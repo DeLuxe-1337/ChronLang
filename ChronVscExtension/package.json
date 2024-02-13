@@ -1,0 +1,25 @@
+{
+  "name": "chron",
+  "displayName": "Chron",
+  "description": "Chron Visual Studio Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.86.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "chron",
+      "aliases": ["Chron", "chron"],
+      "extensions": ["chron"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "chron",
+      "scopeName": "source.chron",
+      "path": "./syntaxes/chron.tmLanguage.json"
+    }]
+  }
+}

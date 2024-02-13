@@ -1,0 +1,94 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Chron",
+	"patterns": [
+		{
+			"name": "comment.line.chron",
+			"match": "//.*$"
+		},
+		{
+			"include": "#function"
+		},
+		{
+			"include": "#include"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#constants"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"include": {
+			"patterns": [
+				{
+					"name": "markup.underline",
+					"match": "\\b(?<=\\binclude\\s)([a-zA-Z_][a-zA-Z0-9_.]*)\\b"
+				}
+			]
+		},
+		"function": {
+			"patterns": [
+				{
+					"name": "support.function",
+					"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*::)\\b"
+				},
+				{
+					"name": "markup.raw",
+					"begin": "::\\s*\\(\\s*",
+					"end": "\\s*\\)",
+					"patterns": [
+						{
+							"name": "variable.parameter",
+							"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+						},
+						{
+							"name": "punctuation.separator",
+							"match": ","
+						}
+					]
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "constant.language",
+					"match": "\\b(true|false|nil)\\b"
+				},
+				{
+					"name": "constant.numeric",
+					"match": "\\b\\d+(?:\\.\\d+)?\\b"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control",
+					"match": "\\b(if|while|for|return|include|break|continue|else)\\b"
+				},
+				{
+					"name": "variable.language",
+					"match": "\\b(release)\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.chron",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.chron",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.chron"
+}

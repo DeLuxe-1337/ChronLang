@@ -1,0 +1,13 @@
+#return true
+!ToString(obj) ?
+
+#return true
+!TypeOf(oobj) ?
+
+!Throw :: (message) ?
+
+#name GC.ReleaseAll
+!GC_ReleaseAll :: ?
+
+#name GC.Release
+!GC_Release :: (object) ?

@@ -1,0 +1,19 @@
+include core.std
+
+#return true
+!ReadLine :: ?
+
+import {
+    // Function overloading supported unlike C
+    printf :: (string)
+    printf :: (string, string)
+}
+
+Print :: (message) {
+    printf(release ToString(message))
+}
+
+PrintLn :: (message) {
+    Print(message)
+    printf(release "\n")
+}

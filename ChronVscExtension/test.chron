@@ -1,0 +1,19 @@
+include core.all
+
+GetSomeValue :: (one, two, word) {
+    return "Hello, world"
+}
+
+!main :: {
+    SomeVariable = "Hello, world"
+    PrintLn(release SomeVariable)
+
+    SomeVariable = 100
+    PrintLn(release SomeVariable)
+
+    SomeVariable = GetSomeValue()
+    PrintLn(release SomeVariable)
+
+    // End of program; release anything we missed (in this example, we missed none)
+    GC.ReleaseAll()
+}
