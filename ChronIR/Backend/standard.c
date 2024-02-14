@@ -25,7 +25,7 @@ GC_ITEM *DynObjectAdd(GC_ITEM *o1, GC_ITEM *o2)
 		}
 		strcpy(result, left->str);
 		strcat(result, right->str);
-		GC_ITEM* ConcatStr = DynString(result);
+		GC_ITEM *ConcatStr = DynString(result);
 		free(result);
 		return ConcatStr;
 	}
@@ -88,7 +88,74 @@ GC_ITEM *DynObjectMul(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
+GC_ITEM *DynObjectCompareGrt(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
 
+	if (left->type != right->type)
+	{
+		return DynBoolean(false);
+	}
+
+	if (left->type == vinteger)
+	{
+		return DynBoolean(left->integer > right->integer);
+	}
+
+	return DynBoolean(false);
+}
+GC_ITEM *DynObjectCompareGrtEq(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
+
+	if (left->type != right->type)
+	{
+		return DynBoolean(false);
+	}
+
+	if (left->type == vinteger)
+	{
+		return DynBoolean(left->integer >= right->integer);
+	}
+
+	return DynBoolean(false);
+}
+GC_ITEM *DynObjectCompareLesstEq(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
+
+	if (left->type != right->type)
+	{
+		return DynBoolean(false);
+	}
+
+	if (left->type == vinteger)
+	{
+		return DynBoolean(left->integer <= right->integer);
+	}
+
+	return DynBoolean(false);
+}
+GC_ITEM *DynObjectCompareLesst(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
+
+	if (left->type != right->type)
+	{
+		return DynBoolean(false);
+	}
+
+	if (left->type == vinteger)
+	{
+		return DynBoolean(left->integer < right->integer);
+	}
+
+	return DynBoolean(false);
+}
 GC_ITEM *DynObjectCompareEq(GC_ITEM *o1, GC_ITEM *o2)
 {
 	DynObject *left = o1->Object;
@@ -143,6 +210,31 @@ GC_ITEM *DynObjectCompareNEq(GC_ITEM *o1, GC_ITEM *o2)
 		printf("Invalid DynObject type\n");
 		return DynBoolean(false);
 	}
+}
+
+GC_ITEM *DynObjectCompareOr(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
+
+	if (left->type != vboolean && left->type != right->type)
+	{
+		return DynBoolean(false);
+	}
+
+	return DynBoolean(left->boolean || right->boolean);
+}
+GC_ITEM *DynObjectCompareAnd(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
+
+	if (left->type != vboolean && left->type != right->type)
+	{
+		return DynBoolean(false);
+	}
+
+	return DynBoolean(left->boolean && right->boolean);
 }
 
 DynObject *GetRef(GC_ITEM *GC)
@@ -247,6 +339,7 @@ GC_ITEM *ReadLine()
 	return DynString(buffer);
 }
 
-bool GetBoolean(GC_ITEM* o) {
-	return ((DynObject*)o->Object)->boolean;
+bool GetBoolean(GC_ITEM *o)
+{
+	return ((DynObject *)o->Object)->boolean;
 }

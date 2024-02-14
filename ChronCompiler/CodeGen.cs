@@ -175,10 +175,18 @@ namespace ChronCompiler
                     return new ChronNotEqual(left, right);
                 case "&&":
                 case "and":
-                    break;
+                    return new ChronAnd(left, right);
                 case "||":
                 case "or":
-                    break;
+                    return new ChronOr(left, right);
+                case ">":
+                    return new ChronGreaterT(left, right);
+                case ">=":
+                    return new ChronGreaterEq(left, right);
+                case "<":
+                    return new ChronLessT(left, right);
+                case "<=":
+                    return new ChronLessEq(left, right);
             }
 
             return base.VisitComparatorExpr(context);

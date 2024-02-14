@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34004.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronScript", "ChronScript\ChronScript.csproj", "{20159042-F1C3-46BC-853A-F0ABF3E681CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChronIR", "ChronIR\ChronIR.csproj", "{620236B0-9DB2-477A-B8A9-2A2FAA074F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronIR", "ChronIR\ChronIR.csproj", "{620236B0-9DB2-477A-B8A9-2A2FAA074F6E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronCompiler", "ChronCompiler\ChronCompiler.csproj", "{AD74068D-034F-4883-8EF0-4940C7C28755}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChronCompiler", "ChronCompiler\ChronCompiler.csproj", "{AD74068D-034F-4883-8EF0-4940C7C28755}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{20159042-F1C3-46BC-853A-F0ABF3E681CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20159042-F1C3-46BC-853A-F0ABF3E681CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20159042-F1C3-46BC-853A-F0ABF3E681CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20159042-F1C3-46BC-853A-F0ABF3E681CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{620236B0-9DB2-477A-B8A9-2A2FAA074F6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{620236B0-9DB2-477A-B8A9-2A2FAA074F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{620236B0-9DB2-477A-B8A9-2A2FAA074F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU

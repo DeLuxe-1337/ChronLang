@@ -4,7 +4,13 @@
 
 #include "object.h"
 
+GC_ITEM *DynObjectCompareGrt(GC_ITEM *left, GC_ITEM *right);
+GC_ITEM *DynObjectCompareGrtEq(GC_ITEM *left, GC_ITEM *right);
+GC_ITEM *DynObjectCompareLesstEq(GC_ITEM *left, GC_ITEM *right);
+GC_ITEM *DynObjectCompareLesst(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectCompareEq(GC_ITEM *left, GC_ITEM *right);
+GC_ITEM *DynObjectCompareOr(GC_ITEM *left, GC_ITEM *right);
+GC_ITEM *DynObjectCompareAnd(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectCompareNEq(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectAdd(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectSub(GC_ITEM *left, GC_ITEM *right);

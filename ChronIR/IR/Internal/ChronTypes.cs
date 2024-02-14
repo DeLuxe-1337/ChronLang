@@ -15,6 +15,12 @@ namespace ChronIR.IR.Internal
         public static string CreateBoolean = "DynBoolean";
         public static string ObjectCompareEq = "DynObjectCompareEq";
         public static string ObjectCompareNEq = "DynObjectCompareNEq";
+        public static string ObjectCompareGrt = "DynObjectCompareGrt";
+        public static string ObjectCompareGrtEq = "DynObjectCompareGrtEq";
+        public static string ObjectCompareLesstEq = "DynObjectCompareLesstEq";
+        public static string ObjectCompareLesst = "DynObjectCompareLesst";
+        public static string ObjectCompareOr = "DynObjectCompareOr";
+        public static string ObjectCompareAnd = "DynObjectCompareAnd";
         public static string ObjectAdd = "DynObjectAdd";
         public static string ObjectSub = "DynObjectSub";
         public static string ObjectDiv = "DynObjectDiv";
