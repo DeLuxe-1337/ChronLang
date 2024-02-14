@@ -88,6 +88,9 @@ namespace ChronIR
             string compiledExecutable = $"{RootDirectory}\\{CurrentContext.Name}.chron.exe";
             string outputPath = $"{WorkingDirectory}\\{CurrentContext.Name}.chron.exe";
 
+            if (File.Exists(outputPath))
+                File.Delete(outputPath);
+
             if (File.Exists(compiledExecutable))
                 File.Move(compiledExecutable, outputPath);
 

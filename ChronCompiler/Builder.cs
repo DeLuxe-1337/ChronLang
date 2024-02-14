@@ -45,7 +45,7 @@ namespace ChronCompiler
                 throw new FileNotFoundException($"ChronCompiler could not find {sourcePath}");
             }
 
-            if (inclusion.IsIncluded(sourcePath))
+            if (inclusion.IsIncluded(name))
                 return;
 
             var input = File.ReadAllText(sourcePath);
