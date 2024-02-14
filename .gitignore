@@ -2,3 +2,4 @@
 .antlr/
 bin/
 obj/
+*.user
