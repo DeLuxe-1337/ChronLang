@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChronIR.IR.Operation.Constants
 {
-    public class ChronString : ChronExpression, ChronInternalType
+    public class ChronString : ChronExpression, ChronConstant
     {
         private ChronInvoke invoke;
         private static ChronFunction createString = new(ChronTypes.CreateString, true);
@@ -20,12 +20,5 @@ namespace ChronIR.IR.Operation.Constants
         {
             return invoke.Read(context);
         }
-
-        public ChronInternalTypes GetInternalType() => ChronInternalTypes.Object;
-
-        //public void Write(ChronContext context)
-        //{
-        //    context.writer.Write($"{Read(context)};");
-        //}
     }
 }

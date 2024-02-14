@@ -15,10 +15,8 @@ namespace ChronIR.IR.Operation
         private Scope.ScopeItem[] Find(ChronContext ctx)
         {
             var result = ctx.env.FindValueByName(name);
-            if(result == null)
-            {
-                Console.WriteLine($"Failed to find `{name}` in current scope...");
-            }
+            if (result == null)
+                throw new Exception($"Failed to find `{name}` in current scope...");
 
             return result;
         }
@@ -33,18 +31,5 @@ namespace ChronIR.IR.Operation
             var stmt = Find(context).First().data as ChronStatement;
             stmt.Write(context);
         }
-
-        //public string GetName(ChronContext context)
-        //{
-        //    if (Find(context).First().data is ChronInvokable invoke)
-        //        return invoke.GetName(context);
-
-        //    return "CHRON_ENV_ACCESSOR_NO_NAME_FOR_INVOKABLE";
-        //}
-
-        //public int ParameterCount()
-        //{
-        //    return -1;
-        //}
     }
 }
