@@ -74,7 +74,7 @@ namespace ChronIR
         public void Compile(string compiler = "Backend\\compile")
         {
             string sourceFilePath = $"{WorkingDirectory}\\{CurrentContext.Name}.chron.c";
-            string targetFilePath = $"{RootDirectory}{CurrentContext.Name}.chron.c";
+            string targetFilePath = $"{RootDirectory}\\{CurrentContext.Name}.chron.c";
 
             if (!File.Exists(targetFilePath))
                 File.Copy(sourceFilePath, targetFilePath);
@@ -86,7 +86,7 @@ namespace ChronIR
             Directory.SetCurrentDirectory(WorkingDirectory);
 
             string compiledExecutable = $"{RootDirectory}\\{CurrentContext.Name}.chron.exe";
-            string outputPath = $"{WorkingDirectory}{CurrentContext.Name}.chron.exe";
+            string outputPath = $"{WorkingDirectory}\\{CurrentContext.Name}.chron.exe";
 
             if (File.Exists(compiledExecutable))
                 File.Move(compiledExecutable, outputPath);
