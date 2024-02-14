@@ -58,9 +58,3 @@ There's many ways you can contribute! You can work on the C backend (most needed
 ## Authors
 
 - [@DeLuxe](https://github.com/DeLuxe-1337)
-
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
