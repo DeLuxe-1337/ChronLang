@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -65,18 +66,36 @@ namespace ChronIR
             }
             CurrentContext.End();
         }
-        private void Compile()
+
+        // void Compile(string) needs to be cleaned up
+
+        private static string RootDirectory = AppContext.BaseDirectory;
+        private static string WorkingDirectory = Environment.CurrentDirectory;
+        public void Compile(string compiler = "Backend\\compile")
         {
-            Process.Start("compile.bat", $"{CurrentContext.Name}.chron");
-        }
-        public void Source(ChronModuleCompile flag)
-        {
-            switch(flag)
-            {
-                case ChronModuleCompile.Compile:
-                    Compile();
-                    break;
-            }
+            string sourceFilePath = $"{WorkingDirectory}\\{CurrentContext.Name}.chron.c";
+            string targetFilePath = $"{RootDirectory}{CurrentContext.Name}.chron.c";
+
+            if (!File.Exists(targetFilePath))
+                File.Copy(sourceFilePath, targetFilePath);
+
+            Directory.SetCurrentDirectory(RootDirectory);
+
+            Process.Start($"{compiler}.bat", $"{CurrentContext.Name}.chron").WaitForExit();
+
+            Directory.SetCurrentDirectory(WorkingDirectory);
+
+            string compiledExecutable = $"{RootDirectory}\\{CurrentContext.Name}.chron.exe";
+            string outputPath = $"{WorkingDirectory}{CurrentContext.Name}.chron.exe";
+
+            if (File.Exists(outputPath))
+                File.Delete(outputPath);
+
+            if (File.Exists(compiledExecutable))
+                File.Move(compiledExecutable, outputPath);
+
+            if(sourceFilePath != targetFilePath)
+                File.Delete(targetFilePath);
         }
     }
 }

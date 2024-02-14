@@ -11,6 +11,9 @@ namespace ChronCompiler
 {
     public class Builder
     {
+        private static string RootDirectory = AppContext.BaseDirectory;
+        private static string WorkingDirectory = Environment.CurrentDirectory;
+
         private ChronContext moduleContext;
         private ChronModule module;
         private ModuleInclusion inclusion = new();
@@ -24,12 +27,28 @@ namespace ChronCompiler
             module = new(moduleContext);
             module.SetupChronRuntime();
         }
+        private string? GetFilePath(string name)
+        {
+            string currentDirectoryPath = Path.Combine(WorkingDirectory, name);
+            string exeDirectoryPath = Path.Combine(RootDirectory, name);
+
+            return File.Exists(currentDirectoryPath) ? currentDirectoryPath :
+                   File.Exists(exeDirectoryPath) ? exeDirectoryPath :
+                   null;
+        }
         public void CompileChronScript(string name) 
         {
-            if (inclusion.IsIncluded(name))
+            var sourcePath = GetFilePath($"{name.Replace('.', '/')}.chron");
+
+            if(string.IsNullOrEmpty(sourcePath))
+            {
+                throw new FileNotFoundException($"ChronCompiler could not find {sourcePath}");
+            }
+
+            if (inclusion.IsIncluded(sourcePath))
                 return;
 
-            var input = File.ReadAllText($"{name.Replace('.', '/')}.chron");
+            var input = File.ReadAllText(sourcePath);
 
             var inputStream = new AntlrInputStream(input);
             var lexer = new ChronLexer(inputStream);
@@ -47,7 +66,8 @@ namespace ChronCompiler
             module.AddStatement(Root);
             module.Write();
             Console.WriteLine($"\t------>\tCompiling and executing\t<------");
-            module.Source(ChronModuleCompile.Compile);
+            module.Compile();
+            Console.WriteLine("\t------>\tEnd of compilation\t<------");
         }
     }
 }
