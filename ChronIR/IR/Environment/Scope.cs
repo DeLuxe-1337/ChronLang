@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChronIR.IR.Environment
 {
-    public class Scope
+    internal class Scope
     {
         public record ScopeItem(string name, object data);
         private static int CurrentScope = 0;

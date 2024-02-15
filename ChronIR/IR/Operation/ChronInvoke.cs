@@ -33,10 +33,14 @@ namespace ChronIR.IR.Operation
 
         public void Write(ChronContext context)
         {
+            ChronDefer.IncreaseScope();
+
             var value = Read(context);
             ChronGC.ReleaseAll(context);
             context.writer.WriteLine($"{value};");
-            ChronDefer.Visit(context);
+
+            ChronDefer.VisitCurrentScope(context);
+            ChronDefer.DecreaseScope();
         }
     }
 }

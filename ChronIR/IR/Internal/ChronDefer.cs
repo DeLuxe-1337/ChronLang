@@ -6,22 +6,40 @@ using System.Threading.Tasks;
 
 namespace ChronIR.IR.Internal
 {
-    public interface ChronDeferer
+    internal interface ChronDeferer
     {
         void Defer(ChronContext context);
     }
-    public static class ChronDefer
+    internal static class ChronDefer
     {
-        public static List<ChronDeferer> DeferList = new();
-        public static List<ChronDeferer>.Enumerator Get() => DeferList.GetEnumerator();
-        public static void Add(ChronDeferer de) => DeferList.Add( de);
-        public static void Visit(ChronContext context)
-        { 
-            foreach(var d in DeferList)
+        private static Dictionary<int, List<ChronDeferer>> DeferDict = new();
+        private static int ScopeLevel = -1;
+        public static void IncreaseScope()
+        {
+            ScopeLevel++;
+            DeferDict[ScopeLevel] = new List<ChronDeferer>();
+        }
+        public static void DecreaseScope()
+        {
+            DeferDict[ScopeLevel] = null;
+            ScopeLevel--;
+        }
+        public static void Add(ChronDeferer deferer)
+        {
+            if (DeferDict.TryGetValue(ScopeLevel, out List<ChronDeferer> deferList))
             {
-                d.Defer(context);
+                deferList.Add(deferer);
             }
-            DeferList.Clear();
+        } 
+        public static void VisitCurrentScope(ChronContext context)
+        {
+            if(DeferDict.TryGetValue(ScopeLevel, out List<ChronDeferer> deferList))
+            {
+                foreach(var deferer in deferList)
+                    deferer.Defer(context);
+
+                deferList.Clear();
+            }
         }
     }
 }

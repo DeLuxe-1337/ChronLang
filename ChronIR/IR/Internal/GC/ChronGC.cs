@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChronIR.IR.Internal.GC
 {
-    public static class ChronGC
+    internal static class ChronGC
     {
         public static bool Enabled = false;
         public static void Retain(ChronContext context, ChronGarbage garbage)

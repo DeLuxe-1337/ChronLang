@@ -44,6 +44,8 @@ namespace ChronIR.IR.Operation
         }
         public void Write(ChronContext context)
         {
+            ChronDefer.IncreaseScope();
+
             context.env.GetCurrentScope().AddToScope(ScopeName.TrimStart('_', 'F', '_'), this, false);
 
             {
@@ -72,6 +74,10 @@ namespace ChronIR.IR.Operation
             {
                 context.writer.WriteLine("{");
                 Block.Write(context);
+
+                ChronDefer.VisitCurrentScope(context);
+                ChronDefer.DecreaseScope();
+
                 context.writer.WriteLine("}");
             }
             else

@@ -19,9 +19,21 @@ namespace ChronIR.IR.Operation
 
         public void Write(ChronContext context)
         {
+            ChronDefer.IncreaseScope();
+
             context.writer.WriteLine($"while({ChronTypes.GetBooleanFromObject}({condition.Read(context)})) {{");
+
+            ChronDefer.IncreaseScope();
+
             block.Write(context);
+
+            ChronDefer.VisitCurrentScope(context);
+            ChronDefer.DecreaseScope();
+
             context.writer.WriteLine("}");
+
+            ChronDefer.VisitCurrentScope(context);
+            ChronDefer.DecreaseScope();
         }
     }
 }

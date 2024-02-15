@@ -21,16 +21,34 @@ namespace ChronIR.IR.Operation
 
         public void Write(ChronContext context)
         {
+            ChronDefer.IncreaseScope();
+
             context.writer.WriteLine($"if({ChronTypes.GetBooleanFromObject}({condition.Read(context)})) {{");
+
+            ChronDefer.IncreaseScope();
+
             trueBlock.Write(context);
+
+            ChronDefer.VisitCurrentScope(context);
+            ChronDefer.DecreaseScope();
+
             context.writer.WriteLine("}");
 
             if(falseBlock != null)
             {
                 context.writer.WriteLine("else {");
+                ChronDefer.IncreaseScope();
+
                 falseBlock.Write(context);
+
+                ChronDefer.VisitCurrentScope(context);
+                ChronDefer.DecreaseScope();
+
                 context.writer.WriteLine("}");
             }
+
+            ChronDefer.VisitCurrentScope(context);
+            ChronDefer.DecreaseScope();
         }
     }
 }

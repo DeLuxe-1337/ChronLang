@@ -4,7 +4,7 @@ program: line* EOF;
 
 line: statement;
 
-statement: (release | import_stmt | include_module | foreign_c | function | call | return | variable | if | while | break | continue) ';'?;
+statement: (defer | release | import_stmt | include_module | foreign_c | function | call | return | variable | if | while | break | continue) ';'?;
 
 variable: IDENTIFIER '=' expression;
 
@@ -29,6 +29,7 @@ if: 'if' expression block ifElse?;
 ifElse: 'else' block;
 
 release: 'release' expression;
+defer: 'defer' statement;
 
 import_functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 import_stmt: 'import' import_block;

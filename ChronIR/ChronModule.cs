@@ -73,32 +73,41 @@ namespace ChronIR
         private static string WorkingDirectory = Environment.CurrentDirectory;
         public void Compile(string compiler = "Backend\\compile")
         {
-            string sourceFilePath = $"{WorkingDirectory}\\{CurrentContext.Name}.chron.c";
-            string targetFilePath = $"{RootDirectory}\\{CurrentContext.Name}.chron.c";
+            string sourceFilePath = Path.Combine(WorkingDirectory, $"{CurrentContext.Name}.chron.c");
+            string targetFilePath = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.c");
 
-            if (!File.Exists(targetFilePath))
-                File.Copy(sourceFilePath, targetFilePath);
+            string compiledExecutable = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.exe");
+            string outputPath = Path.Combine(WorkingDirectory, $"{CurrentContext.Name}.chron.exe");
 
-            Directory.SetCurrentDirectory(RootDirectory);
+            {
+                if (!File.Exists(targetFilePath))
+                    File.Copy(sourceFilePath, targetFilePath);
 
-            Process.Start($"{compiler}.bat", $"{CurrentContext.Name}.chron").WaitForExit();
+                if (File.Exists(outputPath))
+                    File.Delete(outputPath);
 
-            Directory.SetCurrentDirectory(WorkingDirectory);
+                if (File.Exists(compiledExecutable))
+                    File.Delete(compiledExecutable);
+            }
 
-            string compiledExecutable = $"{RootDirectory}\\{CurrentContext.Name}.chron.exe";
-            string outputPath = $"{WorkingDirectory}\\{CurrentContext.Name}.chron.exe";
+            {
+                Directory.SetCurrentDirectory(RootDirectory);
 
-            if (File.Exists(outputPath))
-                File.Delete(outputPath);
+                Process.Start($"{compiler}.bat", $"{CurrentContext.Name}.chron").WaitForExit();
 
-            if (File.Exists(compiledExecutable))
-                File.Move(compiledExecutable, outputPath);
+                Directory.SetCurrentDirectory(WorkingDirectory);
+            }
 
-            if (File.Exists(compiledExecutable))
-                File.Delete(compiledExecutable);
+            {
+                if (File.Exists(compiledExecutable) && !File.Exists(outputPath))
+                    File.Copy(compiledExecutable, outputPath);
 
-            if (sourceFilePath != targetFilePath)
-                File.Delete(targetFilePath);
+                if (File.Exists(compiledExecutable) && compiledExecutable != outputPath)
+                    File.Delete(compiledExecutable);
+
+                if (File.Exists(targetFilePath) && targetFilePath != sourceFilePath)
+                    File.Delete(targetFilePath);
+            }
         }
     }
 }

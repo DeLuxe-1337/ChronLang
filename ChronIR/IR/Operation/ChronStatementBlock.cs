@@ -13,6 +13,12 @@ namespace ChronIR.IR.Operation
         //internal static ChronContext GC_Context = new("GC_Context") { writer = new("gc.context.c") };
         private List<ChronStatement> block = new();
         public void AddStatement(ChronStatement stmt) => block.Add(stmt);
+        public ChronStatement PopStatement()
+        {
+            var stmt = block[block.Count - 1];
+            block.Remove(stmt);
+            return stmt;
+        }
         public bool HasAnyStatements() => block.Any();
         public bool HasStatement<T>() where T : ChronStatement => block.Any((statement) => statement.GetType() == typeof(T));
 
@@ -21,25 +27,6 @@ namespace ChronIR.IR.Operation
             context.env.AddScope(new("Block"));
             foreach (ChronStatement stmt in block)
                 stmt.Write(context);
-            //for (int i = 0; i < Block.Count; i++)
-            //{
-            //    var stmt = Block[i];
-
-            //    if (Block.Count > i + 1)
-            //    {
-            //        var nextStmt = Block[i + 1];
-            //        ChronGC.GC_Enabled = false;
-            //        stmt.Write(GC_Context);
-            //        nextStmt.Write(GC_Context);
-            //    }
-            //    else
-            //    {
-            //        ChronGC.ReleaseAll();
-            //    }
-
-            //    ChronGC.GC_Enabled = true;
-            //    stmt.Write(context);
-            //}
             context.env.RemoveScope();
         }
     }

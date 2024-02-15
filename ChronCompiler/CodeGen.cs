@@ -27,6 +27,15 @@ namespace ChronCompiler
             this.Module = builder.GetModule();
             BlockStack.Push(builder.Root);
         }
+        public override object VisitDefer([NotNull] ChronParser.DeferContext context)
+        {
+            Visit(context.statement());
+            BlockStack.Peek().AddStatement(new ChronDeferStatement(
+                    BlockStack.Peek().PopStatement()
+                ));
+
+            return null;
+        }
         public override object VisitContinue([NotNull] ChronParser.ContinueContext context)
         {
             BlockStack.Peek().AddStatement(new ChronContinue());

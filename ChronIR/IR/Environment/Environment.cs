@@ -7,7 +7,7 @@ using static ChronIR.IR.Environment.Scope;
 
 namespace ChronIR.IR.Environment
 {
-    public class Environment
+    internal class Environment
     {
         private Stack<Scope> scopes = new();
         public void AddScope(Scope scope) => scopes.Push(scope);

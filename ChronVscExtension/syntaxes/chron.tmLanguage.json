@@ -70,7 +70,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control",
-					"match": "\\b(if|while|for|return|include|break|continue|else)\\b"
+					"match": "\\b(if|while|for|return|include|break|defer|continue|else)\\b"
 				},
 				{
 					"name": "variable.language",

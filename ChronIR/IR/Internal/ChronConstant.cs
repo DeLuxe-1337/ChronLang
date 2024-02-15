@@ -1,6 +1,6 @@
 ﻿namespace ChronIR.IR.Internal
 {
-    public interface ChronConstant
+    internal interface ChronConstant
     {
     }
 }
