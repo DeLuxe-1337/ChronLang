@@ -1,6 +1,6 @@
 # ChronLang - Legacy Compiler
 
-A fast, dynamically typed programming language.
+A fast, compiled, dynamically typed programming language.
 
 ## Features
 
@@ -47,10 +47,10 @@ As a solo developer on this project, I occasionally prioritize functionality ove
 Probably, as I mentioned above this is a solo project at the moment!
 
 #### How does this compiler achieve native compilation?
-By generating C source code, thus allows for easy cross-platform with compilers like clang, tcc, gcc, or msvc.
+Generating C source code thus allows for easy cross-platform with compilers like clang, tcc, gcc, or msvc.
 
 #### What can I do to contribute?
-There's many ways you can contribute! You can work on the C backend (most needed), you can implement features (right now the GC is in need of proper implementation). You can clean up the compiler source. You can extend functionality, you can fix issues, the list goes on.
+There are many ways you can contribute! You can work on the C backend (most needed), and you can implement features (right now the GC is in need of proper implementation). You can clean up the compiler source. You can extend functionality, you can fix issues, and the list goes on.
 
 ## When was this project created?
 1/21/24
