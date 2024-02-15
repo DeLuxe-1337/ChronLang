@@ -1,4 +1,4 @@
-# ChronLang - Legacy Compiler
+# ChronLang - Legacy Stage
 
 A fast, compiled, dynamically typed programming language.
 
