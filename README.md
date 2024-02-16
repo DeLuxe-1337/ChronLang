@@ -78,20 +78,20 @@ main :: {
 
 ### Function syntax
 Syntax:
-`identifier` `::` (`(` `identifier array` `)`)? `statement array`
+`identifier` `::` (`(` `identifier array` `)`)? `statement block`
 
 For context `::` stands for `CONSTANT`  
   
 ```chron
-  include core.all 
+include core.all 
 
-  Foo :: (bar) {
-    PrintLn(bar)
-  }
+Foo :: (bar) {
+  PrintLn(bar)
+}
 
-  main :: {
-    Foo("Hello, world")
-  }
+main :: {
+  Foo("Hello, world")
+}
 ```
 
 ## Release
@@ -103,19 +103,19 @@ Syntax:
 
 Example of release
 ```chron
-  include core.all
+include core.all
 
-  main :: {
-    x = 10 // x is a new object
-    y = 5 // y is a new object
+main :: {
+  x = 10 // x is a new object
+  y = 5 // y is a new object
 
-    z = x + y // z is a new object
+  z = x + y // z is a new object
 
-    PrintLn(release z) // Release Z from memory after using it
+  PrintLn(release z) // Release Z from memory after using it
 
-    release x // Release x from memory
-    release y // Release y from memory
-  }
+  release x // Release x from memory
+  release y // Release y from memory
+}
 ```
 
 ## Defer
@@ -126,57 +126,57 @@ Syntax:
 
 Example of defer
 ```chron
-  include core.all
+include core.all
 
-  main :: {
-    defer PrintLn("End of program")
+main :: {
+  defer PrintLn("End of program")
 
-    PrintLn("Hello, world!")
-  }
+  PrintLn("Hello, world!")
+}
 ```
 
 ## If
-  Syntax: `if` `expression` `statement array` (`else` `statement array`)?
+  Syntax: `if` `expression` `statement array` (`else` `statement block`)?
 
   ```chron
-    include core.all
+  include core.all
 
-    main :: {
-      x = true
-      y = false
+  main :: {
+    x = true
+    y = false
 
-      if x == y {
-        ...
-      }
-      else {
-        ...
-      }
+    if x == y {
+      ...
     }
+    else {
+      ...
+    }
+  }
   ```
 
 ## While
-Syntax: `while` `expression` `statement array`
+Syntax: `while` `expression` `statement block`
 
   ```chron
-    include core.all
+  include core.all
 
-    main :: {
-      x = 0
+  main :: {
+    x = 0
 
-      while x < 5 {
-        x = x + 1
-      }
+    while x < 5 {
+      x = x + 1
     }
+  }
   ```
 
 ## Function calling
-`identifier` `(` `expression array` `)`  
 Same as most languages  
+`identifier` `(` `expression array` `)`  
 
 ## Comparators
 Same as most languages  
 `expression` (`or` | `||`) `expression`  
-`expression` (`and` | `and`) `expression`  
+`expression` (`and` | `&&`) `expression`  
 `expression` `==` `expression`  
 `expression` `!=` `expression`  
 `expression` `<=` `expression`  
