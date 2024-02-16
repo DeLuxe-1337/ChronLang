@@ -152,6 +152,11 @@ namespace ChronCompiler
                 return new ChronBoolean(context.BOOLEAN().GetText() == "true" ? true : false);
             }
 
+            if(context.NIL() != null)
+            {
+                return new ChronNil();
+            }
+
             return base.VisitConstant(context);
         }
         public override object VisitBinaryExpr([NotNull] ChronParser.BinaryExprContext context)

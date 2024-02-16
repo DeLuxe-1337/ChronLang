@@ -13,6 +13,7 @@ namespace ChronIR.IR.Internal
         public static string CreateString = "DynString";
         public static string CreateInt = "DynInteger";
         public static string CreateBoolean = "DynBoolean";
+        public static string CreateNil = "DynNil";
         public static string ObjectCompareEq = "DynObjectCompareEq";
         public static string ObjectCompareNEq = "DynObjectCompareNEq";
         public static string ObjectCompareGrt = "DynObjectCompareGrt";

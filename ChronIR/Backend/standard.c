@@ -269,7 +269,7 @@ GC_ITEM *TypeOf(GC_ITEM *left)
 		typeStr = "number";
 		break;
 	case vnull:
-		typeStr = "null";
+		typeStr = "nil";
 		break;
 	default:
 		typeStr = "unknown";
@@ -285,7 +285,7 @@ GC_ITEM *ToString(GC_ITEM *item)
 	switch (obj->type)
 	{
 	case vdeallocated:
-		return DynString("DynObject is deallocated");
+		return DynString("Object is deallocated");
 	case vstring:
 		return DynString(obj->str);
 	case vboolean:
@@ -305,9 +305,9 @@ GC_ITEM *ToString(GC_ITEM *item)
 		return DynString(str);
 	}
 	case vnull:
-		return DynString("null");
+		return DynString("nil");
 	default:
-		return DynString("Invalid DynObject type");
+		return DynString("Invalid object type");
 	}
 }
 

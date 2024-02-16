@@ -27,8 +27,7 @@ typedef struct {
 GC_ITEM* DynString(const char* str);
 GC_ITEM* DynInteger(int i);
 GC_ITEM* DynBoolean(bool boolean);
-GC_ITEM* DynCStructure(void* structure);
-GC_ITEM* DynNull();
+GC_ITEM* DynNil();
 DynObject SetDynObjectType(DynObject* DynObject, DynObjectType type);
 DynObject Expect(DynObject input, DynObject errorMessage);
 DynObject Clone(DynObject* input);

@@ -20,7 +20,7 @@ GC_ITEM *DynString(const char *str)
   return GC_obj;
 }
 
-GC_ITEM* DynInteger(int i)
+GC_ITEM *DynInteger(int i)
 {
   newObject(obj, DynObject);
 
@@ -34,7 +34,8 @@ GC_ITEM* DynInteger(int i)
   return GC_obj;
 }
 
-GC_ITEM* DynBoolean(bool boolean) {
+GC_ITEM *DynBoolean(bool boolean)
+{
   newObject(obj, DynObject);
 
   _VO_obj->boolean = boolean;
@@ -47,31 +48,19 @@ GC_ITEM* DynBoolean(bool boolean) {
   return GC_obj;
 }
 
-// DynObject DynCStructure(void* structure) {
-//   DynObject obj = {
-//     .boolean = false,
-//     .str = NULL,
-//     .integer = 0,
-//     .number = 0.0,
+GC_ITEM * DynNil()
+{
+  newObject(obj, DynObject);
 
-//     .type = vcstruct,
-//     .cstruct = structure
-//   };
-//   return obj;
-// }
+  _VO_obj->boolean = 0;
+  _VO_obj->str = 0;
+  _VO_obj->integer = 0;
+  _VO_obj->number = 0.0;
+  _VO_obj->type = vnull;
+  _VO_obj->cstruct = 0;
 
-// DynObject DynNull() {
-//   DynObject obj = {
-//     .boolean = false,
-//     .str = NULL,
-
-//     .integer = 0,
-//     .number = 0.0,
-//     .type = vnull,
-//     .cstruct = NULL
-//   };
-//   return obj;
-// }
+  return GC_obj;
+}
 
 DynObject SetDynObjectType(DynObject *DynObject, DynObjectType type)
 {

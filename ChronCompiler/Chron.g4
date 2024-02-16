@@ -50,7 +50,7 @@ expression:
 	| 'release' expression #releaseExpr
 	| '(' expression ')'	# evaluateExpr;
 
-constant: NUMBER | STRING | BOOLEAN;
+constant: NUMBER | STRING | BOOLEAN | NIL;
 
 TICK_BLOCK: '`' TICK_TEXT '`';
 fragment TICK_TEXT: ~('`')*;
@@ -59,6 +59,7 @@ foreign_c: '~>' 'C' TICK_BLOCK;
 
 include_module: 'include' IDENTIFIER;
 
+NIL: 'nil';
 NUMBER: [0-9][0-9]*;
 STRING: ('"' ~'"'* '"') | ('\'' ~'\''* '\'');
 BOOLEAN: 'false' | 'true';
