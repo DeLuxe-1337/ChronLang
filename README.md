@@ -8,20 +8,18 @@
 - **Natively Compiled**
 - **Manual Memory Management** OR **Garbage Collector**
 
-<details>
-  <summary>Documentation</summary>
-  
-  - [Hello, world](#hello-world)
-  - [Functions](#functions)
-  - [Defer](#defer)
-  - [If statement](#if)
-  - [While statement](#while)
-  - [Memory - Release](#release)
-  - [Function calling](#function-calling)
-  - [Comparators](#comparators)
-  - [Math](#math)
-  - [Error handling](#error-handling)
-</details>
+## Documentation
+
+- [Hello, world](#hello-world)
+- [Functions](#functions)
+- [Defer](#defer)
+- [Release](#release)
+- [If statement](#if)
+- [While statement](#while)
+- [Function calling](#function-calling)
+- [Comparators](#comparators)
+- [Math](#math)
+- [Error handling](#error-handling)
 
 ## FAQ
 
