@@ -81,6 +81,12 @@ Syntax:
 `identifier` `::` (`(` `identifier array` `)`)? `statement block`
 
 For context `::` stands for `CONSTANT`  
+
+```chron
+Sum :: (a, b) {
+  return a + b
+}
+```
   
 ```chron
 include core.all 
