@@ -30,7 +30,7 @@ namespace ChronIR.IR.Internal
             {
                 deferList.Add(deferer);
             }
-        } 
+        }
         public static void VisitCurrentScope(ChronContext context)
         {
             if(DeferDict.TryGetValue(ScopeLevel, out List<ChronDeferer> deferList))
