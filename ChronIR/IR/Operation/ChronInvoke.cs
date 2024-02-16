@@ -22,7 +22,10 @@ namespace ChronIR.IR.Operation
             StringBuilder sb = new StringBuilder();
             foreach(ChronExpression chronExpression in parameters.GetParameters())
             {
-                sb.Append($"{chronExpression.Read(ctx)},");
+                if (ChronGC.Enabled == false && chronExpression is ChronConstant)
+                    sb.Append($"{new ChronRelease(chronExpression).Read(ctx)}");
+                else
+                    sb.Append($"{chronExpression.Read(ctx)},");
             }
             return sb.ToString().TrimEnd(',');
         }
@@ -36,6 +39,7 @@ namespace ChronIR.IR.Operation
             ChronDefer.IncreaseScope();
 
             var value = Read(context);
+
             ChronGC.ReleaseAll(context);
             context.writer.WriteLine($"{value};");
 

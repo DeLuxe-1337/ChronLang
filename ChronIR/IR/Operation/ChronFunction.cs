@@ -21,7 +21,7 @@ namespace ChronIR.IR.Operation
         private List<string> parameters = new();
         public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
         {
-            if(define)
+            if(define || name == "main")
                 this.Name = name;
             else
                 this.Name = $"_F_{name}";
