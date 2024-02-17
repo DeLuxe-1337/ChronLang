@@ -1,6 +1,4 @@
-﻿using ChronIR.IR.Environment;
-
-namespace ChronIR
+﻿namespace ChronIR
 {
     public enum BuildModeOption
     {

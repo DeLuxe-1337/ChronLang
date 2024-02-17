@@ -1,11 +1,4 @@
-﻿using ChronIR.IR.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChronIR.IR.Environment
+﻿namespace ChronIR.IR.Environment
 {
     internal class Scope
     {
@@ -28,7 +21,7 @@ namespace ChronIR.IR.Environment
             {
                 var scopeItem = scope[i];
 
-                if(scopeItem.name == name)
+                if (scopeItem.name == name)
                     scope.RemoveAt(i);
             }
         }
@@ -38,9 +31,9 @@ namespace ChronIR.IR.Environment
         {
             List<ScopeItem> request = new();
 
-            foreach(var  item in scope)
+            foreach (var item in scope)
             {
-                if(item.name == name)
+                if (item.name == name)
                     request.Add(item);
             }
 

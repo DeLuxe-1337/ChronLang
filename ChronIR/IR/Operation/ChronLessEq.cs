@@ -4,17 +4,18 @@ namespace ChronIR.IR.Operation
 {
     public class ChronLessEq : ChronExpression
     {
-        private ChronExpression leftExpr;
-        private ChronExpression rightExpr;
+        private ChronInvoke invoke;
+        private static ChronFunction compareLessThanEq = new(ChronTypes.ObjectCompareLesstEq, true);
         public ChronLessEq(ChronExpression leftExpr, ChronExpression rightExpr)
         {
-            this.leftExpr = leftExpr;
-            this.rightExpr = rightExpr;
+            invoke = new(compareLessThanEq);
+            invoke.AddParameter(leftExpr);
+            invoke.AddParameter(rightExpr);
         }
 
         public object Read(ChronContext context)
         {
-            return $"{ChronTypes.ObjectCompareLesstEq}({leftExpr.Read(context)},{rightExpr.Read(context)})";
+            return invoke.Read(context);
         }
     }
 }

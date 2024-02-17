@@ -1,11 +1,6 @@
 ﻿using Antlr4.Runtime;
 using ChronIR;
 using ChronIR.IR.Operation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChronCompiler
 {
@@ -36,11 +31,11 @@ namespace ChronCompiler
                    File.Exists(exeDirectoryPath) ? exeDirectoryPath :
                    null;
         }
-        public void CompileChronScript(string name) 
+        public void CompileChronScript(string name)
         {
             var sourcePath = GetFilePath($"{name.Replace('.', '/')}.chron");
 
-            if(string.IsNullOrEmpty(sourcePath))
+            if (string.IsNullOrEmpty(sourcePath))
             {
                 throw new FileNotFoundException($"ChronCompiler could not find {sourcePath}");
             }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChronIR.IR.Internal;
+﻿using ChronIR.IR.Internal;
 
 namespace ChronIR.IR.Operation
 {

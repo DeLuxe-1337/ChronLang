@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChronIR.IR.Internal
+﻿namespace ChronIR.IR.Internal
 {
     internal interface ChronDeferer
     {
@@ -33,9 +27,9 @@ namespace ChronIR.IR.Internal
         }
         public static void VisitCurrentScope(ChronContext context)
         {
-            if(DeferDict.TryGetValue(ScopeLevel, out List<ChronDeferer> deferList))
+            if (DeferDict.TryGetValue(ScopeLevel, out List<ChronDeferer> deferList))
             {
-                foreach(var deferer in deferList)
+                foreach (var deferer in deferList)
                     deferer.Defer(context);
 
                 deferList.Clear();

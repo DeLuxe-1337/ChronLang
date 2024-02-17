@@ -4,17 +4,18 @@ namespace ChronIR.IR.Operation
 {
     public class ChronOr : ChronExpression
     {
-        private ChronExpression leftExpr;
-        private ChronExpression rightExpr;
+        private ChronInvoke invoke;
+        private static ChronFunction compareOr = new(ChronTypes.ObjectCompareOr, true);
         public ChronOr(ChronExpression leftExpr, ChronExpression rightExpr)
         {
-            this.leftExpr = leftExpr;
-            this.rightExpr = rightExpr;
+            invoke = new(compareOr);
+            invoke.AddParameter(leftExpr);
+            invoke.AddParameter(rightExpr);
         }
 
         public object Read(ChronContext context)
         {
-            return $"{ChronTypes.ObjectCompareOr}({leftExpr.Read(context)},{rightExpr.Read(context)})";
+            return invoke.Read(context);
         }
     }
 }

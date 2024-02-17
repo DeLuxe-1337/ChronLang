@@ -1,16 +1,5 @@
 ﻿using ChronIR.IR.Internal;
-using ChronIR.IR.Internal.GC;
-using ChronIR.IR.Operation;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace ChronIR
 {
@@ -59,7 +48,7 @@ namespace ChronIR
         public void AddStatement(ChronStatement statement) => Statements.Add(statement);
         public void Write()
         {
-            foreach(var statement in Statements)
+            foreach (var statement in Statements)
             {
 
                 statement.Write(CurrentContext);

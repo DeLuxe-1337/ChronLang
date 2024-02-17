@@ -3,11 +3,6 @@ using ChronIR;
 using ChronIR.IR.Internal;
 using ChronIR.IR.Operation;
 using ChronIR.IR.Operation.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChronCompiler
 {
@@ -58,7 +53,7 @@ namespace ChronCompiler
         {
             ChronStatementBlock? falseBlock = default;
 
-            if(context.ifElse() != null)
+            if (context.ifElse() != null)
             {
                 falseBlock = Visit(context.ifElse().block()) as ChronStatementBlock;
             }
@@ -83,7 +78,7 @@ namespace ChronCompiler
         {
             var Import = new ChronImport(context.IDENTIFIER().GetText());
 
-            foreach(var p in context.import_functionParameters().IDENTIFIER())
+            foreach (var p in context.import_functionParameters().IDENTIFIER())
             {
                 Import.AddParameter(ChronTypes.TypeMap[p.GetText()]);
             }
@@ -105,7 +100,7 @@ namespace ChronCompiler
         {
             BlockStack.Peek().AddStatement(
                 new ChronVariable(
-                    context.IDENTIFIER().GetText(), 
+                    context.IDENTIFIER().GetText(),
                     Visit(context.expression()) as ChronExpression)
                 );
 
@@ -137,22 +132,22 @@ namespace ChronCompiler
         }
         public override object VisitConstant([NotNull] ChronParser.ConstantContext context)
         {
-            if(context.STRING() != null)
+            if (context.STRING() != null)
             {
                 return new ChronString(context.STRING().GetText().TrimStart('"').TrimEnd('"'));
             }
 
-            if(context.NUMBER() != null)
+            if (context.NUMBER() != null)
             {
                 return new ChronInt(int.Parse(context.NUMBER().GetText()));
             }
 
-            if(context.BOOLEAN() != null)
+            if (context.BOOLEAN() != null)
             {
                 return new ChronBoolean(context.BOOLEAN().GetText() == "true" ? true : false);
             }
 
-            if(context.NIL() != null)
+            if (context.NIL() != null)
             {
                 return new ChronNil();
             }
@@ -179,7 +174,7 @@ namespace ChronCompiler
         }
         public override object VisitComparatorExpr([NotNull] ChronParser.ComparatorExprContext context)
         {
-            var left = Visit(context.expression().First()) as ChronExpression; 
+            var left = Visit(context.expression().First()) as ChronExpression;
             var right = Visit(context.expression()[1]) as ChronExpression;
             switch (context.op.Text)
             {
@@ -250,9 +245,9 @@ namespace ChronCompiler
             if (context.functionBlock() != null && Visit(context.functionBlock()) is ChronStatementBlock block)
                 function.Block = block;
 
-            if(context.functionParameters() != null)
+            if (context.functionParameters() != null)
             {
-                foreach(var p in context.functionParameters().IDENTIFIER())
+                foreach (var p in context.functionParameters().IDENTIFIER())
                 {
                     function.AddParameter(p.GetText());
                 }
@@ -264,7 +259,7 @@ namespace ChronCompiler
             if (context.functionForceReturn() != null)
                 function.SetReturn(true);
 
-            if(context.functionRename() != null)
+            if (context.functionRename() != null)
             {
                 function.ScopeName = context.functionRename().IDENTIFIER().GetText();
             }

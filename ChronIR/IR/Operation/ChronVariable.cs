@@ -1,10 +1,5 @@
 ﻿using ChronIR.IR.Internal;
 using ChronIR.IR.Internal.GC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChronIR.IR.Operation
 {
@@ -14,7 +9,7 @@ namespace ChronIR.IR.Operation
         private string name;
         private ChronExpression value;
         public static ChronVariable Create(string name, ChronExpression value) => new ChronVariable(name, value);
-        public ChronVariable(string name, ChronExpression value) 
+        public ChronVariable(string name, ChronExpression value)
         {
             this.name = name;
             this._accessor_name = $"_V_{name}";

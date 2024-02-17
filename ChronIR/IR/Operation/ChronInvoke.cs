@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChronIR.IR.Internal;
+﻿using ChronIR.IR.Internal;
 using ChronIR.IR.Internal.GC;
+using System.Text;
 
 namespace ChronIR.IR.Operation
 {
@@ -13,17 +9,17 @@ namespace ChronIR.IR.Operation
         private ChronInvokable target;
         private ChronExpressionBlock parameters = new();
         public void AddParameter(ChronExpression chronExpression) => parameters.AddExpression(chronExpression);
-        public ChronInvoke(ChronInvokable invokeTarget) 
-        { 
+        public ChronInvoke(ChronInvokable invokeTarget)
+        {
             this.target = invokeTarget;
         }
         private string ParametersToString(ChronContext ctx)
         {
             StringBuilder sb = new StringBuilder();
-            foreach(ChronExpression chronExpression in parameters.GetParameters())
+            foreach (ChronExpression chronExpression in parameters.GetParameters())
             {
                 if (ChronGC.Enabled == false && chronExpression is ChronConstant)
-                    sb.Append($"{new ChronRelease(chronExpression).Read(ctx)}");
+                    sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
                 else
                     sb.Append($"{chronExpression.Read(ctx)},");
             }

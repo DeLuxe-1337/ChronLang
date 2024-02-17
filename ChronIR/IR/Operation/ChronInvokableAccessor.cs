@@ -1,10 +1,5 @@
 ﻿using ChronIR.IR.Environment;
 using ChronIR.IR.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChronIR.IR.Operation
 {
@@ -31,11 +26,11 @@ namespace ChronIR.IR.Operation
         {
             Scope.ScopeItem[] results = Find(context);
 
-            foreach(var scopeItem in results)
+            foreach (var scopeItem in results)
             {
-                if(scopeItem.data is ChronInvokable invoke)
+                if (scopeItem.data is ChronInvokable invoke)
                 {
-                    if(invoke.ParameterCount() == parameterCount)
+                    if (invoke.ParameterCount() == parameterCount)
                         return invoke.GetName(context);
                 }
             }

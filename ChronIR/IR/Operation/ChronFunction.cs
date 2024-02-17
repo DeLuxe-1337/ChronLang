@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using ChronIR.IR.Internal;
+﻿using ChronIR.IR.Internal;
 using ChronIR.IR.Internal.GC;
+using System.Text;
 
 namespace ChronIR.IR.Operation
 {
@@ -21,7 +16,7 @@ namespace ChronIR.IR.Operation
         private List<string> parameters = new();
         public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
         {
-            if(define || name == "main")
+            if (define || name == "main")
                 this.Name = name;
             else
                 this.Name = $"_F_{name}";
@@ -61,7 +56,7 @@ namespace ChronIR.IR.Operation
 
             context.writer.Write($"{(Block.HasStatement<ChronReturn>() || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {Name}({FormatParameters()})");
 
-            for(int i = 0; i < parameters.Count; i++)
+            for (int i = 0; i < parameters.Count; i++)
             {
                 var parameter = parameters[i];
                 context.env.GetCurrentScope().AddToScope(parameter, GetParameter(i));

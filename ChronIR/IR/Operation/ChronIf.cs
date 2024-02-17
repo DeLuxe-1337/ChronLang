@@ -1,9 +1,4 @@
 ﻿using ChronIR.IR.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChronIR.IR.Operation
 {
@@ -34,7 +29,7 @@ namespace ChronIR.IR.Operation
 
             context.writer.WriteLine("}");
 
-            if(falseBlock != null)
+            if (falseBlock != null)
             {
                 context.writer.WriteLine("else {");
                 ChronDefer.IncreaseScope();
