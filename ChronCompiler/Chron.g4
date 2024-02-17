@@ -4,7 +4,7 @@ program: line* EOF;
 
 line: statement;
 
-statement: (defer | release | import_stmt | include_module | foreign_c | function | struct | call | return | variable | if | while | break | continue) ';'?;
+statement: (defer | release | import_stmt | include_module | foreign_c | function | call | return | variable | if | while | break | continue) ';'?;
 
 variable: IDENTIFIER '=' expression;
 
@@ -17,9 +17,6 @@ functionForceReturn: '#return true';
 functionForceGc: '#gc';
 functionRename: '#name' IDENTIFIER;
 function: (functionForceReturn? | functionForceGc? | functionRename?) functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
-
-structBlock: '{' (IDENTIFIER (',' IDENTIFIER)*)? '}';
-struct: IDENTIFIER '::' 'struct' structBlock;
 
 block: '{' line* '}';
 
@@ -35,9 +32,9 @@ release: 'release' expression;
 defer: 'defer' statement;
 
 import_functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
-import_stmt: 'import' IDENTIFIER? import_block;
+import_stmt: 'import' import_block;
 import_function_return: '->' IDENTIFIER;
-import_function: extern=('extern' | 'external')? IDENTIFIER '::' import_functionParameters? import_function_return?;
+import_function: IDENTIFIER '::' import_functionParameters? import_function_return?;
 import_statement: import_function;
 import_block: '{' import_statement* '}';
 
@@ -48,7 +45,6 @@ expression:
 	constant				# constantExpr
 	| IDENTIFIER			# IDENTIFIERExpr
 	| call					# callExpr
-	| 'new' expression #newExpr
 	| expression op=('==' | '!=' | '>' | '<' | '<=' | '>=' | '||' | 'or' | 'and' | '&&') expression #comparatorExpr
 	| expression op=('+' | '-' | '*' | '/') expression #binaryExpr
 	| 'release' expression #releaseExpr
@@ -69,7 +65,6 @@ STRING: ('"' ~'"'* '"') | ('\'' ~'\''* '\'');
 BOOLEAN: 'false' | 'true';
 
 IDENTIFIER: [a-zA-Z0-9_][a-zA-Z0-9_.]*;
-VARIABLE_IDENTIFIER: [a-zA-Z0-9_][a-zA-Z0-9_]*;
 
 WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;

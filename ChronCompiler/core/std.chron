@@ -2,7 +2,7 @@
 !ToString(obj) ?
 
 #return true
-!TypeOf(obj) ?
+!TypeOf(oobj) ?
 
 !Throw :: (message) ?
 
