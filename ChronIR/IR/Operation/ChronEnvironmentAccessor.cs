@@ -1,5 +1,6 @@
 ﻿using ChronIR.IR.Environment;
 using ChronIR.IR.Internal;
+using System;
 
 namespace ChronIR.IR.Operation
 {
@@ -15,15 +16,19 @@ namespace ChronIR.IR.Operation
 
             return result;
         }
+        public object GetObject(ChronContext context)
+        {
+            return Find(context).First().data;
+        }
         public object Read(ChronContext context)
         {
-            var exp = Find(context).First().data as ChronExpression;
+            var exp = GetObject(context) as ChronExpression;
             return exp.Read(context);
         }
 
         public void Write(ChronContext context)
         {
-            var stmt = Find(context).First().data as ChronStatement;
+            var stmt = GetObject(context) as ChronStatement;
             stmt.Write(context);
         }
     }

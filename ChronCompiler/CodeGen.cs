@@ -22,6 +22,21 @@ namespace ChronCompiler
             this.Module = builder.GetModule();
             BlockStack.Push(builder.Root);
         }
+        public override object VisitNewExpr([NotNull] ChronParser.NewExprContext context)
+        {
+            return new ChronNew(Visit(context.expression()) as ChronExpression);
+        }
+        public override object VisitStruct([NotNull] ChronParser.StructContext context)
+        {
+            ChronStruct structure = new(context.IDENTIFIER().GetText());
+
+            foreach (var identifier in context.structBlock().IDENTIFIER())
+                structure.AddField(identifier.GetText());
+
+            BlockStack.Peek().AddStatement(structure);
+
+            return null;
+        }
         public override object VisitDefer([NotNull] ChronParser.DeferContext context)
         {
             Visit(context.statement());
@@ -82,6 +97,9 @@ namespace ChronCompiler
             {
                 Import.AddParameter(ChronTypes.TypeMap[p.GetText()]);
             }
+
+            if (context.@extern != null)
+                Import.DefineExtern = true;
 
             BlockStack.Peek().AddStatement(
                 Import
