@@ -48,7 +48,7 @@ GC_ITEM *DynBoolean(bool boolean)
   return GC_obj;
 }
 
-GC_ITEM *DynNil()
+GC_ITEM * DynNil()
 {
   newObject(obj, DynObject);
 
@@ -58,20 +58,6 @@ GC_ITEM *DynNil()
   _VO_obj->number = 0.0;
   _VO_obj->type = vnull;
   _VO_obj->cstruct = 0;
-
-  return GC_obj;
-}
-
-GC_ITEM *DynStructure(void *structure)
-{
-  newObject(obj, DynObject);
-
-  _VO_obj->boolean = 0;
-  _VO_obj->str = 0;
-  _VO_obj->integer = 0;
-  _VO_obj->number = 0.0;
-  _VO_obj->type = vnull;
-  _VO_obj->cstruct = structure;
 
   return GC_obj;
 }
