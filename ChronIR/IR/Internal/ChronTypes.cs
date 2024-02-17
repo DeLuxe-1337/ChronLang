@@ -2,8 +2,15 @@
 {
     public static class ChronTypes
     {
-        public record ChronType(string Value);
+        public record ChronType(string Value)
+        {
+            public override string ToString()
+            {
+                return Value;
+            }
+        }
         public static Dictionary<string, ChronType> TypeMap = new() { { "object", new("ChronGarbageCollectedObject") }, { "void", new("ChronVoid") }, { "string", new("const char*") }, { "int", new("int") }, };
+        public static string GCMalloc = "GC_Malloc";
         public static string CreateString = "DynString";
         public static string CreateInt = "DynInteger";
         public static string CreateBoolean = "DynBoolean";

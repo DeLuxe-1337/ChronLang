@@ -4,6 +4,7 @@ namespace ChronIR.IR.Operation
 {
     public class ChronImport : ChronStatement, ChronInvokable
     {
+        public bool DefineExtern = false;
         public string Return = ChronTypes.TypeMap["void"].Value;
         public List<ChronTypes.ChronType> Parameters = new();
         public string Name;
@@ -15,6 +16,10 @@ namespace ChronIR.IR.Operation
         {
             this.Name = name;
             RawCName = name;
+        }
+        private void DefineExternal(ChronContext context, List<ChronTypes.ChronType> type)
+        {
+            context.writer.WriteLine($"extern {Return} _E_{RawCName}({string.Join(",", type)});");
         }
         private void DefineOriginal(ChronContext context, List<string> type)
         {
@@ -29,10 +34,17 @@ namespace ChronIR.IR.Operation
                     definedFunctions[Name] += 1;
                 else
                     definedFunctions[Name] = 0;
+
                 if (definedFunctions[Name] > 0)
                 {
                     Name = $"{Name}{definedFunctions[Name]}";
                 }
+            }
+
+            if(DefineExtern)
+            {
+                DefineExternal(context, Parameters);
+                RawCName = $"_E_{RawCName}";
             }
 
             {
@@ -41,7 +53,7 @@ namespace ChronIR.IR.Operation
                 int param_count = 0;
                 foreach (var p in Parameters)
                 {
-                    param.Add($"{ChronTypes.TypeMap["object"].Value} p{param_count++}");
+                    param.Add($"{ChronTypes.TypeMap["object"]} p{param_count++}");
                 }
 
                 DefineOriginal(context, param);
