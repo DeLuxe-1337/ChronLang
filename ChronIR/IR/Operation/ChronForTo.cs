@@ -1,10 +1,5 @@
 ﻿using ChronIR.IR.Internal;
 using ChronIR.IR.Operation.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChronIR.IR.Operation
 {
@@ -14,7 +9,7 @@ namespace ChronIR.IR.Operation
         private ChronExpression start;
         private ChronExpression end;
         private string identifier;
-        public ChronForTo(string identifier, ChronStatementBlock block, ChronExpression start,  ChronExpression end)
+        public ChronForTo(string identifier, ChronStatementBlock block, ChronExpression start, ChronExpression end)
         {
             this.identifier = identifier;
             this.block = block;
