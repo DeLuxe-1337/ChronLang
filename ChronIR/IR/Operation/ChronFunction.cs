@@ -78,6 +78,11 @@ namespace ChronIR.IR.Operation
             else
                 context.writer.WriteLine(";");
 
+            foreach (var p in parameters)
+            {
+                context.env.GetCurrentScope().RemoveAllWithName(p);
+            }
+
             ChronGC.Enabled = oldGcState;
         }
 
