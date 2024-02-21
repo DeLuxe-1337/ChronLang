@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronInvoke : ChronStatement, ChronExpression
+    public class ChronInvoke : ChronStatement, ChronExpression, ChronAutoRelease
     {
         private ChronInvokable target;
         private ChronExpressionBlock parameters = new();
@@ -18,7 +18,7 @@ namespace ChronIR.IR.Operation
             StringBuilder sb = new StringBuilder();
             foreach (ChronExpression chronExpression in parameters.GetParameters())
             {
-                if (ChronGC.Enabled == false && chronExpression is ChronConstant)
+                if (ChronGC.Enabled == false && (chronExpression is ChronConstant || chronExpression is ChronAutoRelease))
                     sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
                 else
                     sb.Append($"{chronExpression.Read(ctx)},");

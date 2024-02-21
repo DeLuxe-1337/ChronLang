@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronGreaterT : ChronExpression
+    public class ChronGreaterT : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction compareGreaterT = new(ChronTypes.ObjectCompareGrt, true);

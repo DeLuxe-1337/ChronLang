@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronAnd : ChronExpression
+    public class ChronAnd : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction compareAnd = new(ChronTypes.ObjectCompareAnd, true);

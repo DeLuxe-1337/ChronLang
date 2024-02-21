@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation.Constants
 {
-    public class ChronNil : ChronExpression, ChronConstant
+    public class ChronNil : ChronExpression, ChronConstant, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction createNil = new(ChronTypes.CreateNil, true);

@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronDiv : ChronExpression
+    public class ChronDiv : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction binaryDiv = new(ChronTypes.ObjectDiv, true);

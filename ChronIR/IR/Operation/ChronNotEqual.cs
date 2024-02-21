@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronNotEqual : ChronExpression
+    public class ChronNotEqual : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction compareNotEqual = new(ChronTypes.ObjectCompareNEq, true);

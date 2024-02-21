@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronAdd : ChronExpression
+    public class ChronAdd : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction binaryAdd = new(ChronTypes.ObjectAdd, true);

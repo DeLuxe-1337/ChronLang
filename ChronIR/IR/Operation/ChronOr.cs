@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronOr : ChronExpression
+    public class ChronOr : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction compareOr = new(ChronTypes.ObjectCompareOr, true);

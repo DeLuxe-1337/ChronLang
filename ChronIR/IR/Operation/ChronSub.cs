@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronSub : ChronExpression
+    public class ChronSub : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction binarySub = new(ChronTypes.ObjectSub, true);

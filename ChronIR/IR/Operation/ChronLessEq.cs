@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronLessEq : ChronExpression
+    public class ChronLessEq : ChronExpression, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction compareLessThanEq = new(ChronTypes.ObjectCompareLesstEq, true);
