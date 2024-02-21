@@ -341,5 +341,7 @@ GC_ITEM *ReadLine()
 
 bool GetBoolean(GC_ITEM *o)
 {
-	return ((DynObject *)o->Object)->boolean;
+	bool result = ((DynObject *)o->Object)->boolean;
+	GC_Release(o);
+	return result;
 }
