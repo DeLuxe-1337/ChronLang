@@ -116,16 +116,16 @@ namespace ChronCompiler
                     value = new ChronAdd(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
                     break;
                 case "-=":
-                    value = new ChronSub(new ChronEnvironmentAccessor(identifier), value);
+                    value = new ChronSub(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
                     break;
                 case "*=":
-                    value = new ChronMul(new ChronEnvironmentAccessor(identifier), value);
+                    value = new ChronMul(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
                     break;
                 case "/=":
-                    value = new ChronDiv(new ChronEnvironmentAccessor(identifier), value);
+                    value = new ChronDiv(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
                     break;
                 case "%=":
-                    value = new ChronModulus(new ChronEnvironmentAccessor(identifier), value);
+                    value = new ChronModulus(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
                     break;
             }
 
