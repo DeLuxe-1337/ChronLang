@@ -10,10 +10,10 @@ import {
 }
 
 Print :: (message) {
-    printf(release ToString(message))
+    printf(ToString(message))
 }
 
 PrintLn :: (message) {
     Print(message)
-    printf(release "\n")
+    printf("\n")
 }
