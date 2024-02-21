@@ -23,9 +23,13 @@ namespace ChronIR.IR.Operation
 
             block.AddStatement(new ChronVariable(identifier, new ChronAdd(new ChronRelease(variable), new ChronInt(1))));
 
+            context.writer.WriteLine("{");
+
             variable.Write(context);
             whileLoop.Write(context);
             variable.Release(context);
+
+            context.writer.WriteLine("}");
         }
     }
 }
