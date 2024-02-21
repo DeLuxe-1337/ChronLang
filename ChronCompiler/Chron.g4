@@ -48,7 +48,7 @@ expression:
 	| IDENTIFIER			# IDENTIFIERExpr
 	| call					# callExpr
 	| expression op=('==' | '!=' | '>' | '<' | '<=' | '>=' | '||' | 'or' | 'and' | '&&') expression #comparatorExpr
-	| expression op=('+' | '-' | '*' | '/') expression #binaryExpr
+	| expression op=('+' | '-' | '*' | '/' | '%') expression #binaryExpr
 	| 'release' expression #releaseExpr
 	| '(' expression ')'	# evaluateExpr;
 

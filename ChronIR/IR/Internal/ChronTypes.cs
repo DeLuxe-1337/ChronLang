@@ -20,6 +20,7 @@
         public static string ObjectSub = "DynObjectSub";
         public static string ObjectDiv = "DynObjectDiv";
         public static string ObjectMul = "DynObjectMul";
+        public static string ObjectModulus = "DynObjectMod";
         public static string GetBooleanFromObject = "GetBoolean";
         public static string GCRelease = "GC_Release";
         public static int TEMP_VARIABLE = 0;

@@ -16,6 +16,7 @@ GC_ITEM *DynObjectAdd(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectSub(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectDiv(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *DynObjectMul(GC_ITEM *left, GC_ITEM *right);
+GC_ITEM *DynObjectMod(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *TypeOf(GC_ITEM *obj);
 GC_ITEM *Add(GC_ITEM *left, GC_ITEM *right);
 GC_ITEM *ToString(GC_ITEM *input);

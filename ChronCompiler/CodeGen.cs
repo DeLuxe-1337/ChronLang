@@ -177,6 +177,8 @@ namespace ChronCompiler
                     return new ChronMul(left, right);
                 case "/":
                     return new ChronDiv(left, right);
+                case "%":
+                    return new ChronModulus(left, right);
             }
 
             return base.VisitBinaryExpr(context);

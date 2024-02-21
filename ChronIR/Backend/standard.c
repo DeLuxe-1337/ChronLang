@@ -88,6 +88,23 @@ GC_ITEM *DynObjectMul(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
+GC_ITEM *DynObjectMod(GC_ITEM *o1, GC_ITEM *o2)
+{
+	DynObject *left = o1->Object;
+	DynObject *right = o2->Object;
+
+	if (left->type != right->type)
+	{
+		return DynInteger(0);
+	}
+
+	if (left->type == vinteger)
+	{
+		return DynInteger(left->integer % right->integer);
+	}
+
+	return DynInteger(0);
+}
 GC_ITEM *DynObjectCompareGrt(GC_ITEM *o1, GC_ITEM *o2)
 {
 	DynObject *left = o1->Object;
