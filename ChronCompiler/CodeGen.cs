@@ -43,6 +43,15 @@ namespace ChronCompiler
 
             return null;
         }
+        public override object VisitFor([NotNull] ChronParser.ForContext context)
+        {
+            var start = Visit(context.start) as ChronExpression;
+            var end = Visit(context.end) as ChronExpression;
+
+            BlockStack.Peek().AddStatement(new ChronForTo(context.IDENTIFIER().GetText(), Visit(context.block()) as ChronStatementBlock, start, end));
+
+            return null;
+        }
         public override object VisitWhile([NotNull] ChronParser.WhileContext context)
         {
             BlockStack.Peek().AddStatement(new ChronWhileLoop(Visit(context.expression()) as ChronExpression, Visit(context.block()) as ChronStatementBlock));
