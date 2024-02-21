@@ -6,7 +6,7 @@ line: statement;
 
 statement: (defer | release | import_stmt | include_module | foreign_c | function | call | return | variable | if | for | while | break | continue) ';'?;
 
-variable: IDENTIFIER '=' expression;
+variable: IDENTIFIER op=('=' | '+=' | '-=' | '/='| '*=') expression;
 
 return: 'return' expression?;
 

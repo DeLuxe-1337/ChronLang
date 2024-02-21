@@ -107,10 +107,32 @@ namespace ChronCompiler
         }
         public override object VisitVariable([NotNull] ChronParser.VariableContext context)
         {
+            var identifier = context.IDENTIFIER().GetText();
+            var value = Visit(context.expression()) as ChronExpression;
+
+            switch (context.op.Text)
+            {
+                case "+=":
+                    value = new ChronAdd(new ChronEnvironmentAccessor(identifier), value);
+                    break;
+                case "-=":
+                    value = new ChronSub(new ChronEnvironmentAccessor(identifier), value);
+                    break;
+                case "*=":
+                    value = new ChronMul(new ChronEnvironmentAccessor(identifier), value);
+                    break;
+                case "/=":
+                    value = new ChronDiv(new ChronEnvironmentAccessor(identifier), value);
+                    break;
+                case "%=":
+                    value = new ChronModulus(new ChronEnvironmentAccessor(identifier), value);
+                    break;
+            }
+
             BlockStack.Peek().AddStatement(
                 new ChronVariable(
-                    context.IDENTIFIER().GetText(),
-                    Visit(context.expression()) as ChronExpression)
+                    identifier,
+                    value)
                 );
 
             return null;
