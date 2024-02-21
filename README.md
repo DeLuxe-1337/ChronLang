@@ -16,7 +16,7 @@
 - [Release](#release)
 - [If statement](#if)
 - [While statement](#while)
-- [For to statement](#forto)
+- [For to statement](#for-to)
 - [Function calling](#function-calling)
 - [Comparators](#comparators)
 - [Math](#math)
