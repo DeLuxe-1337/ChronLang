@@ -16,6 +16,7 @@
 - [Release](#release)
 - [If statement](#if)
 - [While statement](#while)
+- [For to statement](#forto)
 - [Function calling](#function-calling)
 - [Comparators](#comparators)
 - [Math](#math)
@@ -174,6 +175,18 @@ Syntax: `while` `expression` `statement block`
     }
   }
   ```
+
+## For To
+Syntax: `for` `identifier` `=` `expression` `,` `expression` `statement block`  
+```chron
+include core.all
+
+main :: {
+  for i = 0, 100 {
+    PrintLn(i)
+  }
+}
+```
 
 ## Function calling
 Same as most languages  
