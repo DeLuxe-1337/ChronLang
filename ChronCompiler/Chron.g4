@@ -4,9 +4,25 @@ program: line* EOF;
 
 line: statement;
 
-statement: (defer | release | import_stmt | include_module | foreign_c | function | call | return | variable | if | for | while | break | continue) ';'?;
+statement: (
+		defer
+		| release
+		| import_stmt
+		| include_module
+		| foreign_c
+		| function
+		| call
+		| return
+		| variable
+		| if
+		| for
+		| while
+		| break
+		| continue
+	) ';'?;
 
-variable: IDENTIFIER op=('=' | '+=' | '-=' | '/='| '*=') expression;
+variable:
+	IDENTIFIER op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
 
 return: 'return' expression?;
 
@@ -16,7 +32,11 @@ functionForceName: '!';
 functionForceReturn: '#return true';
 functionForceGc: '#gc';
 functionRename: '#name' IDENTIFIER;
-function: (functionForceReturn? | functionForceGc? | functionRename?) functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
+function: (
+		functionForceReturn?
+		| functionForceGc?
+		| functionRename?
+	) functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
 
 block: '{' line* '}';
 
@@ -31,26 +51,40 @@ ifElse: 'else' block;
 release: 'release' expression;
 defer: 'defer' statement;
 
-for: 'for' IDENTIFIER '=' start=expression ',' end=expression block;
+for:
+	'for' IDENTIFIER '=' start = expression ',' end = expression block;
 
-import_functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
+import_functionParameters:
+	'(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 import_stmt: 'import' import_block;
 import_function_return: '->' IDENTIFIER;
-import_function: IDENTIFIER '::' import_functionParameters? import_function_return?;
+import_function:
+	IDENTIFIER '::' import_functionParameters? import_function_return?;
 import_statement: import_function;
 import_block: '{' import_statement* '}';
 
-call: IDENTIFIER callArgs  ';'?;
+call: IDENTIFIER callArgs ';'?;
 callArgs: '(' (expression (',' expression)*)? ')';
 
 expression:
-	constant				# constantExpr
-	| IDENTIFIER			# IDENTIFIERExpr
-	| call					# callExpr
-	| expression op=('==' | '!=' | '>' | '<' | '<=' | '>=' | '||' | 'or' | 'and' | '&&') expression #comparatorExpr
-	| expression op=('+' | '-' | '*' | '/' | '%') expression #binaryExpr
-	| 'release' expression #releaseExpr
-	| '(' expression ')'	# evaluateExpr;
+	constant		# constantExpr
+	| IDENTIFIER	# IDENTIFIERExpr
+	| call			# callExpr
+	| expression op = (
+		'=='
+		| '!='
+		| '>'
+		| '<'
+		| '<='
+		| '>='
+		| '||'
+		| 'or'
+		| 'and'
+		| '&&'
+	) expression												# comparatorExpr
+	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
+	| 'release' expression										# releaseExpr
+	| '(' expression ')'										# evaluateExpr;
 
 constant: NUMBER | STRING | BOOLEAN | NIL;
 
