@@ -2,5 +2,4 @@
 .antlr/
 bin/
 obj/
-tcc/
 *.user
