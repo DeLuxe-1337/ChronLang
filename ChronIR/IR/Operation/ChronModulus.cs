@@ -5,10 +5,10 @@ namespace ChronIR.IR.Operation
     public class ChronModulus : ChronExpression
     {
         private ChronInvoke invoke;
-        private static ChronFunction binaryAdd = new(ChronTypes.ObjectModulus, true);
+        private static ChronFunction binaryMod = new(ChronTypes.ObjectModulus, true);
         public ChronModulus(ChronExpression leftExpr, ChronExpression rightExpr)
         {
-            invoke = new(binaryAdd);
+            invoke = new(binaryMod);
             invoke.AddParameter(leftExpr);
             invoke.AddParameter(rightExpr);
         }
