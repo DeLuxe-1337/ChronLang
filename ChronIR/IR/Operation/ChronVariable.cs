@@ -38,7 +38,7 @@ namespace ChronIR.IR.Operation
         }
         public void Release(ChronContext context)
         {
-            context.env.GetCurrentScope().AddToScope(name, null, true);
+            context.env.GetCurrentScope().RemoveAllWithName(name);
             new ChronRelease(this).Write(context);
         }
         public override string GC_Reference()
