@@ -21,7 +21,7 @@ namespace ChronIR.IR.Operation
             var variable = new ChronVariable(identifier, start);
             var whileLoop = new ChronWhileLoop(new ChronLessT(variable, end), block);
 
-            block.AddStatement(new ChronVariable(identifier, new ChronAdd(variable, new ChronInt(1))));
+            block.AddStatement(new ChronVariable(identifier, new ChronAdd(new ChronRelease(variable), new ChronInt(1))));
 
             variable.Write(context);
             whileLoop.Write(context);
