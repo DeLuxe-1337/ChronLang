@@ -4,7 +4,6 @@ include core.std
 !ReadLine :: ?
 
 import {
-    // Function overloading supported unlike C
     printf :: (string)
     printf :: (string, string)
 }
