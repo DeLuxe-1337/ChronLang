@@ -113,7 +113,7 @@ namespace ChronCompiler
             switch (context.op.Text)
             {
                 case "+=":
-                    value = new ChronAdd(new ChronEnvironmentAccessor(identifier), value);
+                    value = new ChronAdd(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
                     break;
                 case "-=":
                     value = new ChronSub(new ChronEnvironmentAccessor(identifier), value);
