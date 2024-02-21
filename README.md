@@ -6,7 +6,7 @@
 
 - **Dynamically Typed**
 - **Natively Compiled**
-- **Manual Memory Management** OR **Garbage Collector**
+- **Manual Memory Management** OR **Garbage Collector** (Not Completed, might deprecate as I like the "auto memory release" for basic usage)
 
 ## Documentation
 
