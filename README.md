@@ -18,6 +18,7 @@
 - [While statement](#while)
 - [For to statement](#for-to)
 - [Function calling](#function-calling)
+- [Compound assignment operators](#compound-assignment-operators)
 - [Comparators](#comparators)
 - [Math](#math)
 - [Error handling](#error-handling)
@@ -192,6 +193,14 @@ main :: {
 Same as most languages  
 `identifier` `(` `expression array` `)`  
 
+## Compound Assignment Operators
+Same as most languages  
+`expression` `+=` `expression`  
+`expression` `-=` `expression`  
+`expression` `*=` `expression`  
+`expression` `/=` `expression`  
+`expression` `%=` `expression`  
+
 ## Comparators
 Same as most languages  
 `expression` (`or` | `||`) `expression`  
@@ -209,6 +218,7 @@ Same as most languages (basic, no standard math library yet)
 `expression` `-` `expression`  
 `expression` `*` `expression`  
 `expression` `/` `expression`  
+`expression` `%` `expression`  
 
 ## Error handling
 Still trying to figure out a good design
