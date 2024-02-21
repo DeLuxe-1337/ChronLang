@@ -6,7 +6,7 @@ namespace ChronIR.IR.Operation
 {
     public class ChronFunction : ChronStatement, ChronInvokable
     {
-        public ChronStatementBlock Block = new();
+        public ChronStatementBlock Block;
         public string Name;
         public string ScopeName;
         public bool DoesReturn = false;
@@ -54,7 +54,7 @@ namespace ChronIR.IR.Operation
                 }
             }
 
-            context.writer.Write($"{(Block.HasStatement<ChronReturn>() || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {Name}({FormatParameters()})");
+            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {Name}({FormatParameters()})");
 
             for (int i = 0; i < parameters.Count; i++)
             {
@@ -65,7 +65,7 @@ namespace ChronIR.IR.Operation
             bool oldGcState = ChronGC.Enabled;
             ChronGC.Enabled = UseGarbageCollection;
 
-            if (Block.HasAnyStatements())
+            if (Block != null)
             {
                 context.writer.WriteLine("{");
                 Block.Write(context);
