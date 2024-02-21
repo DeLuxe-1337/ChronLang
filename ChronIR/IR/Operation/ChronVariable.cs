@@ -36,7 +36,11 @@ namespace ChronIR.IR.Operation
 
             context.env.GetCurrentScope().AddToScope(name, this);
         }
-
+        public void Release(ChronContext context)
+        {
+            context.env.GetCurrentScope().AddToScope(name, null, true);
+            new ChronRelease(this).Write(context);
+        }
         public override string GC_Reference()
         {
             return _accessor_name;

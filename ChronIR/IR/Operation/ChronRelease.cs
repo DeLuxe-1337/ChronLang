@@ -12,7 +12,6 @@ namespace ChronIR.IR.Operation
         {
             context.writer.WriteLine($"{ChronTypes.GCRelease}({variableReferenceName});");
         }
-
         public object Read(ChronContext context)
         {
             context.writer.WriteLine($"{ChronTypes.TypeMap["object"].Value} {variableReferenceName} = {expression.Read(context)};");

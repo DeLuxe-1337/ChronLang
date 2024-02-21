@@ -25,6 +25,7 @@ namespace ChronIR.IR.Operation
 
             variable.Write(context);
             whileLoop.Write(context);
+            variable.Release(context);
         }
     }
 }
