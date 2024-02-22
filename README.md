@@ -2,6 +2,12 @@
 
 > A fast, compiled, dynamically typed programming language.
 
+<p align="center">
+  <a href="https://discord.gg/dhvnpnD7sn">
+    <img src="https://img.shields.io/discord/1210018824322158602?logo=discord">
+  </a>
+</p>
+
 ## Features
 
 - **Dynamically Typed**
