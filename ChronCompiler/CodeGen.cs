@@ -208,6 +208,10 @@ namespace ChronCompiler
 
             return base.VisitBinaryExpr(context);
         }
+        public override object VisitNotExpr([NotNull] ChronParser.NotExprContext context)
+        {
+            return new ChronNot(Visit(context.expression()) as ChronExpression);
+        }
         public override object VisitComparatorExpr([NotNull] ChronParser.ComparatorExprContext context)
         {
             var left = Visit(context.expression().First()) as ChronExpression;

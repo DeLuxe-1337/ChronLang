@@ -16,6 +16,7 @@
         public static string ObjectCompareLesst = "DynObjectCompareLesst";
         public static string ObjectCompareOr = "DynObjectCompareOr";
         public static string ObjectCompareAnd = "DynObjectCompareAnd";
+        public static string ObjectCompareNot = "DynObjectNot";
         public static string ObjectAdd = "DynObjectAdd";
         public static string ObjectSub = "DynObjectSub";
         public static string ObjectDiv = "DynObjectDiv";

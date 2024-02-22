@@ -82,6 +82,7 @@ expression:
 		| 'and'
 		| '&&'
 	) expression												# comparatorExpr
+	| '!' expression #notExpr
 	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
 	| 'release' expression										# releaseExpr
 	| '(' expression ')'										# evaluateExpr;

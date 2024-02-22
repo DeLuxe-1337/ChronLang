@@ -253,7 +253,16 @@ GC_ITEM *DynObjectCompareAnd(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(left->boolean && right->boolean);
 }
+GC_ITEM *DynObjectNot(GC_ITEM *o) {
+	DynObject *left = o->Object;
 
+	if (left->type != vboolean)
+	{
+		return DynBoolean(false);
+	}
+
+	return DynBoolean(!left->boolean);
+}
 DynObject *GetRef(GC_ITEM *GC)
 {
 	return (DynObject *)GC->Object;
