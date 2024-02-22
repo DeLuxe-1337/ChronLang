@@ -2,7 +2,7 @@
 
 <p align="center">
 <br>
-> **A fast, compiled, dynamically typed programming language.** 
+> A fast, compiled, dynamically typed programming language.  
 <br/>  
 <br/>
   <a href="https://discord.gg/dhvnpnD7sn">
