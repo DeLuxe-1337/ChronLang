@@ -165,7 +165,7 @@ namespace ChronCompiler
         {
             if (context.STRING() != null)
             {
-                return new ChronString(context.STRING().GetText().TrimStart('"').TrimEnd('"'));
+                return new ChronString(context.STRING().GetText().TrimStart('"').TrimEnd('"').TrimStart('\'').TrimEnd('\'').Replace("\"", "\\\""));
             }
 
             if (context.NUMBER() != null)
