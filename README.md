@@ -65,18 +65,8 @@ There are many ways you can contribute! You can work on the C backend (most need
 // Hello, world
 include core.all
 
-#gc // Experimental feature
 main :: {
   PrintLn("Hello, world")
-}
-```
-
-```chron
-// Hello, world with manual memory management
-include core.all
-
-main :: {
-  PrintLn("Hello, world") // is the same as PrintLn(release "Hello, world")
 }
 ```
 
