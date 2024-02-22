@@ -1,14 +1,14 @@
 # ChronLang - Legacy Stage
 
-<p align="center">
-<br>
-> A fast, compiled, dynamically typed programming language.  
-<br/>  
+<center>
+A fast, compiled, dynamically typed programming language.
 <br/>
-  <a href="https://discord.gg/dhvnpnD7sn">
+<br/>
+<a href="https://discord.gg/dhvnpnD7sn">
     <img src="https://img.shields.io/discord/1210018824322158602?logo=discord">
   </a>
-</p>
+  <br/>
+</center> 
 
 ## Features
 
