@@ -97,7 +97,8 @@ include_module: 'include' IDENTIFIER;
 
 NIL: 'nil';
 NUMBER: [0-9][0-9]*;
-STRING: ('"' ~'"'* '"') | ('\'' ~'\''* '\'');
+STRING: ('"' (ESC | ~'"')* '"');
+fragment ESC      : '\\' . ;
 BOOLEAN: 'false' | 'true';
 
 IDENTIFIER: [a-zA-Z0-9_][a-zA-Z0-9_.]*;
