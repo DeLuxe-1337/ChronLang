@@ -62,7 +62,6 @@ namespace ChronCompiler
             module.Write();
             Console.WriteLine($"\t------>\tCompiling and executing\t<------");
             module.Compile();
-            Console.WriteLine("\t------>\tEnd of compilation\t<------");
         }
     }
 }
