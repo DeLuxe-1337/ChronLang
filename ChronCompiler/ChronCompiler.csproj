@@ -25,12 +25,19 @@
     <None Update="core\all.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="core\file\all.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="core\std.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="core\console.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="core\file\" />
   </ItemGroup>
 
 </Project>
