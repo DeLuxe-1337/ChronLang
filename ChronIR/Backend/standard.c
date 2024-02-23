@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-GC_ITEM *DynObjectAdd(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -25,7 +25,7 @@ GC_ITEM *DynObjectAdd(GC_ITEM *o1, GC_ITEM *o2)
 		}
 		strcpy(result, left->str);
 		strcat(result, right->str);
-		GC_ITEM *ConcatStr = DynString(result);
+		ChronObject ConcatStr = DynString(result);
 		free(result);
 		return ConcatStr;
 	}
@@ -37,7 +37,7 @@ GC_ITEM *DynObjectAdd(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
-GC_ITEM *DynObjectSub(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectSub(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -54,7 +54,7 @@ GC_ITEM *DynObjectSub(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
-GC_ITEM *DynObjectDiv(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectDiv(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -71,7 +71,7 @@ GC_ITEM *DynObjectDiv(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
-GC_ITEM *DynObjectMul(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectMul(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -88,7 +88,7 @@ GC_ITEM *DynObjectMul(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
-GC_ITEM *DynObjectMod(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectMod(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -105,7 +105,7 @@ GC_ITEM *DynObjectMod(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynInteger(0);
 }
-GC_ITEM *DynObjectCompareGrt(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareGrt(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -122,7 +122,7 @@ GC_ITEM *DynObjectCompareGrt(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(false);
 }
-GC_ITEM *DynObjectCompareGrtEq(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareGrtEq(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -139,7 +139,7 @@ GC_ITEM *DynObjectCompareGrtEq(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(false);
 }
-GC_ITEM *DynObjectCompareLesstEq(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareLesstEq(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -156,7 +156,7 @@ GC_ITEM *DynObjectCompareLesstEq(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(false);
 }
-GC_ITEM *DynObjectCompareLesst(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareLesst(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -173,7 +173,7 @@ GC_ITEM *DynObjectCompareLesst(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(false);
 }
-GC_ITEM *DynObjectCompareEq(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -201,7 +201,7 @@ GC_ITEM *DynObjectCompareEq(GC_ITEM *o1, GC_ITEM *o2)
 	}
 }
 
-GC_ITEM *DynObjectCompareNEq(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -229,7 +229,7 @@ GC_ITEM *DynObjectCompareNEq(GC_ITEM *o1, GC_ITEM *o2)
 	}
 }
 
-GC_ITEM *DynObjectCompareOr(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareOr(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -241,7 +241,7 @@ GC_ITEM *DynObjectCompareOr(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(left->boolean || right->boolean);
 }
-GC_ITEM *DynObjectCompareAnd(GC_ITEM *o1, GC_ITEM *o2)
+ChronObject DynObjectCompareAnd(ChronObject o1, ChronObject o2)
 {
 	DynObject *left = o1->Object;
 	DynObject *right = o2->Object;
@@ -253,7 +253,7 @@ GC_ITEM *DynObjectCompareAnd(GC_ITEM *o1, GC_ITEM *o2)
 
 	return DynBoolean(left->boolean && right->boolean);
 }
-GC_ITEM *DynObjectNot(GC_ITEM *o) {
+ChronObject DynObjectNot(ChronObject o) {
 	DynObject *left = o->Object;
 
 	if (left->type != vboolean)
@@ -263,17 +263,17 @@ GC_ITEM *DynObjectNot(GC_ITEM *o) {
 
 	return DynBoolean(!left->boolean);
 }
-DynObject *GetRef(GC_ITEM *GC)
+DynObject *GetRef(ChronObject GC)
 {
 	return (DynObject *)GC->Object;
 }
 
-DynObject Get(GC_ITEM *GC)
+DynObject Get(ChronObject GC)
 {
 	return *(DynObject *)GC->Object;
 }
 
-GC_ITEM *TypeOf(GC_ITEM *left)
+ChronObject TypeOf(ChronObject left)
 {
 	const char *typeStr;
 	DynObject *obj = left->Object;
@@ -308,7 +308,7 @@ GC_ITEM *TypeOf(GC_ITEM *left)
 	return DynString(typeStr);
 }
 
-GC_ITEM *ToString(GC_ITEM *item)
+ChronObject ToString(ChronObject item)
 {
 	DynObject *obj = GetRef(item);
 	switch (obj->type)
@@ -342,7 +342,7 @@ GC_ITEM *ToString(GC_ITEM *item)
 	}
 }
 
-void Throw(GC_ITEM *errorMessage)
+void Throw(ChronObject errorMessage)
 {
 	// Placeholder for text formatting in red
 	fprintf(stderr, "\033[31mRuntime Error:\033[0m %s\n", ((DynObject *)errorMessage->Object)->str);
@@ -350,7 +350,7 @@ void Throw(GC_ITEM *errorMessage)
 	exit(EXIT_FAILURE);
 }
 
-GC_ITEM *ReadLine()
+ChronObject ReadLine()
 {
 	const size_t buffer_size = 1024;
 	char *buffer = malloc(buffer_size * sizeof(char));
@@ -370,9 +370,9 @@ GC_ITEM *ReadLine()
 	return DynString(buffer);
 }
 
-bool GetBoolean(GC_ITEM *o)
+bool GetBoolean(ChronObject o)
 {
 	bool result = ((DynObject *)o->Object)->boolean;
-	GC_Release(o);
+	MemoryContext_Release(o);
 	return result;
 }

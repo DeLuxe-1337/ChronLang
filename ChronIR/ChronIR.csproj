@@ -40,6 +40,12 @@
     <None Update="Backend\include.h">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Backend\memory.c">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Backend\memory.h">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Backend\object.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -3,7 +3,7 @@
 set COMPILER_PATH=clang.exe
 set COMMAND_LINE_ARGS=%*
 
-set SOURCE_FILES=Backend\gc.c Backend\object.c Backend\standard.c
+set SOURCE_FILES=Backend\memory.c Backend\object.c Backend\standard.c
 
 del %COMMAND_LINE_ARGS%.exe
 

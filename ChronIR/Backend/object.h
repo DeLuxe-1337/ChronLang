@@ -1,10 +1,10 @@
-// DynObject.h
-#ifndef DynObject_H
-#define DynObject_H
+// object.h
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include <stdbool.h>
-#include "gc.h"
-#include "malloc.h"
+#include "memory.h"
+#include "standard.h"
 
 typedef enum
 {
@@ -13,15 +13,15 @@ typedef enum
   vnumber,
   vinteger,
   vnull,
-  vcstruct,
+  vptr,
   vtable,
   vdeallocated
 } DynObjectType;
 
 typedef struct
 {
-  GC_ITEM *key;
-  GC_ITEM *value;
+  ChronObject key;
+  ChronObject value; //error on this line
 } TableKeyValuePair;
 
 typedef struct
@@ -33,25 +33,26 @@ typedef struct
 
 typedef struct
 {
+  DynObjectType type;
+  DynamicTable* table;
   bool boolean;
   char *str;
   int integer;
   double number;
-  DynObjectType type;
-  void *cstruct;
-  DynamicTable* table;
+  void * ptr;
 } DynObject;
 
 void InitializeDynamicTable(DynamicTable * table);
-void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value);
-GC_ITEM* IndexDynamicTable(GC_ITEM* o, GC_ITEM* index);
-GC_ITEM *DynString(const char *str);
-GC_ITEM *DynInteger(int i);
-GC_ITEM *DynBoolean(bool boolean);
-GC_ITEM *DynNil();
-GC_ITEM *DynTable();
+void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value);
+ChronObject IndexDynamicTable(ChronObject o, ChronObject index);
+ChronObject DynString(const char *str);
+ChronObject DynInteger(int i);
+ChronObject DynBoolean(bool boolean);
+ChronObject DynNil();
+ChronObject DynTable();
+ChronObject DynPointer(void* ptr);
 DynObject SetDynObjectType(DynObject *DynObject, DynObjectType type);
 DynObject Expect(DynObject input, DynObject errorMessage);
-GC_ITEM* Clone(GC_ITEM *input);
+ChronObject Clone(ChronObject input);
 
 #endif

@@ -4,26 +4,26 @@
 
 #include "object.h"
 
-GC_ITEM *DynObjectCompareGrt(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareGrtEq(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareLesstEq(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareLesst(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareEq(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareOr(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareAnd(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectCompareNEq(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectAdd(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectSub(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectDiv(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectMul(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectMod(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *DynObjectNot(GC_ITEM *o);
-GC_ITEM *TypeOf(GC_ITEM *obj);
-GC_ITEM *Add(GC_ITEM *left, GC_ITEM *right);
-GC_ITEM *ToString(GC_ITEM *input);
-GC_ITEM *ReadLine();
-void Throw(GC_ITEM *errorMessage);
-bool GetBoolean(GC_ITEM *o);
+ChronObject DynObjectCompareGrt(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareGrtEq(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareLesstEq(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareLesst(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareEq(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareOr(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareAnd(ChronObject left, ChronObject right);
+ChronObject DynObjectCompareNEq(ChronObject left, ChronObject right);
+ChronObject DynObjectAdd(ChronObject left, ChronObject right);
+ChronObject DynObjectSub(ChronObject left, ChronObject right);
+ChronObject DynObjectDiv(ChronObject left, ChronObject right);
+ChronObject DynObjectMul(ChronObject left, ChronObject right);
+ChronObject DynObjectMod(ChronObject left, ChronObject right);
+ChronObject DynObjectNot(ChronObject o);
+ChronObject TypeOf(ChronObject obj);
+ChronObject Add(ChronObject left, ChronObject right);
+ChronObject ToString(ChronObject input);
+ChronObject ReadLine();
+void Throw(ChronObject errorMessage);
+bool GetBoolean(ChronObject o);
 
 #define ref(o) (&o)
 #define deref(o) (*o)

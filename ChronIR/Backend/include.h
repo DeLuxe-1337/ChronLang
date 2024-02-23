@@ -1,7 +1,5 @@
-#include "gc.h"
+#include "memory.h"
 #include "standard.h"
-#include <stdio.h>
+#include "object.h"
 
-#define ChronObject DynObject
 #define ChronVoid void
-#define ChronGarbageCollectedObject GC_ITEM*

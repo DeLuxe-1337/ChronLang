@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gc.h"
 
 void InitializeDynamicTable(DynamicTable *table)
 {
@@ -17,7 +16,7 @@ void InitializeDynamicTable(DynamicTable *table)
   table->capacity = 1;
 }
 
-void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value)
+void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 {
   DynObject *tableObject = o->Object;
   DynamicTable *table = tableObject->table;
@@ -46,7 +45,7 @@ void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value)
   }
 }
 
-GC_ITEM *IndexDynamicTable(GC_ITEM *o, GC_ITEM *index)
+ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
 {
   DynObject *tableObject = o->Object;
   DynamicTable *table = tableObject->table;
@@ -61,13 +60,13 @@ GC_ITEM *IndexDynamicTable(GC_ITEM *o, GC_ITEM *index)
   return DynNil();
 }
 
-void dealloc_string(void* o)
+void dealloc_string(void *o)
 {
-  DynObject* obj = o;
+  DynObject *obj = o;
   free(obj->str);
 }
 
-GC_ITEM *DynString(const char *str)
+ChronObject DynString(const char *str)
 {
   newObject(obj, DynObject);
 
@@ -76,14 +75,14 @@ GC_ITEM *DynString(const char *str)
   _VO_obj->integer = 0;
   _VO_obj->number = 0.0;
   _VO_obj->type = vstring;
-  _VO_obj->cstruct = 0;
+  _VO_obj->ptr = 0;
 
   GC_obj->deallocate = dealloc_string;
 
   return GC_obj;
 }
 
-GC_ITEM *DynInteger(int i)
+ChronObject DynInteger(int i)
 {
   newObject(obj, DynObject);
 
@@ -92,12 +91,12 @@ GC_ITEM *DynInteger(int i)
   _VO_obj->integer = i;
   _VO_obj->number = 0.0;
   _VO_obj->type = vinteger;
-  _VO_obj->cstruct = 0;
+  _VO_obj->ptr = 0;
 
   return GC_obj;
 }
 
-GC_ITEM *DynBoolean(bool boolean)
+ChronObject DynBoolean(bool boolean)
 {
   newObject(obj, DynObject);
 
@@ -106,24 +105,26 @@ GC_ITEM *DynBoolean(bool boolean)
   _VO_obj->integer = 0;
   _VO_obj->number = 0.0;
   _VO_obj->type = vboolean;
-  _VO_obj->cstruct = 0;
+  _VO_obj->ptr = 0;
 
   return GC_obj;
 }
 
 void dealloc_table(void *o)
 {
-  printf("Delloacted table\n");
-  DynObject* obj = o;
+  DynObject *obj = o;
   DynamicTable *table = obj->table;
   for (size_t i = 0; i < table->size; i++)
   {
-    GC_Release(table->pairs[i].key);
-    GC_Release(table->pairs[i].value);
+    MemoryContext_Release(table->pairs[i].key);
+    MemoryContext_Release(table->pairs[i].value);
   }
+  free(table->pairs);
+  free(table);
+  // printf("\t>table dealloc\n");
 }
 
-GC_ITEM *DynTable()
+ChronObject DynTable()
 {
   newObject(obj, DynObject);
 
@@ -132,8 +133,8 @@ GC_ITEM *DynTable()
   _VO_obj->integer = 0;
   _VO_obj->number = 0.0;
   _VO_obj->type = vtable;
-  _VO_obj->cstruct = 0;
-  _VO_obj->table = (DynamicTable *)GC_Malloc(sizeof(DynamicTable))->Object;
+  _VO_obj->ptr = 0;
+  _VO_obj->table = (DynamicTable *)malloc(sizeof(DynamicTable));
 
   InitializeDynamicTable(_VO_obj->table);
 
@@ -142,7 +143,7 @@ GC_ITEM *DynTable()
   return GC_obj;
 }
 
-GC_ITEM *DynNil()
+ChronObject DynNil()
 {
   newObject(obj, DynObject);
 
@@ -151,7 +152,21 @@ GC_ITEM *DynNil()
   _VO_obj->integer = 0;
   _VO_obj->number = 0.0;
   _VO_obj->type = vnull;
-  _VO_obj->cstruct = 0;
+  _VO_obj->ptr = 0;
+
+  return GC_obj;
+}
+
+ChronObject DynPointer(void *ptr)
+{
+  newObject(obj, DynObject);
+
+  _VO_obj->boolean = 0;
+  _VO_obj->str = 0;
+  _VO_obj->integer = 0;
+  _VO_obj->number = 0.0;
+  _VO_obj->type = vptr;
+  _VO_obj->ptr = ptr;
 
   return GC_obj;
 }
@@ -164,16 +179,16 @@ GC_ITEM *DynNil()
 // 		return input;
 // }
 
-GC_ITEM *Clone(GC_ITEM *input)
+ChronObject Clone(ChronObject input)
 {
   if (input == NULL)
   {
     return DynNil();
   }
-
+  
   DynObject *target = input->Object;
 
-  GC_ITEM *cloneObject = DynNil();
+  ChronObject cloneObject = DynNil();
   DynObject *clone = cloneObject->Object;
   clone->type = target->type;
 

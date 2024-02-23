@@ -6,8 +6,8 @@
 
 !Throw :: (message) ?
 
-#name GC.ReleaseAll
-!GC_ReleaseAll :: ?
+#name Memory.ReleaseAll
+!MemoryContext_ReleaseAll :: ?
 
-#name GC.Release
-!GC_Release :: (object) ?
+#name Memory.Release
+!MemoryContext_Release :: (object) ?

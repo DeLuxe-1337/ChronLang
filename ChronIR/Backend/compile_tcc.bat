@@ -3,7 +3,7 @@ cls
 set COMPILER_PATH=tcc\tcc
 set COMMAND_LINE_ARGS=%*
 
-set SOURCE_FILES=gc.c object.c standard.c
+set SOURCE_FILES=memory.c object.c standard.c
 
 del *.exe
 
