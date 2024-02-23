@@ -4,32 +4,54 @@
 
 #include <stdbool.h>
 #include "gc.h"
+#include "malloc.h"
 
-typedef enum {
+typedef enum
+{
   vstring,
   vboolean,
   vnumber,
   vinteger,
   vnull,
   vcstruct,
+  vtable,
   vdeallocated
 } DynObjectType;
 
-typedef struct {
+typedef struct
+{
+  GC_ITEM *key;
+  GC_ITEM *value;
+} TableKeyValuePair;
+
+typedef struct
+{
+  TableKeyValuePair *pairs;
+  size_t size;
+  size_t capacity;
+} DynamicTable;
+
+typedef struct
+{
   bool boolean;
-  char* str;
+  char *str;
   int integer;
   double number;
   DynObjectType type;
-  void* cstruct;
+  void *cstruct;
+  DynamicTable* table;
 } DynObject;
 
-GC_ITEM* DynString(const char* str);
-GC_ITEM* DynInteger(int i);
-GC_ITEM* DynBoolean(bool boolean);
-GC_ITEM* DynNil();
-DynObject SetDynObjectType(DynObject* DynObject, DynObjectType type);
+void InitializeDynamicTable(DynamicTable * table);
+void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value);
+GC_ITEM* IndexDynamicTable(GC_ITEM* o, GC_ITEM* index);
+GC_ITEM *DynString(const char *str);
+GC_ITEM *DynInteger(int i);
+GC_ITEM *DynBoolean(bool boolean);
+GC_ITEM *DynNil();
+GC_ITEM *DynTable();
+DynObject SetDynObjectType(DynObject *DynObject, DynObjectType type);
 DynObject Expect(DynObject input, DynObject errorMessage);
-DynObject Clone(DynObject* input);
+GC_ITEM* Clone(GC_ITEM *input);
 
 #endif

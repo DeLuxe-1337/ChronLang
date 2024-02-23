@@ -18,10 +18,10 @@ namespace ChronIR.IR.Operation
         }
         public void Write(ChronContext context)
         {
-            var variable = new ChronVariable(identifier, start);
+            var variable = new ChronVariable(new ChronEnvironmentAccessor(identifier), start);
             var whileLoop = new ChronWhileLoop(new ChronLessT(variable, end), block);
 
-            block.AddStatement(new ChronVariable(identifier, new ChronAdd(new ChronRelease(variable), new ChronInt(1))));
+            block.AddStatement(new ChronVariable(new ChronEnvironmentAccessor(identifier), new ChronAdd(new ChronRelease(variable), new ChronInt(1))));
 
             context.writer.WriteLine("{");
 

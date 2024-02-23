@@ -6,6 +6,61 @@
 #include <string.h>
 #include "gc.h"
 
+void InitializeDynamicTable(DynamicTable *table)
+{
+  table->pairs = (TableKeyValuePair *)malloc(1 * sizeof(TableKeyValuePair));
+  if (table->pairs == NULL)
+  {
+    fprintf(stderr, "Memory allocation failed\n");
+  }
+  table->size = 0;
+  table->capacity = 1;
+}
+
+void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value)
+{
+  DynObject *tableObject = o->Object;
+  DynamicTable *table = tableObject->table;
+
+  if (table->size >= table->capacity)
+  {
+    table->capacity += 1;
+    TableKeyValuePair *new_pairs = (TableKeyValuePair *)realloc(table->pairs, table->capacity * sizeof(TableKeyValuePair));
+    if (new_pairs == NULL)
+    {
+      fprintf(stderr, "Memory reallocation failed\n");
+      return; // Return without modifying the table
+    }
+    table->pairs = new_pairs;
+  }
+
+  table->pairs[table->size].key = Clone(index);
+  if (table->pairs[table->size].key != NULL)
+  {
+    table->pairs[table->size].value = Clone(value);
+    table->size++;
+  }
+  else
+  {
+    printf("Table key is null\n");
+  }
+}
+
+GC_ITEM *IndexDynamicTable(GC_ITEM *o, GC_ITEM *index)
+{
+  DynObject *tableObject = o->Object;
+  DynamicTable *table = tableObject->table;
+
+  for (size_t i = 0; i < table->size; i++)
+  {
+    if (GetBoolean(DynObjectCompareEq(table->pairs[i].key, index)))
+    {
+      return Clone(table->pairs[i].value);
+    }
+  }
+  return DynNil();
+}
+
 GC_ITEM *DynString(const char *str)
 {
   newObject(obj, DynObject);
@@ -48,7 +103,24 @@ GC_ITEM *DynBoolean(bool boolean)
   return GC_obj;
 }
 
-GC_ITEM * DynNil()
+GC_ITEM *DynTable()
+{
+  newObject(obj, DynObject);
+
+  _VO_obj->boolean = 0;
+  _VO_obj->str = 0;
+  _VO_obj->integer = 0;
+  _VO_obj->number = 0.0;
+  _VO_obj->type = vtable;
+  _VO_obj->cstruct = 0;
+  _VO_obj->table = (DynamicTable *)GC_Malloc(sizeof(DynamicTable))->Object;
+
+  InitializeDynamicTable(_VO_obj->table);
+
+  return GC_obj;
+}
+
+GC_ITEM *DynNil()
 {
   newObject(obj, DynObject);
 
@@ -99,41 +171,39 @@ void DynObjectFree(DynObject *DynObject)
 // 		return input;
 // }
 
-// DynObject Clone(DynObject* input) {
-//   if (input == NULL) {
-//     return DynNull();
-//   }
+GC_ITEM * Clone(GC_ITEM * input) {
+  if (input == NULL) {
+    return DynNil();
+  }
 
-//   DynObject clone;
-//   clone.type = input->type;
+  DynObject *target = input->Object;
 
-//   switch (input->type) {
-//     case vstring:
-//       clone.str = strdup(input->str);
-//       if (clone.str == NULL) {
-//         return DynNull();
-//       }
-//       break;
+  GC_ITEM * cloneObject = DynNil();
+  DynObject* clone = cloneObject->Object;
+  clone->type = target->type;
 
-//     case vboolean:
-//       clone.boolean = input->boolean;
-//       break;
+  switch (clone->type) {
+    case vstring:
+      clone->str = strdup(target->str);
+      break;
+    case vboolean:
+      clone->boolean = target->boolean;
+      break;
 
-//     case vnumber:
-//       clone.number = input->number;
-//       break;
+    case vnumber:
+      clone->number = target->number;
+      break;
 
-//     case vinteger:
-//       clone.integer = input->integer;
-//       break;
+    case vinteger:
+      clone->integer = target->integer;
+      break;
 
-//     case vnull:
-//       break;
+    case vnull:
+      break;
+    case vdeallocated:
+      clone->type = vdeallocated;
+      break;
+  }
 
-//     case vdeallocated:
-//       clone.type = vdeallocated;
-//       break;
-//   }
-
-//   return clone;
-// }
+  return cloneObject;
+}

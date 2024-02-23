@@ -3,4 +3,6 @@
 bin/
 obj/
 tcc/
+*.exe
 *.user
+test.c
