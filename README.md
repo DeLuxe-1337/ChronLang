@@ -10,7 +10,7 @@
 
 - **Dynamically Typed**
 - **Natively Compiled**
-- **Manual Memory Management** OR **Garbage Collector** (Not Completed, might deprecate as I like the "auto memory release" for basic usage)
+- **Manual Memory Management** // Kind of, most of the garbage is handled automatically by the compiler... stuff like tables or variables will require manual management
 
 ## Documentation
 
