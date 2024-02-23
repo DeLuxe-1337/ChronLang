@@ -4,9 +4,26 @@ program: line* EOF;
 
 line: statement;
 
-statement: (defer | release | import_stmt | include_module | foreign_c | function | call | return | tableSet | variable | if | while | break | continue) ';'?;
+statement: (
+		defer
+		| release
+		| import_stmt
+		| include_module
+		| foreign_c
+		| function
+		| call
+		| return
+		| tableSet
+		| variable
+		| if
+		| for
+		| while
+		| break
+		| continue
+	) ';'?;
 
-variable: IDENTIFIER '=' expression;
+variable:
+	IDENTIFIER op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
 tableSet: expression '[' expression ']' '=' expression;
 
 return: 'return' expression?;
@@ -52,14 +69,26 @@ call: IDENTIFIER callArgs ';'?;
 callArgs: '(' (expression (',' expression)*)? ')';
 
 expression:
-	constant				# constantExpr
-	| IDENTIFIER			# IDENTIFIERExpr
-	| call					# callExpr
-	| expression op=('==' | '!=' | '>' | '<' | '<=' | '>=' | '||' | 'or' | 'and' | '&&') expression #comparatorExpr
-	| expression op=('+' | '-' | '*' | '/') expression #binaryExpr
+	constant		# constantExpr
+	| IDENTIFIER	# IDENTIFIERExpr
+	| call			# callExpr
+	| expression op = (
+		'=='
+		| '!='
+		| '>'
+		| '<'
+		| '<='
+		| '>='
+		| '||'
+		| 'or'
+		| 'and'
+		| '&&'
+	) expression												# comparatorExpr
+	| '!' expression #notExpr
+	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
 	| expression '[' expression ']' #tableIndexExpr
-	| 'release' expression #releaseExpr
-	| '(' expression ')'	# evaluateExpr;
+	| 'release' expression										# releaseExpr
+	| '(' expression ')'										# evaluateExpr;
 
 constant: NUMBER | STRING | BOOLEAN | NIL;
 
