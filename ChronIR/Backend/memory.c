@@ -9,10 +9,11 @@ MemoryContext *CreateMemoryContext()
 	MemoryContext *context = (MemoryContext *)malloc(sizeof(MemoryContext));
 	if (context != NULL)
 	{
-		context->allocationCount = 0;
+		context->size = 0;
+		context->capacity = MAX_ALLOCATIONS;
 		for (int i = 0; i < MAX_ALLOCATIONS; i++)
 		{
-			context->allocatedMemory[i] = NULL;
+			context->memory[i] = NULL;
 		}
 	}
 	return context;
@@ -23,18 +24,17 @@ void MemoryContextCreateIfNull()
 	if (Context == NULL)
 	{
 		Context = CreateMemoryContext();
-		printf("Set context\n");
 	}
 }
 
 void MemoryContext_ReleaseAll()
 {
-	for (size_t i = 0; i < Context->allocationCount; ++i)
+	for (size_t i = 0; i < Context->memory; ++i)
 	{
-		if (Context->allocatedMemory[i] != NULL)
+		if (Context->memory[i] != NULL)
 		{
-			MemoryContext_Release((ChronObject)Context->allocatedMemory[i]);
-			Context->allocatedMemory[i] = NULL; // Set the pointer to NULL after releasing
+			MemoryContext_Release((ChronObject)Context->memory[i]);
+			Context->memory[i] = NULL; // Set the pointer to NULL after releasing
 		}
 	}
 }
@@ -44,9 +44,9 @@ ChronObject MemoryContext_Malloc(size_t size)
 	MemoryContextCreateIfNull();
 
 	ChronObject ptr = MemoryContext_Register(malloc(size));
-	if (Context->allocationCount < MAX_ALLOCATIONS)
+	if (Context->size < Context->capacity)
 	{
-		Context->allocatedMemory[Context->allocationCount++] = ptr;
+		Context->memory[Context->size++] = ptr;
 	}
 	else
 	{
@@ -78,6 +78,6 @@ void MemoryContext_Release(ChronObject garbage)
 		free(garbage->Object);
 		free(garbage);
 
-		Context->allocationCount--;
+		Context->size--;
 	}
 }

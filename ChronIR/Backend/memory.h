@@ -14,8 +14,9 @@ typedef AllocatedObject* ChronObject;
 
 typedef struct
 {
-  ChronObject allocatedMemory[MAX_ALLOCATIONS];
-  size_t allocationCount;
+  ChronObject memory[MAX_ALLOCATIONS];
+  size_t size;
+  size_t capacity;
 } MemoryContext;
 
 
