@@ -6,6 +6,7 @@
 typedef struct {
   void* Object;
   int count;
+  void (*deallocate)(void*);
 } GC_ITEM;
 
 GC_ITEM *GC_Register(void* object);

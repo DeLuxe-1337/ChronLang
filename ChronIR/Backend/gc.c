@@ -61,6 +61,9 @@ void GC_Release(GC_ITEM *garbage)
 		garbage->count--;
 		if (garbage->count == 0)
 		{
+			if(garbage->deallocate != NULL)
+				garbage->deallocate(garbage->Object);
+
 			free(garbage->Object);
 			free(garbage);
 
