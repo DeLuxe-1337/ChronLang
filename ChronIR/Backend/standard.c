@@ -297,6 +297,9 @@ GC_ITEM *TypeOf(GC_ITEM *left)
 	case vnull:
 		typeStr = "nil";
 		break;
+	case vtable:
+		typeStr = "table";
+		break;
 	default:
 		typeStr = "unknown";
 		break;
@@ -325,12 +328,14 @@ GC_ITEM *ToString(GC_ITEM *item)
 	}
 	case vinteger:
 	{
-		int size = snprintf(NULL, 0, "%lld", obj->integer) + 1; // Determine the required size
+		int size = snprintf(NULL, 0, "%d", obj->integer) + 1; // Determine the required size
 		char *str = (char *)malloc(size * sizeof(char));		// Dynamically allocate memory
 		snprintf(str, size, "%d", obj->integer);				// Convert integer to string
 		return DynString(str);
 	}
-	case vnull:
+	case vtable:
+		return DynString("table tostring not supported");
+ 	case vnull:
 		return DynString("nil");
 	default:
 		return DynString("Invalid object type");

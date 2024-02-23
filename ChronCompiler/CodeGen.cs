@@ -107,25 +107,25 @@ namespace ChronCompiler
         }
         public override object VisitVariable([NotNull] ChronParser.VariableContext context)
         {
-            var identifier = context.IDENTIFIER().GetText();
-            var value = Visit(context.expression()) as ChronExpression;
+            var identifier = Visit(context.expression(0)) as ChronExpression;
+            var value = Visit(context.expression(1)) as ChronExpression;
 
             switch (context.op.Text)
             {
                 case "+=":
-                    value = new ChronAdd(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
+                    value = new ChronAdd(new ChronRelease(identifier), value);
                     break;
                 case "-=":
-                    value = new ChronSub(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
+                    value = new ChronSub(new ChronRelease(identifier), value);
                     break;
                 case "*=":
-                    value = new ChronMul(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
+                    value = new ChronMul(new ChronRelease(identifier), value);
                     break;
                 case "/=":
-                    value = new ChronDiv(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
+                    value = new ChronDiv(new ChronRelease(identifier), value);
                     break;
                 case "%=":
-                    value = new ChronModulus(new ChronRelease(new ChronEnvironmentAccessor(identifier)), value);
+                    value = new ChronModulus(new ChronRelease(identifier), value);
                     break;
             }
 
@@ -136,6 +136,17 @@ namespace ChronCompiler
                 );
 
             return null;
+        }
+        public override object VisitTableExpr([NotNull] ChronParser.TableExprContext context)
+        {
+            return new ChronTable();
+        }
+        public override object VisitTableIndexExpr([NotNull] ChronParser.TableIndexExprContext context)
+        {
+            var table = Visit(context.expression(0)) as ChronExpression;
+            var index = Visit(context.expression(1)) as ChronExpression;
+
+            return new ChronTableAccessor(table, index);
         }
         public override object VisitReturn([NotNull] ChronParser.ReturnContext context)
         {

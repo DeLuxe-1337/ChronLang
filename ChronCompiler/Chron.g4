@@ -13,7 +13,6 @@ statement: (
 		| function
 		| call
 		| return
-		| tableSet
 		| variable
 		| if
 		| for
@@ -23,8 +22,7 @@ statement: (
 	) ';'?;
 
 variable:
-	IDENTIFIER op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
-tableSet: expression '[' expression ']' '=' expression;
+	expression op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
 
 return: 'return' expression?;
 
@@ -86,6 +84,7 @@ expression:
 	) expression												# comparatorExpr
 	| '!' expression #notExpr
 	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
+	| '<' '>' #tableExpr
 	| expression '[' expression ']' #tableIndexExpr
 	| 'release' expression										# releaseExpr
 	| '(' expression ')'										# evaluateExpr;

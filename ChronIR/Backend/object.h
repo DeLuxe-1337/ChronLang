@@ -14,20 +14,9 @@ typedef enum
   vinteger,
   vnull,
   vcstruct,
-  varray,
+  vtable,
   vdeallocated
 } DynObjectType;
-
-typedef struct
-{
-  bool boolean;
-  char *str;
-  int integer;
-  double number;
-  DynObjectType type;
-  void *cstruct;
-  void *table;
-} DynObject;
 
 typedef struct
 {
@@ -42,30 +31,27 @@ typedef struct
   size_t capacity;
 } DynamicTable;
 
-void InitializeDynamicTable(GC_ITEM *o)
+typedef struct
 {
-  DynamicTable* table = (DynamicTable*)o->Object;
+  bool boolean;
+  char *str;
+  int integer;
+  double number;
+  DynObjectType type;
+  void *cstruct;
+  DynamicTable* table;
+} DynObject;
 
-  table->pairs = (TableKeyValuePair *)malloc(1 * sizeof(TableKeyValuePair));
-  if (table->pairs == NULL)
-  {
-    fprintf(stderr, "Memory allocation failed\n");
-  }
-  table->size = 0;
-  table->capacity = 1;
-}
-
-void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value)
-{  
-  DynamicTable* table = (DynamicTable*)o->Object;
-}
-
+void InitializeDynamicTable(DynamicTable * table);
+void SetDynamicTable(GC_ITEM *o, GC_ITEM *index, GC_ITEM *value);
+GC_ITEM* IndexDynamicTable(GC_ITEM* o, GC_ITEM* index);
 GC_ITEM *DynString(const char *str);
 GC_ITEM *DynInteger(int i);
 GC_ITEM *DynBoolean(bool boolean);
 GC_ITEM *DynNil();
+GC_ITEM *DynTable();
 DynObject SetDynObjectType(DynObject *DynObject, DynObjectType type);
 DynObject Expect(DynObject input, DynObject errorMessage);
-DynObject Clone(DynObject *input);
+GC_ITEM* Clone(GC_ITEM *input);
 
 #endif

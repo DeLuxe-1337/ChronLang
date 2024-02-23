@@ -7,6 +7,7 @@
         public static string CreateString = "DynString";
         public static string CreateInt = "DynInteger";
         public static string CreateBoolean = "DynBoolean";
+        public static string CreateTable = "DynTable";
         public static string CreateNil = "DynNil";
         public static string ObjectCompareEq = "DynObjectCompareEq";
         public static string ObjectCompareNEq = "DynObjectCompareNEq";
@@ -23,6 +24,9 @@
         public static string ObjectMul = "DynObjectMul";
         public static string ObjectModulus = "DynObjectMod";
         public static string GetBooleanFromObject = "GetBoolean";
+        public static string IntializeDynamicTable = "InitializeDynamicTable";
+        public static string IndexDynamicTable = "IndexDynamicTable";
+        public static string SetDynamicTable = "SetDynamicTable";
         public static string GCRelease = "GC_Release";
         public static int TEMP_VARIABLE = 0;
     }

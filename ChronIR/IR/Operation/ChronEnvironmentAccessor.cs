@@ -5,13 +5,13 @@ namespace ChronIR.IR.Operation
 {
     public class ChronEnvironmentAccessor : ChronExpression, ChronStatement
     {
-        private string name;
-        public ChronEnvironmentAccessor(string name) => this.name = name;
+        public string Value;
+        public ChronEnvironmentAccessor(string name) => this.Value = name;
         private Scope.ScopeItem[] Find(ChronContext ctx)
         {
-            var result = ctx.env.FindValueByName(name);
+            var result = ctx.env.FindValueByName(Value);
             if (result == null)
-                throw new Exception($"Failed to find `{name}` in current scope...");
+                throw new Exception($"Failed to find `{Value}` in current scope...");
 
             return result;
         }
