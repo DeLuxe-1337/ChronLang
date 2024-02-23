@@ -1,9 +1,8 @@
 ﻿using ChronIR.IR.Internal;
-using ChronIR.IR.Internal.GC;
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronVariable : ChronGarbage, ChronExpression, ChronStatement
+    public class ChronVariable : ChronExpression, ChronStatement
     {
         private string _accessor_name;
         private string _name;
@@ -28,21 +27,17 @@ namespace ChronIR.IR.Operation
                 return impl.VariableRead(context);
             }
 
-            ChronGC.Retain(context, this);
-
             return _accessor_name;
         }
 
         public void Write(ChronContext context)
-        { 
-            if(target is ChronVariableImpl impl)
+        {
+            if (target is ChronVariableImpl impl)
             {
                 impl.VariableWrite(context, value);
 
                 return;
             }
-
-            ChronGC.ReleaseAll(context);
 
             if (context.env.FindValueByName(_name) == null)
             {
@@ -62,10 +57,6 @@ namespace ChronIR.IR.Operation
 
             context.env.GetCurrentScope().RemoveAllWithName(_name);
             new ChronRelease(this).Write(context);
-        }
-        public override string GC_Reference()
-        {
-            return _accessor_name;
         }
     }
 }

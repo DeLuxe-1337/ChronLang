@@ -1,5 +1,4 @@
 ﻿using ChronIR.IR.Internal;
-using ChronIR.IR.Internal.GC;
 using System.Text;
 
 namespace ChronIR.IR.Operation
@@ -62,9 +61,6 @@ namespace ChronIR.IR.Operation
                 context.env.GetCurrentScope().AddToScope(parameter, GetParameter(i));
             }
 
-            bool oldGcState = ChronGC.Enabled;
-            ChronGC.Enabled = UseGarbageCollection;
-
             if (Block != null)
             {
                 context.writer.WriteLine("{");
@@ -82,8 +78,6 @@ namespace ChronIR.IR.Operation
             {
                 context.env.GetCurrentScope().RemoveAllWithName(p);
             }
-
-            ChronGC.Enabled = oldGcState;
         }
 
         public string GetName(ChronContext context)

@@ -1,5 +1,4 @@
 ﻿using ChronIR.IR.Internal;
-using ChronIR.IR.Internal.GC;
 using System.Text;
 
 namespace ChronIR.IR.Operation
@@ -18,7 +17,7 @@ namespace ChronIR.IR.Operation
             StringBuilder sb = new StringBuilder();
             foreach (ChronExpression chronExpression in parameters.GetParameters())
             {
-                if (ChronGC.Enabled == false && (chronExpression is ChronConstant || chronExpression is ChronAutoRelease))
+                if ((chronExpression is ChronConstant || chronExpression is ChronAutoRelease))
                     sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
                 else
                     sb.Append($"{chronExpression.Read(ctx)},");
@@ -35,8 +34,6 @@ namespace ChronIR.IR.Operation
             ChronDefer.IncreaseScope();
 
             var value = Read(context);
-
-            ChronGC.ReleaseAll(context);
             context.writer.WriteLine($"{value};");
 
             ChronDefer.VisitCurrentScope(context);
