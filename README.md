@@ -21,6 +21,7 @@
 - [If statement](#if)
 - [While statement](#while)
 - [For to statement](#for-to)
+- [Tables](#tables)
 - [Function calling](#function-calling)
 - [Compound assignment operators](#compound-assignment-operators)
 - [Comparators](#comparators)
@@ -180,6 +181,24 @@ main :: {
   for i = 0, 100 {
     PrintLn(i)
   }
+}
+```
+
+## Tables
+
+Syntax: `<` `>` //Subject to change;  
+```chron
+include core.all
+
+main :: {
+    x = <>
+    x[0] = "Hi"
+    x[false] = true
+    x["wow!"] = 100
+
+    PrintLn(x[0])
+    PrintLn(x[false])
+    PrintLn(x["wow!"])
 }
 ```
 
