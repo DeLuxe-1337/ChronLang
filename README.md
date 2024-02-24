@@ -22,6 +22,7 @@
 - [While statement](#while)
 - [For to statement](#for-to)
 - [Tables](#tables)
+- [Memory context handling](#memory-context-handling)
 - [Function calling](#function-calling)
 - [Compound assignment operators](#compound-assignment-operators)
 - [Comparators](#comparators)
@@ -199,6 +200,38 @@ main :: {
     PrintLn(x[0])
     PrintLn(x[false])
     PrintLn(x["wow!"])
+}
+```
+
+## Memory Context Handling
+// Most of this might change, so it could be subject to change...  
+The following functions are from memory.chron  
+`CreateMemoryContext :: ()` -> Creates a new context    
+`GetMemoryContext :: ()` -> Returns the current context in use     
+`SetMemoryContext :: (obj)` -> Sets the current context in use   
+`MemoryContext_ReleaseAll :: ()` -> Releases everything from current context  
+`MemoryContext_Release :: (object)` -> Releases a specific object  
+
+The following example will demonstrate using contexts:  
+```chron
+include core.all
+
+main :: {
+    oldContext = Memory.GetContext() // Store current context
+
+    x = "Word!" // Create the variable on oldContext
+
+    newContext = Memory.CreateContext() // Create a new context
+    Memory.SetContext(newContext) // Set the current context to our new context
+
+    PrintLn("Hello, from the new context!"); // This will allocate, and deallocate the string
+    y = "Bye!" // This variable is allocated on the new context
+
+    Memory.ReleaseAll() // This will release everything in newContext; including our 'y' variable
+    Memory.SetContext(oldContext) // Return the context back to our old state
+
+    PrintLn(y) // Not valid
+    PrintLn(x) // Valid
 }
 ```
 
