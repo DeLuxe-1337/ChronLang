@@ -5,9 +5,3 @@
 !TypeOf(obj) ?
 
 !Throw :: (message) ?
-
-#name Memory.ReleaseAll
-!MemoryContext_ReleaseAll :: ?
-
-#name Memory.Release
-!MemoryContext_Release :: (object) ?

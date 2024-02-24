@@ -19,7 +19,9 @@ typedef struct
   size_t capacity;
 } MemoryContext;
 
+MemoryContext *Context;
 
+MemoryContext* Create_MemoryContext();
 ChronObject MemoryContext_Register(void *object);
 void MemoryContext_Release(ChronObject garbage);
 void MemoryContext_ReleaseAll();

@@ -22,6 +22,9 @@ ChronObject TypeOf(ChronObject obj);
 ChronObject Add(ChronObject left, ChronObject right);
 ChronObject ToString(ChronObject input);
 ChronObject ReadLine();
+ChronObject CreateMemoryContext();
+ChronObject GetMemoryContext();
+void SetMemoryContext();
 void Throw(ChronObject errorMessage);
 bool GetBoolean(ChronObject o);
 

@@ -28,6 +28,9 @@
     <None Update="core\file\all.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="core\memory.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="core\std.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

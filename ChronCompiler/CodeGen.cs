@@ -304,9 +304,6 @@ namespace ChronCompiler
                 }
             }
 
-            if (context.functionForceGc() != null)
-                function.SetGc(true);
-
             if (context.functionForceReturn() != null)
                 function.SetReturn(true);
 

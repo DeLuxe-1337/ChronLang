@@ -1,4 +1,5 @@
 #include "standard.h"
+#include "memory.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -375,4 +376,16 @@ bool GetBoolean(ChronObject o)
 	bool result = ((DynObject *)o->Object)->boolean;
 	MemoryContext_Release(o);
 	return result;
+}
+
+ChronObject CreateMemoryContext() {
+	return DynPointer(Create_MemoryContext());
+}
+
+ChronObject GetMemoryContext() {
+	return DynPointer(Context);
+}
+void SetMemoryContext(ChronObject o) {
+	DynObject* obj = o->Object;
+	Context = (MemoryContext*)obj->ptr;
 }

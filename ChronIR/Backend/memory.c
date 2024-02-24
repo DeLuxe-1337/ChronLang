@@ -2,9 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-MemoryContext *Context;
-
-MemoryContext *CreateMemoryContext()
+MemoryContext *Create_MemoryContext()
 {
 	MemoryContext *context = (MemoryContext *)malloc(sizeof(MemoryContext));
 	if (context != NULL)
@@ -25,7 +23,7 @@ void MemoryContextCreateIfNull()
 {
 	if (Context == NULL)
 	{
-		Context = CreateMemoryContext();
+		Context = Create_MemoryContext();
 	}
 }
 
@@ -49,7 +47,7 @@ ChronObject MemoryContext_Malloc(size_t size)
 	if (Context->size > Context->capacity)
 	{
 		Context->capacity *= 2;
-		Context->memory = (ChronObject*)realloc(Context->memory, Context->capacity * sizeof(ChronObject));
+		Context->memory = (ChronObject *)realloc(Context->memory, Context->capacity * sizeof(ChronObject));
 	}
 	Context->memory[Context->size++] = ptr;
 	return ptr;

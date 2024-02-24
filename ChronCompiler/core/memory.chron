@@ -1,0 +1,16 @@
+#return true
+#name Memory.CreateContext
+!CreateMemoryContext :: () ?
+
+#return true
+#name Memory.GetContext
+!GetMemoryContext :: () ?
+
+#name Memory.SetContext
+!SetMemoryContext :: (obj) ? 
+
+#name Memory.ReleaseAll
+!MemoryContext_ReleaseAll :: ?
+
+#name Memory.Release
+!MemoryContext_Release :: (object) ?

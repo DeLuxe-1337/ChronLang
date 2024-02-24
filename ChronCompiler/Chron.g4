@@ -30,12 +30,10 @@ functionBlock: (block | '?');
 functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
 functionForceReturn: '#return true';
-functionForceGc: '#gc';
 functionRename: '#name' IDENTIFIER;
 function: (
 		functionForceReturn?
-		| functionForceGc?
-		| functionRename?
+		functionRename?
 	) functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
 
 block: '{' line* '}';
