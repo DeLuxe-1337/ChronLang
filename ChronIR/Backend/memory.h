@@ -19,7 +19,7 @@ typedef struct
   size_t capacity;
 } MemoryContext;
 
-MemoryContext *Context;
+extern MemoryContext *Context;
 
 MemoryContext* Create_MemoryContext();
 ChronObject MemoryContext_Register(void *object);

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+MemoryContext *Context;
+
 MemoryContext *Create_MemoryContext()
 {
 	MemoryContext *context = (MemoryContext *)malloc(sizeof(MemoryContext));
