@@ -11,6 +11,8 @@ MemoryContext *CreateMemoryContext()
 	{
 		context->size = 0;
 		context->capacity = MAX_ALLOCATIONS;
+		context->memory = malloc(MAX_ALLOCATIONS * sizeof(ChronObject));
+
 		for (int i = 0; i < MAX_ALLOCATIONS; i++)
 		{
 			context->memory[i] = NULL;
@@ -29,7 +31,7 @@ void MemoryContextCreateIfNull()
 
 void MemoryContext_ReleaseAll()
 {
-	for (size_t i = 0; i < Context->memory; ++i)
+	for (size_t i = 0; i < Context->size; ++i)
 	{
 		if (Context->memory[i] != NULL)
 		{
@@ -44,18 +46,12 @@ ChronObject MemoryContext_Malloc(size_t size)
 	MemoryContextCreateIfNull();
 
 	ChronObject ptr = MemoryContext_Register(malloc(size));
-	if (Context->size < Context->capacity)
+	if (Context->size > Context->capacity)
 	{
-		Context->memory[Context->size++] = ptr;
+		Context->capacity *= 2;
+		Context->memory = (ChronObject*)realloc(Context->memory, Context->capacity * sizeof(ChronObject));
 	}
-	else
-	{
-		// Handle the case when the array is full (you might want to extend it
-		// dynamically).
-		fprintf(stderr, "Error: Maximum number of allocations reached\n");
-		free(ptr); // Free the memory to avoid leaks.
-		return NULL;
-	}
+	Context->memory[Context->size++] = ptr;
 	return ptr;
 }
 
