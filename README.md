@@ -6,6 +6,8 @@
     <img src="https://img.shields.io/discord/1210018824322158602?logo=discord">
   </a>
 
+<img src="https://img.shields.io/github/commit-activity/m/DeLuxe-1337/ChronLang"></img>
+
 ## Features
 
 - **Dynamically Typed**
