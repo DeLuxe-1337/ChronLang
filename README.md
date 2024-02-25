@@ -219,15 +219,15 @@ include core.all
 main :: {
     oldContext = Memory.GetContext() // Store current context
 
-    x = "Word!" // Create the variable on oldContext
+    x = "X variable!" // Create the variable on oldContext
 
     newContext = Memory.CreateContext() // Create a new context
     Memory.SetContext(newContext) // Set the current context to our new context
 
     PrintLn("Hello, from the new context!"); // This will allocate, and deallocate the string
     y = "Bye!" // This variable is allocated on the new context
-
-    Memory.ReleaseAll() // This will release everything in newContext; including our 'y' variable
+    
+    Memory.ReleaseContext(newContext) // Release everything from newContext as well as the MemoryContext itself
     Memory.SetContext(oldContext) // Return the context back to our old state
 
     PrintLn(y) // Not valid

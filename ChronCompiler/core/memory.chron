@@ -14,3 +14,6 @@
 
 #name Memory.Release
 !MemoryContext_Release :: (object) ?
+
+#name Memory.ReleaseContext
+!ReleaseMemoryContext :: (object) ?

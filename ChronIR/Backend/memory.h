@@ -26,6 +26,7 @@ ChronObject MemoryContext_Register(void *object);
 void MemoryContext_Release(ChronObject garbage);
 void MemoryContext_ReleaseAll();
 ChronObject MemoryContext_Malloc(size_t size);
+void MemoryContext_ReleaseContext(MemoryContext* ctx);
 
 #define newObject(name, type)                                 \
   ChronObject GC_##name = MemoryContext_Malloc(sizeof(type)); \

@@ -388,3 +388,9 @@ void SetMemoryContext(ChronObject o) {
 	DynObject* obj = o->Object;
 	Context = (MemoryContext*)obj->ptr;
 }
+
+void ReleaseMemoryContext(ChronObject o) {
+	DynObject* obj = o->Object;
+	MemoryContext* ctx = obj->ptr;
+	MemoryContext_ReleaseContext(ctx);
+}

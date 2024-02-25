@@ -64,6 +64,19 @@ ChronObject MemoryContext_Register(void *object)
 	return registeredObject;
 }
 
+void MemoryContext_ReleaseContext(MemoryContext *ctx)
+{
+	for (size_t i = 0; i < ctx->size; i++)
+	{
+		if (ctx->memory[i] != NULL)
+		{
+			MemoryContext_Release((ChronObject)Context->memory[i]);
+			ctx->memory[i] = NULL; // Set the pointer to NULL after releasing
+		}
+	}
+	free(ctx->memory);
+}
+
 void MemoryContext_Release(ChronObject garbage)
 {
 	if (garbage != NULL)

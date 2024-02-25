@@ -24,6 +24,7 @@ ChronObject ToString(ChronObject input);
 ChronObject ReadLine();
 ChronObject CreateMemoryContext();
 ChronObject GetMemoryContext();
+void ReleaseMemoryContext(ChronObject o);
 void SetMemoryContext();
 void Throw(ChronObject errorMessage);
 bool GetBoolean(ChronObject o);
