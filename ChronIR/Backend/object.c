@@ -120,8 +120,10 @@ void dealloc_table(void *o)
     MemoryContext_Release(table->pairs[i].value);
   }
   free(table->pairs);
+  table->pairs = NULL;
+  table->size = 0;
+  table->capacity = 0;
   free(table);
-  // printf("\t>table dealloc\n");
 }
 
 ChronObject DynTable()
