@@ -2,11 +2,13 @@
 
 > A fast, compiled, dynamically typed programming language.   
 
+<p float="left">
 <a href="https://discord.gg/dhvnpnD7sn">
     <img src="https://img.shields.io/discord/1210018824322158602?logo=discord">
   </a>
 
 <img src="https://img.shields.io/github/commit-activity/m/DeLuxe-1337/ChronLang"></img>
+</p>
 
 ## Features
 
