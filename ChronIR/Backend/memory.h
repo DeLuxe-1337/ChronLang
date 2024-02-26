@@ -7,26 +7,27 @@
 typedef struct
 {
   void *Object;
-  void (*deallocate)(void *);
+  // void *(*deallocate)(ChronObject);
+  void (*deallocate)(void*);
 } AllocatedObject;
 
-typedef AllocatedObject* ChronObject;
+typedef AllocatedObject *ChronObject;
 
 typedef struct
 {
-  ChronObject* memory;
+  ChronObject *memory;
   size_t size;
   size_t capacity;
 } MemoryContext;
 
 extern MemoryContext *Context;
 
-MemoryContext* Create_MemoryContext();
+MemoryContext *Create_MemoryContext();
 ChronObject MemoryContext_Register(void *object);
 void MemoryContext_Release(ChronObject garbage);
 void MemoryContext_ReleaseAll();
 ChronObject MemoryContext_Malloc(size_t size);
-void MemoryContext_ReleaseContext(MemoryContext* ctx);
+void MemoryContext_ReleaseContext(MemoryContext *ctx);
 
 #define newObject(name, type)                                 \
   ChronObject GC_##name = MemoryContext_Malloc(sizeof(type)); \

@@ -1,4 +1,4 @@
-// DynObject.c
+// object.c
 #include "object.h"
 #include "standard.h"
 #include <stdio.h>
@@ -59,6 +59,20 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
   }
   return DynNil();
 }
+
+// ChronObject defaultNil;
+
+// void *dealloc_string(ChronObject o)
+// {
+//   if (defaultNil == NULL)
+//     defaultNil = DynNil();
+
+//   DynObject *obj = o->Object;
+//   free(obj->str);
+//   free(o->Object);
+
+//   return defaultNil;
+// }
 
 void dealloc_string(void *o)
 {
@@ -187,7 +201,7 @@ ChronObject Clone(ChronObject input)
   {
     return DynNil();
   }
-  
+
   DynObject *target = input->Object;
 
   ChronObject cloneObject = DynNil();

@@ -81,11 +81,16 @@ void MemoryContext_Release(ChronObject garbage)
 {
 	if (garbage != NULL)
 	{
-		if (garbage->deallocate != NULL)
+		if(garbage->deallocate != NULL)
 			garbage->deallocate(garbage->Object);
 
-		free(garbage->Object);
-		free(garbage);
+		// if (garbage->deallocate != NULL)
+		// 	*garbage = *((ChronObject)garbage->deallocate(garbage));
+		// else
+		// {
+			free(garbage->Object);
+			free(garbage);
+		// }
 
 		Context->size--;
 	}
