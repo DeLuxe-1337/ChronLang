@@ -9,7 +9,6 @@ namespace ChronIR.IR.Operation
         public string Name;
         public string ScopeName;
         public bool DoesReturn = false;
-        public bool UseGarbageCollection = true;
 
         private static Dictionary<string, int> DefinedFunctions = new();
         private List<string> parameters = new();
@@ -24,7 +23,6 @@ namespace ChronIR.IR.Operation
         }
         public void SetName(string name) => Name = name;
         public void SetReturn(bool doesReturn) => this.DoesReturn = doesReturn;
-        public void SetGc(bool useGc) => this.UseGarbageCollection = useGc;
         public void AddParameter(string name) => parameters.Add(name);
         public ChronRawText GetParameter(int index) => new(parameters[index]);
         private string FormatParameters()
