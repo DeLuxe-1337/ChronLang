@@ -2,9 +2,13 @@
 
 > A fast, compiled, dynamically typed programming language.   
 
+<p float="left">
 <a href="https://discord.gg/dhvnpnD7sn">
-    <img src="https://img.shields.io/discord/1210018824322158602?logo=discord">
+    <img src="https://img.shields.io/discord/1210018824322158602?logo=discord"></img>
   </a>
+
+<img src="https://img.shields.io/github/commit-activity/m/DeLuxe-1337/ChronLang"></img>
+</p>
 
 ## Features
 
@@ -206,11 +210,11 @@ main :: {
 ## Memory Context Handling
 // Most of this might change, so it could be subject to change...  
 The following functions are from memory.chron  
-`CreateMemoryContext :: ()` -> Creates a new context    
-`GetMemoryContext :: ()` -> Returns the current context in use     
-`SetMemoryContext :: (obj)` -> Sets the current context in use   
-`MemoryContext_ReleaseAll :: ()` -> Releases everything from current context  
-`MemoryContext_Release :: (object)` -> Releases a specific object  
+`Memory.CreateContext` -> Creates a new context    
+`Memory.GetContext` -> Returns the current context in use     
+`Memory.SetContext :: (obj)` -> Sets the current context in use   
+`Memory.ReleaseAll` -> Releases everything from current context  
+`Memory.Release :: (object)` -> Releases a specific object  
 
 The following example will demonstrate using contexts:  
 ```chron
