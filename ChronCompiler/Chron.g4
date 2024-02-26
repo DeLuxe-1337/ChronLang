@@ -31,10 +31,11 @@ functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
 functionForceReturn: '#return true';
 functionRename: '#name' IDENTIFIER;
+functionInline: 'inline';
 function: (
 		functionForceReturn?
 		functionRename?
-	) functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
+	) functionInline? functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
 
 block: '{' line* '}';
 

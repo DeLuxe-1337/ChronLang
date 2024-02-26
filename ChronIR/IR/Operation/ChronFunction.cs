@@ -9,6 +9,7 @@ namespace ChronIR.IR.Operation
         public string Name;
         public string ScopeName;
         public bool DoesReturn = false;
+        public bool Inline = false;
 
         private static Dictionary<string, int> DefinedFunctions = new();
         private List<string> parameters = new();
@@ -51,7 +52,7 @@ namespace ChronIR.IR.Operation
                 }
             }
 
-            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {Name}({FormatParameters()})");
+            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
 
             for (int i = 0; i < parameters.Count; i++)
             {

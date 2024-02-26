@@ -291,7 +291,9 @@ namespace ChronCompiler
             string FunctionName = context.IDENTIFIER().GetText();
 
             ChronFunction function = new(FunctionName, context.functionForceName() != null);
-            function.SetGc(false);
+
+            if (context.functionInline() != null)
+                function.Inline = true;
 
             if (context.functionBlock() != null && Visit(context.functionBlock()) is ChronStatementBlock block)
                 function.Block = block;
