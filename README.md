@@ -197,8 +197,7 @@ Syntax: `<` `expression list` `>` //Subject to change;
 include core.all
 
 main :: {
-    x = <>
-    x[0] = "Hi"
+    x = <"Hi", 1, false> // 0 = "Hi", 1 = 1, 2 = false
     x[false] = true
     x["wow!"] = 100
 
