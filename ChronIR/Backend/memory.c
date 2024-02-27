@@ -50,6 +50,8 @@ ChronObject MemoryContext_Malloc(size_t size)
 	{
 		Context->capacity *= 2;
 		Context->memory = (ChronObject *)realloc(Context->memory, Context->capacity * sizeof(ChronObject));
+		// printf("\t>Context memory expanded\n");
+		// exit(0);
 	}
 	Context->memory[Context->size++] = ptr;
 	return ptr;
