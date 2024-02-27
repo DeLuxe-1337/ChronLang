@@ -1,0 +1,116 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <RunAOTCompilation>true</RunAOTCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\core\all.chron" />
+    <Content Remove="wwwroot\Backend\include.h" />
+    <Content Remove="wwwroot\Backend\memory.c" />
+    <Content Remove="wwwroot\Backend\memory.h" />
+    <Content Remove="wwwroot\Backend\object.c" />
+    <Content Remove="wwwroot\Backend\object.h" />
+    <Content Remove="wwwroot\Backend\standard.c" />
+    <Content Remove="wwwroot\Backend\standard.h" />
+    <Content Remove="wwwroot\core\console.chron" />
+    <Content Remove="wwwroot\core\file\all.chron" />
+    <Content Remove="wwwroot\core\memory.chron" />
+    <Content Remove="wwwroot\core\std.chron" />
+    <Content Remove="wwwroot\web.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\core\all.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\include.h">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\memory.c">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\memory.h">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\object.c">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\object.h">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\standard.c">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Backend\standard.h">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\core\console.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\core\file\all.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\core\memory.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\core\std.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Diga.Tools.Compiler.Tcc" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.2" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChronCompiler\ChronCompiler.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\include.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\memory.c" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\memory.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\object.c" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\object.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\standard.c" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\Backend\standard.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\web.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="wwwroot\web.js" />
+  </ItemGroup>
+
+</Project>

@@ -11,7 +11,7 @@ namespace ChronIR.IR.Operation
         public bool DoesReturn = false;
         public bool Inline = false;
 
-        private static Dictionary<string, int> DefinedFunctions = new();
+        internal static Dictionary<string, int> DefinedFunctions = new();
         private List<string> parameters = new();
         public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
         {

@@ -1,0 +1,20 @@
+include core.std
+
+#return true
+!ReadLine :: ?
+
+~> C `int printf (const char* format, ...);`
+
+import {
+    printf :: (string)
+    printf :: (string, string)
+}
+
+Print :: (message) {
+    printf(ToString(message))
+}
+
+PrintLn :: (message) {
+    Print(message)
+    printf("\n")
+}

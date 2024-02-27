@@ -8,7 +8,7 @@ namespace ChronIR.IR.Operation
         public List<ChronTypes.ChronType> Parameters = new();
         public string Name;
         public string RawCName;
-        private static Dictionary<string, int> definedFunctions = new();
+        public static Dictionary<string, int> definedFunctions = new();
         private Dictionary<ChronTypes.ChronType, string> chronTypeConversion = new() { { ChronTypes.TypeMap["string"], "str" }, { ChronTypes.TypeMap["int"], "integer" }, };
         public void AddParameter(ChronTypes.ChronType parameter) => Parameters.Add(parameter);
         public ChronImport(string name)

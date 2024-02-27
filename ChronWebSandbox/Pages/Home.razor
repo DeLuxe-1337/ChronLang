@@ -1,0 +1,40 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<PageTitle>Home</PageTitle>
+
+<textarea @bind="Text" style="width: 100%; height: 50vh"></textarea>
+<button @onclick="() => Compile()">Compile</button>
+<p>
+    <a>Compiler output</a>
+    <br />
+    <textarea @bind="Output" style="width: 45%; height: 35vh"></textarea>
+    <textarea @bind="Result" style="width: 45%; height: 35vh"></textarea>
+</p>
+
+@code {
+    private string Text = "include core.all\nmain :: {\n\tPrintLn(\"Hello, world\")\n}";
+    private string Output;
+    private string Result = "Console output not supported yet";
+
+    private async Task Compile()
+    {
+        ChronCompiler.WasmChronBuilder builder = new();
+        builder.Create("module");
+        Output = "Compiling";
+        builder.CompileChronScriptSource("main", Text);
+        Output = builder.BuildToString();
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        ChronCompiler.WasmChronBuilder.Http = Http;
+        ChronCompiler.WasmChronBuilder.FetchSource("core.all");
+        ChronCompiler.WasmChronBuilder.FetchSource("core.console");
+        ChronCompiler.WasmChronBuilder.FetchSource("core.memory");
+        ChronCompiler.WasmChronBuilder.FetchSource("core.std");
+        ChronCompiler.WasmChronBuilder.FetchSource("core.file.all");
+
+        return base.OnInitializedAsync();
+    }
+}

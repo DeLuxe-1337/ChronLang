@@ -1,17 +1,18 @@
 ﻿using Antlr4.Runtime;
 using ChronIR;
 using ChronIR.IR.Operation;
+using System.Xml.Linq;
 
 namespace ChronCompiler
 {
-    public class Builder
+    public abstract class Builder
     {
-        private static string RootDirectory = AppContext.BaseDirectory;
+        private static string RootDirectory = System.IO.Directory.GetCurrentDirectory();
         private static string WorkingDirectory = Environment.CurrentDirectory;
 
-        private ChronContext moduleContext;
-        private ChronModule module;
-        private ModuleInclusion inclusion = new();
+        internal ChronContext moduleContext;
+        internal ChronModule module;
+        internal ModuleInclusion inclusion = new();
         public ModuleInclusion GetInclusion() => inclusion;
         public ChronContext GetCtx() => moduleContext;
         public ChronModule GetModule() => module;
@@ -22,30 +23,9 @@ namespace ChronCompiler
             module = new(moduleContext);
             module.SetupChronRuntime();
         }
-        private string? GetFilePath(string name)
+        public void CompileChronScriptSource(string name, string source)
         {
-            string currentDirectoryPath = Path.Combine(WorkingDirectory, name);
-            string exeDirectoryPath = Path.Combine(RootDirectory, name);
-
-            return File.Exists(currentDirectoryPath) ? currentDirectoryPath :
-                   File.Exists(exeDirectoryPath) ? exeDirectoryPath :
-                   null;
-        }
-        public void CompileChronScript(string name)
-        {
-            var sourcePath = GetFilePath($"{name.Replace('.', '/')}.chron");
-
-            if (string.IsNullOrEmpty(sourcePath))
-            {
-                throw new FileNotFoundException($"ChronCompiler could not find {sourcePath}");
-            }
-
-            if (inclusion.IsIncluded(name))
-                return;
-
-            var input = File.ReadAllText(sourcePath);
-
-            var inputStream = new AntlrInputStream(input);
+            var inputStream = new AntlrInputStream(source);
             var lexer = new ChronLexer(inputStream);
             var CTS = new CommonTokenStream(lexer);
             var parser = new ChronParser(CTS);
@@ -53,15 +33,7 @@ namespace ChronCompiler
 
             var visitor = new CodeGen(name, this);
             visitor.Visit(context);
-
-            inclusion.AddInclusion(name);
         }
-        public void Build()
-        {
-            module.AddStatement(Root);
-            module.Write();
-            Console.WriteLine($"\t------>\tCompiling and executing\t<------");
-            module.Compile();
-        }
+        public abstract void CompileChronScript(string name);
     }
 }

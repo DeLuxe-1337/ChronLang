@@ -1,4 +1,5 @@
 ﻿using ChronIR.IR.Internal;
+using ChronIR.IR.Operation;
 using System.Diagnostics;
 
 namespace ChronIR
@@ -30,12 +31,15 @@ namespace ChronIR
         }
         public void SetupChronRuntime()
         {
-            DefineCompilerInfo("CHRON_DEBUG", CurrentContext.BuildMode == BuildModeOption.Debug ? "1" : "0");
-            DefineCompilerInfo("CHRON_MODULE_NAME", $"\"{CurrentContext.Name}\"");
+            //DefineCompilerInfo("CHRON_DEBUG", CurrentContext.BuildMode == BuildModeOption.Debug ? "1" : "0");
+            //DefineCompilerInfo("CHRON_MODULE_NAME", $"\"{CurrentContext.Name}\"");
             DefineInclusion("Backend/include.h");
         }
         internal void Initialize()
         {
+            ChronFunction.DefinedFunctions = new();
+            ChronTypes.TEMP_VARIABLE = 0;
+            ChronImport.definedFunctions = new();
             CurrentContext.env.AddScope(new("Root"));
 
             CurrentContext.writer = new Writer($"{CurrentContext.Name}.chron.c");
@@ -54,6 +58,11 @@ namespace ChronIR
                 statement.Write(CurrentContext);
             }
             CurrentContext.End();
+        }
+
+        public string Source()
+        {
+            return CurrentContext.writer.StringBuilder.ToString();
         }
 
         // void Compile(string) needs to be cleaned up

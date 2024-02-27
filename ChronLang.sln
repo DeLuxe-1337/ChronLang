@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChronIR", "ChronIR\ChronIR.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChronCompiler", "ChronCompiler\ChronCompiler.csproj", "{AD74068D-034F-4883-8EF0-4940C7C28755}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronWebSandbox", "ChronWebSandbox\ChronWebSandbox.csproj", "{BFD8EACA-CEDC-4D39-900C-B35CC53812B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AD74068D-034F-4883-8EF0-4940C7C28755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD74068D-034F-4883-8EF0-4940C7C28755}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD74068D-034F-4883-8EF0-4940C7C28755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD8EACA-CEDC-4D39-900C-B35CC53812B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD8EACA-CEDC-4D39-900C-B35CC53812B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD8EACA-CEDC-4D39-900C-B35CC53812B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD8EACA-CEDC-4D39-900C-B35CC53812B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

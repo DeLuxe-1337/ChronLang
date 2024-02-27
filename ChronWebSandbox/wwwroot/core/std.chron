@@ -1,0 +1,7 @@
+#return true
+!ToString(obj) ?
+
+#return true
+!TypeOf(obj) ?
+
+!Throw :: (message) ?
