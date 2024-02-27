@@ -103,8 +103,8 @@ main :: {
 ```
 
 ## Release
-Syntax: 
-`release` `expression | statement`
+Syntax: `release` `expression`
+- Release can be used as a statement or expression
 
 - Releases an object from heap
 - Release can be used as a statement or expression  
@@ -128,7 +128,8 @@ main :: {
 
 ## Defer
 Syntax:
-`defer` `statement`
+`defer` `expression`
+- Defer is used as a statement
 
 - Defer is used to postpone the execution of a statement until the end of the current scope.
 
@@ -191,7 +192,7 @@ main :: {
 
 ## Tables
 
-Syntax: `<` `>` //Subject to change;  
+Syntax: `<` `expression list` `>` //Subject to change;  
 ```chron
 include core.all
 
