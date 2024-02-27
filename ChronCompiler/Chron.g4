@@ -83,7 +83,7 @@ expression:
 	) expression												# comparatorExpr
 	| '!' expression #notExpr
 	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
-	| '<' '>' #tableExpr
+	| '<' (expression (',' expression)*)? '>' #tableExpr
 	| expression '[' expression ']' #tableIndexExpr
 	| 'release' expression										# releaseExpr
 	| '(' expression ')'										# evaluateExpr;

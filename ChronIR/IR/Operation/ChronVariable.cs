@@ -32,9 +32,9 @@ namespace ChronIR.IR.Operation
 
         public void Write(ChronContext context)
         {
-            if (target is ChronVariableImpl impl)
+            if (target is ChronVariableImpl target_impl)
             {
-                impl.VariableWrite(context, value);
+                target_impl.VariableWrite(context, value);
 
                 return;
             }
@@ -47,6 +47,9 @@ namespace ChronIR.IR.Operation
             {
                 context.writer.WriteLine($"{_accessor_name} = {value.Read(context)};");
             }
+
+            if (value is ChronVariableRef var_ref)
+                var_ref.VariableCreatedRef(context, this);
 
             context.env.GetCurrentScope().AddToScope(_name, this);
         }

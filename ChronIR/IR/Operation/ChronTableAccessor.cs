@@ -15,14 +15,14 @@ namespace ChronIR.IR.Operation
         {
             this.table = table;
             this.index = index;
-
-            indexTable = new(indexDynamicTable);
-            indexTable.AddParameter(table);
-            indexTable.AddParameter(index);
         }
 
         public object Read(ChronContext context)
         {
+            indexTable = new(indexDynamicTable);
+            indexTable.AddParameter(table);
+            indexTable.AddParameter(index);
+
             return indexTable.Read(context);
         }
 

@@ -139,7 +139,18 @@ namespace ChronCompiler
         }
         public override object VisitTableExpr([NotNull] ChronParser.TableExprContext context)
         {
-            return new ChronTable();
+            var table = new ChronTable();
+
+            if (context.expression() != null)
+            {
+                foreach (var value in context.expression())
+                {
+                    if (Visit(value) is ChronExpression expr)
+                        table.AddInitialValue(expr);
+                }
+            }
+
+            return table;
         }
         public override object VisitTableIndexExpr([NotNull] ChronParser.TableIndexExprContext context)
         {
