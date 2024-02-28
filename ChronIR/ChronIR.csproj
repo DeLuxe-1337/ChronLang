@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="Backend\compile_release.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Backend\compile.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

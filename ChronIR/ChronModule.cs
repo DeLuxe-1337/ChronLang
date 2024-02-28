@@ -30,8 +30,6 @@ namespace ChronIR
         }
         public void SetupChronRuntime()
         {
-            DefineCompilerInfo("CHRON_DEBUG", CurrentContext.BuildMode == BuildModeOption.Debug ? "1" : "0");
-            DefineCompilerInfo("CHRON_MODULE_NAME", $"\"{CurrentContext.Name}\"");
             DefineInclusion("Backend/include.h");
         }
         internal void Initialize()

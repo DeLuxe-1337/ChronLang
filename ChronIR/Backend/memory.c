@@ -6,6 +6,10 @@ MemoryContext *Context;
 
 MemoryContext *Create_MemoryContext()
 {
+	#if CHRON_DEBUG
+		printf("\t>Memory context created\n");
+	#endif
+	
 	MemoryContext *context = (MemoryContext *)malloc(sizeof(MemoryContext));
 	if (context != NULL)
 	{
