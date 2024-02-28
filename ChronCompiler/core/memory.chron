@@ -1,19 +1,19 @@
-#return true
-#name Memory.CreateContext
+$("return")
+$("name"="Memory.CreateContext")
 !CreateMemoryContext :: () ?
 
-#return true
-#name Memory.GetContext
+$("return")
+$("name" = "Memory.GetContext")
 !GetMemoryContext :: () ?
 
-#name Memory.SetContext
+$("name" = "Memory.SetContext")
 !SetMemoryContext :: (obj) ? 
 
-#name Memory.ReleaseAll
+$("name" = "Memory.ReleaseAll")
 !MemoryContext_ReleaseAll :: ?
 
-#name Memory.Release
+$("name" = "Memory.Release")
 !MemoryContext_Release :: (object) ?
 
-#name Memory.ReleaseContext
+$("name" = "Memory.ReleaseContext")
 !ReleaseMemoryContext :: (object) ?

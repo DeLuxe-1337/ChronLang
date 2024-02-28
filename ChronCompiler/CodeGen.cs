@@ -317,12 +317,21 @@ namespace ChronCompiler
                 }
             }
 
-            if (context.functionForceReturn() != null)
-                function.SetReturn(true);
-
-            if (context.functionRename() != null)
+            foreach (var modifier in context.functionModifier())
             {
-                function.ScopeName = context.functionRename().IDENTIFIER().GetText();
+                switch(modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"'))
+                {
+                    case "return":
+                        {
+                            function.SetReturn(true);
+                            break;
+                        }
+                    case "name":
+                        {
+                            function.ScopeName = modifier.STRING(1).GetText().TrimStart('"').TrimEnd('"');
+                            break;
+                        }
+                }
             }
 
             BlockStack.Peek().AddStatement(function);

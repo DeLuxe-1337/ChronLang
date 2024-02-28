@@ -26,16 +26,13 @@ variable:
 
 return: 'return' expression?;
 
-functionBlock: (block | '?');
+functionBlock: block | '?';
 functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
-functionForceReturn: '#return true';
-functionRename: '#name' IDENTIFIER;
 functionInline: 'inline';
-function: (
-		functionForceReturn?
-		functionRename?
-	) functionInline? functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
+
+functionModifier:'$' '(' STRING ('=' STRING)? ')';
+function: (functionModifier+)? functionInline? functionForceName?  IDENTIFIER '::' functionParameters? functionBlock;
 
 block: '{' line* '}';
 

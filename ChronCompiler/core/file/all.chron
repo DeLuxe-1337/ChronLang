@@ -43,5 +43,5 @@ ChronGarbageCollectedObject ReadFile(ChronGarbageCollectedObject o1) {
 
 !WriteFile :: (path, content) ?
 
-#return true
+$("return")
 !ReadFile :: (path) ?

@@ -31,6 +31,9 @@
     <None Update="core\memory.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="core\c.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="core\std.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
