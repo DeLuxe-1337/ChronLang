@@ -21,3 +21,15 @@ $("return"="ChronObject")
 $("name"="c.fromInt")
 $("parameters"="int i")
 !DynInteger :: (object) ?
+
+$("native")
+$("return"="ChronObject")
+$("name"="c.fromString")
+$("parameters"="const char* s")
+!DynString :: (object) ?
+
+$("native")
+$("return"="ChronObject")
+$("name"="c.fromBool")
+$("parameters"="bool b")
+!DynBoolean :: (object) ?
