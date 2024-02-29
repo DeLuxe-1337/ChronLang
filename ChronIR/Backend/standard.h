@@ -29,7 +29,7 @@ void SetMemoryContext();
 void Throw(ChronObject errorMessage);
 bool GetBoolean(ChronObject o);
 int c_int(ChronObject o);
-const char* c_string(ChronObject o);
+const char *c_string(ChronObject o);
 bool c_bool(ChronObject o);
 
 #define ref(o) (&o)

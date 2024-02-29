@@ -3,45 +3,34 @@ using System.Text;
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronFunction : ChronStatement, ChronInvokable
+    public class ChronNativeFunction : ChronStatement, ChronInvokable
     {
         public ChronStatementBlock Block;
         public string Name;
         public string ScopeName;
-        public bool DoesReturn = false;
+        public string ReturnValue = "void";
         public bool Inline = false;
         private List<string> parameters = new();
-        public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
+        private string Parameters;
+        public ChronNativeFunction(string name) //I do this so,you can easily do extern stuff...
         {
-            if (define || name == "main")
-                this.Name = name;
-            else
-                this.Name = $"_F_{name}";
-
-            ScopeName = Name;
+            this.Name = name;
+            this.ScopeName = name;
         }
+        public void SetParameters(string parameters) => Parameters = parameters;
         public void SetName(string name) => Name = name;
-        public void SetReturn(bool doesReturn) => this.DoesReturn = doesReturn;
+        public void SetReturn(string returnValue) => this.ReturnValue = returnValue;
         public void AddParameter(string name) => parameters.Add(name);
         public ChronRawText GetParameter(int index) => new(parameters[index]);
-        private string FormatParameters()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var parameter in parameters)
-            {
-                sb.Append($"{ChronTypes.TypeMap["object"].Value} {parameter.ToString()},");
-            }
-            return sb.ToString().TrimEnd(',');
-        }
         public void Write(ChronContext context)
         {
             ChronDefer.IncreaseScope();
 
-            context.env.GetCurrentScope().AddToScope(ScopeName.TrimStart('_', 'F', '_'), this, false);
+            context.env.GetCurrentScope().AddToScope(ScopeName, this, false);
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
+            context.writer.Write($"{ReturnValue} {(Inline ? "inline" : string.Empty)} {Name}({Parameters})");
 
             for (int i = 0; i < parameters.Count; i++)
             {

@@ -1,3 +1,23 @@
-$("return")
+$("native")
+$("return"="int")
 $("name"="c.int")
-c_int :: (object) ?
+$("parameters"="ChronObject o")
+!c_int :: (object) ?
+
+$("native")
+$("return"="const char*")
+$("name"="c.string")
+$("parameters"="ChronObject o")
+!c_string :: (object) ?
+
+$("native")
+$("return"="bool")
+$("name"="c.bool")
+$("parameters"="ChronObject o")
+!c_bool :: (object) ?
+
+$("native")
+$("return"="ChronObject")
+$("name"="c.fromInt")
+$("parameters"="int i")
+!DynInteger :: (object) ?
