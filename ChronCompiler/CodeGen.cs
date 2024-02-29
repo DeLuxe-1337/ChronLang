@@ -297,7 +297,50 @@ namespace ChronCompiler
 
             return null;
         }
-        public override object VisitFunction([NotNull] ChronParser.FunctionContext context)
+        private void ApplyFunctionModifiers(ChronParser.FunctionModifierContext[] context, ChronInvokable func)
+        {
+            foreach (var modifier in context)
+            {
+                string value = modifier.STRING(1) != null ? modifier.STRING(1).GetText().TrimStart('"').TrimEnd('"') : string.Empty;
+
+                switch (modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"'))
+                {
+                    case "parameters":
+                        {
+                            if(func is ChronNativeFunction function)
+                            {
+                                function.SetParameters(value);
+                            }
+                            break;
+                        }
+                    case "return":
+                        {
+                            {
+                                if (func is ChronFunction function)
+                                    function.SetReturn(true);
+                            }
+                            {
+                                if (func is ChronNativeFunction function)
+                                    function.SetReturn(value);
+                            }
+                            break;
+                        }
+                    case "name":
+                        {
+                            {
+                                if (func is ChronFunction function)
+                                    function.ScopeName = value;
+                            }
+                            {
+                                if (func is ChronNativeFunction function)
+                                    function.ScopeName = value;
+                            }
+                            break;
+                        }
+                }
+            }
+        }
+        private ChronFunction GenerateFunction(ChronParser.FunctionContext context)
         {
             string FunctionName = context.IDENTIFIER().GetText();
 
@@ -317,24 +360,46 @@ namespace ChronCompiler
                 }
             }
 
-            foreach (var modifier in context.functionModifier())
+            ApplyFunctionModifiers(context.functionModifier(), function);
+
+            return function;
+        }
+        private ChronNativeFunction GenerateNativeFunction(ChronParser.FunctionContext context)
+        {
+            string FunctionName = context.IDENTIFIER().GetText();
+
+            ChronNativeFunction function = new(FunctionName);
+
+            if (context.functionInline() != null)
+                function.Inline = true;
+
+            if (context.functionBlock() != null && Visit(context.functionBlock()) is ChronStatementBlock block)
+                function.Block = block;
+
+            if (context.functionParameters() != null)
             {
-                switch(modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"'))
+                foreach (var p in context.functionParameters().IDENTIFIER())
                 {
-                    case "return":
-                        {
-                            function.SetReturn(true);
-                            break;
-                        }
-                    case "name":
-                        {
-                            function.ScopeName = modifier.STRING(1).GetText().TrimStart('"').TrimEnd('"');
-                            break;
-                        }
+                    function.AddParameter(p.GetText());
                 }
             }
 
-            BlockStack.Peek().AddStatement(function);
+            ApplyFunctionModifiers(context.functionModifier(), function);
+
+            return function;
+        }
+        public override object VisitFunction([NotNull] ChronParser.FunctionContext context)
+        {
+            foreach (var modifier in context.functionModifier())
+            {
+                if (modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"') == "native")
+                {
+                    BlockStack.Peek().AddStatement(GenerateNativeFunction(context));
+                    return null;
+                }
+            }
+
+            BlockStack.Peek().AddStatement(GenerateFunction(context));
 
             return null;
         }

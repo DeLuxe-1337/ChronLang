@@ -443,3 +443,19 @@ void ReleaseMemoryContext(ChronObject o)
 	MemoryContext *ctx = obj->ptr;
 	MemoryContext_ReleaseContext(ctx);
 }
+
+int c_int(ChronObject o)
+{
+	DynObject *obj = o->Object;
+	return obj->integer;
+}
+const char *c_string(ChronObject o)
+{
+	DynObject *obj = o->Object;
+	return obj->str;
+}
+bool c_bool(ChronObject o)
+{
+	DynObject *obj = o->Object;
+	return obj->boolean;
+}

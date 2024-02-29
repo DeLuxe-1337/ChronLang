@@ -29,5 +29,19 @@
         public static string SetDynamicTable = "SetDynamicTable";
         public static string GCRelease = "MemoryContext_Release";
         public static int TEMP_VARIABLE = 0;
+        public static Dictionary<string, int> DefinedFunctions = new();
+        public static string DefineFunction(string Name)
+        {
+            if (ChronTypes.DefinedFunctions.ContainsKey(Name))
+                ChronTypes.DefinedFunctions[Name] += 1;
+            else
+                ChronTypes.DefinedFunctions[Name] = 0;
+            if (ChronTypes.DefinedFunctions[Name] > 0)
+            {
+                return $"{Name}{ChronTypes.DefinedFunctions[Name]}";
+            }
+
+            return Name;
+        }
     }
 }

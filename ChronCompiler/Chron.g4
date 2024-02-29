@@ -100,7 +100,7 @@ STRING: ('"' (ESC | ~'"')* '"');
 fragment ESC      : '\\' . ;
 BOOLEAN: 'false' | 'true';
 
-IDENTIFIER: [a-zA-Z0-9_][a-zA-Z0-9_.]*;
+IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_.]*;
 
 WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
