@@ -7,4 +7,4 @@ set COMMAND_LINE_ARGS=%*
 
 set SOURCE_FILES=Backend\memory.c Backend\object.c Backend\standard.c
 
-%COMPILER_PATH% %COMMAND_LINE_ARGS%.c %SOURCE_FILES% -o %COMMAND_LINE_ARGS%.html
+%COMPILER_PATH% %COMMAND_LINE_ARGS% %SOURCE_FILES% -o %COMMAND_LINE_ARGS%.html
