@@ -6,6 +6,7 @@ line: statement;
 
 statement: (
 		defer
+		| linkStatic
 		| release
 		| import_stmt
 		| include_module
@@ -52,6 +53,7 @@ for:
 
 import_functionParameters:
 	'(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
+linkStatic: 'static' 'import' STRING;
 import_stmt: 'import' import_block;
 import_function_return: '->' IDENTIFIER;
 import_function:
