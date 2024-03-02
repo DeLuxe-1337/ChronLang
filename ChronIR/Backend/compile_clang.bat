@@ -7,6 +7,6 @@ set SOURCE_FILES=Backend\memory.c Backend\object.c Backend\standard.c
 
 del %COMMAND_LINE_ARGS%.exe
 
-%COMPILER_PATH% %COMMAND_LINE_ARGS% %SOURCE_FILES% -o %COMMAND_LINE_ARGS%.exe
+%COMPILER_PATH% -O3 %COMMAND_LINE_ARGS% %SOURCE_FILES% -o compiled.exe
 
-%COMMAND_LINE_ARGS%.exe
+compiled.exe
