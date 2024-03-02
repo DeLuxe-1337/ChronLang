@@ -307,7 +307,7 @@ namespace ChronCompiler
                 {
                     case "parameters":
                         {
-                            if(func is ChronNativeFunction function)
+                            if (func is ChronNativeFunction function)
                             {
                                 function.SetParameters(value);
                             }

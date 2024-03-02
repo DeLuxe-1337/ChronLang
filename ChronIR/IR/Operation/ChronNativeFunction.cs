@@ -1,5 +1,4 @@
 ﻿using ChronIR.IR.Internal;
-using System.Text;
 
 namespace ChronIR.IR.Operation
 {

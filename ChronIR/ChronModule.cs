@@ -80,7 +80,7 @@ namespace ChronIR
             {
                 Directory.SetCurrentDirectory(RootDirectory);
 
-                Process.Start($"{compiler}.bat", $"{CurrentContext.Name}.chron").WaitForExit();
+                Process.Start($"{compiler}.bat", $"{CurrentContext.Name}.chron.c").WaitForExit();
 
                 Directory.SetCurrentDirectory(WorkingDirectory);
             }
