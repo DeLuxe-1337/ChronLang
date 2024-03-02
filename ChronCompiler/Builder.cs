@@ -6,9 +6,15 @@ namespace ChronCompiler
 {
     public class Builder
     {
+        public enum CompilerTarget
+        {
+            CLANG,
+            TCC
+        }
         private static string RootDirectory = AppContext.BaseDirectory;
         private static string WorkingDirectory = Environment.CurrentDirectory;
 
+        public CompilerTarget Target { get; set; } = CompilerTarget.TCC;
         private ChronContext moduleContext;
         private ChronModule module;
         private ModuleInclusion inclusion = new();
@@ -61,8 +67,10 @@ namespace ChronCompiler
             module.AddStatement(Root);
             module.Write();
             Console.WriteLine($"\t------>\tCompiling and executing\t<------");
-            module.Compile("Backend\\compile_clang");
-            //module.Compile();
+            if(Target == CompilerTarget.CLANG)
+                module.Compile("Backend\\compile_clang");
+            else
+                module.Compile();
         }
     }
 }
