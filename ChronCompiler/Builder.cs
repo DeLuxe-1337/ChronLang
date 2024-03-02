@@ -61,7 +61,8 @@ namespace ChronCompiler
             module.AddStatement(Root);
             module.Write();
             Console.WriteLine($"\t------>\tCompiling and executing\t<------");
-            module.Compile();
+            module.Compile("Backend\\compile_clang");
+            //module.Compile();
         }
     }
 }

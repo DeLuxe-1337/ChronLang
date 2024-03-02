@@ -9,6 +9,8 @@ namespace ChronIR
     }
     public class ChronModule
     {
+        private static Dictionary<string, string> StaticallyLink = new();
+        public static void AddStaticLink(string link) => StaticallyLink[link] = $"-l{link}";
         private ChronContext CurrentContext;
         private ChronContext Context;
         private List<ChronStatement> Statements = new();
@@ -80,7 +82,9 @@ namespace ChronIR
             {
                 Directory.SetCurrentDirectory(RootDirectory);
 
-                Process.Start($"{compiler}.bat", $"{CurrentContext.Name}.chron.c").WaitForExit();
+                var parameters = $"{(StaticallyLink.Count > 0 ? "-static" : string.Empty)} {string.Join(" ", StaticallyLink.Values)} {CurrentContext.Name}.chron.c";
+                Console.WriteLine(parameters);
+                Process.Start($"{compiler}.bat", parameters).WaitForExit();
 
                 Directory.SetCurrentDirectory(WorkingDirectory);
             }

@@ -22,6 +22,12 @@ namespace ChronCompiler
             this.Module = builder.GetModule();
             BlockStack.Push(builder.Root);
         }
+        public override object VisitLinkStatic([NotNull] ChronParser.LinkStaticContext context)
+        {
+            ChronModule.AddStaticLink(context.STRING().GetText().Trim('"'));
+
+            return null;
+        }
         public override object VisitDefer([NotNull] ChronParser.DeferContext context)
         {
             Visit(context.statement());
