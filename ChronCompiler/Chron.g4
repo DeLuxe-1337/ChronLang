@@ -92,7 +92,7 @@ constant: NUMBER | STRING | BOOLEAN | NIL;
 TICK_BLOCK: '`' TICK_TEXT '`';
 fragment TICK_TEXT: ~('`')*;
 
-foreign_c: '~>' 'C' TICK_BLOCK;
+foreign_c: 'C' TICK_BLOCK;
 
 include_module: 'include' IDENTIFIER;
 

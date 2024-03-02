@@ -3,7 +3,7 @@ include core.std
 $("return")
 !ReadLine :: ?
 
-~> C `int printf (const char* format, ...);`
+C `int printf (const char* format, ...);`
 
 import {
     printf :: (string)
