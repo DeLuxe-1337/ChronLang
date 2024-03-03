@@ -19,6 +19,13 @@ void InitializeDynamicTable(DynamicTable *table)
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 {
   DynObject *tableObject = o->Object;
+
+  if(tableObject->type != vtable)
+  {
+    printf("Runtime error: attempting to set value in table on object that isn't a table.\n");
+    return;
+  }
+
   DynamicTable *table = tableObject->table;
 
   if (table->size >= table->capacity)
@@ -48,13 +55,20 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
 {
   DynObject *tableObject = o->Object;
+
+  if(tableObject->type != vtable)
+  {
+    printf("Runtime error: attempting to index value in table on object that isn't a table.\n");
+    return DynNil();
+  }
+
   DynamicTable *table = tableObject->table;
 
   for (size_t i = 0; i < table->size; i++)
   {
     if (GetBoolean(DynObjectCompareEq(table->pairs[i].key, index)))
     {
-      return Clone(table->pairs[i].value);
+      return table->pairs[i].value;
     }
   }
   return DynNil();
@@ -225,7 +239,17 @@ ChronObject Clone(ChronObject input)
   case vinteger:
     clone->integer = target->integer;
     break;
+  case vtable:
+    clone->table = (DynamicTable *)malloc(sizeof(DynamicTable));
+    InitializeDynamicTable(clone->table);
+    cloneObject->deallocate = dealloc_table;
 
+    for (size_t i = 0; i < target->table->size; i++)
+    {
+      SetDynamicTable(cloneObject, Clone(target->table->pairs[i].key), Clone(target->table->pairs[i].value));
+    }
+
+    break;
   case vnull:
     break;
   case vdeallocated:
