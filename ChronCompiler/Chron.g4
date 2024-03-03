@@ -97,7 +97,7 @@ foreign_c: 'C' TICK_BLOCK;
 include_module: 'include' IDENTIFIER;
 
 NIL: 'nil';
-NUMBER: [0-9][0-9]*;
+NUMBER: '-'? [0-9][0-9]*;
 STRING: ('"' (ESC | ~'"')* '"');
 fragment ESC      : '\\' . ;
 BOOLEAN: 'false' | 'true';
