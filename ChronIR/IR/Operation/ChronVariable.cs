@@ -41,7 +41,7 @@ namespace ChronIR.IR.Operation
 
             if (context.env.FindValueByName(_name) == null)
             {
-                context.writer.WriteLine($"{ChronTypes.TypeMap["object"].Value} {_accessor_name} = {value.Read(context)};");
+                context.writer.WriteLine($"auto {_accessor_name} = {value.Read(context)};");
             }
             else
             {
