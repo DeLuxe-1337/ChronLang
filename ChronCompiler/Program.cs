@@ -4,6 +4,8 @@ class Entry
 {
     static void Main(string[] args)
     {
+        Builder.InitializeTargets();
+
         Dictionary<string, string> parameters = new() { { "source", "main.chron" }, { "name", "MyProgram" }, {"target", "tcc"} };
         foreach (var param in args)
         {
@@ -20,7 +22,7 @@ class Entry
 
         Builder builder = new Builder();
         builder.Create(parameters["name"]);
-        builder.Target = Enum.Parse<Builder.CompilerTarget>(parameters["target"].ToUpper());
+        builder.Target = (parameters["target"].ToUpper());
 
         builder.CompileChronScript(parameters["source"].Replace(".chron", ""));
 

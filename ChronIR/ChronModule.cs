@@ -60,7 +60,7 @@ namespace ChronIR
 
         private static string RootDirectory = AppContext.BaseDirectory;
         private static string WorkingDirectory = Environment.CurrentDirectory;
-        public void Compile(string compiler = "Backend\\compile")
+        public void Compile(string batchCompiler)
         {
             string sourceFilePath = Path.Combine(WorkingDirectory, $"{CurrentContext.Name}.chron.c");
             string targetFilePath = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.c");
@@ -80,13 +80,20 @@ namespace ChronIR
             }
 
             {
-                Directory.SetCurrentDirectory(RootDirectory);
+                //var parameters = $"{(StaticallyLink.Count > 0 ? "-static" : string.Empty)} {string.Join(" ", StaticallyLink.Values)} {CurrentContext.Name}.chron.c";
+                //Console.WriteLine(parameters);
+                Process process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = false;
+                process.StartInfo.WorkingDirectory = RootDirectory;
 
-                var parameters = $"{(StaticallyLink.Count > 0 ? "-static" : string.Empty)} {string.Join(" ", StaticallyLink.Values)} {CurrentContext.Name}.chron.c";
-                Console.WriteLine(parameters);
-                Process.Start($"{compiler}.bat", parameters).WaitForExit();
+                process.StartInfo.FileName = batchCompiler;
 
-                Directory.SetCurrentDirectory(WorkingDirectory);
+                process.StartInfo.EnvironmentVariables["CHRON_NAME"] = CurrentContext.Name;
+                process.StartInfo.EnvironmentVariables["CHRON_SOURCE_FILE"] = $"{CurrentContext.Name}.chron.c";
+
+                process.Start();
+                process.WaitForExit();
             }
 
             {

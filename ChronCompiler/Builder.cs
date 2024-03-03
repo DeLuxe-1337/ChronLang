@@ -6,15 +6,20 @@ namespace ChronCompiler
 {
     public class Builder
     {
-        public enum CompilerTarget
-        {
-            CLANG,
-            TCC
-        }
         private static string RootDirectory = AppContext.BaseDirectory;
         private static string WorkingDirectory = Environment.CurrentDirectory;
 
-        public CompilerTarget Target { get; set; } = CompilerTarget.TCC;
+        public static Dictionary<string, string> AvailableTargets = new();
+        public static void InitializeTargets()
+        {
+            foreach(var target in Directory.GetFiles(Path.Combine(RootDirectory, "Targets")))
+            {
+                FileInfo file = new(target);
+                if(file.Extension == ".bat")
+                    AvailableTargets.Add(file.Name.Replace(".bat", "").ToUpper(), file.FullName);
+            }
+        }
+        public string Target;
         private ChronContext moduleContext;
         private ChronModule module;
         private ModuleInclusion inclusion = new();
@@ -67,10 +72,7 @@ namespace ChronCompiler
             module.AddStatement(Root);
             module.Write();
             Console.WriteLine($"\t------>\tCompiling and executing\t<------");
-            if(Target == CompilerTarget.CLANG)
-                module.Compile("Backend\\compile_clang");
-            else
-                module.Compile();
+            module.Compile(AvailableTargets[Target]);
         }
     }
 }
