@@ -10,7 +10,7 @@ namespace ChronIR
     public class ChronModule
     {
         private static Dictionary<string, string> StaticallyLink = new();
-        public static void AddStaticLink(string link) => StaticallyLink[link] = $"-l{link}";
+        public static void AddStaticLink(string link) => StaticallyLink[link] = $"{link}";
         private ChronContext CurrentContext;
         private ChronContext Context;
         private List<ChronStatement> Statements = new();
@@ -91,6 +91,7 @@ namespace ChronIR
 
                 process.StartInfo.EnvironmentVariables["CHRON_NAME"] = CurrentContext.Name;
                 process.StartInfo.EnvironmentVariables["CHRON_SOURCE_FILE"] = $"{CurrentContext.Name}.chron.c";
+                process.StartInfo.EnvironmentVariables["CHRON_STATIC_LIBS"] = string.Join(" ", StaticallyLink.Values);
 
                 process.Start();
                 process.WaitForExit();
