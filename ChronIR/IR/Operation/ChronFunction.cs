@@ -41,7 +41,7 @@ namespace ChronIR.IR.Operation
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
+            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name.Replace(".", "_")}({FormatParameters()})");
 
             for (int i = 0; i < parameters.Count; i++)
             {

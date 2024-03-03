@@ -29,7 +29,7 @@ namespace ChronIR.IR.Operation
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{ReturnValue} {(Inline ? "inline" : string.Empty)} {Name}({Parameters})");
+            context.writer.Write($"{ReturnValue} {(Inline ? "inline" : string.Empty)} {Name.Replace(".", "_")}({Parameters})");
 
             for (int i = 0; i < parameters.Count; i++)
             {
