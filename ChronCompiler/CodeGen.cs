@@ -28,7 +28,7 @@ namespace ChronCompiler
             {
                 case "TCC":
                     {
-                        Console.WriteLine("TCC not supported for static linking! Switching to CLANG!");
+                        Console.WriteLine("TCC not supported for static linking! Switching target to CLANG!");
                         Builder.Target = "CLANG";
                         break;
                     }
