@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronTableAccessor : ChronExpression, ChronVariableImpl, ChronAutoRelease
+    public class ChronTableAccessor : ChronExpression, ChronVariableImpl
     {
         private ChronExpression table;
         private ChronExpression index;
