@@ -14,7 +14,7 @@ namespace ChronIR.IR.Operation
         }
         public object Read(ChronContext context)
         {
-            context.writer.WriteLine($"auto {variableReferenceName} = {expression.Read(context)};");
+            context.writer.WriteLine($"void* {variableReferenceName} = {expression.Read(context)};");
             ChronDefer.Add(this);
             return variableReferenceName;
         }

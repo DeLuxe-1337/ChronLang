@@ -2,7 +2,7 @@
 
 set COMPILER_PATH=tcc.exe
 
-set RUNTIME_FILES=Backend\memory.c Backend\object.c Backend\standard.c
+set RUNTIME_FILES=%CHRON_BACKEND%\memory.c %CHRON_BACKEND%\object.c %CHRON_BACKEND%\standard.c
 
 if exist "%CHRON_NAME%.exe" (del %CHRON_NAME%.exe)
 

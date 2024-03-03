@@ -85,12 +85,14 @@ namespace ChronIR
                 Process process = new Process();
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = false;
-                process.StartInfo.WorkingDirectory = RootDirectory;
+                process.StartInfo.WorkingDirectory = WorkingDirectory;
 
                 process.StartInfo.FileName = batchCompiler;
 
                 process.StartInfo.EnvironmentVariables["CHRON_NAME"] = CurrentContext.Name;
-                process.StartInfo.EnvironmentVariables["CHRON_SOURCE_FILE"] = $"{CurrentContext.Name}.chron.c";
+                process.StartInfo.EnvironmentVariables["CHRON_WORKING_DIR"] = WorkingDirectory;
+                process.StartInfo.EnvironmentVariables["CHRON_BACKEND"] = Path.Combine(RootDirectory, "Backend");
+                process.StartInfo.EnvironmentVariables["CHRON_SOURCE_FILE"] = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.c");
                 process.StartInfo.EnvironmentVariables["CHRON_STATIC_LIBS"] = string.Join(" ", StaticallyLink.Values);
 
                 process.Start();
