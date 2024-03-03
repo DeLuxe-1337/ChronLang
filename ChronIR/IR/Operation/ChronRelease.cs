@@ -14,6 +14,13 @@ namespace ChronIR.IR.Operation
         }
         public object Read(ChronContext context)
         {
+            if(expression is ChronConditionalAutoRelease condRelease)
+            {
+                if(!condRelease.CanAutoRelease(context))
+                {
+                    return expression.Read(context);
+                }
+            }
             context.writer.WriteLine($"void* {variableReferenceName} = {expression.Read(context)};");
             ChronDefer.Add(this);
             return variableReferenceName;

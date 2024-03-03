@@ -29,17 +29,7 @@ namespace ChronIR.IR.Operation
             {
                 if ((chronExpression is ChronConstant || chronExpression is ChronAutoRelease))
                 {
-                    if (chronExpression is ChronConditionalAutoRelease condRelease)
-                    {
-                        if (condRelease.CanAutoRelease(ctx))
-                            sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
-                        else
-                            sb.Append($"{chronExpression.Read(ctx)},");
-                    }
-                    else
-                    {
-                        sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
-                    }
+                    sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
                 }
                 else
                     sb.Append($"{chronExpression.Read(ctx)},");
