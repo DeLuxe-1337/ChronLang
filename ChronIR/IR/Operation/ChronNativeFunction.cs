@@ -13,7 +13,7 @@ namespace ChronIR.IR.Operation
         private string Parameters;
         public ChronNativeFunction(string name) //I do this so,you can easily do extern stuff...
         {
-            this.Name = name;
+            this.Name = name.Replace(".", "_");
             this.ScopeName = name;
         }
         public void SetParameters(string parameters) => Parameters = parameters;
@@ -29,7 +29,7 @@ namespace ChronIR.IR.Operation
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{ReturnValue} {(Inline ? "inline" : string.Empty)} {Name.Replace(".", "_")}({Parameters})");
+            context.writer.Write($"{ReturnValue} {(Inline ? "inline" : string.Empty)} {Name}({Parameters})");
 
             for (int i = 0; i < parameters.Count; i++)
             {

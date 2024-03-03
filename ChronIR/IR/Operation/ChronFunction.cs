@@ -18,7 +18,10 @@ namespace ChronIR.IR.Operation
             else
                 this.Name = $"_F_{name}";
 
-            ScopeName = Name;
+            ScopeName = name;
+
+            this.Name = Name.Replace(".", "_");
+
         }
         public void SetName(string name) => Name = name;
         public void SetReturn(bool doesReturn) => this.DoesReturn = doesReturn;
@@ -41,7 +44,7 @@ namespace ChronIR.IR.Operation
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name.Replace(".", "_")}({FormatParameters()})");
+            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
 
             for (int i = 0; i < parameters.Count; i++)
             {
