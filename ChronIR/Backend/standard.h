@@ -31,6 +31,7 @@ bool GetBoolean(ChronObject o);
 int c_int(ChronObject o);
 const char *c_string(ChronObject o);
 bool c_bool(ChronObject o);
+void* c_pointer(ChronObject o);
 
 #define ref(o) (&o)
 #define deref(o) (*o)

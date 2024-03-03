@@ -459,3 +459,9 @@ bool c_bool(ChronObject o)
 	DynObject *obj = o->Object;
 	return obj->boolean;
 }
+
+void *c_pointer(ChronObject o)
+{
+	DynObject *obj = o->Object;
+	return obj->ptr;
+}

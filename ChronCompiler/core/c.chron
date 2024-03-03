@@ -17,6 +17,12 @@ $("parameters"="ChronObject o")
 !c_bool :: (object) ?
 
 $("native")
+$("return"="void*")
+$("name"="c.pointer")
+$("parameters"="ChronObject o")
+!c_pointer :: (object) ?
+
+$("native")
 $("return"="ChronObject")
 $("name"="c.fromInt")
 $("parameters"="int i")
@@ -33,3 +39,9 @@ $("return"="ChronObject")
 $("name"="c.fromBool")
 $("parameters"="bool b")
 !DynBoolean :: (object) ?
+
+$("native")
+$("return"="ChronObject")
+$("name"="c.fromPointer")
+$("parameters"="void* ptr")
+!DynPointer :: (object) ?
