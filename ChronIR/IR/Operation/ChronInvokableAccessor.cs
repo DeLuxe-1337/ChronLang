@@ -22,7 +22,7 @@ namespace ChronIR.IR.Operation
 
             return result;
         }
-        public string GetName(ChronContext context)
+        public ChronInvokable GetInvokable(ChronContext context)
         {
             Scope.ScopeItem[] results = Find(context);
 
@@ -31,8 +31,18 @@ namespace ChronIR.IR.Operation
                 if (scopeItem.data is ChronInvokable invoke)
                 {
                     if (invoke.ParameterCount() == parameterCount)
-                        return invoke.GetName(context);
+                        return invoke;
                 }
+            }
+
+            return null;
+        }
+        public string GetName(ChronContext context)
+        {
+            ChronInvokable result = GetInvokable(context);
+            if (result != null)
+            {
+                return result.GetName(context);
             }
 
             //if (.First().data is ChronInvokable invoke)
