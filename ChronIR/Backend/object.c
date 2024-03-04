@@ -16,11 +16,24 @@ void InitializeDynamicTable(DynamicTable *table)
   table->capacity = 1;
 }
 
+TableKeyValuePair *GetDynamicTablePairByIndex(DynamicTable *table, ChronObject index)
+{
+  for (size_t i = 0; i < table->size; i++)
+  {
+    if (GetBoolean(DynObjectCompareEq(table->pairs[i].key, index)))
+    {
+      return &table->pairs[i];
+    }
+  }
+
+  return NULL;
+}
+
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 {
   DynObject *tableObject = o->Object;
 
-  if(tableObject->type != vtable)
+  if (tableObject->type != vtable)
   {
     printf("Runtime error: attempting to set value in table on object that isn't a table.\n");
     return;
@@ -40,15 +53,28 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
     table->pairs = new_pairs;
   }
 
-  table->pairs[table->size].key = Clone(index);
-  if (table->pairs[table->size].key != NULL)
+  TableKeyValuePair *result = GetDynamicTablePairByIndex(table, index);
+
+  if (result != NULL)
   {
-    table->pairs[table->size].value = Clone(value);
-    table->size++;
+    MemoryContext_Release(result->key);
+    MemoryContext_Release(result->value);
+
+    result->key = Clone(index);
+    result->value = Clone(value);
   }
   else
   {
-    printf("Table key is null\n");
+    table->pairs[table->size].key = Clone(index);
+    if (table->pairs[table->size].key != NULL)
+    {
+      table->pairs[table->size].value = Clone(value);
+      table->size++;
+    }
+    else
+    {
+      printf("Table key is null\n");
+    }
   }
 }
 
@@ -56,37 +82,22 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
 {
   DynObject *tableObject = o->Object;
 
-  if(tableObject->type != vtable)
+  if (tableObject->type != vtable)
   {
     printf("Runtime error: attempting to index value in table on object that isn't a table.\n");
     return DynNil();
   }
 
   DynamicTable *table = tableObject->table;
+  TableKeyValuePair *result = GetDynamicTablePairByIndex(table, index);
 
-  for (size_t i = 0; i < table->size; i++)
+  if (result != NULL)
   {
-    if (GetBoolean(DynObjectCompareEq(table->pairs[i].key, index)))
-    {
-      return table->pairs[i].value;
-    }
+    return result->value;
   }
+
   return DynNil();
 }
-
-// ChronObject defaultNil;
-
-// void *dealloc_string(ChronObject o)
-// {
-//   if (defaultNil == NULL)
-//     defaultNil = DynNil();
-
-//   DynObject *obj = o->Object;
-//   free(obj->str);
-//   free(o->Object);
-
-//   return defaultNil;
-// }
 
 void dealloc_string(void *o)
 {
