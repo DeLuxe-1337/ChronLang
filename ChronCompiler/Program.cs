@@ -6,7 +6,7 @@ class Entry
     {
         Builder.InitializeTargets();
 
-        Dictionary<string, string> parameters = new() { { "source", "main.chron" }, { "name", "MyProgram" }, {"target", "tcc"} };
+        Dictionary<string, string> parameters = new() { { "source", "main.chron" }, { "name", "MyProgram" }, { "target", "tcc" } };
         foreach (var param in args)
         {
             if (param.StartsWith("--"))

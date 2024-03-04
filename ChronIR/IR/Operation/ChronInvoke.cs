@@ -12,7 +12,7 @@ namespace ChronIR.IR.Operation
         {
             if (target is ChronInvokableAccessor accessor)
             {
-                if(accessor.GetInvokable(context) is ChronNativeFunction)
+                if (accessor.GetInvokable(context) is ChronNativeFunction)
                     return false;
             }
 

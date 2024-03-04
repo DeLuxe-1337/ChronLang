@@ -14,9 +14,9 @@ namespace ChronIR.IR.Operation
         }
         public object Read(ChronContext context)
         {
-            if(expression is ChronConditionalAutoRelease condRelease)
+            if (expression is ChronConditionalAutoRelease condRelease)
             {
-                if(!condRelease.CanAutoRelease(context))
+                if (!condRelease.CanAutoRelease(context))
                 {
                     return expression.Read(context);
                 }

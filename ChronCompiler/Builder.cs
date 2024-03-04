@@ -12,10 +12,10 @@ namespace ChronCompiler
         public static Dictionary<string, string> AvailableTargets = new();
         public static void InitializeTargets()
         {
-            foreach(var target in Directory.GetFiles(Path.Combine(RootDirectory, "Targets")))
+            foreach (var target in Directory.GetFiles(Path.Combine(RootDirectory, "Targets")))
             {
                 FileInfo file = new(target);
-                if(file.Extension == ".bat")
+                if (file.Extension == ".bat")
                     AvailableTargets.Add(file.Name.Replace(".bat", "").ToUpper(), file.FullName);
             }
         }
