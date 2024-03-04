@@ -465,3 +465,11 @@ void *c_pointer(ChronObject o)
 	DynObject *obj = o->Object;
 	return obj->ptr;
 }
+
+ChronObject TableSizeOf(ChronObject o)
+{
+	DynObject *obj = o->Object;
+	DynamicTable *table = obj->table;
+
+	return DynInteger(table->size);
+}

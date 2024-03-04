@@ -1,0 +1,3 @@
+$("return")
+$("name"="Table.SizeOf")
+!TableSizeOf(table) ?

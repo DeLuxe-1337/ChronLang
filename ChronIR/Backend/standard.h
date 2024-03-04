@@ -33,6 +33,12 @@ const char *c_string(ChronObject o);
 bool c_bool(ChronObject o);
 void* c_pointer(ChronObject o);
 
+/*
+    Table standard
+*/
+
+ChronObject TableSizeOf(ChronObject table);
+
 #define ref(o) (&o)
 #define deref(o) (*o)
 
