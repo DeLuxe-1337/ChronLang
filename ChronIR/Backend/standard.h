@@ -24,6 +24,7 @@ ChronObject ToString(ChronObject input);
 ChronObject ReadLine();
 ChronObject CreateMemoryContext();
 ChronObject GetMemoryContext();
+
 void ReleaseMemoryContext(ChronObject o);
 void SetMemoryContext();
 void Throw(ChronObject errorMessage);
@@ -38,6 +39,7 @@ void* c_pointer(ChronObject o);
 */
 
 ChronObject TableSizeOf(ChronObject table);
+ChronObject TableIter(ChronObject o);
 
 #define ref(o) (&o)
 #define deref(o) (*o)

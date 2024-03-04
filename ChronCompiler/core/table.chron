@@ -1,3 +1,7 @@
 $("return")
 $("name"="Table.SizeOf")
 !TableSizeOf(table) ?
+
+$("return")
+$("name"="Table.Iter")
+!TableIter(table) ?

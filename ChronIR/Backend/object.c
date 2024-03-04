@@ -270,3 +270,8 @@ ChronObject Clone(ChronObject input)
 
   return cloneObject;
 }
+
+DynObject *GetRef(ChronObject GC)
+{
+	return (DynObject *)GC->Object;
+}

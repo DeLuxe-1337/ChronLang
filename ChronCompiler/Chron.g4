@@ -17,6 +17,7 @@ statement: (
 		| variable
 		| if
 		| for
+		| foreach
 		| while
 		| break
 		| continue
@@ -32,8 +33,9 @@ functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
 functionInline: 'inline';
 
-functionModifier:'$' '(' STRING ('=' STRING)? ')';
-function: (functionModifier+)? functionInline? functionForceName?  IDENTIFIER '::' functionParameters? functionBlock;
+functionModifier: '$' '(' STRING ('=' STRING)? ')';
+function: (functionModifier+)? functionInline? functionForceName? IDENTIFIER '::' functionParameters
+		? functionBlock;
 
 block: '{' line* '}';
 
@@ -48,6 +50,8 @@ ifElse: 'else' block;
 release: 'release' expression;
 defer: 'defer' statement;
 
+foreach:
+	'foreach' index=IDENTIFIER ',' value=IDENTIFIER 'in' iter = expression block;
 for:
 	'for' IDENTIFIER '=' start = expression ',' end = expression block;
 
@@ -80,10 +84,10 @@ expression:
 		| 'and'
 		| '&&'
 	) expression												# comparatorExpr
-	| '!' expression #notExpr
+	| '!' expression											# notExpr
 	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
-	| '<' (expression (',' expression)*)? '>' #tableExpr
-	| expression '[' expression ']' #tableIndexExpr
+	| '<' (expression (',' expression)*)? '>'					# tableExpr
+	| expression '[' expression ']'								# tableIndexExpr
 	| 'release' expression										# releaseExpr
 	| '(' expression ')'										# evaluateExpr;
 
@@ -99,7 +103,7 @@ include_module: 'include' IDENTIFIER;
 NIL: 'nil';
 NUMBER: '-'? [0-9][0-9]*;
 STRING: ('"' (ESC | ~'"')* '"');
-fragment ESC      : '\\' . ;
+fragment ESC: '\\' .;
 BOOLEAN: 'false' | 'true';
 
 IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_.]*;

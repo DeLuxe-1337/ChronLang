@@ -42,6 +42,13 @@ typedef struct
   void * ptr;
 } DynObject;
 
+typedef struct {
+  void* self;
+  ChronObject (*index)(void*, int);
+  ChronObject (*value)(void*, int);
+  int size;
+} Iterator;
+
 void InitializeDynamicTable(DynamicTable * table);
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value);
 ChronObject IndexDynamicTable(ChronObject o, ChronObject index);
@@ -51,8 +58,8 @@ ChronObject DynBoolean(bool boolean);
 ChronObject DynNil();
 ChronObject DynTable();
 ChronObject DynPointer(void* ptr);
-DynObject SetDynObjectType(DynObject *DynObject, DynObjectType type);
-DynObject Expect(DynObject input, DynObject errorMessage);
+
+DynObject *GetRef(ChronObject GC);
 ChronObject Clone(ChronObject input);
 
 #endif

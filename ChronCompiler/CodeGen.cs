@@ -22,9 +22,15 @@ namespace ChronCompiler
             this.Module = builder.GetModule();
             BlockStack.Push(builder.Root);
         }
+        public override object VisitForeach([NotNull] ChronParser.ForeachContext context)
+        {
+            BlockStack.Peek().AddStatement(new ChronForEach(context.index.Text, context.value.Text, Visit(context.block()) as ChronStatementBlock, Visit(context.iter) as ChronExpression));
+
+            return null;
+        }
         public override object VisitLinkStatic([NotNull] ChronParser.LinkStaticContext context)
         {
-            switch(Builder.Target)
+            switch (Builder.Target)
             {
                 case "TCC":
                     {

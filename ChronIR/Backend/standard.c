@@ -264,15 +264,6 @@ ChronObject DynObjectNot(ChronObject o)
 
 	return DynBoolean(!left->boolean);
 }
-DynObject *GetRef(ChronObject GC)
-{
-	return (DynObject *)GC->Object;
-}
-
-DynObject Get(ChronObject GC)
-{
-	return *(DynObject *)GC->Object;
-}
 
 ChronObject TypeOf(ChronObject left)
 {
@@ -472,4 +463,41 @@ ChronObject TableSizeOf(ChronObject o)
 	DynamicTable *table = obj->table;
 
 	return DynInteger(table->size);
+}
+
+void dealloc_table_iter(void *o)
+{
+	DynObject *obj = o;
+	Iterator *iter = obj->ptr;
+	free(iter->index);
+	free(iter->value);
+	free(iter->size);
+	free(iter);
+}
+
+ChronObject TableIterIndex(void* self, int index) {
+    DynamicTable* table = self;
+    return table->pairs[index].key;
+}
+
+ChronObject TableIterValue(void* self, int index) {
+    DynamicTable* table = self;
+    return table->pairs[index].value;
+}
+
+ChronObject TableIter(ChronObject o)
+{
+	DynObject *object = o->Object;
+	DynamicTable *table = object->table;
+
+	Iterator *iter = malloc(sizeof(Iterator));
+	iter->self = table;
+	iter->size = table->size;
+	iter->index = TableIterIndex;
+	iter->value = TableIterValue;
+
+	ChronObject iterPointer = DynPointer(iter);
+	iterPointer->deallocate = dealloc_table_iter;
+
+	return iterPointer;
 }
