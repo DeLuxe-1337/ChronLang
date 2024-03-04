@@ -28,6 +28,8 @@
         public static string IndexDynamicTable = "IndexDynamicTable";
         public static string SetDynamicTable = "SetDynamicTable";
         public static string GCRelease = "MemoryContext_Release";
+        public static string Iterator = "Iterator*";
+        public static string GetDynObject = "GetRef";
         public static int TEMP_VARIABLE = 0;
         public static Dictionary<string, int> DefinedFunctions = new();
         public static string DefineFunction(string Name)
