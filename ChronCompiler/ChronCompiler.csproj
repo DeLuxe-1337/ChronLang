@@ -34,6 +34,9 @@
     <None Update="core\c.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="core\string.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="core\table.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

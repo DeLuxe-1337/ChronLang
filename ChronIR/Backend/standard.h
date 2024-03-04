@@ -41,6 +41,11 @@ void* c_pointer(ChronObject o);
 ChronObject TableSizeOf(ChronObject table);
 ChronObject TableIter(ChronObject o);
 
+/*
+    String standard
+*/
+ChronObject StringIter(ChronObject o);
+
 #define ref(o) (&o)
 #define deref(o) (*o)
 

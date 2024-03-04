@@ -2,3 +2,4 @@ include core.memory
 include core.std
 include core.console
 include core.table
+include core.string

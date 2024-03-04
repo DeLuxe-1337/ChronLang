@@ -501,3 +501,29 @@ ChronObject TableIter(ChronObject o)
 
 	return iterPointer;
 }
+
+ChronObject StringIterIndex(void* self, int index) {
+    return DynInteger(index);
+}
+
+ChronObject StringIterValue(void* self, int index) {
+    const char* str = self;
+    return DynChar(str[index]);
+}
+
+ChronObject StringIter(ChronObject o)
+{
+	DynObject *object = o->Object;
+	const char* str = object->str;
+
+	Iterator *iter = malloc(sizeof(Iterator));
+	iter->self = str;
+	iter->size = (int)strlen(str);
+	iter->index = StringIterIndex;
+	iter->value = StringIterValue;
+
+	ChronObject iterPointer = DynPointer(iter);
+	iterPointer->deallocate = dealloc_table_iter;
+
+	return iterPointer;
+}
