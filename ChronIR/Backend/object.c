@@ -121,6 +121,25 @@ ChronObject DynString(const char *str)
   return GC_obj;
 }
 
+ChronObject DynChar(char c)
+{
+  newObject(obj, DynObject);
+
+  _VO_obj->boolean = false;
+  _VO_obj->str = malloc(2 * sizeof(char));
+  _VO_obj->integer = 0;
+  _VO_obj->number = 0.0;
+  _VO_obj->type = vstring;
+  _VO_obj->ptr = 0;
+
+  _VO_obj->str[0] = c;
+  _VO_obj->str[1] = '\0';
+
+  GC_obj->deallocate = dealloc_string;
+
+  return GC_obj;
+}
+
 ChronObject DynInteger(int i)
 {
   newObject(obj, DynObject);
