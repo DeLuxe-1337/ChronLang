@@ -25,6 +25,7 @@
 - [If statement](#if)
 - [While statement](#while)
 - [For to statement](#for-to)
+- [Foreach statement](#for-each)
 - [Tables](#tables)
 - [Memory context handling](#memory-context-handling)
 - [Function calling](#function-calling)
@@ -190,6 +191,21 @@ main :: {
 }
 ```
 
+## For Each
+Syntax: `foreach` index=`identifier` `,` value=`identifier` `in` `iter` `statement block`  
+```chron
+include core.all
+
+main :: {
+    x = <nil, true, 69, "Hello, world", false>
+
+    foreach index, value in Table.Iter(x) {
+        PrintLn(index)
+        PrintLn(value)
+    }
+}
+```
+
 ## Tables
 
 Syntax: `<` `expression list` `>` //Subject to change;  
@@ -206,6 +222,10 @@ main :: {
     PrintLn(x["wow!"])
 }
 ```
+
+There's functions you can use for tables...  
+`Table.SizeOf :: (table)` will return the length of the table  
+`Table.Iter :: (table)` will return an iterable object for the table  
 
 ## Memory Context Handling
 // Most of this might change, so it could be subject to change...  
