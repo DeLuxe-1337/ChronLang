@@ -28,14 +28,21 @@ namespace ChronIR.IR.Operation
 
             var __i = new ChronTemporaryVariable("i", new ChronRawText("0"), "int");
 
-            block.PrependStatement(new ChronVariable(new ChronEnvironmentAccessor(index), new ChronRawText($"{__iter__.Read(context)}->index({__iter__.Read(context)}->self, {__i.Read(context)})")));
-            block.PrependStatement(new ChronVariable(new ChronEnvironmentAccessor(value), new ChronRawText($"{__iter__.Read(context)}->value({__iter__.Read(context)}->self, {__i.Read(context)})")));
+            var foreachIndex = new ChronVariable(new ChronEnvironmentAccessor(index), new ChronRawText($"{__iter__.Read(context)}->index({__iter__.Read(context)}->self, {__i.Read(context)})"));
+            var foreachValue = new ChronVariable(new ChronEnvironmentAccessor(value), new ChronRawText($"{__iter__.Read(context)}->value({__iter__.Read(context)}->self, {__i.Read(context)})"));
+            block.PrependStatement(foreachIndex);
+            block.PrependStatement(foreachValue);
+
+            block.AddStatement(new ChronDeferStatement(new ChronRelease(foreachIndex)));
+            block.AddStatement(new ChronDeferStatement(new ChronRelease(foreachValue)));
 
             var forLoop = new ChronFor(__i, new ChronRawText($"{__iter__.Read(context)}->size"), block);
             forLoop.Write(context);
 
             ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
+
+            new ChronRelease(iter).Write(context);
 
             context.writer.WriteLine("}");
         }

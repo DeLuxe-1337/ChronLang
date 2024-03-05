@@ -465,24 +465,21 @@ ChronObject TableSizeOf(ChronObject o)
 	return DynInteger(table->size);
 }
 
-void dealloc_table_iter(void *o)
+void dealloc_iter(void *o)
 {
 	DynObject *obj = o;
 	Iterator *iter = obj->ptr;
-	free(iter->index);
-	free(iter->value);
-	free(iter->size);
 	free(iter);
 }
 
 ChronObject TableIterIndex(void* self, int index) {
     DynamicTable* table = self;
-    return table->pairs[index].key;
+    return Clone(table->pairs[index].key);
 }
 
 ChronObject TableIterValue(void* self, int index) {
     DynamicTable* table = self;
-    return table->pairs[index].value;
+    return Clone(table->pairs[index].value);
 }
 
 ChronObject TableIter(ChronObject o)
@@ -497,7 +494,7 @@ ChronObject TableIter(ChronObject o)
 	iter->value = TableIterValue;
 
 	ChronObject iterPointer = DynPointer(iter);
-	iterPointer->deallocate = dealloc_table_iter;
+	iterPointer->deallocate = dealloc_iter;
 
 	return iterPointer;
 }
@@ -523,7 +520,7 @@ ChronObject StringIter(ChronObject o)
 	iter->value = StringIterValue;
 
 	ChronObject iterPointer = DynPointer(iter);
-	iterPointer->deallocate = dealloc_table_iter;
+	iterPointer->deallocate = dealloc_iter;
 
 	return iterPointer;
 }
