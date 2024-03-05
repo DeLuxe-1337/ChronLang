@@ -15,7 +15,7 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 
 	if (left->type == vstring)
 	{
-		int len = strlen(left->str) + strlen(right->str) + 1;
+		int len = strlen(left->data.str) + strlen(right->data.str) + 1;
 		char *result = (char *)malloc(len * sizeof(char));
 
 		if (result == NULL)
@@ -23,8 +23,8 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 			printf("Memory allocation failed.\n");
 			return DynString("Failed to concat");
 		}
-		strcpy(result, left->str);
-		strcat(result, right->str);
+		strcpy(result, left->data.str);
+		strcat(result, right->data.str);
 		ChronObject ConcatStr = DynString(result);
 		free(result);
 		return ConcatStr;
@@ -32,7 +32,7 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynInteger(left->integer + right->integer);
+		return DynInteger(left->data.integer + right->data.integer);
 	}
 
 	return DynInteger(0);
@@ -49,7 +49,7 @@ ChronObject DynObjectSub(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynInteger(left->integer - right->integer);
+		return DynInteger(left->data.integer - right->data.integer);
 	}
 
 	return DynInteger(0);
@@ -66,7 +66,7 @@ ChronObject DynObjectDiv(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynInteger(left->integer / right->integer);
+		return DynInteger(left->data.integer / right->data.integer);
 	}
 
 	return DynInteger(0);
@@ -83,7 +83,7 @@ ChronObject DynObjectMul(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynInteger(left->integer * right->integer);
+		return DynInteger(left->data.integer * right->data.integer);
 	}
 
 	return DynInteger(0);
@@ -100,7 +100,7 @@ ChronObject DynObjectMod(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynInteger(left->integer % right->integer);
+		return DynInteger(left->data.integer % right->data.integer);
 	}
 
 	return DynInteger(0);
@@ -117,7 +117,7 @@ ChronObject DynObjectCompareGrt(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynBoolean(left->integer > right->integer);
+		return DynBoolean(left->data.integer > right->data.integer);
 	}
 
 	return DynBoolean(false);
@@ -134,7 +134,7 @@ ChronObject DynObjectCompareGrtEq(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynBoolean(left->integer >= right->integer);
+		return DynBoolean(left->data.integer >= right->data.integer);
 	}
 
 	return DynBoolean(false);
@@ -151,7 +151,7 @@ ChronObject DynObjectCompareLesstEq(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynBoolean(left->integer <= right->integer);
+		return DynBoolean(left->data.integer <= right->data.integer);
 	}
 
 	return DynBoolean(false);
@@ -168,7 +168,7 @@ ChronObject DynObjectCompareLesst(ChronObject o1, ChronObject o2)
 
 	if (left->type == vinteger)
 	{
-		return DynBoolean(left->integer < right->integer);
+		return DynBoolean(left->data.integer < right->data.integer);
 	}
 
 	return DynBoolean(false);
@@ -186,13 +186,13 @@ ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 	switch (left->type)
 	{
 	case vstring:
-		return DynBoolean(strcmp(left->str, right->str) == 0);
+		return DynBoolean(strcmp(left->data.str, right->data.str) == 0);
 	case vboolean:
-		return DynBoolean(left->boolean == right->boolean);
+		return DynBoolean(left->data.boolean == right->data.boolean);
 	case vnumber:
-		return DynBoolean(left->number == right->number);
+		return DynBoolean(left->data.number == right->data.number);
 	case vinteger:
-		return DynBoolean(left->integer == right->integer);
+		return DynBoolean(left->data.integer == right->data.integer);
 	case vdeallocated:
 		return DynBoolean(false);
 	default:
@@ -214,13 +214,13 @@ ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 	switch (left->type)
 	{
 	case vstring:
-		return DynBoolean(strcmp(left->str, right->str) != 0);
+		return DynBoolean(strcmp(left->data.str, right->data.str) != 0);
 	case vboolean:
-		return DynBoolean(left->boolean != right->boolean);
+		return DynBoolean(left->data.boolean != right->data.boolean);
 	case vnumber:
-		return DynBoolean(left->number != right->number);
+		return DynBoolean(left->data.number != right->data.number);
 	case vinteger:
-		return DynBoolean(left->integer != right->integer);
+		return DynBoolean(left->data.integer != right->data.integer);
 	case vdeallocated:
 		return DynBoolean(false);
 	default:
@@ -239,7 +239,7 @@ ChronObject DynObjectCompareOr(ChronObject o1, ChronObject o2)
 		return DynBoolean(false);
 	}
 
-	return DynBoolean(left->boolean || right->boolean);
+	return DynBoolean(left->data.boolean || right->data.boolean);
 }
 ChronObject DynObjectCompareAnd(ChronObject o1, ChronObject o2)
 {
@@ -251,7 +251,7 @@ ChronObject DynObjectCompareAnd(ChronObject o1, ChronObject o2)
 		return DynBoolean(false);
 	}
 
-	return DynBoolean(left->boolean && right->boolean);
+	return DynBoolean(left->data.boolean && right->data.boolean);
 }
 ChronObject DynObjectNot(ChronObject o)
 {
@@ -262,7 +262,7 @@ ChronObject DynObjectNot(ChronObject o)
 		return DynBoolean(false);
 	}
 
-	return DynBoolean(!left->boolean);
+	return DynBoolean(!left->data.boolean);
 }
 
 ChronObject TypeOf(ChronObject left)
@@ -292,6 +292,9 @@ ChronObject TypeOf(ChronObject left)
 	case vtable:
 		typeStr = "table";
 		break;
+	case vptr:
+		typeStr = "pointer";
+		break;
 	default:
 		typeStr = "unknown";
 		break;
@@ -308,26 +311,26 @@ ChronObject ToString(ChronObject item)
 	case vdeallocated:
 		return DynString("Object is deallocated");
 	case vstring:
-		return DynString(obj->str);
+		return DynString(obj->data.str);
 	case vboolean:
-		return DynString(obj->boolean ? "true" : "false");
+		return DynString(obj->data.boolean ? "true" : "false");
 	case vnumber:
 	{
-		int size = snprintf(NULL, 0, "%f", obj->number) + 1; // Determine the required size
+		int size = snprintf(NULL, 0, "%f", obj->data.number) + 1; // Determine the required size
 		char *str = (char *)malloc(size * sizeof(char));	 // Dynamically allocate memory
-		snprintf(str, size, "%f", obj->number);				 // Convert number to string
+		snprintf(str, size, "%f", obj->data.number);				 // Convert number to string
 		return DynString(str);
 	}
 	case vinteger:
 	{
-		int size = snprintf(NULL, 0, "%d", obj->integer) + 1; // Determine the required size
+		int size = snprintf(NULL, 0, "%d", obj->data.integer) + 1; // Determine the required size
 		char *str = (char *)malloc(size * sizeof(char));	  // Dynamically allocate memory
-		snprintf(str, size, "%d", obj->integer);			  // Convert integer to string
+		snprintf(str, size, "%d", obj->data.integer);			  // Convert integer to string
 		return DynString(str);
 	}
 	case vtable:
 	{
-		DynamicTable *table = obj->table;
+		DynamicTable *table = obj->data.table;
 
 		/*
 			The following was written and compiled by ChronLang (besides the loop, no way to iter tables without an index as of now)
@@ -381,7 +384,7 @@ ChronObject ToString(ChronObject item)
 void Throw(ChronObject errorMessage)
 {
 	// Placeholder for text formatting in red
-	fprintf(stderr, "\033[31mRuntime Error:\033[0m %s\n", ((DynObject *)errorMessage->Object)->str);
+	fprintf(stderr, "\033[31mRuntime Error:\033[0m %s\n", ((DynObject *)errorMessage->Object)->data.str);
 	fprintf(stderr, "Terminated Program\n");
 	exit(EXIT_FAILURE);
 }
@@ -408,7 +411,7 @@ ChronObject ReadLine()
 
 bool GetBoolean(ChronObject o)
 {
-	bool result = ((DynObject *)o->Object)->boolean;
+	bool result = ((DynObject *)o->Object)->data.boolean;
 	MemoryContext_Release(o);
 	return result;
 }
@@ -425,42 +428,42 @@ ChronObject GetMemoryContext()
 void SetMemoryContext(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	Context = (MemoryContext *)obj->ptr;
+	Context = (MemoryContext *)obj->data.ptr;
 }
 
 void ReleaseMemoryContext(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	MemoryContext *ctx = obj->ptr;
+	MemoryContext *ctx = obj->data.ptr;
 	MemoryContext_ReleaseContext(ctx);
 }
 
 int c_int(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	return obj->integer;
+	return obj->data.integer;
 }
 const char *c_string(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	return obj->str;
+	return obj->data.str;
 }
 bool c_bool(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	return obj->boolean;
+	return obj->data.boolean;
 }
 
 void *c_pointer(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	return obj->ptr;
+	return obj->data.ptr;
 }
 
 ChronObject TableSizeOf(ChronObject o)
 {
 	DynObject *obj = o->Object;
-	DynamicTable *table = obj->table;
+	DynamicTable *table = obj->data.table;
 
 	return DynInteger(table->size);
 }
@@ -468,7 +471,7 @@ ChronObject TableSizeOf(ChronObject o)
 void dealloc_iter(void *o)
 {
 	DynObject *obj = o;
-	Iterator *iter = obj->ptr;
+	Iterator *iter = obj->data.ptr;
 	free(iter);
 }
 
@@ -485,7 +488,7 @@ ChronObject TableIterValue(void* self, int index) {
 ChronObject TableIter(ChronObject o)
 {
 	DynObject *object = o->Object;
-	DynamicTable *table = object->table;
+	DynamicTable *table = object->data.table;
 
 	Iterator *iter = malloc(sizeof(Iterator));
 	iter->self = table;
@@ -511,7 +514,7 @@ ChronObject StringIterValue(void* self, int index) {
 ChronObject StringIter(ChronObject o)
 {
 	DynObject *object = o->Object;
-	const char* str = object->str;
+	const char* str = object->data.str;
 
 	Iterator *iter = malloc(sizeof(Iterator));
 	iter->self = str;

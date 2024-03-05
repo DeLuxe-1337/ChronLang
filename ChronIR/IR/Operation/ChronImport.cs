@@ -61,7 +61,7 @@ namespace ChronIR.IR.Operation
                 int param_count = 0;
                 foreach (var p in Parameters)
                 {
-                    context.writer.WriteLine($"{p.Value} r{param_count} = o{param_count++}->{chronTypeConversion[p]};");
+                    context.writer.WriteLine($"{p.Value} r{param_count} = o{param_count++}->data.{chronTypeConversion[p]};");
                 }
             }
 

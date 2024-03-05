@@ -21,7 +21,7 @@ namespace ChronIR.IR.Operation
             ChronDefer.IncreaseScope();
 
             var iter = new ChronVariable(new ChronEnvironmentAccessor("Iter"), iterator);
-            var __iter__ = new ChronTemporaryVariable("ITER", new ChronRawText($"{ChronTypes.GetDynObject}({iter.Read(context)})->ptr"), ChronTypes.Iterator);
+            var __iter__ = new ChronTemporaryVariable("ITER", new ChronRawText($"{ChronTypes.GetDynObject}({iter.Read(context)})->data.ptr"), ChronTypes.Iterator);
 
             iter.Write(context);
             __iter__.Write(context);
