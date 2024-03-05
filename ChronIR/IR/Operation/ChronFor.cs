@@ -21,7 +21,7 @@ namespace ChronIR.IR.Operation
 
             block.Write(context);
 
-            ChronDefer.VisitCurrentScope(context); 
+            ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
             context.writer.WriteLine("}");
         }
