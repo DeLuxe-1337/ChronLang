@@ -9,6 +9,7 @@ namespace ChronIR.IR.Operation
         public string ScopeName;
         public string ReturnValue = "void";
         public bool Inline = false;
+        public bool External = false;
         private List<string> parameters = new();
         private string Parameters;
         public ChronNativeFunction(string name) //I do this so,you can easily do extern stuff...
@@ -29,7 +30,7 @@ namespace ChronIR.IR.Operation
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{ReturnValue} {(Inline ? "inline" : string.Empty)} {Name}({Parameters})");
+            context.writer.Write($"{(External ? "extern" : string.Empty)} {ReturnValue} {(Inline ? "inline" : string.Empty)} {Name}({Parameters})");
 
             for (int i = 0; i < parameters.Count; i++)
             {

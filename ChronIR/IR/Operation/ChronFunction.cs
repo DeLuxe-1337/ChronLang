@@ -10,6 +10,7 @@ namespace ChronIR.IR.Operation
         public string ScopeName;
         public bool DoesReturn = false;
         public bool Inline = false;
+        public bool External = false;
         private List<string> parameters = new();
         public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
         {
@@ -44,7 +45,7 @@ namespace ChronIR.IR.Operation
 
             Name = ChronTypes.DefineFunction(Name);
 
-            context.writer.Write($"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
+            context.writer.Write($"{(External ? "extern" : string.Empty)} {((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
 
             for (int i = 0; i < parameters.Count; i++)
             {

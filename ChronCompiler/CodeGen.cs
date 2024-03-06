@@ -335,6 +335,30 @@ namespace ChronCompiler
                             }
                             break;
                         }
+                    case "inline":
+                        {
+                            {
+                                if (func is ChronFunction function)
+                                    function.Inline = true;
+                            }
+                            {
+                                if (func is ChronNativeFunction function)
+                                    function.Inline = true;
+                            }
+                            break;
+                        }
+                    case "extern":
+                        {
+                            {
+                                if (func is ChronFunction function)
+                                    function.External = true;
+                            }
+                            {
+                                if (func is ChronNativeFunction function)
+                                    function.External = true;
+                            }
+                            break;
+                        }
                     case "return":
                         {
                             {
@@ -368,9 +392,6 @@ namespace ChronCompiler
 
             ChronFunction function = new(FunctionName, context.functionForceName() != null);
 
-            if (context.functionInline() != null)
-                function.Inline = true;
-
             if (context.functionBlock() != null && Visit(context.functionBlock()) is ChronStatementBlock block)
                 function.Block = block;
 
@@ -391,9 +412,6 @@ namespace ChronCompiler
             string FunctionName = context.IDENTIFIER().GetText();
 
             ChronNativeFunction function = new(FunctionName);
-
-            if (context.functionInline() != null)
-                function.Inline = true;
 
             if (context.functionBlock() != null && Visit(context.functionBlock()) is ChronStatementBlock block)
                 function.Block = block;

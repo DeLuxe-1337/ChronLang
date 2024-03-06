@@ -31,10 +31,9 @@ return: 'return' expression?;
 functionBlock: block | '?';
 functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
-functionInline: 'inline';
 
 functionModifier: '$' '(' STRING ('=' STRING)? ')';
-function: (functionModifier+)? functionInline? functionForceName? IDENTIFIER '::' functionParameters
+function: (functionModifier+)? functionForceName? IDENTIFIER '::' functionParameters
 		? functionBlock;
 
 block: '{' line* '}';
