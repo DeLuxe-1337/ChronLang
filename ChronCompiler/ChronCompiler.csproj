@@ -46,6 +46,9 @@
     <None Update="core\console.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Targets\wasm.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Targets\tcc.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
