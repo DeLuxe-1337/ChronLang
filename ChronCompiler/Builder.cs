@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using ChronCompiler.Targets;
 using ChronIR;
 using ChronIR.IR.Operation;
 
@@ -8,18 +9,16 @@ namespace ChronCompiler
     {
         private static string RootDirectory = AppContext.BaseDirectory;
         private static string WorkingDirectory = Environment.CurrentDirectory;
-
-        public static Dictionary<string, string> AvailableTargets = new();
         public static void InitializeTargets()
         {
             foreach (var target in Directory.GetFiles(Path.Combine(RootDirectory, "Targets")))
             {
                 FileInfo file = new(target);
                 if (file.Extension == ".bat")
-                    AvailableTargets.Add(file.Name.Replace(".bat", "").ToUpper(), file.FullName);
+                    Target.AddTarget(file.Name.Replace(".bat", "").ToUpper(), file.FullName);
             }
         }
-        public string Target;
+        public string SelectedTarget;
         private ChronContext moduleContext;
         private ChronModule module;
         private ModuleInclusion inclusion = new();
@@ -72,7 +71,7 @@ namespace ChronCompiler
             module.AddStatement(Root);
             module.Write();
             Console.WriteLine($"\t------>\tCompiling and executing\t<------");
-            module.Compile(AvailableTargets[Target]);
+            TargetCompiler.CompileTarget(module, Target.GetTarget(SelectedTarget));
         }
     }
 }

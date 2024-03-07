@@ -30,12 +30,12 @@ namespace ChronCompiler
         }
         public override object VisitLinkStatic([NotNull] ChronParser.LinkStaticContext context)
         {
-            switch (Builder.Target)
+            switch (Builder.SelectedTarget)
             {
                 case "TCC":
                     {
                         Console.WriteLine("TCC not supported for static linking! Switching target to CLANG!");
-                        Builder.Target = "CLANG";
+                        Builder.SelectedTarget = "CLANG";
                         break;
                     }
             }

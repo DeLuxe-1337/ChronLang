@@ -1,5 +1,4 @@
 ﻿using ChronIR.IR.Internal;
-using System.Diagnostics;
 
 namespace ChronIR
 {
@@ -14,6 +13,8 @@ namespace ChronIR
         private ChronContext CurrentContext;
         private ChronContext Context;
         private List<ChronStatement> Statements = new();
+        public ChronContext GetContext() => CurrentContext;
+        public Dictionary<string, string> GetStaticLink() => StaticallyLink;
         public ChronModule(ChronContext context)
         {
             Context = context;
@@ -54,61 +55,6 @@ namespace ChronIR
                 statement.Write(CurrentContext);
             }
             CurrentContext.End();
-        }
-
-        // void Compile(string) needs to be cleaned up
-
-        private static string RootDirectory = AppContext.BaseDirectory;
-        private static string WorkingDirectory = Environment.CurrentDirectory;
-        public void Compile(string batchCompiler)
-        {
-            string sourceFilePath = Path.Combine(WorkingDirectory, $"{CurrentContext.Name}.chron.c");
-            string targetFilePath = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.c");
-
-            string compiledExecutable = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.exe");
-            string outputPath = Path.Combine(WorkingDirectory, $"{CurrentContext.Name}.chron.exe");
-
-            {
-                if (!File.Exists(targetFilePath))
-                    File.Copy(sourceFilePath, targetFilePath);
-
-                if (File.Exists(outputPath))
-                    File.Delete(outputPath);
-
-                if (File.Exists(compiledExecutable))
-                    File.Delete(compiledExecutable);
-            }
-
-            {
-                //var parameters = $"{(StaticallyLink.Count > 0 ? "-static" : string.Empty)} {string.Join(" ", StaticallyLink.Values)} {CurrentContext.Name}.chron.c";
-                //Console.WriteLine(parameters);
-                Process process = new Process();
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = false;
-                process.StartInfo.WorkingDirectory = WorkingDirectory;
-
-                process.StartInfo.FileName = batchCompiler;
-
-                process.StartInfo.EnvironmentVariables["CHRON_NAME"] = CurrentContext.Name;
-                process.StartInfo.EnvironmentVariables["CHRON_WORKING_DIR"] = WorkingDirectory;
-                process.StartInfo.EnvironmentVariables["CHRON_BACKEND"] = Path.Combine(RootDirectory, "Backend");
-                process.StartInfo.EnvironmentVariables["CHRON_SOURCE_FILE"] = Path.Combine(RootDirectory, $"{CurrentContext.Name}.chron.c");
-                process.StartInfo.EnvironmentVariables["CHRON_STATIC_LIBS"] = string.Join(" ", StaticallyLink.Values);
-
-                process.Start();
-                process.WaitForExit();
-            }
-
-            {
-                if (File.Exists(compiledExecutable) && !File.Exists(outputPath))
-                    File.Copy(compiledExecutable, outputPath);
-
-                if (File.Exists(compiledExecutable) && compiledExecutable != outputPath)
-                    File.Delete(compiledExecutable);
-
-                if (File.Exists(targetFilePath) && targetFilePath != sourceFilePath)
-                    File.Delete(targetFilePath);
-            }
         }
     }
 }

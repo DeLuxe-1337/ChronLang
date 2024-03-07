@@ -1,4 +1,5 @@
 ﻿using ChronCompiler;
+using ChronCompiler.Targets;
 
 class Entry
 {
@@ -13,6 +14,7 @@ class Entry
             {
                 var split = param.Replace("--", "").Split('=');
                 parameters[split[0]] = split[1];
+                TargetCompiler.AddTargetArgument($"CHRON_{split[0]}".ToUpper(), split[1]);
             }
             if (param.EndsWith(".chron"))
             {
@@ -26,7 +28,7 @@ class Entry
             parameters["name"] = parameters["source"];
 
         builder.Create(parameters["name"]);
-        builder.Target = (parameters["target"].ToUpper());
+        builder.SelectedTarget = (parameters["target"].ToUpper());
 
         builder.CompileChronScript(parameters["source"]);
 
