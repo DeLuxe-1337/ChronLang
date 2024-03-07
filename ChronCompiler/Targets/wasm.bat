@@ -1,6 +1,6 @@
 @echo off
 
-if not exist "emsdk" (
+if not exist "emsdk\emsdk_env.bat" (
 	git clone https://github.com/emscripten-core/emsdk.git
 	cd emsdk
 	call emsdk.bat install latest
