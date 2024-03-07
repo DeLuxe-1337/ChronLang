@@ -1,20 +1,26 @@
 @echo off
 
-if not exist "emsdk\emsdk_env.bat" (
-	git clone https://github.com/emscripten-core/emsdk.git
-	cd emsdk
-	call emsdk.bat install latest
-	call emsdk.bat activate latest
-	cd ..
-)
+rem Batch is weird, ChatGPT wrote this part because I couldn't do `if exist emsdk_env.bat (...)`
 
-call emsdk\emsdk_env
+call emsdk_env.bat >nul 2>&1
+
+if errorlevel 1 (
+	if not exist "emsdk" (
+		git clone https://github.com/emscripten-core/emsdk.git
+		cd emsdk
+		call emsdk.bat install latest
+		call emsdk.bat activate latest
+		cd ..
+	)
+
+	call emsdk\emsdk_env
+)
 
 set COMPILER_PATH=emcc
 
 set RUNTIME_FILES=%CHRON_BACKEND%\memory.c %CHRON_BACKEND%\object.c %CHRON_BACKEND%\standard.c
 
-if %CHRON_JS_LIBRARY% == "" ( 
+if "%CHRON_JS_LIBRARY%" == "" ( 
 	set CHRON_JS_LIBRARY="wasmLibrary.js" 
 )
 
