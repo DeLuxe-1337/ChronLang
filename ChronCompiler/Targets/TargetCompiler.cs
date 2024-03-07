@@ -47,8 +47,6 @@ namespace ChronCompiler.Targets
                 foreach (var argument in argumentsForTarget)
                 {
                     process.StartInfo.EnvironmentVariables[argument.Key] = argument.Value;
-                    Console.WriteLine(argument.Value);
-                    Console.WriteLine(argument.Key);
                 }
 
                 process.Start();
