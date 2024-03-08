@@ -317,15 +317,15 @@ ChronObject ToString(ChronObject item)
 	case vnumber:
 	{
 		int size = snprintf(NULL, 0, "%f", obj->data.number) + 1; // Determine the required size
-		char *str = (char *)malloc(size * sizeof(char));	 // Dynamically allocate memory
-		snprintf(str, size, "%f", obj->data.number);				 // Convert number to string
+		char *str = (char *)malloc(size * sizeof(char));		  // Dynamically allocate memory
+		snprintf(str, size, "%f", obj->data.number);			  // Convert number to string
 		return DynString(str);
 	}
 	case vinteger:
 	{
 		int size = snprintf(NULL, 0, "%d", obj->data.integer) + 1; // Determine the required size
-		char *str = (char *)malloc(size * sizeof(char));	  // Dynamically allocate memory
-		snprintf(str, size, "%d", obj->data.integer);			  // Convert integer to string
+		char *str = (char *)malloc(size * sizeof(char));		   // Dynamically allocate memory
+		snprintf(str, size, "%d", obj->data.integer);			   // Convert integer to string
 		return DynString(str);
 	}
 	case vtable:
@@ -475,14 +475,16 @@ void dealloc_iter(void *o)
 	free(iter);
 }
 
-ChronObject TableIterIndex(void* self, int index) {
-    DynamicTable* table = self;
-    return Clone(table->pairs[index].key);
+ChronObject TableIterIndex(void *self, int index)
+{
+	DynamicTable *table = self;
+	return Clone(table->pairs[index].key);
 }
 
-ChronObject TableIterValue(void* self, int index) {
-    DynamicTable* table = self;
-    return Clone(table->pairs[index].value);
+ChronObject TableIterValue(void *self, int index)
+{
+	DynamicTable *table = self;
+	return Clone(table->pairs[index].value);
 }
 
 ChronObject TableIter(ChronObject o)
@@ -502,19 +504,21 @@ ChronObject TableIter(ChronObject o)
 	return iterPointer;
 }
 
-ChronObject StringIterIndex(void* self, int index) {
-    return DynInteger(index);
+ChronObject StringIterIndex(void *self, int index)
+{
+	return DynInteger(index);
 }
 
-ChronObject StringIterValue(void* self, int index) {
-    const char* str = self;
-    return DynChar(str[index]);
+ChronObject StringIterValue(void *self, int index)
+{
+	const char *str = self;
+	return DynChar(str[index]);
 }
 
 ChronObject StringIter(ChronObject o)
 {
 	DynObject *object = o->Object;
-	const char* str = object->data.str;
+	const char *str = object->data.str;
 
 	Iterator *iter = malloc(sizeof(Iterator));
 	iter->self = str;
@@ -528,7 +532,31 @@ ChronObject StringIter(ChronObject o)
 	return iterPointer;
 }
 
-int c_object_type(ChronObject o) {
+int c_object_type(ChronObject o)
+{
 	DynObject *object = o->Object;
 	return object->type;
+}
+
+int c_table_size(ChronObject o)
+{
+	DynObject *object = o->Object;
+	DynamicTable *table = object->data.table;
+	return table->size;
+}
+
+ChronObject c_table_key(int index, ChronObject o)
+{
+	DynObject *object = o->Object;
+	DynamicTable *table = object->data.table;
+	ChronObject key = table->pairs[index].key;
+	return key;
+}
+
+ChronObject c_table_value(int index, ChronObject o)
+{
+	DynObject *object = o->Object;
+	DynamicTable *table = object->data.table;
+	ChronObject value = table->pairs[index].value;
+	return value;
 }
