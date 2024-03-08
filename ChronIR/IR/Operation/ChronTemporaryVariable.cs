@@ -23,6 +23,9 @@ namespace ChronIR.IR.Operation
         public void Write(ChronContext context)
         {
             context.writer.WriteLine(EmbedWrite(context));
+
+            if (value is ChronVariableRef var_ref)
+                var_ref.VariableCreatedRef(context, this);
         }
     }
 }

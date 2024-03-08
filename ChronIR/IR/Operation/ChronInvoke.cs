@@ -27,6 +27,14 @@ namespace ChronIR.IR.Operation
             StringBuilder sb = new StringBuilder();
             foreach (ChronExpression chronExpression in parameters.GetParameters())
             {
+                if(chronExpression is ChronTable) 
+                {
+                    var tableTemp = new ChronTemporaryVariable("TABLE_CALL_T", chronExpression);
+                    tableTemp.Write(ctx);
+                    sb.Append($"{tableTemp.Read(ctx)},");
+                    continue;
+                }
+
                 if ((chronExpression is ChronConstant || chronExpression is ChronAutoRelease))
                 {
                     sb.Append($"{new ChronRelease(chronExpression).Read(ctx)},");
