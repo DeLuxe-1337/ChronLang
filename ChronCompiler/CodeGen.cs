@@ -159,6 +159,10 @@ namespace ChronCompiler
 
             return null;
         }
+        public override object VisitBindExpr([NotNull] ChronParser.BindExprContext context)
+        {
+            return new ChronBindExpression(Visit(context.expression(0)) as ChronExpression, Visit(context.expression(1)) as ChronExpression);
+        }
         public override object VisitTableExpr([NotNull] ChronParser.TableExprContext context)
         {
             var table = new ChronTable();

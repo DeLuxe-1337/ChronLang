@@ -25,8 +25,16 @@ namespace ChronIR.IR.Operation
             {
                 var value = initValues[i];
 
-                var setter = new ChronTableAccessor(variable, new ChronInt(i));
-                setter.VariableWrite(context, value);
+                if(value is ChronBindExpression bind)
+                {
+                    var setter = new ChronTableAccessor(variable, bind.Key);
+                    setter.VariableWrite(context, bind.Value);
+                }
+                else
+                {
+                    var setter = new ChronTableAccessor(variable, new ChronInt(i));
+                    setter.VariableWrite(context, value);
+                }
             }
         }
     }
