@@ -527,3 +527,8 @@ ChronObject StringIter(ChronObject o)
 
 	return iterPointer;
 }
+
+int c_object_type(ChronObject o) {
+	DynObject *object = o->Object;
+	return object->type;
+}

@@ -33,6 +33,7 @@ int c_int(ChronObject o);
 const char *c_string(ChronObject o);
 bool c_bool(ChronObject o);
 void* c_pointer(ChronObject o);
+int c_object_type(ChronObject o);
 
 /*
     Table standard
