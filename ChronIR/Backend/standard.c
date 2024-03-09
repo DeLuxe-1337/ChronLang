@@ -295,6 +295,9 @@ ChronObject TypeOf(ChronObject left)
 	case vptr:
 		typeStr = "pointer";
 		break;
+	case vfunction:
+		typeStr = "function";
+		break;
 	default:
 		typeStr = "unknown";
 		break;
@@ -374,6 +377,10 @@ ChronObject ToString(ChronObject item)
 
 		return _V_str;
 	}
+	case vptr:
+		return DynString("pointer");
+	case vfunction:
+		return DynString("function");
 	case vnull:
 		return DynString("nil");
 	default:

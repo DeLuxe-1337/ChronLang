@@ -3,7 +3,7 @@ using System.Text;
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronFunction : ChronStatement, ChronInvokable
+    public class ChronFunction : ChronStatement, ChronInvokable, ChronExpression
     {
         public ChronStatementBlock Block;
         public string Name;
@@ -12,6 +12,7 @@ namespace ChronIR.IR.Operation
         public bool Inline = false;
         public bool External = false;
         private List<string> parameters = new();
+        private static ChronFunction createFunction = new(ChronTypes.CreateFunction, true);
         public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
         {
             if (define || name == "main")
@@ -80,6 +81,13 @@ namespace ChronIR.IR.Operation
         public int ParameterCount()
         {
             return parameters.Count;
+        }
+
+        public object Read(ChronContext context)
+        {
+            ChronInvoke invoke = new(createFunction);
+            invoke.AddParameter(new ChronRawText(Name));
+            return new ChronRelease(invoke).Read(context);
         }
     }
 }

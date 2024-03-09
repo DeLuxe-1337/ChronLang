@@ -15,7 +15,8 @@ typedef enum
   vnull,
   vptr,
   vtable,
-  vdeallocated
+  vdeallocated,
+  vfunction,
 } DynObjectType;
 
 typedef struct
@@ -63,6 +64,7 @@ ChronObject DynBoolean(bool boolean);
 ChronObject DynNil();
 ChronObject DynTable();
 ChronObject DynPointer(void *ptr);
+ChronObject DynFunction(void *ptr);
 
 DynObject *GetRef(ChronObject GC);
 ChronObject Clone(ChronObject input);

@@ -201,6 +201,16 @@ ChronObject DynPointer(void *ptr)
   return GC_obj;
 }
 
+ChronObject DynFunction(void *ptr)
+{
+  newObject(obj, DynObject);
+
+  _VO_obj->type = vfunction;
+  _VO_obj->data.ptr = ptr;
+
+  return GC_obj;
+}
+
 // DynObject Expect(DynObject input, DynObject errorMessage) {
 //     if (input.type == vnull) {
 //         Throw(errorMessage);

@@ -9,6 +9,7 @@
         public static string CreateBoolean = "DynBoolean";
         public static string CreateTable = "DynTable";
         public static string CreateNil = "DynNil";
+        public static string CreateFunction = "DynFunction";
         public static string ObjectCompareEq = "DynObjectCompareEq";
         public static string ObjectCompareNEq = "DynObjectCompareNEq";
         public static string ObjectCompareGrt = "DynObjectCompareGrt";
