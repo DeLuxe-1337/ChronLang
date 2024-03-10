@@ -24,10 +24,11 @@ namespace ChronIR.IR.Operation
         public ChronRawText GetParameter(int index) => new(parameters[index]);
         public void Write(ChronContext context)
         {
-            ChronDefer.IncreaseScope();
 
             context.env.GetCurrentScope().AddToScope(ScopeName, this, false);
 
+            context.env.AddScope(new("NativeFunctionBlock"));
+            ChronDefer.IncreaseScope();
             Name = ChronTypes.DefineFunction(Name);
 
             context.writer.Write($"{(External ? "extern" : string.Empty)} {ReturnValue} {(Inline ? "inline" : string.Empty)} {Name}({Parameters})");
@@ -51,10 +52,7 @@ namespace ChronIR.IR.Operation
             else
                 context.writer.WriteLine(";");
 
-            foreach (var p in parameters)
-            {
-                context.env.GetCurrentScope().RemoveAllWithName(p);
-            }
+            context.env.RemoveScope();
         }
 
         public string GetName(ChronContext context)

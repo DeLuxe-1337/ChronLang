@@ -16,6 +16,7 @@ namespace ChronIR.IR.Operation
 
         public void Write(ChronContext context)
         {
+            context.env.AddScope(new("ForBlock"));
             context.writer.WriteLine($"for({index.EmbedWrite(context)} {index.Read(context)} < {size.Read(context)}; {index.Read(context)}++) {{");
             ChronDefer.IncreaseScope();
 
@@ -24,6 +25,7 @@ namespace ChronIR.IR.Operation
             ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
             context.writer.WriteLine("}");
+            context.env.RemoveScope();
         }
     }
 }

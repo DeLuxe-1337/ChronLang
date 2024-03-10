@@ -19,6 +19,7 @@ namespace ChronIR.IR.Operation
         {
             context.writer.WriteLine("{");
             ChronDefer.IncreaseScope();
+            context.env.AddScope(new("ForEachBlock"));
 
             var iter = new ChronVariable(new ChronEnvironmentAccessor("Iter"), iterator);
             var __iter__ = new ChronTemporaryVariable("ITER", new ChronRawText($"{ChronTypes.GetDynObject}({iter.Read(context)})->data.ptr"), ChronTypes.Iterator);
@@ -45,6 +46,7 @@ namespace ChronIR.IR.Operation
             new ChronRelease(iter).Write(context);
 
             context.writer.WriteLine("}");
+            context.env.RemoveScope();
         }
     }
 }

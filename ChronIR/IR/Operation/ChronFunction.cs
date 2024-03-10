@@ -48,9 +48,10 @@ namespace ChronIR.IR.Operation
                 Block.PrependStatement(new ChronInvoke(new ChronFunction(initialize, true)));
             }
 
-            ChronDefer.IncreaseScope();
-
             context.env.GetCurrentScope().AddToScope(ScopeName.TrimStart('_', 'F', '_'), this, false);
+
+            context.env.AddScope(new("FunctionBlock"));
+            ChronDefer.IncreaseScope();
 
             Name = ChronTypes.DefineFunction(Name);
 
@@ -75,10 +76,7 @@ namespace ChronIR.IR.Operation
             else
                 context.writer.WriteLine(";");
 
-            foreach (var p in parameters)
-            {
-                context.env.GetCurrentScope().RemoveAllWithName(p);
-            }
+            context.env.RemoveScope();
         }
 
         public string GetName(ChronContext context)

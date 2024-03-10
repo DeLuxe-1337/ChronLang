@@ -17,7 +17,7 @@ namespace ChronIR.IR.Operation
         public void Write(ChronContext context)
         {
             ChronDefer.IncreaseScope();
-
+            context.env.AddScope(new("IfBlock"));
             context.writer.WriteLine($"if({ChronTypes.GetBooleanFromObject}({condition.Read(context)})) {{");
 
             ChronDefer.IncreaseScope();
@@ -44,6 +44,7 @@ namespace ChronIR.IR.Operation
 
             ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
+            context.env.RemoveScope();
         }
     }
 }

@@ -19,10 +19,8 @@ namespace ChronIR.IR.Operation
 
         public void Write(ChronContext context)
         {
-            context.env.AddScope(new("Global"));
             foreach (ChronStatement stmt in block)
                 stmt.Write(context);
-            context.env.RemoveScope();
         }
     }
 }

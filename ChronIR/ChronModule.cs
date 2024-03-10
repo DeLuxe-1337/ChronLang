@@ -37,7 +37,7 @@ namespace ChronIR
         }
         internal void Initialize()
         {
-            CurrentContext.env.AddScope(new("Root"));
+            CurrentContext.env.AddScope(new("Global"));
 
             CurrentContext.writer = new Writer($"{CurrentContext.Name}.chron.c");
 
@@ -51,7 +51,6 @@ namespace ChronIR
         {
             foreach (var statement in Statements)
             {
-
                 statement.Write(CurrentContext);
             }
             CurrentContext.End();
