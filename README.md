@@ -20,6 +20,7 @@
 
 - [Hello, world](#hello-world)
 - [Functions](#functions)
+- [Variables](#variables)
 - [Defer](#defer)
 - [Release](#release)
 - [If statement](#if)
@@ -116,8 +117,11 @@ Variables can be used globally and locally...
 
 ```chron
 global_variable = 100
+
 Main :: {
     local_variable = 50
+    PrintLn(global_variable)
+    PrintLn(local_variable)
 }
 ```
 
