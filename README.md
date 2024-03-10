@@ -72,7 +72,7 @@ There are many ways you can contribute! You can work on the C backend (most need
 // Hello, world
 include core.all
 
-main :: {
+Main :: {
   PrintLn("Hello, world")
 }
 ```
@@ -98,8 +98,26 @@ Foo :: (bar) {
   PrintLn(bar)
 }
 
-main :: {
+Main :: {
   Foo("Hello, world")
+}
+```
+
+Function attributes are a thing  
+```chron
+$("inline")
+Sum :: (a, b) { return a + b }
+```
+
+## Variables
+Syntax: `identifier` `=` `expression`  
+
+Variables can be used globally and locally...
+
+```chron
+global_variable = 100
+Main :: {
+    local_variable = 50
 }
 ```
 
@@ -114,7 +132,7 @@ Example of release
 ```chron
 include core.all
 
-main :: {
+Main :: {
   x = 10 // x is a new object
   y = 5 // y is a new object
 
@@ -138,7 +156,7 @@ Example of defer
 ```chron
 include core.all
 
-main :: {
+Main :: {
   defer PrintLn("End of program")
 
   PrintLn("Hello, world!")
@@ -151,7 +169,7 @@ main :: {
   ```chron
   include core.all
 
-  main :: {
+  Main :: {
     x = true
     y = false
 
@@ -170,7 +188,7 @@ Syntax: `while` `expression` `statement block`
   ```chron
   include core.all
 
-  main :: {
+  Main :: {
     x = 0
 
     while x < 5 {
@@ -184,7 +202,7 @@ Syntax: `for` `identifier` `=` `expression` `,` `expression` `statement block`
 ```chron
 include core.all
 
-main :: {
+Main :: {
   for i = 0, 100 {
     PrintLn(i)
   }
@@ -196,7 +214,7 @@ Syntax: `foreach` index=`identifier` `,` value=`identifier` `in` `iter` `stateme
 ```chron
 include core.all
 
-main :: {
+Main :: {
     x = <nil, true, 69, "Hello, world", false>
 
     foreach index, value in Table.Iter(x) {
@@ -212,7 +230,7 @@ Syntax: `<` `expression list` `>` //Subject to change;
 ```chron
 include core.all
 
-main :: {
+Main :: {
     x = <"Hi", 1, false> // 0 = "Hi", 1 = 1, 2 = false
     x[false] = true
     x["wow!"] = 100
@@ -240,7 +258,7 @@ The following example will demonstrate using contexts:
 ```chron
 include core.all
 
-main :: {
+Main :: {
     oldContext = Memory.GetContext() // Store current context
 
     x = "X variable!" // Create the variable on oldContext
