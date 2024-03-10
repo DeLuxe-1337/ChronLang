@@ -21,11 +21,13 @@ namespace ChronIR.IR.Operation
             context.writer.WriteLine($"if({ChronTypes.GetBooleanFromObject}({condition.Read(context)})) {{");
 
             ChronDefer.IncreaseScope();
+            context.env.AddScope(new("IfTrueBlock"));
 
             trueBlock.Write(context);
 
             ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
+            context.env.RemoveScope();
 
             context.writer.WriteLine("}");
 
@@ -33,11 +35,13 @@ namespace ChronIR.IR.Operation
             {
                 context.writer.WriteLine("else {");
                 ChronDefer.IncreaseScope();
+                context.env.AddScope(new("IfFalseBlock"));
 
                 falseBlock.Write(context);
 
                 ChronDefer.VisitCurrentScope(context);
                 ChronDefer.DecreaseScope();
+                context.env.RemoveScope();
 
                 context.writer.WriteLine("}");
             }
