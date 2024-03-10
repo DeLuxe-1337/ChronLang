@@ -8,6 +8,8 @@ namespace ChronIR.IR.Operation
         private string _name;
         private ChronExpression target;
         private ChronExpression value;
+        internal static List<ChronVariable> Global = new();
+        public static void AddGlobal(ChronVariable v) => Global.Add(v);
         public static ChronVariable Create(ChronExpression target, ChronExpression value) => new ChronVariable(target, value);
         public ChronVariable(ChronExpression target, ChronExpression value)
         {
@@ -29,9 +31,27 @@ namespace ChronIR.IR.Operation
 
             return _accessor_name;
         }
-
+        public static string WriteGlobalInitializerFunction(ChronContext context)
+        {
+            string functionName = "__InitializeGlobals";
+            context.writer.WriteLine($"void {functionName}() {{");
+            foreach(var global in Global)
+            {
+                global.Write(context);
+            }
+            context.writer.WriteLine("}");
+            return functionName;
+        } 
         public void Write(ChronContext context)
         {
+            if(context.GetScopeName() == "Global" && !Global.Contains(this))
+            {
+                context.writer.WriteLine($"void* {_accessor_name};");
+                context.env.GetCurrentScope().AddToScope(_name, this);
+                Global.Add(this);
+                return;
+            }
+
             if (target is ChronVariableImpl target_impl)
             {
                 target_impl.VariableWrite(context, value);

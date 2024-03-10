@@ -15,8 +15,10 @@ namespace ChronIR.IR.Operation
         private static ChronFunction createFunction = new(ChronTypes.CreateFunction, true);
         public ChronFunction(string name, bool define = false) //I do this so,you can easily do extern stuff...
         {
-            if (define || name == "main")
+            if (define)
                 this.Name = name;
+            else if(name.ToLower() == "main")
+                this.Name = "main";
             else
                 this.Name = $"_F_{name}";
 
@@ -40,6 +42,12 @@ namespace ChronIR.IR.Operation
         }
         public void Write(ChronContext context)
         {
+            if(Name == "main")
+            {
+                var initialize = ChronVariable.WriteGlobalInitializerFunction(context);
+                Block.PrependStatement(new ChronInvoke(new ChronFunction(initialize, true)));
+            }
+
             ChronDefer.IncreaseScope();
 
             context.env.GetCurrentScope().AddToScope(ScopeName.TrimStart('_', 'F', '_'), this, false);

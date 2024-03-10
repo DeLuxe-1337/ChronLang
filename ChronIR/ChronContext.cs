@@ -14,6 +14,7 @@
 
         public string Name = $"module{++ModuleNumber}";
         public BuildModeOption BuildMode = BuildModeOption.Debug;
+        public string GetScopeName() => env.GetCurrentScope().Name;
         public ChronContext(string name)
         {
             this.Name = name;
