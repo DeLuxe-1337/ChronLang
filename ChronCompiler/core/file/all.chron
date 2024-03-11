@@ -1,18 +1,18 @@
 ~> C `
-ChronVoid WriteFile(ChronGarbageCollectedObject o1, ChronGarbageCollectedObject o2) {
+ChronVoid WriteFile(ChronObject o1, ChronObject o2) {
 	DynObject *path = o1->Object;
 	DynObject *content = o2->Object;
 
-	FILE *file = fopen(path->str, "w");
-	fprintf(file, "%s", content->str);
+	FILE *file = fopen(path->data.str, "w");
+	fprintf(file, "%s", content->data.str);
 	fclose(file);
 }
 `
 
 ~> C `
-ChronGarbageCollectedObject ReadFile(ChronGarbageCollectedObject o1) {
+ChronObject ReadFile(ChronObject o1) {
     DynObject *path = o1->Object;
-    FILE *file = fopen(path->str, "r");
+    FILE *file = fopen(path->data.str, "r");
 
     // Determine the size of the file
     fseek(file, 0, SEEK_END); // Move the file pointer to the end of the file
@@ -20,7 +20,7 @@ ChronGarbageCollectedObject ReadFile(ChronGarbageCollectedObject o1) {
     fseek(file, 0, SEEK_SET); // Move the file pointer back to the beginning of the file
 
     // Allocate memory for the string
-    ChronGarbageCollectedObject strObject = GC_Malloc(size + 1);
+    ChronObject strObject = MemoryContext_Malloc(size + 1);
 	char* str = strObject->Object;
 
     // Read the entire content of the file into the string
@@ -32,10 +32,10 @@ ChronGarbageCollectedObject ReadFile(ChronGarbageCollectedObject o1) {
     // Close the file
     fclose(file);
 
-    ChronGarbageCollectedObject result = DynString(str);
+    ChronObject result = DynString(str);
 
     // Free the allocated memory
-    GC_Release(strObject);
+    MemoryContext_Release(strObject);
 
     return result;
 }
