@@ -32,8 +32,9 @@ functionBlock: block | '?';
 functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
 
-functionModifier: '$' '(' STRING ('=' STRING)? ')';
-function: (functionModifier+)? functionForceName? IDENTIFIER '::' functionParameters
+modifier: '$' '(' STRING ('=' STRING)? ')';
+modifiers: (modifier+);
+function: modifiers? functionForceName? IDENTIFIER '::' functionParameters
 		? functionBlock;
 
 block: '{' line* '}';
