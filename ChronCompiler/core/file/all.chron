@@ -1,4 +1,4 @@
-~> C `
+C `
 ChronVoid WriteFile(ChronObject o1, ChronObject o2) {
 	DynObject *path = o1->Object;
 	DynObject *content = o2->Object;
@@ -9,7 +9,7 @@ ChronVoid WriteFile(ChronObject o1, ChronObject o2) {
 }
 `
 
-~> C `
+C `
 ChronObject ReadFile(ChronObject o1) {
     DynObject *path = o1->Object;
     FILE *file = fopen(path->data.str, "r");
