@@ -14,7 +14,7 @@
 
 - **Dynamically Typed**
 - **Natively Compiled**
-- **Manual Memory Management** // Kind of, most of the garbage is handled automatically by the compiler... stuff like tables or variables will require manual management
+- **Manual Memory Management** // Most of the garbage is handled automatically by the compiler... stuff like tables or variables will require manual management
 
 ## Documentation
 
