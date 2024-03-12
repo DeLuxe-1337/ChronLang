@@ -48,7 +48,7 @@ namespace ChronIR.IR.Operation
                 Block.PrependStatement(new ChronInvoke(new ChronFunction(initialize, true)));
             }
 
-            context.env.GetCurrentScope().AddToScope(ScopeName.TrimStart('_', 'F', '_'), this, false);
+            context.env.GetCurrentScope().AddToScope(ScopeName, this, false);
 
             context.env.AddScope(new("FunctionBlock"));
             ChronDefer.IncreaseScope();
