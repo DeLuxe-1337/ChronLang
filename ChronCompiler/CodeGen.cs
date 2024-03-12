@@ -151,11 +151,28 @@ namespace ChronCompiler
                     break;
             }
 
-            BlockStack.Peek().AddStatement(
-                new ChronVariable(
+            var variable = new ChronVariable(
                     identifier,
-                    value)
-                );
+                    value);
+
+            if(context.modifiers() != null)
+            {
+                var modifiers = Visit(context.modifiers()) as Dictionary<string, string>;
+
+                foreach(var modifier in modifiers)
+                {
+                    switch(modifier.Key)
+                    {
+                        case "type":
+                            {
+                                variable.DefaultType = modifier.Value;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            BlockStack.Peek().AddStatement(variable);
 
             return null;
         }

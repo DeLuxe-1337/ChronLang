@@ -9,6 +9,7 @@ namespace ChronIR.IR.Operation
         private ChronExpression target;
         private ChronExpression value;
         internal static List<ChronVariable> Global = new();
+        public string DefaultType = "void*";
         public static void AddGlobal(ChronVariable v) => Global.Add(v);
         public static ChronVariable Create(ChronExpression target, ChronExpression value) => new ChronVariable(target, value);
         public ChronVariable(ChronExpression target, ChronExpression value)
@@ -46,7 +47,7 @@ namespace ChronIR.IR.Operation
         {
             if(context.GetScopeName() == "Global" && !Global.Contains(this))
             {
-                context.writer.WriteLine($"void* {_accessor_name};");
+                context.writer.WriteLine($"{DefaultType} {_accessor_name};");
                 context.env.GetCurrentScope().AddToScope(_name, this);
                 Global.Add(this);
                 return;
@@ -61,7 +62,7 @@ namespace ChronIR.IR.Operation
 
             if (context.env.FindValueByName(_name) == null)
             {
-                context.writer.WriteLine($"void* {_accessor_name} = {value.Read(context)};");
+                context.writer.WriteLine($"{DefaultType} {_accessor_name} = {value.Read(context)};");
             }
             else
             {

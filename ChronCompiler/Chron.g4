@@ -24,7 +24,7 @@ statement: (
 	) ';'?;
 
 variable:
-	expression op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
+	modifiers? expression op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
 
 return: 'return' expression?;
 
@@ -34,8 +34,8 @@ functionForceName: '!';
 
 modifier: '$' '(' STRING ('=' STRING)? ')';
 modifiers: (modifier+);
-function: modifiers? functionForceName? IDENTIFIER '::' functionParameters
-		? functionBlock;
+function:
+	modifiers? functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
 
 block: '{' line* '}';
 
@@ -51,7 +51,7 @@ release: 'release' expression;
 defer: 'defer' statement;
 
 foreach:
-	'foreach' index=IDENTIFIER ',' value=IDENTIFIER 'in' iter = expression block;
+	'foreach' index = IDENTIFIER ',' value = IDENTIFIER 'in' iter = expression block;
 for:
 	'for' IDENTIFIER '=' start = expression ',' end = expression block;
 
@@ -86,7 +86,7 @@ expression:
 	) expression												# comparatorExpr
 	| '!' expression											# notExpr
 	| expression op = ('+' | '-' | '*' | '/' | '%') expression	# binaryExpr
-	| expression '=' expression #bindExpr
+	| expression '=' expression									# bindExpr
 	| '<' (expression (',' expression)*)? '>'					# tableExpr
 	| expression '[' expression ']'								# tableIndexExpr
 	| 'release' expression										# releaseExpr
