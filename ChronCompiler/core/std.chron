@@ -1,8 +1,8 @@
 $("return")
-!ToString(obj) ?
+!ToString :: (obj) ?
 
 $("return")
-!TypeOf(obj) ?
+!TypeOf :: (obj) ?
 
 !Throw :: (message) ?
 
