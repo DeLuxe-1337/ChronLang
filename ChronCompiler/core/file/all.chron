@@ -40,8 +40,9 @@ ChronObject ReadFile(ChronObject o1) {
     return result;
 }
 `
-
+$("name"="File.Write")
 !WriteFile :: (path, content) ?
 
 $("return")
+$("name"="File.Read")
 !ReadFile :: (path) ?
