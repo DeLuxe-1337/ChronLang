@@ -6,3 +6,4 @@ tcc/
 *.exe
 *.user
 test.c
+ChronCompiler/Properties/PublishProfiles/FolderProfile.pubxml.user
