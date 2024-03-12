@@ -323,16 +323,24 @@ namespace ChronCompiler
 
             return null;
         }
-        private void ApplyFunctionModifiers(ChronParser.ModifiersContext context, ChronInvokable func)
+        public override object VisitModifiers([NotNull] ChronParser.ModifiersContext context)
         {
-            if (context == null || context.modifier() == null)
-                return;
+            Dictionary<string, string> modifiers = new();
 
-            foreach (var modifier in context.modifier())
+            foreach(var modifier in context.modifier())
             {
-                string value = modifier.STRING(1) != null ? modifier.STRING(1).GetText().TrimStart('"').TrimEnd('"') : string.Empty;
+                modifiers.Add(modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"'), modifier.STRING(1) != null ? modifier.STRING(1).GetText().TrimStart('"').TrimEnd('"') : string.Empty);
+            }
 
-                switch (modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"'))
+            return modifiers;
+        }
+        private void ApplyFunctionModifiers(Dictionary<string, string> modifiers, ChronInvokable func)
+        {
+            foreach (var modifier in modifiers)
+            {
+                string value = modifier.Value;
+
+                switch (modifier.Key)
                 {
                     case "parameters":
                         {
@@ -410,7 +418,8 @@ namespace ChronCompiler
                 }
             }
 
-            ApplyFunctionModifiers(context.modifiers(), function);
+            if(context.modifiers() != null)
+            ApplyFunctionModifiers(Visit(context.modifiers()) as Dictionary<string, string>, function);
 
             return function;
         }
@@ -431,7 +440,8 @@ namespace ChronCompiler
                 }
             }
 
-            ApplyFunctionModifiers(context.modifiers(), function);
+            if (context.modifiers() != null)
+                ApplyFunctionModifiers(Visit(context.modifiers()) as Dictionary<string, string>, function);
 
             return function;
         }
@@ -439,9 +449,10 @@ namespace ChronCompiler
         {
             if(context.modifiers() != null)
             {
-                foreach (var modifier in context.modifiers().modifier())
+                var modifiers = Visit(context.modifiers()) as Dictionary<string, string>;
+                foreach (var modifier in modifiers)
                 {
-                    if (modifier.STRING(0).GetText().TrimStart('"').TrimEnd('"') == "native")
+                    if (modifier.Key == "native")
                     {
                         BlockStack.Peek().AddStatement(GenerateNativeFunction(context));
                         return null;
