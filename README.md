@@ -262,14 +262,14 @@ Main :: {
 }
 ```
 
+There's functions you can use for tables...  
+`Table.SizeOf :: (table)` will return the length of the table  
+`Table.Iter :: (table)` will return an iterable object for the table  
+
 ## Include
 Syntax: `include` `identifier`  
 For example `include core.all` will include `core/all.chron`  
 You can write your own global "packages" if you store them in the compiler directory.
-
-There's functions you can use for tables...  
-`Table.SizeOf :: (table)` will return the length of the table  
-`Table.Iter :: (table)` will return an iterable object for the table  
 
 ## Memory Management
 At the moment you have to manually `release` variables.
