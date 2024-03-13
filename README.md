@@ -140,10 +140,11 @@ Main :: {
 
 ## Release
 Syntax: `release` `expression`
+- Releases an object from heap
 - Release can be used as a statement or expression
 
-- Releases an object from heap
-- Release can be used as a statement or expression  
+Using release as a statement allows for compound releasing.  
+`release x, y, z`
 
 Example of release
 ```chron
