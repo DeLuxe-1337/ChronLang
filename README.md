@@ -128,6 +128,9 @@ Syntax: `identifier` `=` `expression`
 
 Variables can be used globally and locally...
 
+Locally created variables are automatically released at the end of scope.    
+Globally created variables must manually be released.  
+
 ```chron
 global_variable = 100
 
