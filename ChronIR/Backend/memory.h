@@ -32,5 +32,4 @@ void MemoryContext_ReleaseContext(MemoryContext *ctx);
 #define newObject(name, type)                                 \
   ChronObject GC_##name = MemoryContext_Malloc(sizeof(type)); \
   type *_VO_##name = GC_##name->Object
-
 #endif

@@ -34,16 +34,11 @@ namespace ChronIR.IR.Operation
             block.PrependStatement(foreachIndex);
             block.PrependStatement(foreachValue);
 
-            block.AddStatement(new ChronDeferStatement(new ChronRelease(foreachIndex)));
-            block.AddStatement(new ChronDeferStatement(new ChronRelease(foreachValue)));
-
             var forLoop = new ChronFor(__i, new ChronRawText($"{__iter__.Read(context)}->size"), block);
             forLoop.Write(context);
 
             ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
-
-            new ChronRelease(iter).Write(context);
 
             context.writer.WriteLine("}");
             context.env.RemoveScope();

@@ -45,7 +45,8 @@ namespace ChronIR.IR.Operation
         } 
         public void Write(ChronContext context)
         {
-            if(context.GetScopeName() == "Global" && !Global.Contains(this))
+            bool global = Global.Contains(this);
+            if (context.GetScopeName() == "Global" && !global)
             {
                 context.writer.WriteLine($"{DefaultType} {_accessor_name};");
                 context.env.GetCurrentScope().AddToScope(_name, this);
@@ -63,6 +64,9 @@ namespace ChronIR.IR.Operation
             if (context.env.FindValueByName(_name) == null)
             {
                 context.writer.WriteLine($"{DefaultType} {_accessor_name} = {value.Read(context)};");
+
+                if (!global)
+                    new ChronDeferStatement(new ChronRelease(this)).Write(context);
             }
             else
             {

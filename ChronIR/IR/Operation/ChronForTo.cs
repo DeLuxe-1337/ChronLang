@@ -25,9 +25,13 @@ namespace ChronIR.IR.Operation
 
             context.writer.WriteLine("{");
 
+            ChronDefer.IncreaseScope();
+
             variable.Write(context);
             whileLoop.Write(context);
-            variable.Release(context);
+
+            ChronDefer.VisitCurrentScope(context);
+            ChronDefer.DecreaseScope();
 
             context.writer.WriteLine("}");
         }
