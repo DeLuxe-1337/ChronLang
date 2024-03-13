@@ -14,7 +14,7 @@
 
 - **Dynamically Typed**
 - **Natively Compiled**
-- **Manual Memory Management** // Most of the garbage is handled automatically by the compiler... stuff like tables or variables will require manual management
+- **Manual Memory Management**
 
 ## Documentation
 
@@ -28,7 +28,11 @@
 - [For to statement](#for-to)
 - [Foreach statement](#for-each)
 - [Tables](#tables)
+- [Include](#include)
+- [Memory management](#memory-management)
 - [Memory context handling](#memory-context-handling)
+- [Function attributes](#function-attributes)
+- [Function returning](#function-returning)
 - [Function calling](#function-calling)
 - [Compound assignment operators](#compound-assignment-operators)
 - [Comparators](#comparators)
@@ -58,6 +62,20 @@ Generating C source code thus allows for easy cross-platform with compilers like
 #### What can I do to contribute?
 There are many ways you can contribute! You can work on the C backend, and you can implement features. You can clean up the compiler source. You can extend functionality, you can fix issues, and the list goes on.
 
+#### How to compile?
+```bat
+git clone https://github.com/DeLuxe-1337/ChronLang
+cd ChronLang
+dotnet build
+```
+You can also use [Dotnet Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot) if you wish.
+
+#### Target Audience
+The target audience is anyone who enjoys dynamically typed, lightweight, minimalistic, fast, and compiled languages. 
+
+#### Goal
+The goal of this programming language is to compile a dynamically typed nature. We often encounter dynamically typed languages that are interpreted, not true compilation.
+
 ## When was this project created?
 1/21/24
 
@@ -84,7 +102,8 @@ Main :: {
 Syntax:
 `identifier` `::` (`(` `identifier array` `)`)? `statement block`
 
-For context `::` stands for `CONSTANT`  
+For context `::` signifies `constant`
+All functions are considered `constant`/`::`
 
 ```chron
 Sum :: (a, b) {
@@ -102,12 +121,6 @@ Foo :: (bar) {
 Main :: {
   Foo("Hello, world")
 }
-```
-
-Function attributes are a thing  
-```chron
-$("inline")
-Sum :: (a, b) { return a + b }
 ```
 
 ## Variables
@@ -231,6 +244,10 @@ Main :: {
 ## Tables
 
 Syntax: `<` `expression list` `>` //Subject to change;  
+
+You can also initialize a table with key, value pairs for example:  
+`T = <"foo" = 5, ...>`
+
 ```chron
 include core.all
 
@@ -248,6 +265,15 @@ Main :: {
 There's functions you can use for tables...  
 `Table.SizeOf :: (table)` will return the length of the table  
 `Table.Iter :: (table)` will return an iterable object for the table  
+
+## Include
+Syntax: `include` `identifier`  
+For example `include core.all` will include `core/all.chron`  
+You can write your own global "packages" if you store them in the compiler directory.
+
+## Memory Management
+At the moment you have to manually `release` variables.
+Check out [Memory Context Handling](#memory-context-handling) to view how to use contexts
 
 ## Memory Context Handling
 // Most of this might change, so it could be subject to change...  
@@ -280,6 +306,26 @@ Main :: {
     PrintLn(x) // Valid
 }
 ```
+
+## Function attributes
+Syntax: `$` `(` `string` (`=` `string`)? `)`
+Example:
+```chron
+$("inline")
+Sum :: (a, b) { return a + b }
+```
+
+The built in attributes there are:
+- `inline` -> inlines a function
+- `extern` -> declares a function as extern
+- `return`=?... -> declares a function to return; used if there's no function body and you want it to return (or for native function)
+- `name`=... -> override the scope name for a function
+- `parameters`=... -> overrides a functions parameters; currently used to interop with native functions (subject to change)
+- `native` -> declares a function to be native (which means it's basically just declared like a regular c function)
+
+## Function returning
+Same as most langauges
+`return` `expression`
 
 ## Function calling
 Same as most languages  
