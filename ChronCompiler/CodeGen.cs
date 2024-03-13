@@ -95,9 +95,12 @@ namespace ChronCompiler
         }
         public override object VisitRelease([NotNull] ChronParser.ReleaseContext context)
         {
-            BlockStack.Peek().AddStatement(
-                new ChronRelease(Visit(context.expression()) as ChronExpression)
+            foreach(var expression in context.expression())
+            {
+                BlockStack.Peek().AddStatement(
+                new ChronRelease(Visit(expression) as ChronExpression)
                 );
+            }
 
             return null;
         }

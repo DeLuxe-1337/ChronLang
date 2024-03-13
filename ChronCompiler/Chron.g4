@@ -47,7 +47,7 @@ continue: 'continue';
 if: 'if' expression block ifElse?;
 ifElse: 'else' block;
 
-release: 'release' expression;
+release: 'release' (expression (',' expression)*);
 defer: 'defer' statement;
 
 foreach:
