@@ -6,10 +6,10 @@ MemoryContext *Context;
 
 MemoryContext *Create_MemoryContext()
 {
-	#if CHRON_DEBUG
-		printf("\t>Memory context created\n");
-	#endif
-	
+#if CHRON_DEBUG
+	printf("\t>Memory context created\n");
+#endif
+
 	MemoryContext *context = (MemoryContext *)malloc(sizeof(MemoryContext));
 	if (context != NULL)
 	{
@@ -85,18 +85,15 @@ void MemoryContext_ReleaseContext(MemoryContext *ctx)
 
 void MemoryContext_Release(ChronObject garbage)
 {
-	if (garbage != NULL)
+	if (garbage != NULL && garbage->Object != NULL)
 	{
-		if(garbage->deallocate != NULL)
+		if (garbage->deallocate != NULL)
 			garbage->deallocate(garbage->Object);
 
-		// if (garbage->deallocate != NULL)
-		// 	*garbage = *((ChronObject)garbage->deallocate(garbage));
-		// else
-		// {
-			free(garbage->Object);
-			free(garbage);
-		// }
+		free(garbage->Object);
+		free(garbage);
+
+		garbage->Object = NULL;
 
 		Context->size--;
 	}
