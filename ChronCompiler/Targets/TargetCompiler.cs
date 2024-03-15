@@ -16,8 +16,13 @@ namespace ChronCompiler.Targets
             string sourceFilePath = Path.Combine(WorkingDirectory, $"{context.Name}.chron.c");
             string targetFilePath = Path.Combine(RootDirectory, $"{context.Name}.chron.c");
 
+#if LINUX
+            string compiledExecutable = Path.Combine(RootDirectory, $"{context.Name}.chron");
+            string outputPath = Path.Combine(WorkingDirectory, $"{context.Name}.chron");
+#else
             string compiledExecutable = Path.Combine(RootDirectory, $"{context.Name}.chron.exe");
             string outputPath = Path.Combine(WorkingDirectory, $"{context.Name}.chron.exe");
+#endif
 
             {
                 if (!File.Exists(targetFilePath))

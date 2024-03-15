@@ -21,6 +21,10 @@
     <ProjectReference Include="..\ChronIR\ChronIR.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Target)'=='Linux'">
+	<DefineConstants>LINUX</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="core\all.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -44,6 +48,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="core\console.chron">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Targets\tcc.sh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Targets\wasm.bat">
