@@ -68,15 +68,18 @@ There are many ways you can contribute! You can work on the C backend, and you c
     <br>
     You need git, tcc, and dotnet  
     
-    ```bat
+```bat
 git clone https://github.com/DeLuxe-1337/ChronLang
 cd ChronLang
-dotnet build
+dotnet build  
+
 ```  
 
 You can also use [Dotnet Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot) if you wish.
 
 </details>
+
+
 <details>
 <summary>Linux (Tested on PopOS! (Ubuntu) specifically)</summary>
 <br>
