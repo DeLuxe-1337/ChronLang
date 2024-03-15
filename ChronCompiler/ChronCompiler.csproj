@@ -21,7 +21,7 @@
     <ProjectReference Include="..\ChronIR\ChronIR.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Target)'=='Linux'">
+  <PropertyGroup Condition="'$(CompileTarget)'=='Linux'">
 	<DefineConstants>LINUX</DefineConstants>
   </PropertyGroup>
 
