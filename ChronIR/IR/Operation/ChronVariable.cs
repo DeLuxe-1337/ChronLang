@@ -70,7 +70,10 @@ namespace ChronIR.IR.Operation
             }
             else
             {
+                var releaseOldValue = new ChronRelease(this) { AddToDeferQueue = false };
+                releaseOldValue.Read(context);
                 context.writer.WriteLine($"{_accessor_name} = {value.Read(context)};");
+                releaseOldValue.Defer(context);
             }
 
             if (value is ChronVariableRef var_ref)

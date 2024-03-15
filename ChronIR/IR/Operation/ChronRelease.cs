@@ -4,6 +4,7 @@ namespace ChronIR.IR.Operation
 {
     public class ChronRelease : ChronStatement, ChronExpression, ChronDeferer
     {
+        public bool AddToDeferQueue = true;
         private ChronExpression expression;
         private ChronTemporaryVariable expressionStore;
         private static ChronFunction MemoryRelease = new(ChronTypes.GCRelease, true);
@@ -28,8 +29,11 @@ namespace ChronIR.IR.Operation
                     return expression.Read(context);
                 }
             }
+
+            if (AddToDeferQueue)
+                ChronDefer.Add(this);
+
             expressionStore.Write(context);
-            ChronDefer.Add(this);
             return expressionStore.Read(context);
         }
 

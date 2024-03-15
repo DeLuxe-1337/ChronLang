@@ -91,9 +91,10 @@ void MemoryContext_Release(ChronObject garbage)
 			garbage->deallocate(garbage->Object);
 
 		free(garbage->Object);
-		free(garbage);
+		// free(garbage);
 
 		garbage->Object = NULL;
+		garbage->deallocate = NULL;
 
 		Context->size--;
 	}
