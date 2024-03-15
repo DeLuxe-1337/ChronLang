@@ -14,8 +14,13 @@ namespace ChronCompiler
             foreach (var target in Directory.GetFiles(Path.Combine(RootDirectory, "Targets")))
             {
                 FileInfo file = new(target);
+#if LINUX
+                if (file.Extension == ".sh")
+                    Target.AddTarget(file.Name.Replace(".sh", "").ToUpper(), file.FullName);
+#else
                 if (file.Extension == ".bat")
                     Target.AddTarget(file.Name.Replace(".bat", "").ToUpper(), file.FullName);
+#endif
             }
         }
         public string SelectedTarget;
