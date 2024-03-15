@@ -128,6 +128,9 @@ Syntax: `identifier` `=` `expression`
 
 Variables can be used globally and locally...
 
+Locally created variables are automatically released at the end of scope.    
+Globally created variables must manually be released.  
+
 ```chron
 global_variable = 100
 
@@ -140,21 +143,24 @@ Main :: {
 
 ## Release
 Syntax: `release` `expression`
+- Releases an object from heap
 - Release can be used as a statement or expression
 
-- Releases an object from heap
-- Release can be used as a statement or expression  
+Using release as a statement allows for compound releasing.  
+`release x, y, z`
 
 Example of release
 ```chron
 include core.all
 
+x = 10 // x is a new object
+y = 5 // y is a new object
+
+z = x + y // z is a new object
+
+// Note local variables are automatically released
+
 Main :: {
-  x = 10 // x is a new object
-  y = 5 // y is a new object
-
-  z = x + y // z is a new object
-
   PrintLn(release z) // Release Z from memory after using it
 
   release x // Release x from memory
