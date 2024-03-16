@@ -63,12 +63,39 @@ Generating C source code thus allows for easy cross-platform with compilers like
 There are many ways you can contribute! You can work on the C backend, and you can implement features. You can clean up the compiler source. You can extend functionality, you can fix issues, and the list goes on.
 
 #### How to compile?
+<details>
+    <summary>Windows</summary>
+    <br>
+    You need git, tcc, and dotnet  
+    
 ```bat
 git clone https://github.com/DeLuxe-1337/ChronLang
 cd ChronLang
-dotnet build
-```
+dotnet build  
+
+```  
+
 You can also use [Dotnet Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot) if you wish.
+
+</details>
+
+
+<details>
+<summary>Linux (Tested on PopOS! (Ubuntu) specifically)</summary>
+<br>
+    You need git, tcc, and dotnet
+
+```sh
+git clone https://github.com/DeLuxe-1337/ChronLang
+cd ChronLang
+dotnet build -c Release /p:CompileTarget=Linux
+cd ChronCompiler/bin/Release/net8.0
+chmod +x Targets/tcc.sh
+
+```
+
+
+</details>
 
 #### Target Audience
 The target audience is anyone who enjoys dynamically typed, lightweight, minimalistic, fast, and compiled languages. 
