@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COMPILER_PATH=tcc
-RUNTIME_FILES="Backend/memory.c Backend/object.c Backend/standard.c"
+RUNTIME_FILES="$CHRON_BACKEND/memory.c $CHRON_BACKEND/object.c $CHRON_BACKEND/standard.c"
 
 if [ -f "$CHRON_NAME" ]; then
     rm "$CHRON_NAME"
