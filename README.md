@@ -341,12 +341,17 @@ Main :: {
 ```
 
 ## Function attributes
-Syntax: `$` `(` `string` (`=` `string`)? `)`
+Syntax: `[` `(` `string` (`=` `string`)? `]`
 Example:
 ```chron
-$("inline")
+["inline"]
 Sum :: (a, b) { return a + b }
 ```
+Modifiers can be used in compound for example:  
+```chron
+["inline", "return", "extern", "native", "name"="..."]
+```
+
 
 The built in attributes there are:
 - `inline` -> inlines a function
