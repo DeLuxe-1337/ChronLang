@@ -50,6 +50,9 @@
     <None Update="core\console.chron">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Targets\clang.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Targets\tcc.sh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
