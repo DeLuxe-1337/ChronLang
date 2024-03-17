@@ -8,7 +8,10 @@ namespace ChronIR.IR.Operation
         public ChronReturn(ChronExpression expr) { this.returnExpression = expr; }
         public void Write(ChronContext context)
         {
-            var expression = returnExpression.Read(context);
+            var tmpReturn = new ChronTemporaryVariable("RETURN_TMP", returnExpression);
+            tmpReturn.Write(context);
+
+            var expression = tmpReturn.Read(context);
 
             ChronDefer.VisitCurrentScope(context);
 
