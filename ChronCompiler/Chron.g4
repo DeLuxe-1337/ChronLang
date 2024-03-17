@@ -4,24 +4,26 @@ program: line* EOF;
 
 line: statement;
 
-statement: (
-		defer
-		| linkStatic
-		| release
-		| import_stmt
-		| include_module
-		| foreign_c
-		| function
-		| call
-		| return
-		| variable
-		| if
-		| for
-		| foreach
-		| while
-		| break
-		| continue
-	) ';'?;
+statement:
+	defer
+	| linkStatic
+	| release
+	| import_stmt
+	| include_module
+	| foreign_c
+	| function
+	| call
+	| return
+	| variable
+	| if
+	| for
+	| foreach
+	| while
+	| break
+	| continue;
+	
+modifier: STRING ('=' STRING)?;
+modifiers: '[' (modifier (',' modifier)*)? ']';
 
 variable:
 	modifiers? expression op = ('=' | '+=' | '-=' | '/=' | '*=') expression;
@@ -32,8 +34,6 @@ functionBlock: block | '?';
 functionParameters: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
 functionForceName: '!';
 
-modifier: '$' '(' STRING ('=' STRING)? ')';
-modifiers: (modifier+);
 function:
 	modifiers? functionForceName? IDENTIFIER '::' functionParameters? functionBlock;
 

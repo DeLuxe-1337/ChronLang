@@ -1,7 +1,5 @@
-$("return")
-$("name"="Table.SizeOf")
+["return", "name"="Table.SizeOf"]
 !TableSizeOf :: (table) ?
 
-$("return")
-$("name"="Table.Iter")
+["return", "name"="Table.Iter"]
 !TableIter :: (table) ?

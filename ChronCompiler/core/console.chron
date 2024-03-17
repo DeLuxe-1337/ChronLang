@@ -1,6 +1,6 @@
 include core.std
 
-$("return")
+["return"]
 !ReadLine :: ?
 
 C `int printf (const char* format, ...);`

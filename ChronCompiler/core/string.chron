@@ -1,3 +1,2 @@
-$("return")
-$("name"="String.Iter")
+["return", "name"="String.Iter"]
 !StringIter :: (str) ?

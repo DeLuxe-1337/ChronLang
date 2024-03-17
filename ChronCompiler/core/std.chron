@@ -1,10 +1,10 @@
-$("return")
+["return"]
 !ToString :: (obj) ?
 
-$("return")
+["return"]
 !TypeOf :: (obj) ?
 
 !Throw :: (message) ?
 
-$("return")
+["return"]
 !Clone :: (object) ?
