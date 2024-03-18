@@ -50,22 +50,29 @@ namespace ChronIR
         public void AddStatement(ChronStatement statement) => Statements.Add(statement);
         public void Write()
         {
-            //Forward declare all functions
-            foreach(var statement in Statements)
+            try
             {
-                if(statement is ChronStatementBlock block)
+                //Forward declare all functions
+                foreach (var statement in Statements)
                 {
-                    foreach(var stmt in block.block)
-                        if (stmt is ChronFunction func)
-                            func.ForwardDeclare(CurrentContext);
+                    if (statement is ChronStatementBlock block)
+                    {
+                        foreach (var stmt in block.block)
+                            if (stmt is ChronFunction func)
+                                func.ForwardDeclare(CurrentContext);
+                    }
                 }
-            }
 
-            foreach (var statement in Statements)
-            {
-                statement.Write(CurrentContext);
+                foreach (var statement in Statements)
+                {
+                    statement.Write(CurrentContext);
+                }
+                CurrentContext.End();
             }
-            CurrentContext.End();
+            catch
+            {
+                CurrentContext.End();
+            }
         }
     }
 }
