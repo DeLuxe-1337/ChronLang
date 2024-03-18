@@ -397,6 +397,22 @@ Main :: {
     PrintLn(invoke Sum x["Sum"](5, 10))
 }
 ```
+Here's another example:  
+```chron
+Sum :: (a, b) {
+    return a + b
+}
+
+Difference :: (a, b) {
+    return a - b;
+}
+
+Main :: {
+    x = <"Sum"=Sum, "Diff"=Difference>
+    PrintLn(invoke Sum x["Sum"](5, 10))
+    PrintLn(invoke Sum x["Diff"](5, 10)) // Doesn't matter if you use Sum or Difference as the function sig, as they're both essentially the same sig. (Return and parameters is what is important to a signature)
+}
+```
 
 
 ## Compound Assignment Operators
