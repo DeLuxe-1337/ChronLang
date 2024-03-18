@@ -171,7 +171,6 @@ ChronObject DynTable()
 {
   newObject(obj, DynObject);
 
-
   _VO_obj->type = vtable;
   _VO_obj->data.table = (DynamicTable *)malloc(sizeof(DynamicTable));
 
@@ -260,6 +259,10 @@ ChronObject Clone(ChronObject input)
     }
 
     break;
+  case vfunction:
+  case vptr:
+    clone->data.ptr = target->data.ptr;
+    break;
   case vnull:
     break;
   case vdeallocated:
@@ -272,5 +275,5 @@ ChronObject Clone(ChronObject input)
 
 DynObject *GetRef(ChronObject GC)
 {
-	return (DynObject *)GC->Object;
+  return (DynObject *)GC->Object;
 }
