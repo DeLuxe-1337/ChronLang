@@ -40,6 +40,19 @@ namespace ChronIR.IR.Operation
             }
             return sb.ToString().TrimEnd(',');
         }
+        private string GenerateReturn()
+        {
+            return $"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)}";
+        }
+        private string GenerateFunctionHeader(string name)
+        {
+            return $"{name}({FormatParameters()})";
+        }
+        private string GenerateFunctionSignature(string name)
+        {
+            return $"typedef {GenerateReturn()} (*{name})({FormatParameters()});";
+        }
+        public string Signature => Name + "Sig";
         public void Write(ChronContext context)
         {
             if(Name == "main")
@@ -54,8 +67,8 @@ namespace ChronIR.IR.Operation
             ChronDefer.IncreaseScope();
 
             Name = ChronTypes.DefineFunction(Name);
-
-            context.writer.Write($"{(External ? "extern" : string.Empty)} {((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)} {(Inline ? "inline" : string.Empty)} {Name}({FormatParameters()})");
+            context.writer.WriteLine(GenerateFunctionSignature(Name + "Sig"));
+            context.writer.Write($"{(External ? "extern" : string.Empty)} {GenerateReturn()} {(Inline ? "inline" : string.Empty)} {GenerateFunctionHeader(Name)}");
 
             for (int i = 0; i < parameters.Count; i++)
             {

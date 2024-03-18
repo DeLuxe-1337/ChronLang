@@ -51,7 +51,7 @@ namespace ChronIR.IR.Operation
             return "CHRON_ENV_ACCESSOR_NO_NAME_FOR_INVOKABLE";
         }
 
-        int ChronInvokable.ParameterCount()
+        public int ParameterCount()
         {
             return parameterCount;
         }

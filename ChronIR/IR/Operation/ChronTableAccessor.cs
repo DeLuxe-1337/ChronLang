@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronTableAccessor : ChronExpression, ChronVariableImpl
+    public class ChronTableAccessor : ChronExpression, ChronVariableImpl, ChronInvokable, ChronAutoRelease
     {
         private ChronExpression table;
         private ChronExpression index;
@@ -44,6 +44,16 @@ namespace ChronIR.IR.Operation
         public void VariableRelease(ChronContext context)
         {
 
+        }
+
+        public string GetName(ChronContext context)
+        {
+            return Read(context).ToString();
+        }
+
+        public int ParameterCount()
+        {
+            return -1;
         }
     }
 }

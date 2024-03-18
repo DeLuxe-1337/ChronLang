@@ -1,4 +1,5 @@
 ﻿using ChronIR.IR.Internal;
+using System.Numerics;
 using System.Text;
 
 namespace ChronIR.IR.Operation
@@ -7,6 +8,7 @@ namespace ChronIR.IR.Operation
     {
         private ChronInvokable target;
         private ChronExpressionBlock parameters = new();
+        public (bool, ChronEnvironmentAccessor) RuntimeInvoke;
         public void AddParameter(ChronExpression chronExpression) => parameters.AddExpression(chronExpression);
         public override bool CanAutoRelease(ChronContext context)
         {
@@ -46,7 +48,22 @@ namespace ChronIR.IR.Operation
         }
         public object Read(ChronContext context)
         {
-            return $"{target.GetName(context)}({ParametersToString(context)})";
+            var name = target.GetName(context);
+            var parameters = ParametersToString(context);
+
+            if(RuntimeInvoke.Item1)
+            {
+                var funcRaw = RuntimeInvoke.Item2.GetStatement(context);
+                if(funcRaw is ChronFunction func)
+                {
+                    if (target is ChronEnvironmentAccessor accessor)
+                            name = accessor.Read(context).ToString();
+
+                    return $"(({func.Signature})c_pointer({name}))({parameters})";
+                }
+            }
+
+            return $"{name}({parameters})";
         }
 
         public void Write(ChronContext context)

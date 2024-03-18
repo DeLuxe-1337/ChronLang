@@ -316,26 +316,45 @@ namespace ChronCompiler
         {
             return new ChronEnvironmentAccessor(context.IDENTIFIER().GetText());
         }
-        private ChronInvoke GenerateCall([NotNull] ChronParser.CallContext context)
+        private ChronInvoke GenerateCall(ChronParser.CallInvokeContext callInvoke, [NotNull] ChronParser.ExpressionContext expression, [NotNull]ChronParser.CallArgsContext args)
         {
-            string callee = context.IDENTIFIER().GetText();
-            ChronInvoke invoke = new(new ChronInvokableAccessor(callee, context.callArgs().expression().Length));
-            foreach (var expr in context.callArgs().expression())
-            {
-                invoke.AddParameter(Visit(expr) as ChronExpression);
-            }
+            ChronExpression callee = Visit(expression) as ChronExpression;
 
-            return invoke;
+            if (callee is ChronEnvironmentAccessor accessor)
+                    callee = new ChronEnvironmentAccessor(accessor.Value, args.expression().Length);
+
+            if (callee is ChronInvokable inv)
+            {
+                ChronInvoke invoke = new(inv);
+
+                if(callInvoke != null)
+                {
+                    invoke.RuntimeInvoke.Item1 = true;
+                    invoke.RuntimeInvoke.Item2 = new ChronEnvironmentAccessor(callInvoke.IDENTIFIER().GetText());
+                }
+
+                foreach (var expr in args.expression())
+                {
+                    invoke.AddParameter(Visit(expr) as ChronExpression);
+                }
+
+                return invoke;
+            }
+            return null;
+        }
+        public override object VisitCallInvokeExpr([NotNull] ChronParser.CallInvokeExprContext context)
+        {
+            return GenerateCall(context.callInvoke(), context.expression(), context.callArgs());
         }
         public override object VisitCall([NotNull] ChronParser.CallContext context)
         {
-            BlockStack.Peek().AddStatement(GenerateCall(context));
+            BlockStack.Peek().AddStatement(GenerateCall(context.callInvoke(), context.expression(), context.callArgs()));
 
             return null;
         }
         public override object VisitCallExpr([NotNull] ChronParser.CallExprContext context)
         {
-            return GenerateCall(context.call());
+            return GenerateCall(null, context.expression(), context.callArgs());
         }
         public override object VisitForeign_c([NotNull] ChronParser.Foreign_cContext context)
         {

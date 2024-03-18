@@ -21,7 +21,7 @@ statement:
 	| while
 	| break
 	| continue;
-	
+
 modifier: STRING ('=' STRING)?;
 modifiers: '[' (modifier (',' modifier)*)? ']';
 
@@ -65,13 +65,15 @@ import_function:
 import_statement: import_function;
 import_block: '{' import_statement* '}';
 
-call: IDENTIFIER callArgs ';'?;
+call: callInvoke? expression callArgs ';'?;
 callArgs: '(' (expression (',' expression)*)? ')';
 
+callInvoke: (invoke='invoke' sig=IDENTIFIER);
+
 expression:
-	constant		# constantExpr
-	| IDENTIFIER	# IDENTIFIERExpr
-	| call			# callExpr
+	constant				# constantExpr
+	| IDENTIFIER			# IDENTIFIERExpr
+	| expression callArgs	# callExpr
 	| expression op = (
 		'=='
 		| '!='
@@ -89,6 +91,7 @@ expression:
 	| expression '=' expression									# bindExpr
 	| '<' (expression (',' expression)*)? '>'					# tableExpr
 	| expression '[' expression ']'								# tableIndexExpr
+	| callInvoke expression callArgs						# callInvokeExpr
 	| 'release' expression										# releaseExpr
 	| '(' expression ')'										# evaluateExpr;
 
