@@ -34,6 +34,7 @@
 - [Function attributes](#function-attributes)
 - [Function returning](#function-returning)
 - [Function calling](#function-calling)
+- [Storing and calling functions at runtime](#invoking-functions-at-runtime)
 - [Compound assignment operators](#compound-assignment-operators)
 - [Comparators](#comparators)
 - [Math](#math)
@@ -368,6 +369,35 @@ Same as most langauges
 ## Function calling
 Same as most languages  
 `identifier` `(` `expression array` `)`  
+
+## Invoking Functions At Runtime
+You can invoke functions at runtime using the `invoke` keyword.  
+Syntax: `invoke` `function_sig` `call`  
+
+Here's an example:  
+```chron
+Sum :: (a, b) {
+    return a + b
+}
+
+Main :: {
+    x = Sum
+    PrintLn(invoke Sum x(5, 10))
+}
+```
+
+You can even store functions in tables; here's an example:  
+```chron
+Sum :: (a, b) {
+    return a + b
+}
+
+Main :: {
+    x = <"Sum"=Sum>
+    PrintLn(invoke Sum x["Sum"](5, 10))
+}
+```
+
 
 ## Compound Assignment Operators
 Same as most languages  
