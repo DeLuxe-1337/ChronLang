@@ -44,15 +44,26 @@ namespace ChronIR.IR.Operation
         {
             return $"{((Block != null && Block.HasStatement<ChronReturn>()) || DoesReturn ? ChronTypes.TypeMap["object"].Value : ChronTypes.TypeMap["void"].Value)}";
         }
-        private string GenerateFunctionHeader(string name)
+        private string GenerateFunctionNameParam(string name)
         {
             return $"{name}({FormatParameters()})";
+        }
+        private string GenerateFunctionHeader(string name)
+        {
+            return $"{(External ? "extern" : string.Empty)} {GenerateReturn()} {(Inline ? "inline" : string.Empty)} {GenerateFunctionNameParam(Name)}";
         }
         private string GenerateFunctionSignature(string name)
         {
             return $"typedef {GenerateReturn()} (*{name})({FormatParameters()});";
         }
         public string Signature => Name + "Sig";
+        public void ForwardDeclare(ChronContext context)
+        {
+            Name = ChronTypes.DefineFunction(Name);
+            context.writer.WriteLine(GenerateFunctionSignature(Name + "Sig"));
+            context.writer.WriteLine($"{GenerateFunctionHeader(Name)};");
+            context.env.GetCurrentScope().AddToScope(ScopeName, this, false);
+        }
         public void Write(ChronContext context)
         {
             if(Name == "main")
@@ -61,14 +72,10 @@ namespace ChronIR.IR.Operation
                 Block.PrependStatement(new ChronInvoke(new ChronFunction(initialize, true)));
             }
 
-            context.env.GetCurrentScope().AddToScope(ScopeName, this, false);
-
             context.env.AddScope(new("FunctionBlock"));
             ChronDefer.IncreaseScope();
 
-            Name = ChronTypes.DefineFunction(Name);
-            context.writer.WriteLine(GenerateFunctionSignature(Name + "Sig"));
-            context.writer.Write($"{(External ? "extern" : string.Empty)} {GenerateReturn()} {(Inline ? "inline" : string.Empty)} {GenerateFunctionHeader(Name)}");
+            context.writer.Write(GenerateFunctionHeader(Name));
 
             for (int i = 0; i < parameters.Count; i++)
             {

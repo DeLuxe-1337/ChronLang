@@ -5,7 +5,7 @@ namespace ChronIR.IR.Operation
     public class ChronStatementBlock : ChronStatement
     {
         //internal static ChronContext GC_Context = new("GC_Context") { writer = new("gc.context.c") };
-        private List<ChronStatement> block = new();
+        internal List<ChronStatement> block = new();
         public void AddStatement(ChronStatement stmt) => block.Add(stmt);
         public void PrependStatement(ChronStatement stmt) => block.Insert(0, stmt);
         public ChronStatement PopStatement()

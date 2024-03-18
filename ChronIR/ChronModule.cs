@@ -1,4 +1,5 @@
 ﻿using ChronIR.IR.Internal;
+using ChronIR.IR.Operation;
 
 namespace ChronIR
 {
@@ -49,6 +50,17 @@ namespace ChronIR
         public void AddStatement(ChronStatement statement) => Statements.Add(statement);
         public void Write()
         {
+            //Forward declare all functions
+            foreach(var statement in Statements)
+            {
+                if(statement is ChronStatementBlock block)
+                {
+                    foreach(var stmt in block.block)
+                        if (stmt is ChronFunction func)
+                            func.ForwardDeclare(CurrentContext);
+                }
+            }
+
             foreach (var statement in Statements)
             {
                 statement.Write(CurrentContext);
