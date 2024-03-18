@@ -12,9 +12,9 @@ statement:
 	| include_module
 	| foreign_c
 	| function
+	| variable
 	| call
 	| return
-	| variable
 	| if
 	| for
 	| foreach
