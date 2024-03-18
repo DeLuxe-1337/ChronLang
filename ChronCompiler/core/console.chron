@@ -11,10 +11,9 @@ import {
 }
 
 Print :: (message) {
-    printf(ToString(message))
+    printf("%s", ToString(message))
 }
 
 PrintLn :: (message) {
-    Print(message)
-    printf("\n")
+    printf("%s\n", ToString(message))
 }
