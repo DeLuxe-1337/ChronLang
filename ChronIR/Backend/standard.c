@@ -193,10 +193,12 @@ ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 		return DynBoolean(left->data.number == right->data.number);
 	case vinteger:
 		return DynBoolean(left->data.integer == right->data.integer);
+	case vfunction:
+	case vptr:
+		return DynBoolean(left->data.ptr == right->data.ptr);
 	case vdeallocated:
 		return DynBoolean(false);
 	default:
-		printf("Invalid DynObject type\n");
 		return DynBoolean(false);
 	}
 }
@@ -221,10 +223,12 @@ ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 		return DynBoolean(left->data.number != right->data.number);
 	case vinteger:
 		return DynBoolean(left->data.integer != right->data.integer);
+	case vfunction:
+	case vptr:
+		return DynBoolean(left->data.ptr == right->data.ptr);
 	case vdeallocated:
 		return DynBoolean(false);
 	default:
-		printf("Invalid DynObject type\n");
 		return DynBoolean(false);
 	}
 }
