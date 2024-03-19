@@ -5,13 +5,15 @@ GenerateBasicFunction :: (name) {
     block = IR.CreateBlock()
     IR.Block.Append(block, IR.CreateInvoke("printf", <IR.CreateString("Hello, world")>))
 
-    func = IR.CreateFunction(name, block, nil)
-
-    return Clone(func)
+    return IR.CreateFunction(name, block, nil)
 }
 
 Main :: {
+    PrintLn("Writing basic function")
+
     IR.Write(GenerateBasicFunction("main"))
+
+    PrintLn("Writing to file")
 
     IR.Writer.WriteToFile("out.chron_test.c")
 

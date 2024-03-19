@@ -7,5 +7,4 @@ tcc/
 *.user
 test.c
 ChronCompiler/Properties/PublishProfiles/FolderProfile.pubxml.user
-ChronBootstrap/out.chron_test.c
-ChronBootstrap/main.chron.c
+ChronBootstrap/*.c
