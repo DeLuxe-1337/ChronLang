@@ -1,0 +1,16 @@
+WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke>
+ReadMap = <"Literals.String"=IR.Read.Literals.String>
+
+IR.Write :: (node) {
+    type = node["type"]
+    visiter = WriteMap[type]
+    
+    return invoke IR.Write visiter(node)
+}
+
+IR.Read :: (node) {
+    type = node["type"]
+    visiter = ReadMap[type]
+    
+    return invoke IR.Read visiter(node)
+}

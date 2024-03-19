@@ -1,0 +1,38 @@
+IR.Write.Function :: (context) {
+    name = context["name"]
+    block = context["block"]
+    parameters = context["parameters"]
+
+    if context["return"] == true {
+        IR.Writer.Write(Types.Void)
+    } else {
+        IR.Writer.Write(Types.Object)
+    }
+
+    IR.Writer.Write(" " + name + "(")
+
+    if parameters != nil {
+        build = ""
+        foreach index, value in Table.Iter(parameters) {
+            build += Types.Object + " " + value
+            if index != (Table.SizeOf(parameters) - 1) {
+                build += ","
+            }
+        }
+        IR.Writer.Write(build)
+    }
+
+    IR.Writer.Write(")")
+
+    IR.Writer.WriteLine("{")
+
+    IR.Write(block)
+
+    IR.Writer.WriteLine("}")
+    
+    return nil
+}
+
+IR.CreateFunction :: (name, block, parameters) {
+    return <"name"=name, "parameters"=parameters, "block"=block, "return"=false, "type"="Function">
+}

@@ -1,0 +1,9 @@
+Types.CreateString = "DynString"
+Types.CreateInt = "DynInteger"
+Types.CreateBoolean = "DynBoolean"
+Types.CreateTable = "DynTable"
+Types.CreateNil = "DynNil"
+Types.CreateFunction = "DynFunction"
+
+Types.Void = "ChronVoid"
+Types.Object = "ChronObject"

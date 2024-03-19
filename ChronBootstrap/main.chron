@@ -1,0 +1,21 @@
+include core.all
+include ir.all
+
+GenerateBasicFunction :: (name) {
+    block = IR.CreateBlock()
+    IR.Block.Append(block, IR.CreateInvoke("printf", <IR.CreateString("Hello, world")>))
+
+    func = IR.CreateFunction(name, block, nil)
+
+    return Clone(func)
+}
+
+Main :: {
+    IR.Write(GenerateBasicFunction("main"))
+
+    IR.Writer.WriteToFile("out.chron_test.c")
+
+    PrintLn("End of program")
+
+    Memory.ReleaseAll()
+}

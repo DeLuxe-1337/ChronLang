@@ -1,0 +1,23 @@
+IR.Write.Invoke :: (context) {
+    parameters = context["parameters"]
+    target = context["target"]
+
+    IR.Writer.Write(target + "(")
+
+    build = ""
+
+    foreach index, value in Table.Iter(parameters) {
+        build += IR.Read(value)
+        if index != (Table.SizeOf(parameters) - 1) {
+            build += ","
+        }
+    }
+
+    IR.Writer.WriteLine(build + ");")
+
+    return nil
+}
+
+IR.CreateInvoke :: (callee, parameters) {
+    return <"target"=callee, "parameters"=parameters , "type"="Invoke">
+}

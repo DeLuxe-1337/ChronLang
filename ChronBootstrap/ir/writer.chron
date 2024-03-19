@@ -1,0 +1,15 @@
+include core.file.all
+
+GeneratedSource = ""
+
+IR.Writer.WriteLine :: (text) {
+    GeneratedSource += text + "\n"
+}
+
+IR.Writer.Write :: (text) {
+    GeneratedSource += text
+}
+
+IR.Writer.WriteToFile :: (path) {
+    File.Write(path, GeneratedSource)
+}

@@ -1,0 +1,8 @@
+IR.Read.Literals.String :: (context) {
+    value = context["value"]
+    return "\"" + value + "\""
+}
+
+IR.CreateString :: (value) {
+    return <"value"=value, "type"="Literals.String">
+}
