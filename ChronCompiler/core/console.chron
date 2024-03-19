@@ -3,12 +3,15 @@ include core.std
 ["return"]
 !ReadLine :: ?
 
-C `int printf (const char* format, ...);`
+["native", "return"="int", "parameters"="const char* format, ..."]
+!printf :: ?
 
-import {
-    printf :: (string)
-    printf :: (string, string)
-}
+// C `int printf (const char* format, ...);`
+
+// import {
+//     printf :: (string)
+//     printf :: (string, string)
+// }
 
 Print :: (message) {
     printf("%s", ToString(message))
