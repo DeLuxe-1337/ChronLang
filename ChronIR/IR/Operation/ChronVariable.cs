@@ -16,7 +16,7 @@ namespace ChronIR.IR.Operation
         {
             if (target is ChronEnvironmentAccessor accessor)
             {
-                this._accessor_name = $"_V_{accessor.Value}";
+                this._accessor_name = $"_V_{accessor.Value.Replace(".", "_")}";
                 this._name = accessor.Value;
             }
 
