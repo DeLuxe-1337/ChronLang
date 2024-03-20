@@ -138,19 +138,19 @@ namespace ChronCompiler
             switch (context.op.Text)
             {
                 case "+=":
-                    value = new ChronAdd(new ChronRelease(identifier), value);
+                    value = new ChronAdd(identifier, value);
                     break;
                 case "-=":
-                    value = new ChronSub(new ChronRelease(identifier), value);
+                    value = new ChronSub(identifier, value);
                     break;
                 case "*=":
-                    value = new ChronMul(new ChronRelease(identifier), value);
+                    value = new ChronMul(identifier, value);
                     break;
                 case "/=":
-                    value = new ChronDiv(new ChronRelease(identifier), value);
+                    value = new ChronDiv(identifier, value);
                     break;
                 case "%=":
-                    value = new ChronModulus(new ChronRelease(identifier), value);
+                    value = new ChronModulus(identifier, value);
                     break;
             }
 
