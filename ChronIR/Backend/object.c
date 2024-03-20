@@ -43,7 +43,7 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 
   if (table->size >= table->capacity)
   {
-    table->capacity += 1;
+    table->capacity *= 2;
     TableKeyValuePair *new_pairs = (TableKeyValuePair *)realloc(table->pairs, table->capacity * sizeof(TableKeyValuePair));
     if (new_pairs == NULL)
     {
