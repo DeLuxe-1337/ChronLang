@@ -70,13 +70,31 @@ namespace ChronIR.IR.Operation
             }
             else
             {
-                var releaseOldValue = new ChronRelease(this) { AddToDeferQueue = false };
-                var newValue = new ChronTemporaryVariable("VARIABLE_SET", value);
+                var oldValue = context.env.FindValueByName(_name);
+                bool releaseOldValue = true;
+                
+                foreach(var scope in oldValue)
+                {
+                    if(scope.data is ChronVariable v)
+                    {
+                        releaseOldValue = false;
+                    }
+                }
 
-                newValue.Write(context);
-                releaseOldValue.Write(context);
+                if(releaseOldValue)
+                {
+                    var releaseVar = new ChronRelease(this) { AddToDeferQueue = false };
+                    var newValue = new ChronTemporaryVariable("VARIABLE_SET", value);
 
-                context.writer.WriteLine($"{_accessor_name} = {newValue.Read(context)};");
+                    newValue.Write(context);
+                    releaseVar.Write(context);
+
+                    context.writer.WriteLine($"{_accessor_name} = {newValue.Read(context)};");
+                }
+                else
+                {
+                    context.writer.WriteLine($"{_accessor_name} = {value.Read(context)};");
+                }
             }
 
             if (value is ChronVariableRef var_ref)
