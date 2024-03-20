@@ -71,9 +71,12 @@ namespace ChronIR.IR.Operation
             else
             {
                 var releaseOldValue = new ChronRelease(this) { AddToDeferQueue = false };
-                releaseOldValue.Read(context);
-                context.writer.WriteLine($"{_accessor_name} = {value.Read(context)};");
-                releaseOldValue.Defer(context);
+                var newValue = new ChronTemporaryVariable("VARIABLE_SET", value);
+
+                newValue.Write(context);
+                releaseOldValue.Write(context);
+
+                context.writer.WriteLine($"{_accessor_name} = {newValue.Read(context)};");
             }
 
             if (value is ChronVariableRef var_ref)
