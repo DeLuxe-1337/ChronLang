@@ -1,5 +1,5 @@
 WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke, "EnvironmentAccessor"=IR.Write.EnvironmentAccessor>
-ReadMap = <"Literals.String"=IR.Read.Literals.String, "EnvironmentAccessor"=IR.Read.EnvironmentAccessor>
+ReadMap = <"Literals.String"=IR.Read.Literals.String, "EnvironmentAccessor"=IR.Read.EnvironmentAccessor, "Function"=IR.Read.Function>
 
 IR.Write :: (node) {
     type = node["type"]

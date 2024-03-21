@@ -1,9 +1,9 @@
 IR.Write.EnvironmentAccessor :: (context) {
-    IR.Write(IR.EnvironmentAccessor.Find(context["value"]))
+    IR.Write(IR.EnvironmentAccessor.Find(context["name"]))
 }
 
 IR.Read.EnvironmentAccessor :: (context) {
-    return IR.Read(IR.EnvironmentAccessor.Find(context["value"]))
+    return IR.Read(IR.EnvironmentAccessor.Find(context["name"]))
 }
 
 IR.EnvironmentAccessor.Find :: (value) {

@@ -14,6 +14,8 @@ IR.Write.Function :: (context) {
 
     IR.Writer.Write(" " + accessorName + "(")
 
+    context["block"] = nil
+
     IR.Env.Scope.Add(name, context, true)
     IR.Env.Scope.Create()
 
@@ -36,6 +38,10 @@ IR.Write.Function :: (context) {
 
     IR.Env.Scope.Pop()
     IR.Writer.WriteLine("}")
+}
+
+IR.Read.Function :: (context) { 
+    return "_F_" + Clone(context["name"])
 }
 
 IR.CreateFunction :: (name, block, parameters) {

@@ -3,7 +3,7 @@ include ir.all
 
 GenerateBasicFunction :: (name) {
     block = IR.CreateBlock()
-    IR.Block.Append(block, IR.CreateInvoke("printf", <IR.CreateString("Hello, world")>))
+    IR.Block.Append(block, IR.CreateInvoke(IR.CreateEnvironmentAccessor("main"), <IR.CreateString("Hello, world")>))
 
     return IR.CreateFunction(name, block, nil)
 }

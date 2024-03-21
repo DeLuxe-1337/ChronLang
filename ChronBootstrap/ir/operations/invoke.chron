@@ -2,7 +2,7 @@ IR.Write.Invoke :: (context) {
     parameters = Clone(context["parameters"])
     target = Clone(context["target"])
 
-    IR.Writer.Write(target + "(")
+    IR.Writer.Write(IR.Read(target) + "(")
 
     build = ""
 
