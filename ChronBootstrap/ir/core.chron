@@ -1,16 +1,20 @@
-WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke>
-ReadMap = <"Literals.String"=IR.Read.Literals.String>
+WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke, "EnvironmentAccessor"=IR.Write.EnvironmentAccessor>
+ReadMap = <"Literals.String"=IR.Read.Literals.String, "EnvironmentAccessor"=IR.Read.EnvironmentAccessor>
 
 IR.Write :: (node) {
     type = node["type"]
     visiter = WriteMap[type]
+
+    PrintLn("Write " + type)
     
-    return invoke IR.Write visiter(node)
+    invoke IR.Write visiter(node)
 }
 
 IR.Read :: (node) {
     type = node["type"]
     visiter = ReadMap[type]
+
+    PrintLn("Read " + type)
     
     return invoke IR.Read visiter(node)
 }

@@ -10,24 +10,6 @@ GenerateBasicFunction :: (name) {
 
 Main :: {
     IR.Env.Scope.Create()
-    
-    IR.Env.Scope.Add("peak", "test value", false)
-
-    PrintLn("Scope get:")
-    PrintLn(IR.Env.Scope.Get("peak"))
-
-    PrintLn("Creating another scope")
-
-    IR.Env.Scope.Create()
-
-    IR.Env.Scope.Add("peak", 60, false)
-
-    PrintLn("Scope get:")
-    PrintLn(IR.Env.Scope.Get("peak"))
-
-    IR.Env.Scope.Pop()
-    
-    PrintLn("Writing basic function")
 
     IR.Write(GenerateBasicFunction("main"))
 

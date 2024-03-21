@@ -1,0 +1,20 @@
+IR.Write.EnvironmentAccessor :: (context) {
+    IR.Write(IR.EnvironmentAccessor.Find(context["value"]))
+}
+
+IR.Read.EnvironmentAccessor :: (context) {
+    return IR.Read(IR.EnvironmentAccessor.Find(context["value"]))
+}
+
+IR.EnvironmentAccessor.Find :: (value) {
+    result = IR.Env.Scope.Get(value)
+    if result[0] != nil {
+        return result[0]
+    }
+
+    return nil
+}
+
+IR.CreateEnvironmentAccessor :: (name) {
+    return <"name"=name, "type"="EnvironmentAccessor">
+}

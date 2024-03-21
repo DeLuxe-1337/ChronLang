@@ -1,15 +1,21 @@
 IR.Write.Function :: (context) {
-    name = context["name"]
-    block = context["block"]
-    parameters = context["parameters"]
+    name = Clone(context["name"])
+    block = Clone(context["block"])
+    parameters = Clone(context["parameters"])
+    doesReturn = Clone(context["return"])
+    
+    accessorName = "_F_" + name
 
-    if context["return"] == true {
+    if doesReturn == true {
         IR.Writer.Write(Types.Void)
     } else {
         IR.Writer.Write(Types.Object)
     }
 
-    IR.Writer.Write(" " + name + "(")
+    IR.Writer.Write(" " + accessorName + "(")
+
+    IR.Env.Scope.Add(name, context, true)
+    IR.Env.Scope.Create()
 
     if parameters != nil {
         build = ""
@@ -28,9 +34,8 @@ IR.Write.Function :: (context) {
 
     IR.Write(block)
 
+    IR.Env.Scope.Pop()
     IR.Writer.WriteLine("}")
-    
-    return nil
 }
 
 IR.CreateFunction :: (name, block, parameters) {

@@ -1,6 +1,6 @@
 IR.Write.Invoke :: (context) {
-    parameters = context["parameters"]
-    target = context["target"]
+    parameters = Clone(context["parameters"])
+    target = Clone(context["target"])
 
     IR.Writer.Write(target + "(")
 
@@ -14,8 +14,6 @@ IR.Write.Invoke :: (context) {
     }
 
     IR.Writer.WriteLine(build + ");")
-
-    return nil
 }
 
 IR.CreateInvoke :: (callee, parameters) {

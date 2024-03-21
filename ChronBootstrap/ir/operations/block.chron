@@ -4,8 +4,6 @@ IR.Write.Block :: (context) {
             IR.Write(value)
         }
     }
-    
-    return nil
 }
 
 IR.CreateBlock :: () {

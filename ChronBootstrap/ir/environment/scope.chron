@@ -4,7 +4,6 @@ IR.Env.Scope.CurrentIndex = -1
 
 IR.Env.Scope.Create :: () {
     IR.Env.Scope.CurrentIndex += 1
-    PrintLn(IR.Env.Scope.CurrentIndex)
     IR.Env.Scope.List[IR.Env.Scope.CurrentIndex] = <>
     IR.Env.Scope.SetCurrent()
 }
@@ -41,7 +40,6 @@ IR.Env.Scope.Get :: (name) {
             }
         }
     }
-    PrintLn("End of get")
     return Clone(result)
 }
 
@@ -64,9 +62,13 @@ IR.Env.Scope.Add :: (name, operation, removeExisting) {
 }
 
 IR.Env.Scope.RemoveAllWithName :: (name) {
-    foreach index, value in Table.Iter(IR.Env.Scope.List) {
-        if (value != nil) and (value["name"] == name) {
-            IR.Env.Scope.List[index] = nil
+    foreach scopeIndex, scope in Table.Iter(IR.Env.Scope.List) {
+        if TypeOf(scope) == "table" {
+            foreach index, value in Table.Iter(scope) {
+                if (value != nil) and (value["name"] == name) {
+                    IR.Env.Scope.List[scopeIndex][index] = nil
+                }
+            }
         }
     }
 }
