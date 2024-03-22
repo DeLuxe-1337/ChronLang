@@ -555,10 +555,10 @@ ChronObject StringContains(ChronObject source, ChronObject target)
 
 ChronObject StringIsAlpha(ChronObject source)
 {
-	char* str = c_string(source);
+	const char* str= c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
-		char* check = str[i];
+		char check = str[i];
 		if(isalpha(check) == false)
 			return DynBoolean(false);
 	}
@@ -569,10 +569,10 @@ ChronObject StringIsAlpha(ChronObject source)
 
 ChronObject StringIsAlphaNumeric(ChronObject source)
 {
-	char* str = c_string(source);
+	const char* str= c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
-		char* check = str[i];
+		char check = str[i];
 		if(isalnum(check) == false)
 			return DynBoolean(false);
 	}
@@ -583,10 +583,10 @@ ChronObject StringIsAlphaNumeric(ChronObject source)
 
 ChronObject StringIsNumeric(ChronObject source)
 {
-	char* str = c_string(source);
+	const char* str= c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
-		char* check = str[i];
+		char check = str[i];
 		if(isdigit(check) == false)
 			return DynBoolean(false);
 	}
@@ -597,10 +597,10 @@ ChronObject StringIsNumeric(ChronObject source)
 
 ChronObject StringIsWhitespace(ChronObject source)
 {
-	char* str = c_string(source);
+	const char* str= c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
-		char* check = str[i];
+		char check = str[i];
 		if(isspace(check) == false)
 			return DynBoolean(false);
 	}
