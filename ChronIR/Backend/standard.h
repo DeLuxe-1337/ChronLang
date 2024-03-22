@@ -54,6 +54,7 @@ ChronObject StringLength(ChronObject source);
 ChronObject StringIsAlpha(ChronObject source);
 ChronObject StringIsAlphaNumeric(ChronObject source);
 ChronObject StringIsNumeric(ChronObject source);
+ChronObject StringIsWhitespace(ChronObject source);
 
 #define ref(o) (&o)
 #define deref(o) (*o)

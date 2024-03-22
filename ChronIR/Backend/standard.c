@@ -595,6 +595,20 @@ ChronObject StringIsNumeric(ChronObject source)
 	return DynBoolean(true);
 }
 
+ChronObject StringIsWhitespace(ChronObject source)
+{
+	char* str = c_string(source);
+	for (size_t i = 0; i < strlen(str); i++)
+	{
+		char* check = str[i];
+		if(isspace(check) == false)
+			return DynBoolean(false);
+	}
+	
+
+	return DynBoolean(true);
+}
+
 ChronObject StringLength(ChronObject source)
 {
 	return DynInteger(strlen(c_string(source)));

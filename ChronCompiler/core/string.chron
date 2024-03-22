@@ -13,5 +13,8 @@
 ["return", "name"="String.IsNumeric"]
 !StringIsNumeric :: (source) ?
 
+["return", "name"="String.IsWhitespace"]
+!StringIsWhitespace :: (source) ?
+
 ["return", "name"="String.SizeOf"]
 !StringLength :: (source) ?
