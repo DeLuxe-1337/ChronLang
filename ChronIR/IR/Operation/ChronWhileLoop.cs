@@ -17,6 +17,11 @@ namespace ChronIR.IR.Operation
             context.env.AddScope(new("WhileBlock"));
             ChronDefer.IncreaseScope();
 
+            if(condition is ChronRelease releaseExpr)
+            {
+                condition = releaseExpr.Expression;
+            }
+
             context.writer.WriteLine($"while({ChronTypes.GetBooleanFromObject}({condition.Read(context)})) {{");
 
             ChronDefer.IncreaseScope();

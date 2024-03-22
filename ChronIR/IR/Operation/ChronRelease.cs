@@ -5,13 +5,13 @@ namespace ChronIR.IR.Operation
     public class ChronRelease : ChronStatement, ChronExpression, ChronDeferer
     {
         public bool AddToDeferQueue = true;
-        private ChronExpression expression;
+        public ChronExpression Expression;
         private ChronTemporaryVariable expressionStore;
         private static ChronFunction MemoryRelease = new(ChronTypes.GCRelease, true);
         public ChronRelease(ChronExpression expr) 
         { 
-            this.expression = expr;
-            this.expressionStore = new("RELEASE_TMP", this.expression);
+            this.Expression = expr;
+            this.expressionStore = new("RELEASE_TMP", this.Expression);
         }
 
         public void Defer(ChronContext context)
@@ -22,11 +22,11 @@ namespace ChronIR.IR.Operation
         }
         public object Read(ChronContext context)
         {
-            if (expression is ChronConditionalAutoRelease condRelease)
+            if (Expression is ChronConditionalAutoRelease condRelease)
             {
                 if (!condRelease.CanAutoRelease(context))
                 {
-                    return expression.Read(context);
+                    return Expression.Read(context);
                 }
             }
 
@@ -40,7 +40,7 @@ namespace ChronIR.IR.Operation
         public void Write(ChronContext context)
         {
             ChronInvoke invoke = new(MemoryRelease);
-            invoke.AddParameter(expression);
+            invoke.AddParameter(Expression);
             invoke.Write(context);
         }
     }
