@@ -1,6 +1,8 @@
 include lexer.token
 include lexer.state
 
+Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET">
+
 Lexer.GetToken :: (state) {
     while ((String.IsWhitespace(Lexer.State.Get(state))) or (Lexer.State.Get(state) == "\n")) and (Lexer.State.EOF(state) == false) {
         Lexer.State.IncreaseIndex(state)
@@ -8,7 +10,7 @@ Lexer.GetToken :: (state) {
 
     if String.IsAlpha(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
         identifier = ""
-        while (String.IsAlphaNumeric(Lexer.State.Get(state))) and (Lexer.State.EOF(state) == false) {
+        while (String.IsAlphaNumeric(Lexer.State.Get(state)) or (Lexer.State.Get(state) == ".")) and (Lexer.State.EOF(state) == false) {
             identifier += Lexer.State.Get(state)
             Lexer.State.IncreaseIndex(state)
         }
@@ -39,6 +41,24 @@ Lexer.GetToken :: (state) {
         return Lexer.Token.Create(Clone(string), "STRING")
     }
 
+    if Lexer.State.Get(state) == ":" and (Lexer.State.EOF(state) == false) {
+        Lexer.State.IncreaseIndex(state)
+        if(Lexer.State.Get(state) == ":") {
+            Lexer.State.IncreaseIndex(state)
+            return Lexer.Token.Create("::", "CONSTANT")
+        }
+        else {
+            return Lexer.Token.Create(":", "COLON")
+        }
+    }
+
+    foreach symbol, type in Table.Iter(Lexer.SymbolMap) {
+        if Lexer.State.Get(state) == symbol {
+            Lexer.State.IncreaseIndex(state)
+            return Lexer.Token.Create(Clone(symbol), Clone(type))
+        }
+    }
+
     return nil
 }
 
@@ -49,9 +69,6 @@ Lexer.GetAllTokens :: (state) {
         result = Lexer.GetToken(state)
         if result != nil {
             tokens[Table.SizeOf(tokens)] = result
-            PrintLn("Token")
-            PrintLn(result)
-            PrintLn("End of token")
         }
     }
 

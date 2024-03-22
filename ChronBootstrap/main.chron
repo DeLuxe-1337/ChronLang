@@ -1,11 +1,9 @@
 include core.all
 include core.file.all
-include ir.all
 include lexer.core
 
 Main :: {
     state = Lexer.State.Create(File.Read("lexer.test.chron"))
-    PrintLn(state)
 
     tokens = Lexer.GetAllTokens(state)
     PrintLn(tokens)

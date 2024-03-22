@@ -1,3 +1,5 @@
-abc
-100 
- "Hello, world"    
+include core.all
+
+Main :: {
+    PrintLn("Hello, world")
+}
