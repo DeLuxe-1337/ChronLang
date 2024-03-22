@@ -559,7 +559,7 @@ ChronObject StringIsAlpha(ChronObject source)
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if (isalpha(check) == false)
+		if (!isalpha(check))
 			return DynBoolean(false);
 	}
 
@@ -572,7 +572,7 @@ ChronObject StringIsAlphaNumeric(ChronObject source)
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if (isalnum(check) == false)
+		if (!isalnum(check))
 			return DynBoolean(false);
 	}
 
@@ -585,7 +585,7 @@ ChronObject StringIsNumeric(ChronObject source)
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if (isdigit(check) == false)
+		if (!isdigit(check))
 			return DynBoolean(false);
 	}
 
@@ -598,7 +598,7 @@ ChronObject StringIsWhitespace(ChronObject source)
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if (isspace(check) == false)
+		if (!isspace(check))
 			return DynBoolean(false);
 	}
 
@@ -616,10 +616,12 @@ ChronObject StringIndex(ChronObject source, ChronObject index)
 	int idx = c_int(index);
 	size_t str_length = strlen(str);
 
-	if (idx < 0 || idx >= str_length) return DynNil();
+	if (idx < 0 || idx >= str_length)
+		return DynNil();
 
 	char *extracted_char = malloc(2);
-	if (extracted_char == NULL) return DynNil();
+	if (extracted_char == NULL)
+		return DynNil();
 
 	extracted_char[0] = str[idx];
 	extracted_char[1] = '\0';
