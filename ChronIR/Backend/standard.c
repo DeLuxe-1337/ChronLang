@@ -555,56 +555,52 @@ ChronObject StringContains(ChronObject source, ChronObject target)
 
 ChronObject StringIsAlpha(ChronObject source)
 {
-	const char* str= c_string(source);
+	const char *str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if(isalpha(check) == false)
+		if (isalpha(check) == false)
 			return DynBoolean(false);
 	}
-	
 
 	return DynBoolean(true);
 }
 
 ChronObject StringIsAlphaNumeric(ChronObject source)
 {
-	const char* str= c_string(source);
+	const char *str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if(isalnum(check) == false)
+		if (isalnum(check) == false)
 			return DynBoolean(false);
 	}
-	
 
 	return DynBoolean(true);
 }
 
 ChronObject StringIsNumeric(ChronObject source)
 {
-	const char* str= c_string(source);
+	const char *str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if(isdigit(check) == false)
+		if (isdigit(check) == false)
 			return DynBoolean(false);
 	}
-	
 
 	return DynBoolean(true);
 }
 
 ChronObject StringIsWhitespace(ChronObject source)
 {
-	const char* str= c_string(source);
+	const char *str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
-		if(isspace(check) == false)
+		if (isspace(check) == false)
 			return DynBoolean(false);
 	}
-	
 
 	return DynBoolean(true);
 }
@@ -612,6 +608,11 @@ ChronObject StringIsWhitespace(ChronObject source)
 ChronObject StringLength(ChronObject source)
 {
 	return DynInteger(strlen(c_string(source)));
+}
+
+ChronObject StringIndex(ChronObject source, ChronObject index)
+{
+	return DynString(c_string(source)[c_int(index)]);
 }
 
 int c_object_type(ChronObject o)

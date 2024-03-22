@@ -4,6 +4,9 @@
 ["return", "name"="String.Contains"]
 !StringContains :: (source, target) ?
 
+["return", "name"="String.Index"]
+!StringIndex :: (source, index) ?
+
 ["return", "name"="String.IsAlpha"]
 !StringIsAlpha :: (source) ?
 
