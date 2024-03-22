@@ -612,8 +612,22 @@ ChronObject StringLength(ChronObject source)
 
 ChronObject StringIndex(ChronObject source, ChronObject index)
 {
-	char x = c_string(source)[c_int(index)];
-	return DynString(&x);
+	char *str = c_string(source);
+	int idx = c_int(index);
+	size_t str_length = strlen(str);
+
+	if (idx < 0 || idx >= str_length) return DynNil();
+
+	char *extracted_char = malloc(2);
+	if (extracted_char == NULL) return DynNil();
+
+	extracted_char[0] = str[idx];
+	extracted_char[1] = '\0';
+
+	ChronObject result = DynString(extracted_char);
+	free(extracted_char);
+
+	return result;
 }
 
 int c_object_type(ChronObject o)
