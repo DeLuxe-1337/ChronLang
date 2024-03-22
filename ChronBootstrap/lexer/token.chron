@@ -1,0 +1,7 @@
+Lexer.Token.Create :: (value, type) {
+    return <"value"=value, "type"=type>
+}
+
+Lexer.Token.ToString :: (token) {
+    return "[Value=" + ToString(token["value"]) + ", Type=" + ToString(token["type"]) + "]"
+}

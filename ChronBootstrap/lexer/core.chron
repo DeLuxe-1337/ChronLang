@@ -1,0 +1,59 @@
+include lexer.token
+include lexer.state
+
+Lexer.GetToken :: (state) {
+    while ((String.IsWhitespace(Lexer.State.Get(state))) or (Lexer.State.Get(state) == "\n")) and (Lexer.State.EOF(state) == false) {
+        Lexer.State.IncreaseIndex(state)
+    }
+
+    if String.IsAlpha(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
+        identifier = ""
+        while (String.IsAlphaNumeric(Lexer.State.Get(state))) and (Lexer.State.EOF(state) == false) {
+            identifier += Lexer.State.Get(state)
+            Lexer.State.IncreaseIndex(state)
+        }
+        return Lexer.Token.Create(Clone(identifier), "IDENTIFIER")
+    }
+
+    if String.IsNumeric(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
+        number = ""
+        while (String.IsNumeric(Lexer.State.Get(state))) and (Lexer.State.EOF(state) == false) {
+            number += Lexer.State.Get(state)
+            Lexer.State.IncreaseIndex(state)
+        }
+        return Lexer.Token.Create(Clone(number), "NUMBER")
+    }
+
+    if Lexer.State.Get(state) == "\"" and (Lexer.State.EOF(state) == false) {
+        string = ""
+
+        Lexer.State.IncreaseIndex(state)
+
+        while Lexer.State.Get(state) != "\"" and (Lexer.State.EOF(state) == false) {
+            string += Lexer.State.Get(state)
+            Lexer.State.IncreaseIndex(state)
+        }
+        
+        Lexer.State.IncreaseIndex(state)
+        
+        return Lexer.Token.Create(Clone(string), "STRING")
+    }
+
+    return nil
+}
+
+Lexer.GetAllTokens :: (state) {
+    tokens = <>
+
+    while Lexer.State.EOF(state) == false {
+        result = Lexer.GetToken(state)
+        if result != nil {
+            tokens[Table.SizeOf(tokens)] = result
+            PrintLn("Token")
+            PrintLn(result)
+            PrintLn("End of token")
+        }
+    }
+
+    return Clone(tokens)
+}

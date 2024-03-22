@@ -1,0 +1,23 @@
+include core.all
+include ir.all
+
+GenerateBasicFunction :: (name) {
+    block = IR.CreateBlock()
+    IR.Block.Append(block, IR.CreateInvoke(IR.CreateEnvironmentAccessor("main"), <IR.CreateString("Hello, world")>))
+
+    return IR.CreateFunction(name, block, nil)
+}
+
+Main :: {
+    IR.Env.Scope.Create()
+
+    IR.Write(GenerateBasicFunction("main"))
+
+    PrintLn("Writing to file")
+
+    IR.Writer.WriteToFile("out.chron_test.c")
+
+    PrintLn("End of program")
+
+    Memory.ReleaseAll()
+}

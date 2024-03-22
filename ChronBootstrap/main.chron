@@ -1,21 +1,14 @@
 include core.all
+include core.file.all
 include ir.all
-
-GenerateBasicFunction :: (name) {
-    block = IR.CreateBlock()
-    IR.Block.Append(block, IR.CreateInvoke(IR.CreateEnvironmentAccessor("main"), <IR.CreateString("Hello, world")>))
-
-    return IR.CreateFunction(name, block, nil)
-}
+include lexer.core
 
 Main :: {
-    IR.Env.Scope.Create()
+    state = Lexer.State.Create(File.Read("lexer.test.chron"))
+    PrintLn(state)
 
-    IR.Write(GenerateBasicFunction("main"))
-
-    PrintLn("Writing to file")
-
-    IR.Writer.WriteToFile("out.chron_test.c")
+    tokens = Lexer.GetAllTokens(state)
+    PrintLn(tokens)
 
     PrintLn("End of program")
 
