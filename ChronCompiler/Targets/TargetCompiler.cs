@@ -25,6 +25,9 @@ namespace ChronCompiler.Targets
 #endif
 
             {
+                if (File.Exists(targetFilePath))
+                    File.Delete(targetFilePath);
+
                 if (!File.Exists(targetFilePath))
                     File.Copy(sourceFilePath, targetFilePath);
 
