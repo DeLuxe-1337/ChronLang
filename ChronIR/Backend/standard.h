@@ -49,6 +49,11 @@ ChronObject TableIter(ChronObject o);
     String standard
 */
 ChronObject StringIter(ChronObject o);
+ChronObject StringContains(ChronObject source, ChronObject target);
+ChronObject StringLength(ChronObject source);
+ChronObject StringIsAlpha(ChronObject source);
+ChronObject StringIsAlphaNumeric(ChronObject source);
+ChronObject StringIsNumeric(ChronObject source);
 
 #define ref(o) (&o)
 #define deref(o) (*o)

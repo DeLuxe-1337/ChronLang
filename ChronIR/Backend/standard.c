@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 {
@@ -541,6 +542,62 @@ ChronObject StringIter(ChronObject o)
 	iterPointer->deallocate = dealloc_iter;
 
 	return iterPointer;
+}
+
+ChronObject StringContains(ChronObject source, ChronObject target)
+{
+	char *found = strstr(c_string(source), c_string(target));
+	if (found != NULL)
+		return DynBoolean(true);
+
+	return DynBoolean(false);
+}
+
+ChronObject StringIsAlpha(ChronObject source)
+{
+	char* str = c_string(source);
+	for (size_t i = 0; i < strlen(str); i++)
+	{
+		char* check = str[i];
+		if(isalpha(check) == false)
+			return DynBoolean(false);
+	}
+	
+
+	return DynBoolean(true);
+}
+
+ChronObject StringIsAlphaNumeric(ChronObject source)
+{
+	char* str = c_string(source);
+	for (size_t i = 0; i < strlen(str); i++)
+	{
+		char* check = str[i];
+		if(isalnum(check) == false)
+			return DynBoolean(false);
+	}
+	
+
+	return DynBoolean(true);
+}
+
+ChronObject StringIsNumeric(ChronObject source)
+{
+	char* str = c_string(source);
+	for (size_t i = 0; i < strlen(str); i++)
+	{
+		char* check = str[i];
+		if(isdigit(check) == false)
+			return DynBoolean(false);
+	}
+	
+
+	return DynBoolean(true);
+}
+
+ChronObject StringLength(ChronObject source)
+{
+	return DynInteger(strlen(c_string(source)));
 }
 
 int c_object_type(ChronObject o)
