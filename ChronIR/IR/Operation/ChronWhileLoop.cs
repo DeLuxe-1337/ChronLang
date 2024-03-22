@@ -17,12 +17,11 @@ namespace ChronIR.IR.Operation
             context.env.AddScope(new("WhileBlock"));
             ChronDefer.IncreaseScope();
 
-            if(condition is ChronRelease releaseExpr)
-            {
-                condition = releaseExpr.Expression;
-            }
+            var value = new ChronTemporaryVariable("WHILE_TMP", condition);
+            value.Write(context);
+            block.PrependStatement(value);
 
-            context.writer.WriteLine($"while({ChronTypes.GetBooleanFromObject}({condition.Read(context)})) {{");
+            context.writer.WriteLine($"while({ChronTypes.GetBooleanFromObject}({value.Read(context)})) {{");
 
             ChronDefer.IncreaseScope();
 
@@ -30,6 +29,8 @@ namespace ChronIR.IR.Operation
 
             ChronDefer.VisitCurrentScope(context);
             ChronDefer.DecreaseScope();
+
+            value.Undeclare();
 
             context.writer.WriteLine("}");
 
