@@ -400,8 +400,7 @@ ChronObject ToString(ChronObject item)
 void Throw(ChronObject errorMessage)
 {
 	// Placeholder for text formatting in red
-	fprintf(stderr, "\033[31mRuntime Error:\033[0m %s\n", ((DynObject *)errorMessage->Object)->data.str);
-	fprintf(stderr, "Terminated Program\n");
+	fprintf(stderr, "[Runtime Error Thrown] %s\n", ((DynObject *)errorMessage->Object)->data.str);
 	exit(EXIT_FAILURE);
 }
 
