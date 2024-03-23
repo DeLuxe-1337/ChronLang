@@ -24,7 +24,10 @@ Parser.Statement.Function :: (state) {
 
         block = Parser.Statement.Block(state)
         if block != nil {
-            return IR.CreateFunction(name, block, nil)
+            function = IR.CreateFunction(name, block, nil)
+            function["overrideName"] = OverrideName
+
+            return Clone(function)
         }
     }
     return nil
