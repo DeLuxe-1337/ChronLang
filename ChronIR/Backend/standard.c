@@ -197,6 +197,8 @@ ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 	case vfunction:
 	case vptr:
 		return DynBoolean(left->data.ptr == right->data.ptr);
+	case vnull:
+		return DynBoolean(left->type == right->type);
 	case vdeallocated:
 		return DynBoolean(false);
 	default:
@@ -227,6 +229,8 @@ ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 	case vfunction:
 	case vptr:
 		return DynBoolean(left->data.ptr == right->data.ptr);
+	case vnull:
+		return DynBoolean(left->type != right->type);
 	case vdeallocated:
 		return DynBoolean(false);
 	default:
