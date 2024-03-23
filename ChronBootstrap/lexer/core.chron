@@ -12,6 +12,15 @@ Lexer.GetToken :: (state) {
         Lexer.State.IncreaseIndex(state)
     }
 
+    if ((Lexer.State.Get(state) == "/") and (Lexer.State.Peek(state, 1) == "/")) and (Lexer.State.EOF(state) == false) {
+        while (Lexer.State.Get(state) != "\n") and (Lexer.State.EOF(state) == false) {
+            Lexer.State.IncreaseIndex(state)
+        }
+
+        Lexer.State.IncreaseIndex(state)
+        Lexer.CurrentLine += 1
+    }
+
     if String.IsAlpha(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
         identifier = ""
         while (String.IsAlphaNumeric(Lexer.State.Get(state)) or (Lexer.State.Get(state) == ".")) and (Lexer.State.EOF(state) == false) {
