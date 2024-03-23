@@ -1,0 +1,49 @@
+Parser.State.Create :: (tokens) {
+    return <"tokens"=tokens, "size"=Table.SizeOf(tokens), "index"=0, "EOT"=false>
+}
+
+Parser.State.Get :: (state) {
+    if (state["size"]) < (state["index"]) {
+        state["EOT"] = true
+        return nil
+    }
+
+    return Clone(state["tokens"][state["index"]])
+}
+
+Parser.State.EOT :: (state) {
+    return Clone(state["EOT"])
+}
+
+Parser.State.IncreaseIndex :: (state) {
+    state["index"] += 1
+}
+
+Parser.State.Next :: (state) {
+    Parser.State.IncreaseIndex(state)
+    return Parser.State.Get(state)
+}
+
+Parser.State.Peek :: (state, amount) {
+    newIndex = state["index"] + amount
+    return Clone(state["tokens"][newIndex])
+}
+
+Parser.State.Match :: (token, type, value) {
+    isTypeMatched = false
+    isValueMatched = false
+
+    if (type != nil) and (token["type"] == type) {
+        isTypeMatched = true
+    }
+
+    if (value != nil) and (token["value"] == value) {
+        isValueMatched = true
+    }
+
+    if (type != nil) and (value != nil) {
+        return isTypeMatched and isValueMatched
+    }
+
+    return isTypeMatched or isValueMatched
+}

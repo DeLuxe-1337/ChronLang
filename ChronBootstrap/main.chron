@@ -1,12 +1,16 @@
 include core.all
 include core.file.all
 include lexer.core
+include parser.core
 
 Main :: {
-    state = Lexer.State.Create(File.Read("lexer.test.chron"))
+    lexerState = Lexer.State.Create(File.Read("lexer.test.chron"))
 
-    tokens = Lexer.GetAllTokens(state)
+    tokens = Lexer.GetAllTokens(lexerState)
     PrintLn(tokens)
+
+    parserState = Parser.State.Create(tokens)
+    PrintLn(Parser.Statement(parserState))
 
     PrintLn("End of program")
 
