@@ -2,15 +2,29 @@ include core.all
 include core.file.all
 include lexer.core
 include parser.core
+include ir.all
 
 Main :: {
+    PrintLn("->Lexer:")
+
     lexerState = Lexer.State.Create(File.Read("lexer.test.chron"))
 
     tokens = Lexer.GetAllTokens(lexerState)
     PrintLn(tokens)
 
+    PrintLn("->Parser:")
+
     parserState = Parser.State.Create(tokens)
-    PrintLn(Parser.Statement(parserState))
+    statement = Parser.Statement(parserState)
+
+    PrintLn("->IR:")
+    IR.Env.Scope.Create()
+
+    IR.Write(statement)
+
+    PrintLn("Writing to file")
+
+    IR.Writer.WriteToFile("out.chron_test.c")
 
     PrintLn("End of program")
 

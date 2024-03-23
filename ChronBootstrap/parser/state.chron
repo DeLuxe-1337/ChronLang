@@ -24,9 +24,14 @@ Parser.State.Next :: (state) {
     return Parser.State.Get(state)
 }
 
+Parser.State.GetAndIncrease :: (state) {
+    ret = Parser.State.Get(state)
+    Parser.State.IncreaseIndex(state)
+    return Clone(ret)
+}
+
 Parser.State.Peek :: (state, amount) {
-    newIndex = state["index"] + amount
-    return Clone(state["tokens"][newIndex])
+    return Clone(state["tokens"][(state["index"] + amount)])
 }
 
 Parser.State.Match :: (token, type, value) {
