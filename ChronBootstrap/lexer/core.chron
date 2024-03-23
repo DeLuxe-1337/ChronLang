@@ -59,6 +59,11 @@ Lexer.GetToken :: (state) {
         }
     }
 
+    if (Lexer.State.EOF(state) == false) {
+        PrintLn("Unmatched character (" + Lexer.State.Get(state) + ") skipping...")
+        Lexer.State.IncreaseIndex(state)
+    }
+
     return nil
 }
 
