@@ -3,11 +3,8 @@ include parser.state
 Parser.Statement.Include :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", "include") and Parser.State.Match(Parser.State.Peek(state, 1), "IDENTIFIER", nil) {
         path = Parser.State.Next(state)["value"]
-        PrintLn("Include path: " + path)
 
         Parser.State.IncreaseIndex(state)
-
-        PrintLn("Include stmt valid")
     }
     return nil
 }
@@ -16,39 +13,38 @@ Parser.Statement.Function :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "CONSTANT", nil) {
         name = Parser.State.GetAndIncrease(state)["value"]
 
-        PrintLn("Function: " + name)
         Parser.State.IncreaseIndex(state)
 
         block = Parser.Statement.Block(state)
         if block != nil {
             return IR.CreateFunction(Clone(name), Clone(block), nil)
         }
-
-        PrintLn("Function stmt valid")
     }
     return nil
 }
 
 Parser.Statement.Invoke :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "LPAREN", nil) {
-        name = Parser.State.GetAndIncrease(state)["value"]
+        target = Parser.Expression(state)
 
         Parser.State.IncreaseIndex(state)
 
         parameters = <>
         parameter_index = 0
         while Parser.State.Get(state)["type"] != "RPAREN" {
-            parameters[parameter_index] = Parser.Expression(state)
-            parameter_index += 1
+            expr = Parser.Expression(state)
+            if expr != nil {
+                parameters[parameter_index] = expr
+                parameter_index += 1
+            } else {
+                PrintLn("Couldn't parse expression...")
+                Parser.State.IncreaseIndex(state)
+            }
         }
         
         Parser.State.IncreaseIndex(state)
 
-        PrintLn("Invoke stmt valid")
-
-        PrintLn(parameters)
-
-        return IR.CreateInvoke(IR.CreateEnvironmentAccessor(name), Clone(parameters))
+        return IR.CreateInvoke(Clone(target), Clone(parameters))
     }
     return nil
 }
@@ -61,7 +57,6 @@ Parser.Statement.Block :: (state) {
             IR.Block.Append(block, Parser.Statement(state))
         }
         Parser.State.IncreaseIndex(state)
-        PrintLn("Block stmt valid")
         return Clone(block)
     }
     return nil
@@ -91,9 +86,35 @@ Parser.Expression.String :: (state) {
     return nil
 }
 
+Parser.Expression.Identifier :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) {
+        return IR.CreateEnvironmentAccessor(Parser.State.GetAndIncrease(state)["value"])
+    }
+
+    return nil
+}
+
 Parser.Expression :: (state) {
     expr = Parser.Expression.String(state)
     if expr != nil { return expr } 
 
+    expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
     return nil
+}
+
+Parser.ParseAllStatements :: (state) {
+    statements = <>
+
+    while Parser.State.EOT(state) == false {
+        result = Parser.Statement(state)
+        if result != nil {
+            statements[Table.SizeOf(statements)] = result
+        } else {
+            PrintLn("Unable to parse statement")
+        }
+    }
+
+    return Clone(statements)
 }
