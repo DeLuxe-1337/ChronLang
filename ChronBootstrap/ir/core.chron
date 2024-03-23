@@ -3,7 +3,7 @@ ReadMap = <"Literals.String"=IR.Read.Literals.String, "EnvironmentAccessor"=IR.R
 
 IR.Write :: (node) {
     type = node["type"]
-    visiter = WriteMap[type]
+    visiter = Clone(WriteMap[type])
 
     PrintLn("Write " + type)
     
@@ -12,7 +12,7 @@ IR.Write :: (node) {
 
 IR.Read :: (node) {
     type = node["type"]
-    visiter = ReadMap[type]
+    visiter = Clone(ReadMap[type])
 
     PrintLn("Read " + type)
     
