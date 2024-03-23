@@ -45,5 +45,5 @@ IR.Read.Function :: (context) {
 }
 
 IR.CreateFunction :: (name, block, parameters) {
-    return <"name"=name, "parameters"=parameters, "block"=block, "return"=false, "type"="Function">
+    return <"name"=Clone(name), "parameters"=Clone(parameters), "block"=Clone(block), "return"=false, "type"="Function">
 }

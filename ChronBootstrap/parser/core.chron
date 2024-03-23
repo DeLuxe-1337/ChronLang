@@ -10,6 +10,13 @@ Parser.Statement.Include :: (state) {
 }
 
 Parser.Statement.Function :: (state) {
+    OverrideName = false
+
+    if Parser.State.Match(Parser.State.Get(state), "EXCLAMATION", nil) {
+        OverrideName = true
+        Parser.State.IncreaseIndex(state)
+    }
+
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "CONSTANT", nil) {
         name = Parser.State.GetAndIncrease(state)["value"]
 
@@ -17,7 +24,7 @@ Parser.Statement.Function :: (state) {
 
         block = Parser.Statement.Block(state)
         if block != nil {
-            return IR.CreateFunction(Clone(name), Clone(block), nil)
+            return IR.CreateFunction(name, block, nil)
         }
     }
     return nil
@@ -49,7 +56,7 @@ Parser.Statement.Invoke :: (state) {
         
         Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
 
-        return IR.CreateInvoke(Clone(target), Clone(parameters))
+        return IR.CreateInvoke(target, parameters)
     }
     return nil
 }

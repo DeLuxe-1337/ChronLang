@@ -17,5 +17,5 @@ IR.Write.Invoke :: (context) {
 }
 
 IR.CreateInvoke :: (callee, parameters) {
-    return <"target"=callee, "parameters"=parameters , "type"="Invoke">
+    return <"target"=Clone(callee), "parameters"=Clone(parameters) , "type"="Invoke">
 }

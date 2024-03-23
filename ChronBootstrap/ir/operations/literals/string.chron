@@ -4,5 +4,5 @@ IR.Read.Literals.String :: (context) {
 }
 
 IR.CreateString :: (value) {
-    return <"value"=value, "type"="Literals.String">
+    return <"value"=Clone(value), "type"="Literals.String">
 }
