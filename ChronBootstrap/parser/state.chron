@@ -2,6 +2,12 @@ Parser.State.Create :: (tokens) {
     return <"tokens"=tokens, "size"=Table.SizeOf(tokens), "index"=0, "EOT"=false>
 }
 
+Parser.State.Error :: (state, errorMessage) {
+    state["EOT"] = true
+
+    Throw(errorMessage)
+}
+
 Parser.State.Get :: (state) {
     if state["EOT"] == true {
         return nil
@@ -36,6 +42,16 @@ Parser.State.GetAndIncrease :: (state) {
 
 Parser.State.Peek :: (state, amount) {
     return Clone(state["tokens"][(state["index"] + amount)])
+}
+
+Parser.State.Expect :: (state, type, value, errorMessage) {
+    token = Parser.State.GetAndIncrease(state)
+    if Parser.State.Match(token, type, value) == false {
+        Parser.State.Error(state, ("[Parse Error] " + errorMessage + " at line " + ToString(token["line"])))
+        return false
+    }
+
+    return true
 }
 
 Parser.State.Match :: (token, type, value) {

@@ -13,7 +13,7 @@ Parser.Statement.Function :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "CONSTANT", nil) {
         name = Parser.State.GetAndIncrease(state)["value"]
 
-        Parser.State.IncreaseIndex(state)
+        Parser.State.Expect(state, "CONSTANT", nil, "Expected '::'")
 
         block = Parser.Statement.Block(state)
         if block != nil {
@@ -27,12 +27,17 @@ Parser.Statement.Invoke :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "LPAREN", nil) {
         target = Parser.Expression(state)
 
-        Parser.State.IncreaseIndex(state)
+        Parser.State.Expect(state, "LPAREN", nil, "Expected '('")
 
         parameters = <>
         parameter_index = 0
         while Parser.State.Get(state)["type"] != "RPAREN" {
+            if parameter_index > 0 {
+                Parser.State.Expect(state, "COMMA", nil, "Expected ','")
+            }
+
             expr = Parser.Expression(state)
+
             if expr != nil {
                 parameters[parameter_index] = expr
                 parameter_index += 1
@@ -42,7 +47,7 @@ Parser.Statement.Invoke :: (state) {
             }
         }
         
-        Parser.State.IncreaseIndex(state)
+        Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
 
         return IR.CreateInvoke(Clone(target), Clone(parameters))
     }
@@ -51,12 +56,12 @@ Parser.Statement.Invoke :: (state) {
 
 Parser.Statement.Block :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "LBRACKET", nil) {
-        Parser.State.IncreaseIndex(state)
+        Parser.State.Expect(state, "LBRACKET", nil, "Expected '{'")
         block = IR.CreateBlock()
         while Parser.State.Get(state)["type"] != "RBRACKET" {
             IR.Block.Append(block, Parser.Statement(state))
         }
-        Parser.State.IncreaseIndex(state)
+        Parser.State.Expect(state, "RBRACKET", nil, "Expected '}'")
         return Clone(block)
     }
     return nil
