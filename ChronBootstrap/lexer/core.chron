@@ -1,10 +1,14 @@
 include lexer.token
 include lexer.state
 
-Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET">
+Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET", ","="COMMA">
+Lexer.CurrentLine = 1
 
 Lexer.GetToken :: (state) {
     while ((String.IsWhitespace(Lexer.State.Get(state))) or (Lexer.State.Get(state) == "\n")) and (Lexer.State.EOF(state) == false) {
+        if Lexer.State.Get(state) == "\n" {
+            Lexer.CurrentLine += 1
+        }
         Lexer.State.IncreaseIndex(state)
     }
 
@@ -14,7 +18,7 @@ Lexer.GetToken :: (state) {
             identifier += Lexer.State.Get(state)
             Lexer.State.IncreaseIndex(state)
         }
-        return Lexer.Token.Create(Clone(identifier), "IDENTIFIER")
+        return Lexer.Token.Create(identifier, "IDENTIFIER", Lexer.CurrentLine)
     }
 
     if String.IsNumeric(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
@@ -23,7 +27,7 @@ Lexer.GetToken :: (state) {
             number += Lexer.State.Get(state)
             Lexer.State.IncreaseIndex(state)
         }
-        return Lexer.Token.Create(Clone(number), "NUMBER")
+        return Lexer.Token.Create(number, "NUMBER", Lexer.CurrentLine)
     }
 
     if Lexer.State.Get(state) == "\"" and (Lexer.State.EOF(state) == false) {
@@ -38,24 +42,24 @@ Lexer.GetToken :: (state) {
         
         Lexer.State.IncreaseIndex(state)
         
-        return Lexer.Token.Create(Clone(string), "STRING")
+        return Lexer.Token.Create(string, "STRING", Lexer.CurrentLine)
     }
 
     if Lexer.State.Get(state) == ":" and (Lexer.State.EOF(state) == false) {
         Lexer.State.IncreaseIndex(state)
         if(Lexer.State.Get(state) == ":") {
             Lexer.State.IncreaseIndex(state)
-            return Lexer.Token.Create("::", "CONSTANT")
+            return Lexer.Token.Create("::", "CONSTANT", Lexer.CurrentLine)
         }
         else {
-            return Lexer.Token.Create(":", "COLON")
+            return Lexer.Token.Create(":", "COLON", Lexer.CurrentLine)
         }
     }
 
     foreach symbol, type in Table.Iter(Lexer.SymbolMap) {
         if Lexer.State.Get(state) == symbol {
             Lexer.State.IncreaseIndex(state)
-            return Lexer.Token.Create(Clone(symbol), Clone(type))
+            return Lexer.Token.Create(symbol, type, Lexer.CurrentLine)
         }
     }
 

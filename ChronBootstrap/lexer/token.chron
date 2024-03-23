@@ -1,7 +1,3 @@
-Lexer.Token.Create :: (value, type) {
-    return <"value"=value, "type"=type>
-}
-
-Lexer.Token.ToString :: (token) {
-    return "[Value=" + ToString(token["value"]) + ", Type=" + ToString(token["type"]) + "]"
+Lexer.Token.Create :: (value, type, line) {
+    return <"value"=Clone(value), "type"=Clone(type), "line"=Clone(line)>
 }
