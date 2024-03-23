@@ -3,7 +3,7 @@ Lexer.State.Create :: (source) {
 }
 
 Lexer.State.Get :: (state) {
-    if (state["length"]) < (state["index"]) {
+    if (state["length"]) <= (state["index"]) {
         state["EOF"] = true
         return ""
     }

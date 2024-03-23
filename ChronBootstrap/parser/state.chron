@@ -3,7 +3,11 @@ Parser.State.Create :: (tokens) {
 }
 
 Parser.State.Get :: (state) {
-    if (state["size"]) < (state["index"]) {
+    if state["EOT"] == true {
+        return nil
+    }
+
+    if (state["size"]) <= (state["index"]) {
         state["EOT"] = true
         return nil
     }
@@ -35,6 +39,10 @@ Parser.State.Peek :: (state, amount) {
 }
 
 Parser.State.Match :: (token, type, value) {
+    if token == nil {
+        return false
+    }
+
     isTypeMatched = false
     isValueMatched = false
 
