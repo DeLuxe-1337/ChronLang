@@ -15,12 +15,16 @@ Main :: {
     PrintLn("->Parser:")
 
     parserState = Parser.State.Create(tokens)
-    statement = Parser.Statement(parserState)
+    statements = Parser.ParseAllStatements(parserState)
+    
 
     PrintLn("->IR:")
     IR.Env.Scope.Create()
 
-    IR.Write(statement)
+    foreach index, statement in Table.Iter(statements) {
+        PrintLn(index)
+        IR.Write(statement)
+    }
 
     PrintLn("Writing to file")
 
