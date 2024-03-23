@@ -1,5 +1,13 @@
 include core.all
 
+X :: {
+
+}
+
+PrintLn :: {
+    X("Hi","Hello")
+}
+
 Main :: {
-    Main("Hello, world")
+    PrintLn("Hello, world")
 }
