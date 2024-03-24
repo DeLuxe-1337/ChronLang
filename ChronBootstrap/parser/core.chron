@@ -34,10 +34,9 @@ Parser.Statement.Function :: (state) {
 
                 ident = Parser.State.Get(state)
 
-                if Parser.State.Match(ident, "IDENTIFIER", nil) {
+                if Parser.State.Expect(state, "IDENTIFIER", nil, "Expected IDENTIFIER in function parameters") {
                     parameters[parameter_index] = ident["value"]
                     parameter_index += 1
-                    Parser.State.IncreaseIndex(state)
                 }
             }
 
