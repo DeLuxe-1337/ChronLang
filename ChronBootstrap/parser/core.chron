@@ -22,9 +22,31 @@ Parser.Statement.Function :: (state) {
 
         Parser.State.Expect(state, "CONSTANT", nil, "Expected '::'")
 
+        parameters = <>
+        parameter_index = 0
+        if Parser.State.Match(Parser.State.Get(state), "LPAREN", nil) {
+            Parser.State.Expect(state, "LPAREN", nil, "Expected '('")
+            
+            while Parser.State.Get(state)["type"] != "RPAREN" {
+                if parameter_index > 0 {
+                    Parser.State.Expect(state, "COMMA", nil, "Expected ','")
+                }
+
+                ident = Parser.State.Get(state)
+
+                if Parser.State.Match(ident, "IDENTIFIER", nil) {
+                    parameters[parameter_index] = ident["value"]
+                    parameter_index += 1
+                    Parser.State.IncreaseIndex(state)
+                }
+            }
+
+            Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
+        }
+
         block = Parser.Statement.Block(state)
         if block != nil {
-            function = IR.CreateFunction(name, block, nil)
+            function = IR.CreateFunction(name, block, parameters)
             function["overrideName"] = OverrideName
 
             return Clone(function)
