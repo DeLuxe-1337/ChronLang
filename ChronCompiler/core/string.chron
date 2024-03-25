@@ -21,3 +21,6 @@
 
 ["return", "name"="String.SizeOf"]
 !StringLength :: (source) ?
+
+["return", "name"="String.Replace"]
+!StringReplace :: (source, sub, replace) ?

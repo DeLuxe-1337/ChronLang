@@ -56,6 +56,7 @@ ChronObject StringIsAlphaNumeric(ChronObject source);
 ChronObject StringIsNumeric(ChronObject source);
 ChronObject StringIsWhitespace(ChronObject source);
 ChronObject StringIndex(ChronObject source, ChronObject index);
+ChronObject StringReplace(ChronObject input, ChronObject sub, ChronObject replace);
 
 #define ref(o) (&o)
 #define deref(o) (*o)

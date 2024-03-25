@@ -635,6 +635,46 @@ ChronObject StringIndex(ChronObject source, ChronObject index)
 	return result;
 }
 
+ChronObject StringReplace(ChronObject input, ChronObject sub, ChronObject replace) {
+	const char* string = c_string(input);
+	const char* substring = c_string(sub);
+	const char* replacement = c_string(replace);
+
+	 char *result;
+    int i, count = 0;
+    int substringLen = strlen(substring);
+    int replacementLen = strlen(replacement);
+
+    // Count the number of occurrences of substring in string
+    for (i = 0; string[i] != '\0'; ++i) {
+        if (strstr(&string[i], substring) == &string[i]) {
+            ++count;
+            // Jump ahead by the length of the substring
+            i += substringLen - 1;
+        }
+    }
+
+    // Allocate memory for the new string
+    result = (char *)malloc(i + count * (replacementLen - substringLen) + 1);
+
+    i = 0;
+    while (*string) {
+        // Check if the substring is present at the current position
+        if (strstr(string, substring) == string) {
+            strcpy(&result[i], replacement);
+            i += replacementLen;
+            string += substringLen;
+        } else {
+            result[i++] = *string++;
+        }
+    }
+    result[i] = '\0';
+
+	ChronObject chronObjectResult = DynString(result);
+	free(result);
+	return chronObjectResult;
+}
+
 int c_object_type(ChronObject o)
 {
 	DynObject *object = o->Object;
