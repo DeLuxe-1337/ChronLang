@@ -1,34 +1,10 @@
 include core.all
 include core.file.all
-include lexer.core
-include parser.core
-include ir.all
+include compiler.module
 
 Main :: {
-    PrintLn("->Lexer:")
-
-    lexerState = Lexer.State.Create(File.Read("test.chron"))
-
-    tokens = Lexer.GetAllTokens(lexerState)
-    PrintLn(tokens)
-
-    PrintLn("->Parser:")
-
-    parserState = Parser.State.Create(tokens)
-    statements = Parser.ParseAllStatements(parserState)
-    
-
-    PrintLn("->IR:")
-    IR.Env.Scope.Create()
-
-    foreach index, statement in Table.Iter(statements) {
-        PrintLn(index)
-        IR.Write(statement)
-    }
-
-    PrintLn("Writing to file")
-
-    IR.Writer.WriteToFile("out.chron_test.c")
+    Compiler.Module.CompileFromFile("test.chron")
+    Compiler.Module.WriteStatementsToFile()
 
     PrintLn("End of program")
 

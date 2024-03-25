@@ -1,8 +1,5 @@
 include core.all
 
-PrintLn :: (param) {
-}
-
-!Main :: {
+Main :: {
     PrintLn("Hello, world") // This is a comment
 }

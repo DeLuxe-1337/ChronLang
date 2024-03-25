@@ -9,6 +9,10 @@ IR.Write.Function :: (context) {
         accessorName = "_F_" + name
     }
 
+    if name == "Main" {
+        accessorName = "main"
+    }
+
     if doesReturn == false {
         IR.Writer.Write(Types.Void)
     } else {
