@@ -42,8 +42,8 @@ namespace ChronCompiler
             string currentDirectoryPath = Path.Combine(WorkingDirectory, name);
             string exeDirectoryPath = Path.Combine(RootDirectory, name);
 
-            return File.Exists(currentDirectoryPath) ? currentDirectoryPath :
-                   File.Exists(exeDirectoryPath) ? exeDirectoryPath :
+            return File.Exists(exeDirectoryPath) ? exeDirectoryPath : 
+                File.Exists(currentDirectoryPath) ? currentDirectoryPath :
                    null;
         }
         public void CompileChronScript(string name)
