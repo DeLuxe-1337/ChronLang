@@ -1,102 +1,5 @@
 include parser.state
-
-Parser.Statement.Include :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", "include") and Parser.State.Match(Parser.State.Peek(state, 1), "IDENTIFIER", nil) {
-        path = Parser.State.Next(state)["value"]
-
-        Parser.State.IncreaseIndex(state)
-    }
-    return nil
-}
-
-Parser.Statement.Function :: (state) {
-    OverrideName = false
-
-    if Parser.State.Match(Parser.State.Get(state), "EXCLAMATION", nil) {
-        OverrideName = true
-        Parser.State.IncreaseIndex(state)
-    }
-
-    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "CONSTANT", nil) {
-        name = Parser.State.GetAndIncrease(state)["value"]
-
-        Parser.State.Expect(state, "CONSTANT", nil, "Expected '::'")
-
-        parameters = <>
-        parameter_index = 0
-        if Parser.State.Match(Parser.State.Get(state), "LPAREN", nil) {
-            Parser.State.Expect(state, "LPAREN", nil, "Expected '('")
-            
-            while Parser.State.Get(state)["type"] != "RPAREN" {
-                if parameter_index > 0 {
-                    Parser.State.Expect(state, "COMMA", nil, "Expected ','")
-                }
-
-                ident = Parser.State.Get(state)
-
-                if Parser.State.Expect(state, "IDENTIFIER", nil, "Expected IDENTIFIER in function parameters") {
-                    parameters[parameter_index] = ident["value"]
-                    parameter_index += 1
-                }
-            }
-
-            Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
-        }
-
-        block = Parser.Statement.Block(state)
-        if block != nil {
-            function = IR.CreateFunction(name, block, parameters)
-            function["overrideName"] = OverrideName
-
-            return Clone(function)
-        }
-    }
-    return nil
-}
-
-Parser.Statement.Invoke :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "LPAREN", nil) {
-        target = Parser.Expression(state)
-
-        Parser.State.Expect(state, "LPAREN", nil, "Expected '('")
-
-        parameters = <>
-        parameter_index = 0
-        while Parser.State.Get(state)["type"] != "RPAREN" {
-            if parameter_index > 0 {
-                Parser.State.Expect(state, "COMMA", nil, "Expected ','")
-            }
-
-            expr = Parser.Expression(state)
-
-            if expr != nil {
-                parameters[parameter_index] = expr
-                parameter_index += 1
-            } else {
-                PrintLn("Couldn't parse expression...")
-                Parser.State.IncreaseIndex(state)
-            }
-        }
-        
-        Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
-
-        return IR.CreateInvoke(target, parameters)
-    }
-    return nil
-}
-
-Parser.Statement.Block :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "LBRACKET", nil) {
-        Parser.State.Expect(state, "LBRACKET", nil, "Expected '{'")
-        block = IR.CreateBlock()
-        while Parser.State.Get(state)["type"] != "RBRACKET" {
-            IR.Block.Append(block, Parser.Statement(state))
-        }
-        Parser.State.Expect(state, "RBRACKET", nil, "Expected '}'")
-        return Clone(block)
-    }
-    return nil
-}
+include parser.operations.all
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -110,22 +13,6 @@ Parser.Statement :: (state) {
 
     stmt = Parser.Statement.Block(state)
     if stmt != nil { return stmt }
-
-    return nil
-}
-
-Parser.Expression.String :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "STRING", nil) {
-        return IR.CreateString(Parser.State.GetAndIncrease(state)["value"])
-    }
-
-    return nil
-}
-
-Parser.Expression.Identifier :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) {
-        return IR.CreateEnvironmentAccessor(Parser.State.GetAndIncrease(state)["value"])
-    }
 
     return nil
 }

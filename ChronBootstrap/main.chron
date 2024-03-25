@@ -7,7 +7,7 @@ include ir.all
 Main :: {
     PrintLn("->Lexer:")
 
-    lexerState = Lexer.State.Create(File.Read("lexer.test.chron"))
+    lexerState = Lexer.State.Create(File.Read("test.chron"))
 
     tokens = Lexer.GetAllTokens(lexerState)
     PrintLn(tokens)

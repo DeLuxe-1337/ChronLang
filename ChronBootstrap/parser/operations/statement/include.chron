@@ -1,0 +1,8 @@
+Parser.Statement.Include :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", "include") and Parser.State.Match(Parser.State.Peek(state, 1), "IDENTIFIER", nil) {
+        path = Parser.State.Next(state)["value"]
+
+        Parser.State.IncreaseIndex(state)
+    }
+    return nil
+}

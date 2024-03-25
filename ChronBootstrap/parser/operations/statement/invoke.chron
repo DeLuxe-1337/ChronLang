@@ -1,0 +1,30 @@
+Parser.Statement.Invoke :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "LPAREN", nil) {
+        target = Parser.Expression(state)
+
+        Parser.State.Expect(state, "LPAREN", nil, "Expected '('")
+
+        parameters = <>
+        parameter_index = 0
+        while Parser.State.Get(state)["type"] != "RPAREN" {
+            if parameter_index > 0 {
+                Parser.State.Expect(state, "COMMA", nil, "Expected ','")
+            }
+
+            expr = Parser.Expression(state)
+
+            if expr != nil {
+                parameters[parameter_index] = expr
+                parameter_index += 1
+            } else {
+                PrintLn("Couldn't parse expression...")
+                Parser.State.IncreaseIndex(state)
+            }
+        }
+        
+        Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
+
+        return IR.CreateInvoke(target, parameters)
+    }
+    return nil
+}
