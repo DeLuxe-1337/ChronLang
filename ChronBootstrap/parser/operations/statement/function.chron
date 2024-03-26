@@ -1,6 +1,10 @@
 Parser.Statement.Function :: (state) {
     OverrideName = false
 
+    Modifiers = Parser.Statement.Modifier(state)
+
+    PrintLn(Modifiers)
+
     if Parser.State.Match(Parser.State.Get(state), "EXCLAMATION", nil) {
         OverrideName = true
         Parser.State.IncreaseIndex(state)
@@ -36,6 +40,10 @@ Parser.Statement.Function :: (state) {
         if block != nil {
             function = IR.CreateFunction(name, block, parameters)
             function["overrideName"] = OverrideName
+
+            if Modifiers["name"] != nil {
+                function["scopeName"] = Modifiers["name"]
+            }
 
             return Clone(function)
         }

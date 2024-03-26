@@ -1,5 +1,6 @@
 IR.Write.Function :: (context) {
     name = Clone(context["name"])
+    scopeName = Clone(context["scopeName"])
     block = Clone(context["block"])
     parameters = Clone(context["parameters"])
     doesReturn = Clone(context["return"])
@@ -23,7 +24,7 @@ IR.Write.Function :: (context) {
 
     context["block"] = nil
 
-    IR.Env.Scope.Add(name, context, true)
+    IR.Env.Scope.Add(scopeName, context, true)
     IR.Env.Scope.Create()
 
     if parameters != nil {
@@ -52,5 +53,5 @@ IR.Read.Function :: (context) {
 }
 
 IR.CreateFunction :: (name, block, parameters) {
-    return <"name"=Clone(name), "parameters"=Clone(parameters), "block"=Clone(block), "return"=false, "overrideName"=false, "type"="Function">
+    return <"name"=Clone(name), "scopeName"=Clone(name), "parameters"=Clone(parameters), "block"=Clone(block), "return"=false, "overrideName"=false, "type"="Function">
 }

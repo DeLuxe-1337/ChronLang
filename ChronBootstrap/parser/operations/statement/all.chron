@@ -2,3 +2,4 @@ include parser.operations.statement.include
 include parser.operations.statement.invoke
 include parser.operations.statement.block
 include parser.operations.statement.function
+include parser.operations.statement.modifier

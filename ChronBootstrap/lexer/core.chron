@@ -1,7 +1,7 @@
 include lexer.token
 include lexer.state
 
-Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET", ","="COMMA", "!"="EXCLAMATION">
+Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET", "["="LBRACE", "]"="RBRACE", ","="COMMA", "!"="EXCLAMATION", "="="EQUAL">
 Lexer.CurrentLine = 1
 
 Lexer.GetToken :: (state) {
