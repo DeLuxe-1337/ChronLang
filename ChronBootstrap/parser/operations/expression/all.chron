@@ -1,2 +1,3 @@
 include parser.operations.expression.identifier
 include parser.operations.expression.string
+include parser.operations.expression.number

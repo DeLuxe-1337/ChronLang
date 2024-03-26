@@ -21,6 +21,9 @@ Parser.Expression :: (state) {
     expr = Parser.Expression.String(state)
     if expr != nil { return expr } 
 
+    expr = Parser.Expression.Number(state)
+    if expr != nil { return expr } 
+
     expr = Parser.Expression.Identifier(state)
     if expr != nil { return expr } 
 

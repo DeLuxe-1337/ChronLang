@@ -7,3 +7,10 @@ Types.CreateFunction = "DynFunction"
 
 Types.Void = "ChronVoid"
 Types.Object = "ChronObject"
+
+Functions.CreateString = IR.CreateFunctionRaw(Types.CreateString, true)
+Functions.CreateInt = IR.CreateFunctionRaw(Types.CreateInt, true)
+Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true)
+Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true)
+Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true)
+Functions.CreateFunction = IR.CreateFunctionRaw(Types.CreateFunction, true)

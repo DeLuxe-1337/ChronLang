@@ -1,0 +1,7 @@
+Parser.Expression.Number :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "NUMBER", nil) {
+        return IR.CreateNumber(Parser.State.GetAndIncrease(state)["value"])
+    }
+
+    return nil
+}

@@ -1,4 +1,6 @@
 include ir.operations.literals.string
+include ir.operations.literals.number
+include ir.operations.literals.raw
 include ir.operations.block
 include ir.operations.invoke
 include ir.operations.environment_accessor

@@ -1,9 +1,9 @@
 include core.all
 
 ["name"="Test", "inline", "extern"]
-X :: () {}
+X :: (x) {}
 
 Main :: {
     PrintLn("Hello, world") // This is a comment
-    Test()
+    Test(100)
 }
