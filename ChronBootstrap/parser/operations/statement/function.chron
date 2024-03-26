@@ -45,6 +45,14 @@ Parser.Statement.Function :: (state) {
                 function["scopeName"] = Modifiers["name"]
             }
 
+            if Modifiers["inline"] != nil {
+                function["inline"] = true
+            }
+
+            if Modifiers["extern"] != nil {
+                function["extern"] = true
+            }
+
             return Clone(function)
         }
     }

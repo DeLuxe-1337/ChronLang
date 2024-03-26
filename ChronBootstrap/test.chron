@@ -1,6 +1,6 @@
 include core.all
 
-["name"="Test"]
+["name"="Test", "inline", "extern"]
 X :: () {}
 
 Main :: {

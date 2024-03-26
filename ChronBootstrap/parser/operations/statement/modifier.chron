@@ -11,7 +11,7 @@ Parser.Statement.Modifier :: (state) {
             }
 
             name = Parser.State.ExpectRet(state, "STRING", nil, "Expected STRING in modifier name")["value"]
-            value = nil
+            value = true
 
             if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
                 Parser.State.IncreaseIndex(state)
