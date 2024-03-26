@@ -45,13 +45,22 @@ Parser.State.Peek :: (state, amount) {
 }
 
 Parser.State.Expect :: (state, type, value, errorMessage) {
-    token = Parser.State.GetAndIncrease(state)
-    if Parser.State.Match(token, type, value) == false {
-        Parser.State.Error(state, ("[Parse Error] " + errorMessage + "; (got " + ToString(token["type"]) + " at line " + ToString(token["line"]) + ")"))
-        return false
+    if Parser.State.ExpectRet(state, type, value, errorMessage) != nil {
+        return true
     }
 
-    return true
+    return false
+}
+
+Parser.State.ExpectRet :: (state, type, value, errorMessage) {
+    token = Parser.State.GetAndIncrease(state)
+
+    if Parser.State.Match(token, type, value) == false {
+        Parser.State.Error(state, ("[Parse Error] " + errorMessage + "; (got " + ToString(token["type"]) + " at line " + ToString(token["line"]) + ")"))
+        return nil
+    }
+
+    return Clone(token)
 }
 
 Parser.State.Match :: (token, type, value) {
