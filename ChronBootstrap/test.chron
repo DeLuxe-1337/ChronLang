@@ -6,5 +6,7 @@ X :: (x) {}
 Main :: {
     PrintLn("Hello, world") // This is a comment
     Test(100)
+    Test(true)
+    Test(false)
     Test(nil)
 }
