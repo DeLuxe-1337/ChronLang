@@ -9,4 +9,5 @@ Main :: {
     Test(true)
     Test(false)
     Test(nil)
+    PrintLn(Test(50))
 }

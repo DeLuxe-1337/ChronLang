@@ -1,5 +1,4 @@
 include parser.operations.statement.include
-include parser.operations.statement.invoke
 include parser.operations.statement.block
 include parser.operations.statement.function
 include parser.operations.statement.modifier
@@ -11,7 +10,7 @@ Parser.Statement :: (state) {
     stmt = Parser.Statement.Function(state)
     if stmt != nil { return stmt }
 
-    stmt = Parser.Statement.Invoke(state)
+    stmt = Parser.Invoke(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Block(state)

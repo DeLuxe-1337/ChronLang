@@ -17,6 +17,9 @@ Parser.Expression :: (state) {
     expr = Parser.Expression.Nil(state)
     if expr != nil { return expr } 
 
+    expr = Parser.Invoke(state)
+    if expr != nil { return expr } 
+
     expr = Parser.Expression.Identifier(state)
     if expr != nil { return expr } 
 

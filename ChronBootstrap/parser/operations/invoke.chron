@@ -1,6 +1,6 @@
-Parser.Statement.Invoke :: (state) {
+Parser.Invoke :: (state) {
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "LPAREN", nil) {
-        target = Parser.Expression(state)
+        target = Parser.Expression.Identifier(state)
 
         Parser.State.Expect(state, "LPAREN", nil, "Expected '('")
 
@@ -26,5 +26,6 @@ Parser.Statement.Invoke :: (state) {
 
         return IR.CreateInvoke(target, parameters)
     }
+    
     return nil
 }
