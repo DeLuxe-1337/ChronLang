@@ -1,7 +1,7 @@
 include lexer.token
 include lexer.state
 
-Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET", "["="LBRACE", "]"="RBRACE", ","="COMMA", "!"="EXCLAMATION", "="="EQUAL">
+Lexer.SymbolMap = <"("="LPAREN", ")"="RPAREN", "{"="LBRACKET", "}"="RBRACKET", "["="LBRACE", "]"="RBRACE", ","="COMMA", "!"="EXCLAMATION", "="="EQUAL", "nil"="NIL">
 Lexer.CurrentLine = 1
 
 Lexer.GetToken :: (state) {
@@ -27,6 +27,13 @@ Lexer.GetToken :: (state) {
             identifier += Lexer.State.Get(state)
             Lexer.State.IncreaseIndex(state)
         }
+
+        foreach symbol, type in Table.Iter(Lexer.SymbolMap) {
+            if identifier == symbol {
+                return Lexer.Token.Create(symbol, type, Lexer.CurrentLine)
+            }
+        }
+
         return Lexer.Token.Create(identifier, "IDENTIFIER", Lexer.CurrentLine)
     }
 

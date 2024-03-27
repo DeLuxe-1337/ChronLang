@@ -1,3 +1,20 @@
 include parser.operations.expression.identifier
 include parser.operations.expression.string
 include parser.operations.expression.number
+include parser.operations.expression.nil
+
+Parser.Expression :: (state) {
+    expr = Parser.Expression.String(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Number(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Nil(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
+    return nil
+}

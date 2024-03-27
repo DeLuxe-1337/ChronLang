@@ -1,35 +1,6 @@
 include parser.state
 include parser.operations.all
 
-Parser.Statement :: (state) {
-    stmt = Parser.Statement.Include(state)
-    if stmt != nil { return stmt }
-
-    stmt = Parser.Statement.Function(state)
-    if stmt != nil { return stmt }
-
-    stmt = Parser.Statement.Invoke(state)
-    if stmt != nil { return stmt }
-
-    stmt = Parser.Statement.Block(state)
-    if stmt != nil { return stmt }
-
-    return nil
-}
-
-Parser.Expression :: (state) {
-    expr = Parser.Expression.String(state)
-    if expr != nil { return expr } 
-
-    expr = Parser.Expression.Number(state)
-    if expr != nil { return expr } 
-
-    expr = Parser.Expression.Identifier(state)
-    if expr != nil { return expr } 
-
-    return nil
-}
-
 Parser.ParseAllStatements :: (state) {
     statements = <>
 

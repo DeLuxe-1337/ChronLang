@@ -12,10 +12,12 @@ IR.Read.Invoke :: (context) {
 
     build = ""
 
-    foreach index, value in Table.Iter(parameters) {
-        build += IR.Read(value)
-        if index != (Table.SizeOf(parameters) - 1) {
-            build += ","
+    if parameters != nil {
+        foreach index, value in Table.Iter(parameters) {
+            build += IR.Read(value)
+            if index != (Table.SizeOf(parameters) - 1) {
+                build += ","
+            }
         }
     }
 

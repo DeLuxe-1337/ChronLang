@@ -1,0 +1,8 @@
+Parser.Expression.Nil :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "NIL", nil) {
+        Parser.State.IncreaseIndex(state)
+        return IR.CreateNil()
+    }
+
+    return nil
+}
