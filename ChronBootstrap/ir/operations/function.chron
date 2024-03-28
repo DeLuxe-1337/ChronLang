@@ -1,9 +1,54 @@
 IR.Write.Function :: (context) {
     name = Clone(context["name"])
-    scopeName = Clone(context["scopeName"])
     block = Clone(context["block"])
+    accessorName = Clone(context["accessorName"])
+
+    context["block"] = nil
+
+    IR.Env.Scope.Create()
+    
+    IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context))
+
+    IR.Writer.WriteLine("{")
+
+    IR.Write(block)
+
+    IR.Env.Scope.Pop()
+    IR.Writer.WriteLine("}")
+}
+
+IR.Function.GenerateParameters :: (context) {
     parameters = Clone(context["parameters"])
+
+    if parameters != nil {
+        build = ""
+        foreach index, value in Table.Iter(parameters) {
+            build += Types.Object + " " + value
+            if index != (Table.SizeOf(parameters) - 1) {
+                build += ","
+            }
+        }
+        return Clone(build)
+    }
+
+    return nil
+}
+
+IR.Function.GenerateReturn :: (context) {
     doesReturn = Clone(context["return"])
+    if doesReturn == false {
+        return Clone(Types.Void)
+    } 
+
+    return Clone(Types.Object)
+}
+
+IR.Function.GenerateFunctionSignature :: (name, context) {
+    return "typedef " + IR.Function.GenerateReturn(context) + " (*" + name + ")(" + IR.Function.GenerateParameters(context) + ");"
+}
+
+IR.Function.GenerateFunctionHeader :: (context) {
+    name = Clone(context["name"])
     accessorName = name
 
     if context["overrideName"] == false {
@@ -16,46 +61,38 @@ IR.Write.Function :: (context) {
 
     context["accessorName"] = accessorName
 
+    build = ""
+
     if context["extern"] == true {
-        IR.Writer.Write("extern ")
+        build += "extern "
     }
 
     if context["inline"] == true {
-        IR.Writer.Write("inline ")
+        build += "inline "
     }
 
-    if doesReturn == false {
-        IR.Writer.Write(Types.Void)
-    } else {
-        IR.Writer.Write(Types.Object)
+    build += IR.Function.GenerateReturn(context)
+
+    build += " " + accessorName + "("
+
+    parameters = IR.Function.GenerateParameters(context)
+    if parameters != nil {
+        build += parameters
     }
 
-    IR.Writer.Write(" " + accessorName + "(")
+    build += ")"
+    return Clone(build)
+}
 
+IR.Function.ForwardDeclare :: (context) {
+    scopeName = Clone(context["scopeName"])
     context["block"] = nil
 
+    sig = IR.Function.GenerateFunctionSignature(scopeName + "Sig", context)
+    IR.Writer.WriteLine(sig)
+    IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
+
     IR.Env.Scope.Add(scopeName, context, true)
-    IR.Env.Scope.Create()
-
-    if parameters != nil {
-        build = ""
-        foreach index, value in Table.Iter(parameters) {
-            build += Types.Object + " " + value
-            if index != (Table.SizeOf(parameters) - 1) {
-                build += ","
-            }
-        }
-        IR.Writer.Write(build)
-    }
-
-    IR.Writer.Write(")")
-
-    IR.Writer.WriteLine("{")
-
-    IR.Write(block)
-
-    IR.Env.Scope.Pop()
-    IR.Writer.WriteLine("}")
 }
 
 IR.Read.Function :: (context) {

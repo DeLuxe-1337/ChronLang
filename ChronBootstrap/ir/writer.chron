@@ -3,11 +3,11 @@ include core.file.all
 GeneratedSource = ""
 
 IR.Writer.WriteLine :: (text) {
-    GeneratedSource += text + "\n"
+    GeneratedSource += ToString(text) + "\n"
 }
 
 IR.Writer.Write :: (text) {
-    GeneratedSource += text
+    GeneratedSource += ToString(text)
 }
 
 IR.Writer.WriteToFile :: (path) {
