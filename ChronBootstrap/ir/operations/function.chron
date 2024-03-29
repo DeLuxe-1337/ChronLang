@@ -2,10 +2,16 @@ IR.Write.Function :: (context) {
     name = Clone(context["name"])
     block = Clone(context["block"])
     accessorName = Clone(context["accessorName"])
+    parameters = Clone(context["parameters"])
 
     context["block"] = nil
 
     IR.Env.Scope.Create()
+    IR.Env.Defer.Create()
+
+    foreach index, param in Table.Iter(parameters) {
+        IR.Env.Scope.Add(param, IR.CreateRawText(param), true)
+    }
     
     IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context))
 
@@ -13,6 +19,7 @@ IR.Write.Function :: (context) {
 
     IR.Write(block)
 
+    IR.Env.Defer.VisitCurrentScope()
     IR.Env.Scope.Pop()
     IR.Writer.WriteLine("}")
 }

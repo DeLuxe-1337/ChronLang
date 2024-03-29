@@ -7,3 +7,4 @@ include ir.operations.block
 include ir.operations.invoke
 include ir.operations.environment_accessor
 include ir.operations.function
+include ir.operations.defer

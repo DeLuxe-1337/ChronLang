@@ -1,10 +1,12 @@
 include core.all
 
 ["name"="Test", "inline", "extern"]
-X :: (x) {}
+X :: (x) {
+    PrintLn(x)
+}
 
 Main :: {
-    PrintLn("Hello, world") // This is a comment
+    defer PrintLn("Hello, world") // This is a comment
     Test(100)
     Test(true)
     Test(false)

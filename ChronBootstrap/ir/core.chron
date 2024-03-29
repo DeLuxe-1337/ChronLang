@@ -1,4 +1,4 @@
-WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke, "EnvironmentAccessor"=IR.Write.EnvironmentAccessor>
+WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke, "EnvironmentAccessor"=IR.Write.EnvironmentAccessor, "Defer"=IR.Write.Defer>
 ReadMap = <
     "Literals.String"=IR.Read.Literals.String, 
     "Literals.Number"=IR.Read.Literals.Number, 
