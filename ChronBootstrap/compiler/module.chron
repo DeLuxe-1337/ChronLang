@@ -17,7 +17,7 @@ Compiler.Module.CompileFromFile :: (file) {
     lexerState = Lexer.State.Create(File.Read(file))
 
     tokens = Lexer.GetAllTokens(lexerState)
-    // PrintLn(tokens)
+    PrintLn(tokens)
 
     PrintLn("->Parser:")
 
@@ -36,6 +36,14 @@ Compiler.Module.WriteStatementsToFile :: () {
     IR.WriteModule()
 
     IR.Env.Scope.Create()
+
+    foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
+        foreach index, statement in Table.Iter(statementTable) {
+            if statement["type"] == "Function" {
+                IR.Function.ForwardDeclare(Clone(statement))
+            }
+        }
+    }
 
     foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
         foreach index, statement in Table.Iter(statementTable) {
