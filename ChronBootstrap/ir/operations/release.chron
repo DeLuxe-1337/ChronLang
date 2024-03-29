@@ -1,0 +1,13 @@
+IR.Write.Release :: (context) {
+    invokeParameters = <context["child"]>
+    invokeRelease = IR.CreateInvoke(Functions.MemoryRelease, invokeParameters)
+    IR.Write(invokeRelease)
+}
+
+IR.Read.Release :: (context) {
+    return ""
+}
+
+IR.CreateRelease :: (child) {
+    return <"type"="Release", "child"=Clone(child)>
+}

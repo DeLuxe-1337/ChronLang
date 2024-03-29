@@ -10,7 +10,8 @@ Lexer.SymbolMap = <
     "!"="EXCLAMATION", 
     "="="EQUAL", 
     "nil"="NIL",
-    "defer"="DEFER"
+    "defer"="DEFER",
+    "release"="RELEASE"
 >
 
 Lexer.CurrentLine = 1

@@ -1,4 +1,11 @@
-WriteMap = <"Function"=IR.Write.Function, "Block"=IR.Write.Block, "Invoke"=IR.Write.Invoke, "EnvironmentAccessor"=IR.Write.EnvironmentAccessor, "Defer"=IR.Write.Defer>
+WriteMap = <
+    "Function"=IR.Write.Function, 
+    "Block"=IR.Write.Block, 
+    "Invoke"=IR.Write.Invoke, 
+    "EnvironmentAccessor"=IR.Write.EnvironmentAccessor, 
+    "Defer"=IR.Write.Defer,
+    "Release"=IR.Write.Release
+>
 ReadMap = <
     "Literals.String"=IR.Read.Literals.String, 
     "Literals.Number"=IR.Read.Literals.Number, 
@@ -7,7 +14,8 @@ ReadMap = <
     "Literals.RawText"=IR.Read.Literals.RawText, 
     "Invoke"=IR.Read.Invoke, 
     "EnvironmentAccessor"=IR.Read.EnvironmentAccessor, 
-    "Function"=IR.Read.Function
+    "Function"=IR.Read.Function,
+    "Release"=IR.Read.Release
 >
 
 IR.Write :: (node) {

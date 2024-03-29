@@ -4,6 +4,7 @@ Types.CreateBoolean = "DynBoolean"
 Types.CreateTable = "DynTable"
 Types.CreateNil = "DynNil"
 Types.CreateFunction = "DynFunction"
+Types.MemoryRelease = "MemoryContext_Release"
 
 Types.Void = "ChronVoid"
 Types.Object = "ChronObject"
@@ -14,3 +15,4 @@ Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true)
 Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true)
 Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true)
 Functions.CreateFunction = IR.CreateFunctionRaw(Types.CreateFunction, true)
+Functions.MemoryRelease = IR.CreateFunctionRaw(Types.MemoryRelease, true)

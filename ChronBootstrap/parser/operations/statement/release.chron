@@ -1,0 +1,10 @@
+Parser.Statement.Release :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "RELEASE", nil) {
+        Parser.State.Expect(state, "RELEASE", nil, "Expected 'release'")
+
+        exp = Parser.Expression(state)
+
+        return IR.CreateRelease(exp)
+    }
+    return nil
+}

@@ -3,6 +3,7 @@ include parser.operations.statement.block
 include parser.operations.statement.function
 include parser.operations.statement.modifier
 include parser.operations.statement.defer
+include parser.operations.statement.release
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -18,6 +19,9 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Defer(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.Release(state)
     if stmt != nil { return stmt }
 
     return nil
