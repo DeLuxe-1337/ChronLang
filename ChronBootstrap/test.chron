@@ -7,7 +7,7 @@ X :: (x) {
 
 Main :: {
     defer PrintLn("Hello, world") // This is a comment
-    release "Hello, world"
+    PrintLn(release "Hello")
     Test(100)
     Test(true)
     Test(false)

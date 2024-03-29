@@ -5,9 +5,20 @@ IR.Write.Release :: (context) {
 }
 
 IR.Read.Release :: (context) {
-    return ""
+    context["temp"] = IR.CreateTempVariable("RELEASE", context["child"])
+    IR.Write(context["temp"])
+    
+    IR.Env.Defer.Push(context)
+
+    return IR.Read(context["temp"])
+}
+
+IR.Defer.Release :: (context) {
+    invokeParameters = <context["temp"]>
+    invokeRelease = IR.CreateInvoke(Functions.MemoryRelease, invokeParameters)
+    IR.Write(invokeRelease)
 }
 
 IR.CreateRelease :: (child) {
-    return <"type"="Release", "child"=Clone(child)>
+    return <"type"="Release", "child"=Clone(child), "defer"=IR.Defer.Release>
 }

@@ -4,7 +4,8 @@ WriteMap = <
     "Invoke"=IR.Write.Invoke, 
     "EnvironmentAccessor"=IR.Write.EnvironmentAccessor, 
     "Defer"=IR.Write.Defer,
-    "Release"=IR.Write.Release
+    "Release"=IR.Write.Release,
+    "TempVariable"=IR.Write.TempVariable
 >
 ReadMap = <
     "Literals.String"=IR.Read.Literals.String, 
@@ -15,11 +16,12 @@ ReadMap = <
     "Invoke"=IR.Read.Invoke, 
     "EnvironmentAccessor"=IR.Read.EnvironmentAccessor, 
     "Function"=IR.Read.Function,
-    "Release"=IR.Read.Release
+    "Release"=IR.Read.Release,
+    "TempVariable"=IR.Read.TempVariable
 >
 
 IR.Write :: (node) {
-    type = node["type"]
+    type = Clone(node["type"])
     visiter = Clone(WriteMap[type])
 
     PrintLn("Write " + type)
@@ -28,7 +30,7 @@ IR.Write :: (node) {
 }
 
 IR.Read :: (node) {
-    type = node["type"]
+    type = Clone(node["type"])
     visiter = Clone(ReadMap[type])
 
     PrintLn("Read " + type)

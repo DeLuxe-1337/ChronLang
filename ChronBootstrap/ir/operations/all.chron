@@ -9,3 +9,4 @@ include ir.operations.environment_accessor
 include ir.operations.function
 include ir.operations.defer
 include ir.operations.release
+include ir.operations.temp_variable

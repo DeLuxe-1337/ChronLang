@@ -1,7 +1,5 @@
 IR.Read.Literals.RawText :: (context) {
-    value = context["value"]
-
-    return Clone(value)
+    return Clone(context["value"])
 }
 
 IR.CreateRawText :: (value) {

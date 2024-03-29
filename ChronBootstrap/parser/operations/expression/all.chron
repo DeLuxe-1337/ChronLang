@@ -3,6 +3,7 @@ include parser.operations.expression.string
 include parser.operations.expression.number
 include parser.operations.expression.boolean
 include parser.operations.expression.nil
+include parser.operations.expression.release
 
 Parser.Expression :: (state) {
     expr = Parser.Expression.String(state)
@@ -21,6 +22,9 @@ Parser.Expression :: (state) {
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Release(state)
     if expr != nil { return expr } 
 
     return nil

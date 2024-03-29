@@ -18,10 +18,11 @@ IR.Env.Defer.SetCurrent :: () {
     IR.Env.Defer.Current = IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]
 }
 
-IR.Env.Defer.Push :: (scopeItem) {
-    if scopeItem["defer"] != nil {
+IR.Env.Defer.Push :: (item) {
+    PrintLn("A")
+    if item["defer"] != nil {
         index = Table.SizeOf(IR.Env.Defer.Current)
-        IR.Env.Defer.Current[index] = scopeItem
+        IR.Env.Defer.Current[index] = item
     }
 } 
 
