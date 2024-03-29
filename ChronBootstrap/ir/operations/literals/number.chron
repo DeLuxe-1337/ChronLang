@@ -8,5 +8,5 @@ IR.Read.Literals.Number :: (context) {
 }
 
 IR.CreateNumber :: (value) {
-    return <"value"=Clone(value), "type"="Literals.Number">
+    return <"value"=Clone(value), "literal"=true, "type"="Literals.Number">
 }

@@ -7,5 +7,5 @@ IR.Read.Literals.Nil :: (context) {
 }
 
 IR.CreateNil :: {
-    return <"type"="Literals.Nil">
+    return <"literal"=true, "type"="Literals.Nil">
 }
