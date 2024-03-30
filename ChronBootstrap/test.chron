@@ -5,6 +5,8 @@ X :: (x) {
     PrintLn(x)
 }
 
+Sum :: (a,b) ?
+
 Main :: {
     defer PrintLn("Hello, world") // This is a comment
     PrintLn(release "Hello")

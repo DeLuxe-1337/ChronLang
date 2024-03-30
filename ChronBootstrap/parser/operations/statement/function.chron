@@ -35,24 +35,27 @@ Parser.Statement.Function :: (state) {
         }
 
         block = Parser.Statement.Block(state)
-        if block != nil {
-            function = IR.CreateFunction(name, block, parameters)
-            function["overrideName"] = OverrideName
+        function = IR.CreateFunction(name, block, parameters)
 
-            if Modifiers["name"] != nil {
-                function["scopeName"] = Modifiers["name"]
-            }
+        function["overrideName"] = OverrideName
 
-            if Modifiers["inline"] != nil {
-                function["inline"] = true
-            }
-
-            if Modifiers["extern"] != nil {
-                function["extern"] = true
-            }
-
-            return Clone(function)
+        if Modifiers["name"] != nil {
+            function["scopeName"] = Modifiers["name"]
         }
+
+        if Modifiers["inline"] != nil {
+            function["inline"] = true
+        }
+
+        if Modifiers["extern"] != nil {
+            function["extern"] = true
+        }
+
+        if block == nil {
+            Parser.State.Expect(state, "QUESTION", nil, "Expected '?' or a block after function decl.")
+        }
+
+        return Clone(function)
     }
     return nil
 }

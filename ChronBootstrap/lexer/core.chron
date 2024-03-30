@@ -9,6 +9,7 @@ Lexer.SymbolMap = <
     ","="COMMA", 
     "!"="EXCLAMATION", 
     "="="EQUAL", 
+    "?"="QUESTION", 
     "nil"="NIL",
     "defer"="DEFER",
     "release"="RELEASE"
