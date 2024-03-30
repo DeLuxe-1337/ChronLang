@@ -6,11 +6,15 @@ IR.Read.EnvironmentAccessor :: (context) {
     return IR.Read(IR.EnvironmentAccessor.Find(context["value"]))
 }
 
+IR.EnvironmentAccessor.Get :: (context) {
+    return IR.EnvironmentAccessor.Find(context["value"])
+}
+
 IR.EnvironmentAccessor.Find :: (value) {
-    PrintLn(value)
     result = IR.Env.Scope.Get(value)
     if result[0] != nil {
-        return result[0]
+        result = result[0]
+        return Clone(result)
     }
 
     return nil

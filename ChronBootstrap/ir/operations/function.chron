@@ -70,7 +70,7 @@ IR.Function.GenerateFunctionHeader :: (context) {
     name = Clone(context["name"])
     accessorName = name
 
-    if (context["overrideName"] == false) and (context["native"] != true) {
+    if ((context["overrideName"] == false) and (context["native"] != true)) {
         accessorName = "_F_" + name
     }
 
@@ -107,9 +107,11 @@ IR.Function.ForwardDeclare :: (context) {
     scopeName = Clone(context["scopeName"])
     context["block"] = nil
 
-    sig = IR.Function.GenerateFunctionSignature(scopeName + "Sig", context)
-    IR.Writer.WriteLine(sig)
-    IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
+    // if context["native"] != true {
+        sig = IR.Function.GenerateFunctionSignature(Clone(context["name"]) + "Sig", context)
+        IR.Writer.WriteLine(sig)
+        IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
+    // }
 
     IR.Env.Scope.Add(scopeName, context, true)
 }

@@ -36,7 +36,7 @@ Lexer.GetToken :: (state) {
 
     if String.IsAlpha(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
         identifier = ""
-        while (String.IsAlphaNumeric(Lexer.State.Get(state)) or (Lexer.State.Get(state) == ".")) and (Lexer.State.EOF(state) == false) {
+        while (String.IsAlphaNumeric(Lexer.State.Get(state)) or (Lexer.State.Get(state) == ".") or (Lexer.State.Get(state) == "_")) and (Lexer.State.EOF(state) == false) {
             identifier += Lexer.State.Get(state)
             Lexer.State.IncreaseIndex(state)
         }

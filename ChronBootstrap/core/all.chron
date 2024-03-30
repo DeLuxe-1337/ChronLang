@@ -1,2 +1,3 @@
 include core.std
+include core.c
 include core.console

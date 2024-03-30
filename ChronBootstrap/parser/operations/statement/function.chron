@@ -5,7 +5,7 @@ Parser.Statement.Function :: (state) {
 
     if Parser.State.Match(Parser.State.Get(state), "EXCLAMATION", nil) {
         OverrideName = true
-        Parser.State.IncreaseIndex(state)
+        Parser.State.Expect(state, "EXCLAMATION", nil, "Expected '!'")
     }
 
     if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "CONSTANT", nil) {
@@ -63,6 +63,10 @@ Parser.Statement.Function :: (state) {
             if Modifiers["parameters"] != nil {
                 function["nativeParameters"] = Modifiers["parameters"]
             }
+        }
+
+        if Modifiers["return"] != nil {
+            function["return"] = true
         }
     
         if block == nil {

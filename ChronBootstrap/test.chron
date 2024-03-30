@@ -1,10 +1,5 @@
 include core.all
 
 Main :: {
-    defer PrintLn("Hello, world") // This is a comment
-    PrintLn("Hello")
-    PrintLn(50)
-    PrintLn(true)
-    PrintLn(false)
-    PrintLn(nil)
+    PrintLn("Hello, world")
 }
