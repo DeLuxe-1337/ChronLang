@@ -51,6 +51,20 @@ Parser.Statement.Function :: (state) {
             function["extern"] = true
         }
 
+        if Modifiers["native"] != nil {
+            function["native"] = true
+            function["nativeReturn"] = "void"
+            function["nativeParameters"] = ""
+
+            if Modifiers["return"] != nil {
+                function["nativeReturn"] = Modifiers["return"]
+            }
+
+            if Modifiers["parameters"] != nil {
+                function["nativeParameters"] = Modifiers["parameters"]
+            }
+        }
+    
         if block == nil {
             Parser.State.Expect(state, "QUESTION", nil, "Expected '?' or a block after function decl.")
         }

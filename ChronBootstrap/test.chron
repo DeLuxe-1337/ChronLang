@@ -1,18 +1,10 @@
 include core.all
 
-["name"="Test", "inline", "extern"]
-X :: (x) {
-    PrintLn(x)
-}
-
-Sum :: (a,b) ?
-
 Main :: {
     defer PrintLn("Hello, world") // This is a comment
-    PrintLn(release "Hello")
-    Test(100)
-    Test(true)
-    Test(false)
-    Test(nil)
-    PrintLn(Test(50))
+    PrintLn("Hello")
+    PrintLn(50)
+    PrintLn(true)
+    PrintLn(false)
+    PrintLn(nil)
 }

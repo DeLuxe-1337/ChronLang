@@ -33,9 +33,11 @@ IR.Env.Scope.Get :: (name) {
     foreach scopeIndex, scope in Table.Iter(IR.Env.Scope.List) {
         if TypeOf(scope) == "table" {
             foreach index, value in Table.Iter(scope) {
-                if (value != nil) and (value["name"] == name) {
-                    result[i] = value["value"]
-                    i += 1
+                if (TypeOf(value) == "table") {
+                    if (value != nil) and (value["name"] == name) {
+                        result[i] = value["value"]
+                        i += 1
+                    }
                 }
             }
         }

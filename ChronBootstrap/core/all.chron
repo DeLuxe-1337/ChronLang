@@ -1,2 +1,2 @@
-PrintLn :: (param) {
-}
+include core.std
+include core.console

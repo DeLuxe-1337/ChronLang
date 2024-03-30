@@ -29,6 +29,10 @@ IR.Write.Function :: (context) {
 }
 
 IR.Function.GenerateParameters :: (context) {
+    if context["native"] == true {
+        return Clone(context["nativeParameters"])
+    }
+
     parameters = Clone(context["parameters"])
 
     if parameters != nil {
@@ -46,6 +50,10 @@ IR.Function.GenerateParameters :: (context) {
 }
 
 IR.Function.GenerateReturn :: (context) {
+    if context["native"] == true {
+        return Clone(context["nativeReturn"])
+    }
+
     doesReturn = Clone(context["return"])
     if doesReturn == false {
         return Clone(Types.Void)
@@ -62,7 +70,7 @@ IR.Function.GenerateFunctionHeader :: (context) {
     name = Clone(context["name"])
     accessorName = name
 
-    if context["overrideName"] == false {
+    if (context["overrideName"] == false) and (context["native"] != true) {
         accessorName = "_F_" + name
     }
 

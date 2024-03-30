@@ -1,0 +1,12 @@
+include core.std
+
+["native", "return"="int", "parameters"="const char* format, ..."]
+printf :: (format, text) ?
+
+Print :: (message) {
+    printf("%s", ToString(message))
+}
+
+PrintLn :: (message) {
+    printf("%s\n", ToString(message))
+}
