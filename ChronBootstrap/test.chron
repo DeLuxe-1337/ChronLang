@@ -1,5 +1,10 @@
 include core.all
 
 Main :: {
+    defer PrintLn("End of program")
     PrintLn("Hello, world")
+    PrintLn(true)
+    PrintLn(false)
+    PrintLn(nil)
+    PrintLn(500)
 }
