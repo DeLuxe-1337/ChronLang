@@ -1,5 +1,7 @@
 IR.Write.Invoke :: (context) {
+    IR.Env.Defer.Create()
     IR.Writer.WriteLine(IR.Read.Invoke(context) + ";")
+    IR.Env.Defer.VisitCurrentScope()
 }
 
 IR.Read.Invoke :: (context) {
