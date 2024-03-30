@@ -33,5 +33,5 @@ IR.Read.Invoke :: (context) {
 }
 
 IR.CreateInvoke :: (callee, parameters) {
-    return <"target"=Clone(callee), "parameters"=Clone(parameters) , "type"="Invoke">
+    return <"target"=Clone(callee), "parameters"=Clone(parameters), "autoRelease"=true, "type"="Invoke">
 }
