@@ -1,0 +1,49 @@
+Parser.Expression.Factor :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "LPAREN", nil) {
+        Parser.State.IncreaseIndex(state)
+
+        result = Parser.Expression(state)
+
+        Parser.State.Expect(state, "RPAREN", nil, "Expected ')' after '('")
+        
+        return Clone(result)
+    }
+
+    return Parser.Expression.Primary(state)
+}
+
+Parser.Expression.Term :: (state) {
+    left = Parser.Expression.Factor(state)
+
+    while ((Parser.State.Match(Parser.State.Get(state), "STAR", nil) == true) or (Parser.State.Match(Parser.State.Get(state), "FSLASH", nil) == true)) {
+        operator = Parser.State.Get(state)["type"]
+        Parser.State.IncreaseIndex(state)
+        right = Parser.Expression.Factor(state)
+
+        if operator == "STAR" {
+            left = IR.CreateMult(left, right)
+        } else {
+            left = IR.CreateDiv(left, right)
+        }
+    }
+
+    return Clone(left)
+}
+
+Parser.Expression.Summand :: (state) {
+    left = Parser.Expression.Term(state)
+
+    while ((Parser.State.Match(Parser.State.Get(state), "PLUS", nil) == true) or (Parser.State.Match(Parser.State.Get(state), "MINUS", nil) == true)) {
+        operator = Parser.State.Get(state)["type"]
+        Parser.State.IncreaseIndex(state)
+        right = Parser.Expression.Term(state)
+
+        if operator == "PLUS" {
+            left = IR.CreateAdd(left, right)
+        } else {
+            left = IR.CreateSub(left, right)
+        }
+    }
+
+    return Clone(left)
+}

@@ -17,7 +17,11 @@ ReadMap = <
     "EnvironmentAccessor"=IR.Read.EnvironmentAccessor, 
     "Function"=IR.Read.Function,
     "Release"=IR.Read.Release,
-    "TempVariable"=IR.Read.TempVariable
+    "TempVariable"=IR.Read.TempVariable,
+    "Math.Add"=IR.Read.Math.Add,
+    "Math.Sub"=IR.Read.Math.Sub,
+    "Math.Mult"=IR.Read.Math.Mult,
+    "Math.Div"=IR.Read.Math.Div
 >
 
 IR.Write :: (node) {

@@ -6,6 +6,10 @@ Compiler.Module.Statements = <>
 Compiler.Module.StatementCount = 0
 Compiler.Module.Compiled = <>
 
+Compiler.Module.Create :: (name) {
+    return <"name"=name>
+}
+
 Compiler.Module.CompileFromFile :: (file) {
     if Compiler.Module.Compiled[file] != nil {
         PrintLn(file + " is already included")
@@ -31,7 +35,7 @@ Compiler.Module.CompileFromFile :: (file) {
     return true
 }
 
-Compiler.Module.WriteStatementsToFile :: () {
+Compiler.Module.WriteStatementsToFile :: (module) {
     PrintLn("->IR:")
     IR.WriteModule()
 
@@ -54,5 +58,5 @@ Compiler.Module.WriteStatementsToFile :: () {
 
     PrintLn("Writing to file")
 
-    IR.Writer.WriteToFile("out.chron_test.c")
+    IR.Writer.WriteToFile(module["name"] + ".chron.c")
 }

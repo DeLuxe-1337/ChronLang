@@ -4,8 +4,9 @@ include parser.operations.expression.number
 include parser.operations.expression.boolean
 include parser.operations.expression.nil
 include parser.operations.expression.release
+include parser.operations.expression.math
 
-Parser.Expression :: (state) {
+Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.String(state)
     if expr != nil { return expr } 
 
@@ -16,6 +17,13 @@ Parser.Expression :: (state) {
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Nil(state)
+    if expr != nil { return expr } 
+
+    return nil
+}
+
+Parser.Expression :: (state) {
+    expr = Parser.Expression.Summand(state)
     if expr != nil { return expr } 
 
     expr = Parser.Invoke(state)

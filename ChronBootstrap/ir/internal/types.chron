@@ -4,6 +4,11 @@ Types.CreateBoolean = "DynBoolean"
 Types.CreateTable = "DynTable"
 Types.CreateNil = "DynNil"
 Types.CreateFunction = "DynFunction"
+Types.ObjectAdd = "DynObjectAdd"
+Types.ObjectSub = "DynObjectSub"
+Types.ObjectDiv = "DynObjectDiv"
+Types.ObjectMul = "DynObjectMul"
+Types.ObjectModulus = "DynObjectMod"
 Types.MemoryRelease = "MemoryContext_Release"
 
 Types.Void = "ChronVoid"
@@ -16,3 +21,9 @@ Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true)
 Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true)
 Functions.CreateFunction = IR.CreateFunctionRaw(Types.CreateFunction, true)
 Functions.MemoryRelease = IR.CreateFunctionRaw(Types.MemoryRelease, true)
+
+Functions.ObjectAdd = IR.CreateFunctionRaw(Types.ObjectAdd, true)
+Functions.ObjectSub = IR.CreateFunctionRaw(Types.ObjectSub, true)
+Functions.ObjectDiv = IR.CreateFunctionRaw(Types.ObjectDiv, true)
+Functions.ObjectMul = IR.CreateFunctionRaw(Types.ObjectMul, true)
+Functions.ObjectModulus = IR.CreateFunctionRaw(Types.ObjectModulus, true)

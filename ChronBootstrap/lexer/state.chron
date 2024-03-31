@@ -1,5 +1,5 @@
 Lexer.State.Create :: (source) {
-    return <"source"=source, "length"=String.SizeOf(source), "index"=0, "EOF"=false>
+    return <"source"=source, "length"=String.SizeOf(source), "currentLine"=1,"index"=0, "EOF"=false>
 }
 
 Lexer.State.Get :: (state) {
