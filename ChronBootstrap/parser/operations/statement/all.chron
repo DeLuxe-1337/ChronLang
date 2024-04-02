@@ -12,9 +12,6 @@ Parser.Statement :: (state) {
     stmt = Parser.Statement.Function(state)
     if stmt != nil { return stmt }
 
-    stmt = Parser.Invoke(state)
-    if stmt != nil { return stmt }
-
     stmt = Parser.Statement.Block(state)
     if stmt != nil { return stmt }
 
@@ -22,6 +19,9 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Release(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Expression(state)
     if stmt != nil { return stmt }
 
     return nil

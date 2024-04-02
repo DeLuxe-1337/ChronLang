@@ -63,6 +63,21 @@ Parser.State.ExpectRet :: (state, type, value, errorMessage) {
     return Clone(token)
 }
 
+Parser.State.Previous :: (state) {
+    return Clone(state["tokens"][(state["index"] - 1)])
+}
+
+Parser.State.MatchInc :: (state, tokens) {
+    foreach index, value in Table.Iter(tokens) {
+        if Parser.State.Match(Parser.State.Get(state), value, nil) {
+            Parser.State.IncreaseIndex(state)
+            return true
+        }
+    }
+
+    return false
+}
+
 Parser.State.Match :: (token, type, value) {
     if token == nil {
         return false

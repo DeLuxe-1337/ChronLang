@@ -1,0 +1,17 @@
+Parser.Expression.Comparison :: (state) {
+    left = Parser.Expression.Summand(state)
+
+    while (Parser.State.MatchInc(state, <"EQUAL">)) {
+        operator = Parser.State.Previous(state)["type"]
+
+        Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
+
+        right = Parser.Expression(state)
+        
+        if operator == "EQUAL" {
+            left = IR.CreateEqual(left, right)
+        }
+    }
+
+    return Clone(left)
+}

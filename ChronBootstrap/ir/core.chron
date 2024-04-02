@@ -22,7 +22,8 @@ ReadMap = <
     "Math.Sub"=IR.Read.Math.Sub,
     "Math.Mult"=IR.Read.Math.Mult,
     "Math.Div"=IR.Read.Math.Div,
-    "Math.Mod"=IR.Read.Math.Mod
+    "Math.Mod"=IR.Read.Math.Mod,
+    "Comparison.Equal"=IR.Read.Comparison.Equal
 >
 
 IR.Write :: (node) {
@@ -30,6 +31,8 @@ IR.Write :: (node) {
     visiter = Clone(WriteMap[type])
 
     PrintLn("Write " + type)
+
+    PrintLn(node)
     
     invoke IR.Write visiter(node)
 }

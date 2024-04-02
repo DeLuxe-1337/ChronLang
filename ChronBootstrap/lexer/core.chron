@@ -15,9 +15,12 @@ Lexer.SymbolMap = <
     "/"="FSLASH", 
     "*"="STAR", 
     "%"="PERCENT", 
+    "or"="OR",
+    "and"="A",
     "nil"="NIL",
     "defer"="DEFER",
-    "release"="RELEASE"
+    "release"="RELEASE",
+    "include"="INCLUDE"
 >
 
 Lexer.GetToken :: (state) {

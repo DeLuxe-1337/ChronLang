@@ -1,5 +1,5 @@
 Parser.Statement.Include :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", "include") and Parser.State.Match(Parser.State.Peek(state, 1), "IDENTIFIER", nil) {
+    if Parser.State.Match(Parser.State.Get(state), "INCLUDE", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "IDENTIFIER", nil) {
         path = String.Replace(Parser.State.Next(state)["value"], ".", "/") + ".chron"
 
         PrintLn(path)

@@ -9,7 +9,7 @@ Parser.Expression.Factor :: (state) {
         return Clone(result)
     }
 
-    return Parser.Expression.Primary(state)
+    return Parser.Invoke(state)
 }
 
 Parser.Expression.Term :: (state) {

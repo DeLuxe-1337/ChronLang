@@ -5,6 +5,7 @@ include parser.operations.expression.boolean
 include parser.operations.expression.nil
 include parser.operations.expression.release
 include parser.operations.expression.math
+include parser.operations.expression.comparison
 
 Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.String(state)
@@ -19,17 +20,14 @@ Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.Nil(state)
     if expr != nil { return expr } 
 
+    expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
     return nil
 }
 
 Parser.Expression :: (state) {
-    expr = Parser.Expression.Summand(state)
-    if expr != nil { return expr } 
-
-    expr = Parser.Invoke(state)
-    if expr != nil { return expr } 
-
-    expr = Parser.Expression.Identifier(state)
+    expr = Parser.Expression.Comparison(state)
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Release(state)
