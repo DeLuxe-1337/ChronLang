@@ -14,3 +14,4 @@ include ir.operations.math.add
 include ir.operations.math.sub
 include ir.operations.math.div
 include ir.operations.math.mult
+include ir.operations.math.mod

@@ -14,6 +14,7 @@ Lexer.SymbolMap = <
     "-"="MINUS", 
     "/"="FSLASH", 
     "*"="STAR", 
+    "%"="PERCENT", 
     "nil"="NIL",
     "defer"="DEFER",
     "release"="RELEASE"

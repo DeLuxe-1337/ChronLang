@@ -21,7 +21,8 @@ ReadMap = <
     "Math.Add"=IR.Read.Math.Add,
     "Math.Sub"=IR.Read.Math.Sub,
     "Math.Mult"=IR.Read.Math.Mult,
-    "Math.Div"=IR.Read.Math.Div
+    "Math.Div"=IR.Read.Math.Div,
+    "Math.Mod"=IR.Read.Math.Mod
 >
 
 IR.Write :: (node) {

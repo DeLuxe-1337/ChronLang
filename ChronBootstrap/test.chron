@@ -19,4 +19,5 @@ Main :: {
     PrintLn((10 + 5) * (6 - 3) / 2 - 4)
     PrintLn("Hello, " + "world")
     PrintLn(-500)
+    PrintLn(5 % 2)
 }
