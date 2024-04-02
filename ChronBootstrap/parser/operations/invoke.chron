@@ -25,7 +25,7 @@ Parser.FinishInvoke :: (state, callee) {
 Parser.Invoke :: (state) {
     expr = Parser.Expression.Primary(state)
 
-    while Parser.State.MatchInc(state, <"LPAREN">) {
+    while Parser.State.MatchAny(state, <"LPAREN">) {
         expr = Parser.FinishInvoke(state, expr)
     }
     

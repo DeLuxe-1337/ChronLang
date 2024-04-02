@@ -1,7 +1,5 @@
 Parser.Expression.Factor :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "LPAREN", nil) {
-        Parser.State.IncreaseIndex(state)
-
+    if Parser.State.MatchAny(state, <"LPAREN">) {
         result = Parser.Expression(state)
 
         Parser.State.Expect(state, "RPAREN", nil, "Expected ')' after '('")
@@ -15,9 +13,8 @@ Parser.Expression.Factor :: (state) {
 Parser.Expression.Term :: (state) {
     left = Parser.Expression.Factor(state)
 
-    while ((Parser.State.Match(Parser.State.Get(state), "STAR", nil) == true) or (Parser.State.Match(Parser.State.Get(state), "FSLASH", nil) == true) or (Parser.State.Match(Parser.State.Get(state), "PERCENT", nil) == true)) {
-        operator = Parser.State.Get(state)["type"]
-        Parser.State.IncreaseIndex(state)
+    while Parser.State.MatchAny(state, <"STAR", "FSLASH", "PERCENT">) {
+        operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.Factor(state)
 
         if operator == "PERCENT" {
@@ -37,9 +34,8 @@ Parser.Expression.Term :: (state) {
 Parser.Expression.Summand :: (state) {
     left = Parser.Expression.Term(state)
 
-    while ((Parser.State.Match(Parser.State.Get(state), "PLUS", nil) == true) or (Parser.State.Match(Parser.State.Get(state), "MINUS", nil) == true)) {
-        operator = Parser.State.Get(state)["type"]
-        Parser.State.IncreaseIndex(state)
+    while Parser.State.MatchAny(state, <"PLUS", "MINUS">) {
+        operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.Term(state)
 
         if operator == "PLUS" {

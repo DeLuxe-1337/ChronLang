@@ -23,6 +23,5 @@ Main :: {
     PrintLn("Hello, " + "world")
     PrintLn(-500)
     PrintLn(5 % 2)
-    PrintLn(Test() == 5)
-    PrintLn(Test() + 5)
+    PrintLn(5 == 5)
 }

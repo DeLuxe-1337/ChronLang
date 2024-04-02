@@ -67,7 +67,7 @@ Parser.State.Previous :: (state) {
     return Clone(state["tokens"][(state["index"] - 1)])
 }
 
-Parser.State.MatchInc :: (state, tokens) {
+Parser.State.MatchAny :: (state, tokens) {
     foreach index, value in Table.Iter(tokens) {
         if Parser.State.Match(Parser.State.Get(state), value, nil) {
             Parser.State.IncreaseIndex(state)
