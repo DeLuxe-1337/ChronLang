@@ -23,7 +23,12 @@ ReadMap = <
     "Math.Mult"=IR.Read.Math.Mult,
     "Math.Div"=IR.Read.Math.Div,
     "Math.Mod"=IR.Read.Math.Mod,
-    "Comparison.Equal"=IR.Read.Comparison.Equal
+    "Comparison.Equal"=IR.Read.Comparison.Equal,
+    "Comparison.NotEqual"=IR.Read.Comparison.NotEqual,
+    "Comparison.Greater"=IR.Read.Comparison.Greater,
+    "Comparison.GreaterThanEq"=IR.Read.Comparison.GreaterThanEq,
+    "Comparison.Less"=IR.Read.Comparison.Less,
+    "Comparison.LessThanEq"=IR.Read.Comparison.LessThanEq
 >
 
 IR.Write :: (node) {

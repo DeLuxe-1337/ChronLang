@@ -9,6 +9,8 @@ Lexer.SymbolMap = <
     ","="COMMA", 
     "!"="EXCLAMATION", 
     "="="EQUAL", 
+    ">"="GREATER", 
+    "<"="LESS", 
     "?"="QUESTION", 
     "+"="PLUS", 
     "-"="MINUS", 

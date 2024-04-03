@@ -16,3 +16,8 @@ include ir.operations.math.div
 include ir.operations.math.mult
 include ir.operations.math.mod
 include ir.operations.comparison.equal
+include ir.operations.comparison.not_equal
+include ir.operations.comparison.greater
+include ir.operations.comparison.less
+include ir.operations.comparison.greater_than_eq
+include ir.operations.comparison.less_than_eq
