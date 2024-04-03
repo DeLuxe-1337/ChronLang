@@ -18,12 +18,22 @@ namespace ChronIR.IR.Operation
             ChronDefer.IncreaseScope();
 
             var value = new ChronTemporaryVariable("WHILE_TMP", condition);
-            value.Write(context);
-            block.AddStatement(value);
 
-            context.writer.WriteLine($"while({ChronTypes.GetBooleanFromObject}({value.Read(context)})) {{");
+            context.writer.WriteLine($"while(1) {{");
 
             ChronDefer.IncreaseScope();
+
+            // Condition
+            value.Write(context);
+
+            // Evaluate condition
+            context.writer.WriteLine($"if({ChronTypes.GetBooleanFromObject}({value.Read(context)}) == false) {{");
+
+            // Clean up condition
+            ChronDefer.VisitCurrentScope(context);
+
+            // Exit while loop
+            context.writer.WriteLine("break;\n}");
 
             block.Write(context);
 
