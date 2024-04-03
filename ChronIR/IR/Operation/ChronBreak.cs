@@ -6,6 +6,8 @@ namespace ChronIR.IR.Operation
     {
         public void Write(ChronContext context)
         {
+            ChronDefer.VisitCurrentScope(context);
+
             context.writer.WriteLine("break;");
         }
     }
