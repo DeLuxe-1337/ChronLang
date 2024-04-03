@@ -3,43 +3,41 @@ Parser.Expression.Comparison :: (state) {
 
     while (Parser.State.MatchAny(state, <"EQUAL", "EXCLAMATION", "GREATER", "LESS">)) {
         operator = Parser.State.Previous(state)["type"]
-        matched = false // I would use continue instead of a variable, but there's some issues with how while loops are handled
 
         if Parser.State.Get(state)["type"] != "EQUAL" {
             right = Parser.Expression(state)
 
             if operator == "GREATER" {
                 left = IR.CreateCompareGreater(left, right)
-                matched = true
+                continue
             }
 
             if operator == "LESS" {
                 left = IR.CreateCompareLess(left, right)
-                matched = true
+                continue
             }
         }
 
-        if matched == false {
-            Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
+        Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
 
-            right = Parser.Expression(state)
-            
-            if operator == "EQUAL" {
-                left = IR.CreateEqual(left, right)
-            }
-
-            if operator == "EXCLAMATION" {
-                left = IR.CreateNotEqual(left, right)
-            }
-            
-            if operator == "GREATER" {
-                left = IR.CreateCompareGreaterThanEqual(left, right)
-            }
-
-            if operator == "LESS" {
-                left = IR.CreateCompareLessThanEqual(left, right)
-            }
+        right = Parser.Expression(state)
+        
+        if operator == "EQUAL" {
+            left = IR.CreateEqual(left, right)
         }
+
+        if operator == "EXCLAMATION" {
+            left = IR.CreateNotEqual(left, right)
+        }
+        
+        if operator == "GREATER" {
+            left = IR.CreateCompareGreaterThanEqual(left, right)
+        }
+
+        if operator == "LESS" {
+            left = IR.CreateCompareLessThanEqual(left, right)
+        }
+        
     }
 
     return Clone(left)
