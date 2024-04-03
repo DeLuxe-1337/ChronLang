@@ -21,7 +21,7 @@ Compiler.Module.CompileFromFile :: (file) {
     lexerState = Lexer.State.Create(File.Read(file))
 
     tokens = Lexer.GetAllTokens(lexerState)
-    PrintLn(tokens)
+    // PrintLn(tokens)
 
     PrintLn("->Parser:")
 
@@ -51,7 +51,7 @@ Compiler.Module.WriteStatementsToFile :: (module) {
 
     foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
         foreach index, statement in Table.Iter(statementTable) {
-            PrintLn(index)
+            // PrintLn(index)
             IR.Write(statement)
         }
     }

@@ -1,0 +1,12 @@
+Parser.Expression.Unary :: (state) {
+    if (Parser.State.MatchAny(state, <"EXCLAMATION">)) {
+        operator = Parser.State.Previous(state)["type"]
+        right = Parser.Expression.Unary(state)
+        
+        if operator == "EXCLAMATION" {
+            return IR.CreateCompareNot(right)
+        }
+    }
+
+    return Parser.Invoke(state)
+}

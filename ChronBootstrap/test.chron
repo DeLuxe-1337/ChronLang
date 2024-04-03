@@ -1,10 +1,7 @@
 include core.all
 
-["return"]
-Test :: {}
-
-Main :: {
-    defer PrintLn("End of program")
+// ["return"]
+Test :: {
     PrintLn("Hello, world")
     PrintLn(true)
     PrintLn(false)
@@ -28,4 +25,8 @@ Main :: {
     PrintLn(5 <= 5)
     PrintLn(5 == 5)
     PrintLn(5 == 5 or 3 == 3)
+}
+
+Main :: {
+    defer PrintLn("End of program")
 }

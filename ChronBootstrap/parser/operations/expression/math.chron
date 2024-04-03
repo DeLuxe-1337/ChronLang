@@ -7,7 +7,7 @@ Parser.Expression.Factor :: (state) {
         return Clone(result)
     }
 
-    return Parser.Invoke(state)
+    return Parser.Expression.Unary(state)
 }
 
 Parser.Expression.Term :: (state) {

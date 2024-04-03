@@ -30,14 +30,15 @@ ReadMap = <
     "Comparison.Less"=IR.Read.Comparison.Less,
     "Comparison.LessThanEq"=IR.Read.Comparison.LessThanEq,
     "Comparison.Or"=IR.Read.Comparison.Or,
-    "Comparison.And"=IR.Read.Comparison.And
+    "Comparison.And"=IR.Read.Comparison.And,
+    "Comparison.Not"=IR.Read.Comparison.Not
 >
 
 IR.Write :: (node) {
     type = Clone(node["type"])
     visiter = Clone(WriteMap[type])
 
-    PrintLn("Write " + type)
+    // PrintLn("Write " + type)
 
     // PrintLn(node)
     
@@ -48,7 +49,7 @@ IR.Read :: (node) {
     type = Clone(node["type"])
     visiter = Clone(ReadMap[type])
 
-    PrintLn("Read " + type)
+    // PrintLn("Read " + type)
     
     return invoke IR.Read visiter(node)
 }

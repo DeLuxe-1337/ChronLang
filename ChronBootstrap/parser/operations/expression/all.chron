@@ -6,6 +6,7 @@ include parser.operations.expression.nil
 include parser.operations.expression.release
 include parser.operations.expression.math
 include parser.operations.expression.comparison
+include parser.operations.expression.unary
 
 Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.String(state)

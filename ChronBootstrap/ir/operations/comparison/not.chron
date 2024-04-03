@@ -1,0 +1,10 @@
+IR.Read.Comparison.Not :: (context) {
+    invokeParameters = <context["right"]>
+    invokeCreate = IR.CreateInvoke(Functions.ObjectCompareNot, invokeParameters)
+
+    return IR.Read(invokeCreate)
+}
+
+IR.CreateCompareNot :: (right) {
+    return <"right"=Clone(right), "autoRelease"=true, "type"="Comparison.Not">
+}

@@ -21,6 +21,8 @@ Types.ObjectCompareGrtEq = "DynObjectCompareGrtEq"
 Types.ObjectCompareLesstEq = "DynObjectCompareLesstEq"
 Types.ObjectCompareLesst = "DynObjectCompareLesst"
 
+Types.ObjectCompareNot = "DynObjectNot"
+
 Types.Void = "ChronVoid"
 Types.Object = "ChronObject"
 
@@ -47,3 +49,5 @@ Functions.ObjectCompareGrt = IR.CreateFunctionRaw(Types.ObjectCompareGrt, true)
 Functions.ObjectCompareGrtEq = IR.CreateFunctionRaw(Types.ObjectCompareGrtEq, true)
 Functions.ObjectCompareLesstEq = IR.CreateFunctionRaw(Types.ObjectCompareLesstEq, true)
 Functions.ObjectCompareLesst = IR.CreateFunctionRaw(Types.ObjectCompareLesst, true)
+
+Functions.ObjectCompareNot = IR.CreateFunctionRaw(Types.ObjectCompareNot, true)

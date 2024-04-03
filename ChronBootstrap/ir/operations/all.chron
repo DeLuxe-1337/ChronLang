@@ -23,3 +23,4 @@ include ir.operations.comparison.greater_than_eq
 include ir.operations.comparison.less_than_eq
 include ir.operations.comparison.or
 include ir.operations.comparison.and
+include ir.operations.comparison.not
