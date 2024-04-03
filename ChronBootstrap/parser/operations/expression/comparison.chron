@@ -1,11 +1,11 @@
-Parser.Expression.Comparison :: (state) {
+Parser.Expression.ComparsionEquality :: (state) {
     left = Parser.Expression.Summand(state)
 
     while (Parser.State.MatchAny(state, <"EQUAL", "EXCLAMATION", "GREATER", "LESS">)) {
         operator = Parser.State.Previous(state)["type"]
 
         if Parser.State.Get(state)["type"] != "EQUAL" {
-            right = Parser.Expression(state)
+            right = Parser.Expression.Summand(state)
 
             if operator == "GREATER" {
                 left = IR.CreateCompareGreater(left, right)
@@ -20,24 +20,48 @@ Parser.Expression.Comparison :: (state) {
 
         Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
 
-        right = Parser.Expression(state)
+        right = Parser.Expression.Summand(state)
         
         if operator == "EQUAL" {
-            left = IR.CreateEqual(left, right)
+            left = IR.CreateCompareEqual(left, right)
+            continue
         }
 
         if operator == "EXCLAMATION" {
-            left = IR.CreateNotEqual(left, right)
+            left = IR.CreateCompareNotEqual(left, right)
+            continue
         }
         
         if operator == "GREATER" {
             left = IR.CreateCompareGreaterThanEqual(left, right)
+            continue
         }
 
         if operator == "LESS" {
             left = IR.CreateCompareLessThanEqual(left, right)
+            continue
         }
-        
+    }
+
+    return Clone(left)
+}
+
+Parser.Expression.ComparisonLogical :: (state) {
+    left = Parser.Expression.ComparsionEquality(state)
+
+    while (Parser.State.MatchAny(state, <"OR", "AND">)) {
+        operator = Parser.State.Previous(state)["type"]
+        right = Parser.Expression.ComparsionEquality(state)
+
+        if operator == "OR" {
+            left = IR.CreateCompareOr(left, right)
+            continue
+        }
+
+        if operator == "AND" {
+            left = IR.CreateCompareAnd(left, right)
+            continue
+        }
     }
 
     return Clone(left)

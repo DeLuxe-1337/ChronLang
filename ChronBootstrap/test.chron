@@ -26,4 +26,6 @@ Main :: {
     PrintLn(5 != 3)
     PrintLn(5 < 5)
     PrintLn(5 <= 5)
+    PrintLn(5 == 5)
+    PrintLn(5 == 5 or 3 == 3)
 }

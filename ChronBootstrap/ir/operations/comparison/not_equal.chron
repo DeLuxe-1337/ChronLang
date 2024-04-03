@@ -5,6 +5,6 @@ IR.Read.Comparison.NotEqual :: (context) {
     return IR.Read(invokeCreate)
 }
 
-IR.CreateNotEqual :: (left, right) {
+IR.CreateCompareNotEqual :: (left, right) {
     return <"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Comparison.NotEqual">
 }

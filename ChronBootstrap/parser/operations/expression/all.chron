@@ -27,7 +27,7 @@ Parser.Expression.Primary :: (state) {
 }
 
 Parser.Expression :: (state) {
-    expr = Parser.Expression.Comparison(state)
+    expr = Parser.Expression.ComparisonLogical(state)
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Release(state)

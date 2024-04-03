@@ -28,7 +28,9 @@ ReadMap = <
     "Comparison.Greater"=IR.Read.Comparison.Greater,
     "Comparison.GreaterThanEq"=IR.Read.Comparison.GreaterThanEq,
     "Comparison.Less"=IR.Read.Comparison.Less,
-    "Comparison.LessThanEq"=IR.Read.Comparison.LessThanEq
+    "Comparison.LessThanEq"=IR.Read.Comparison.LessThanEq,
+    "Comparison.Or"=IR.Read.Comparison.Or,
+    "Comparison.And"=IR.Read.Comparison.And
 >
 
 IR.Write :: (node) {
@@ -37,7 +39,7 @@ IR.Write :: (node) {
 
     PrintLn("Write " + type)
 
-    PrintLn(node)
+    // PrintLn(node)
     
     invoke IR.Write visiter(node)
 }
