@@ -1,5 +1,5 @@
 C `
-ChronVoid WriteFile(ChronObject o1, ChronObject o2) {
+ChronVoid Chron_WriteFile(ChronObject o1, ChronObject o2) {
 	DynObject *path = o1->Object;
 	DynObject *content = o2->Object;
 
@@ -11,7 +11,7 @@ ChronVoid WriteFile(ChronObject o1, ChronObject o2) {
 
 C `
 #define CHUNK_SIZE 1024
-ChronObject ReadFile(ChronObject o1) {
+ChronObject Chron_ReadFile(ChronObject o1) {
     DynObject *path = o1->Object;
     FILE *file = fopen(path->data.str, "r");
     char *buffer;
@@ -51,7 +51,7 @@ ChronObject ReadFile(ChronObject o1) {
 }
 `
 ["name"="File.Write"]
-!WriteFile :: (path, content) ?
+!Chron_WriteFile :: (path, content) ?
 
 ["return", "name"="File.Read"]
-!ReadFile :: (path) ?
+!Chron_ReadFile :: (path) ?

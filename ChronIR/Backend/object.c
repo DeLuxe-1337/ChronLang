@@ -84,7 +84,7 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
 
   if (tableObject->type != vtable)
   {
-    printf("Runtime error: attempting to index value in table on object that isn't a table.\n");
+    //printf("Runtime error: attempting to index value in table on object that isn't a table.\n");
     return DynNil();
   }
 
