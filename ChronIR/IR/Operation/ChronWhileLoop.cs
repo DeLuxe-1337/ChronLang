@@ -19,7 +19,7 @@ namespace ChronIR.IR.Operation
 
             var value = new ChronTemporaryVariable("WHILE_TMP", condition);
             value.Write(context);
-            block.AddStatement(value);
+            block.PrependStatement(value);
 
             context.writer.WriteLine($"while({ChronTypes.GetBooleanFromObject}({value.Read(context)})) {{");
 
