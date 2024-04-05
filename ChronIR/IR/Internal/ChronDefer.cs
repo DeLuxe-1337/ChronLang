@@ -18,6 +18,10 @@
             DeferDict[ScopeLevel] = null;
             ScopeLevel--;
         }
+        public static void Remove(ChronDeferer deferer)
+        {
+            DeferDict[ScopeLevel].Remove(deferer);
+        }
         public static void Add(ChronDeferer deferer)
         {
             if (DeferDict.TryGetValue(ScopeLevel, out List<ChronDeferer> deferList))

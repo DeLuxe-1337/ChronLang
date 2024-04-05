@@ -13,6 +13,9 @@ namespace ChronIR.IR.Operation
 
             var expression = tmpReturn.Read(context);
 
+            if(returnExpression is ChronDeferer defer)
+                ChronDefer.Remove(defer);
+
             ChronDefer.VisitCurrentScope(context);
 
             context.writer.WriteLine($"return {expression};");
