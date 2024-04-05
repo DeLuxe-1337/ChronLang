@@ -33,5 +33,10 @@ IR.Env.Defer.VisitCurrentScope :: () {
     foreach index, value in Table.Iter(IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]) {
         IR.Env.Defer.Visit(value)
     }
+
+    // Clear defer scope
     IR.Env.Defer.Pop()
+    IR.Env.Defer.Create()
+
+    PrintLn(IR.Env.Defer.CurrentIndex)
 }

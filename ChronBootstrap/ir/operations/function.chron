@@ -21,11 +21,13 @@ IR.Write.Function :: (context) {
         IR.Write(block)
 
         IR.Env.Defer.VisitCurrentScope()
-        IR.Env.Scope.Pop()
         IR.Writer.WriteLine("}")
     } else {
         IR.Writer.WriteLine(";")
     }
+
+    IR.Env.Scope.Pop()
+    IR.Env.Defer.Pop()
 }
 
 IR.Function.GenerateParameters :: (context) {
