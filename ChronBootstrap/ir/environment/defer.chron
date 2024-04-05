@@ -37,6 +37,4 @@ IR.Env.Defer.VisitCurrentScope :: () {
     // Clear defer scope
     IR.Env.Defer.Pop()
     IR.Env.Defer.Create()
-
-    PrintLn(IR.Env.Defer.CurrentIndex)
 }

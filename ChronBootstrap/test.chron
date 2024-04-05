@@ -33,4 +33,11 @@ Main :: {
     defer PrintLn("End of program")
 
     PrintLn(Test())
+
+    if 1 == 2 {
+        PrintLn("1 == 1 is true")
+    } else if 5 == 3 {
+        PrintLn("5 == 5 is true")
+    } else
+        PrintLn("False")
 }

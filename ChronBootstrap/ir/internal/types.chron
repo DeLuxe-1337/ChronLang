@@ -21,6 +21,8 @@ Types.ObjectCompareGrtEq = "DynObjectCompareGrtEq"
 Types.ObjectCompareLesstEq = "DynObjectCompareLesstEq"
 Types.ObjectCompareLesst = "DynObjectCompareLesst"
 
+Types.GetBooleanFromObject = "GetBoolean"
+
 Types.ObjectCompareNot = "DynObjectNot"
 
 Types.Void = "ChronVoid"

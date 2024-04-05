@@ -1,0 +1,19 @@
+Parser.Statement.If :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "IF", nil) {
+        Parser.State.Expect(state, "IF", nil, "Expected 'if'")
+        
+        exp = Parser.Expression(state)
+        block = Parser.Statement.Block(state)
+        ifStmt = IR.CreateIf(exp, block, nil)
+
+        while Parser.State.Match(Parser.State.Get(state), "ELSE", nil) {
+            Parser.State.Expect(state, "ELSE", nil, "Expected 'else'")
+            stmt = Parser.Statement(state)
+            stmt = IR.CreateScopedBlock(IR.CreateBlockWithStatement(stmt))
+            ifStmt = IR.CreateIf(exp, ifStmt, stmt)
+        }
+
+        return Clone(ifStmt)
+    }
+    return nil
+}

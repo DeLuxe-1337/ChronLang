@@ -6,6 +6,8 @@ WriteMap = <
     "Defer"=IR.Write.Defer,
     "Release"=IR.Write.Release,
     "Return"=IR.Write.Return,
+    "If"=IR.Write.If,
+    "ScopedBlock"=IR.Write.ScopedBlock,
     "TempVariable"=IR.Write.TempVariable
 >
 ReadMap = <
