@@ -13,6 +13,10 @@ namespace ChronIR.IR.Operation
 
             var expression = tmpReturn.Read(context);
 
+            // Only do this for the defer check
+            if(returnExpression is ChronEnvironmentAccessor accessor)
+                returnExpression = accessor.GetExpression(context);
+
             if(returnExpression is ChronDeferer defer)
                 ChronDefer.Remove(defer);
 

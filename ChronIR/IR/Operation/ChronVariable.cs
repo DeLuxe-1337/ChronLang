@@ -2,7 +2,7 @@
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronVariable : ChronExpression, ChronStatement
+    public class ChronVariable : ChronExpression, ChronStatement, ChronDeferer
     {
         private string _accessor_name;
         private string _name;
@@ -66,7 +66,7 @@ namespace ChronIR.IR.Operation
                 context.writer.WriteLine($"{DefaultType} {_accessor_name} = {value.Read(context)};");
 
                 if (!global)
-                    new ChronDeferStatement(new ChronRelease(this)).Write(context);
+                    ChronDefer.Add(this);
             }
             else
             {
@@ -104,11 +104,13 @@ namespace ChronIR.IR.Operation
         }
         public void Release(ChronContext context)
         {
-            if (target is ChronVariableImpl impl)
-                return;
-
             context.env.GetCurrentScope().RemoveAllWithName(_name);
             new ChronRelease(this).Write(context);
+        }
+
+        public void Defer(ChronContext context)
+        {
+            Release(context);
         }
     }
 }
