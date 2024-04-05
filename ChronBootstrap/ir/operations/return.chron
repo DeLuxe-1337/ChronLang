@@ -1,0 +1,11 @@
+IR.Write.Return :: (context) {
+    if context["expression"] != nil {
+        IR.Writer.WriteLine("return " + IR.Read(context["expression"]) + ";")
+    } else {
+        IR.Writer.WriteLine("return;")
+    }
+}
+
+IR.CreateReturn :: (child) {
+    return <"type"="Return", "expression"=Clone(child)>
+}

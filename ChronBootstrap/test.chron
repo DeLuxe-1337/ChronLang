@@ -25,8 +25,12 @@ Test :: {
     PrintLn(5 <= 5)
     PrintLn(5 == 5)
     PrintLn(5 == 5 or 3 == 3)
+
+    return nil
 }
 
 Main :: {
     defer PrintLn("End of program")
+
+    PrintLn(Test())
 }

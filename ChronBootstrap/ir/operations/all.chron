@@ -10,6 +10,7 @@ include ir.operations.function
 include ir.operations.defer
 include ir.operations.release
 include ir.operations.temp_variable
+include ir.operations.return
 include ir.operations.math.add
 include ir.operations.math.sub
 include ir.operations.math.div

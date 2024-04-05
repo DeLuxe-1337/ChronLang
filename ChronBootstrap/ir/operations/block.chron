@@ -13,4 +13,14 @@ IR.CreateBlock :: () {
 IR.Block.Append :: (block, statement) {
     index = Table.SizeOf(block) - 1
     block[index] = statement
+
+    if statement["type"] == "Return" {
+        block["containsReturnStatement"] = true
+    }
+
+    if statement["type"] == "Block" { // If there's a return statement in an if, for, while, etc statement
+        if statement["containsReturnStatement"] == true {
+            block["containsReturnStatement"] = true
+        }
+    }
 }

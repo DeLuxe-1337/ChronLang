@@ -5,6 +5,7 @@ WriteMap = <
     "EnvironmentAccessor"=IR.Write.EnvironmentAccessor, 
     "Defer"=IR.Write.Defer,
     "Release"=IR.Write.Release,
+    "Return"=IR.Write.Return,
     "TempVariable"=IR.Write.TempVariable
 >
 ReadMap = <

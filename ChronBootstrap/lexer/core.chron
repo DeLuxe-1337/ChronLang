@@ -22,6 +22,7 @@ Lexer.SymbolMap = <
     "nil"="NIL",
     "defer"="DEFER",
     "release"="RELEASE",
+    "return"="RETURN",
     "include"="INCLUDE"
 >
 
