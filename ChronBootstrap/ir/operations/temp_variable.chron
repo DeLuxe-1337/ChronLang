@@ -4,7 +4,12 @@ IR.Write.TempVariable :: (context) {
     expression = Clone(IR.Read(Clone(context["child"])))
     varName = Clone(context["name"])
 
-    IR.Writer.WriteLine("void* " + varName + " = " + expression + ";")
+    if context["written"] != true {
+        IR.Writer.WriteLine("void* " + varName + " = " + expression + ";")
+        context["written"] = true
+    } else {
+        IR.Writer.WriteLine(varName + " = " + expression + ";")
+    }
 }
 
 IR.Read.TempVariable :: (context) {

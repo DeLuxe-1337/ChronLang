@@ -37,10 +37,6 @@ ReadMap = <
 IR.Write :: (node) {
     type = Clone(node["type"])
     visiter = Clone(WriteMap[type])
-
-    // PrintLn("Write " + type)
-
-    // PrintLn(node)
     
     invoke IR.Write visiter(node)
 }
@@ -48,8 +44,6 @@ IR.Write :: (node) {
 IR.Read :: (node) {
     type = Clone(node["type"])
     visiter = Clone(ReadMap[type])
-
-    // PrintLn("Read " + type)
     
     return invoke IR.Read visiter(node)
 }
