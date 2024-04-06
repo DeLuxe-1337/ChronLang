@@ -65,7 +65,7 @@ namespace ChronIR.IR.Operation
             {
                 context.writer.WriteLine($"{DefaultType} {_accessor_name} = {value.Read(context)};");
 
-                if (!global)
+                if (!global && value is ChronAutoRelease)
                     ChronDefer.Add(this);
             }
             else
