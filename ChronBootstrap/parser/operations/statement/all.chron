@@ -6,6 +6,8 @@ include parser.operations.statement.defer
 include parser.operations.statement.release
 include parser.operations.statement.return
 include parser.operations.statement.if
+include parser.operations.statement.continue
+include parser.operations.statement.break
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -24,6 +26,12 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Return(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.Break(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.Continue(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.If(state)

@@ -1,0 +1,9 @@
+IR.Write.Continue :: (context) {
+    IR.Env.Defer.VisitCurrentScope()
+
+    IR.Writer.WriteLine("continue;")
+}
+
+IR.CreateContinue :: () {
+    return <"type"="Continue">
+}

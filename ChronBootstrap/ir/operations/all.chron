@@ -13,6 +13,8 @@ include ir.operations.release
 include ir.operations.temp_variable
 include ir.operations.if
 include ir.operations.return
+include ir.operations.continue
+include ir.operations.break
 include ir.operations.math.add
 include ir.operations.math.sub
 include ir.operations.math.div

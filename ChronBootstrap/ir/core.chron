@@ -8,6 +8,8 @@ WriteMap = <
     "Return"=IR.Write.Return,
     "If"=IR.Write.If,
     "ScopedBlock"=IR.Write.ScopedBlock,
+    "Continue"=IR.Write.Continue,
+    "Break"=IR.Write.Break,
     "TempVariable"=IR.Write.TempVariable
 >
 ReadMap = <
