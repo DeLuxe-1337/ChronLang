@@ -44,7 +44,7 @@ Compiler.Module.WriteStatementsToFile :: (module) {
     foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
         foreach index, statement in Table.Iter(statementTable) {
             if statement["type"] == "Function" {
-                IR.Function.ForwardDeclare(Clone(statement))
+                IR.Function.ForwardDeclare(statement)
             }
         }
     }

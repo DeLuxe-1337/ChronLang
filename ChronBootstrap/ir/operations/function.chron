@@ -56,8 +56,7 @@ IR.Function.GenerateReturn :: (context) {
         return Clone(context["nativeReturn"])
     }
 
-    doesReturn = Clone(context["return"])
-    if doesReturn == false {
+    if context["return"] == false {
         return Clone(Types.Void)
     } 
 
@@ -116,7 +115,7 @@ IR.Function.ForwardDeclare :: (context) {
         IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
     // }
 
-    IR.Env.Scope.Add(scopeName, context, true)
+    IR.Env.Scope.Add(scopeName, Clone(context), true)
 }
 
 IR.Read.Function :: (context) {
