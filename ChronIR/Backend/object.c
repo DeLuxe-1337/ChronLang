@@ -5,209 +5,259 @@
 #include <stdlib.h>
 #include <string.h>
 
-void InitializeDynamicTable(DynamicTable *table)
+unsigned long HashString(const char* str)
 {
-  table->pairs = (TableKeyValuePair *)malloc(1 * sizeof(TableKeyValuePair));
-  if (table->pairs == NULL)
-  {
-    fprintf(stderr, "Memory allocation failed\n");
-  }
-  table->size = 0;
-  table->capacity = 1;
+    unsigned long hash = 5381;
+    int c;
+
+    while ((c = *str++))
+    {
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+
+    return hash;
 }
 
-TableKeyValuePair *GetDynamicTablePairByIndex(DynamicTable *table, ChronObject index)
+int hash(ChronObject key, int capacity)
 {
-  for (size_t i = 0; i < table->size; i++)
-  {
-    if (GetBoolean(DynObjectCompareEq(table->pairs[i].key, index)))
+    DynObject* obj = key->Object;
+    switch (obj->type)
     {
-      return &table->pairs[i];
+    case vstring:
+        return HashString(obj->data.str) % capacity;
+    case vinteger:
+        return obj->data.integer % capacity;
+    case vboolean:
+        return obj->data.boolean ? -2 : -3;
+    case vnull:
+        return -4;
     }
-  }
+}
 
-  return NULL;
+ChronObject HashMapGet(DynamicTable* map, ChronObject key)
+{
+    int index = hash(key, map->capacity);
+    Node* current = map->buckets[index];
+    while (current != NULL)
+    {
+        if (GetBoolean(DynObjectCompareEq(current->pair.key, key)))
+        {
+            return current->pair.value;
+        }
+        current = current->next;
+    }
+    return DynNil(); // Key not found
+}
+
+void HashMapResize(DynamicTable* map)
+{
+    int newCapacity = map->capacity * 2;
+    Node** newBuckets = (Node**)malloc(sizeof(Node*) * newCapacity);
+    memset(newBuckets, 0, sizeof(Node*) * newCapacity);
+
+    // Rehash all elements into the new array
+    for (int i = 0; i < map->capacity; i++)
+    {
+        Node* current = map->buckets[i];
+        while (current != NULL)
+        {
+            Node* next = current->next;
+            int index = hash(current->pair.key, newCapacity);
+            current->next = newBuckets[index];
+            newBuckets[index] = current;
+            current = next;
+        }
+    }
+
+    // Free the old array and update the map's fields
+    free(map->buckets);
+    map->buckets = newBuckets;
+    map->capacity = newCapacity;
+}
+
+void HashMapInsert(DynamicTable* map, ChronObject key, ChronObject value)
+{
+    if ((double)map->size / map->capacity >= LOAD_FACTOR_THRESHOLD)
+    {
+        HashMapResize(map);
+    }
+
+    int index = hash(key, map->capacity);
+    KeyValuePair* pair = (KeyValuePair*)malloc(sizeof(KeyValuePair));
+    pair->key = key;
+    pair->value = value;
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->pair = *pair;
+    node->next = NULL;
+
+    if (map->buckets[index] == NULL)
+    {
+        map->buckets[index] = node;
+    }
+    else
+    {
+        Node* current = map->buckets[index];
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        current->next = node;
+    }
+    map->size++;
+}
+
+void InitializeDynamicTable(DynamicTable* table)
+{
+    table->capacity = INITIAL_CAPACITY;
+    table->size = 0;
+    table->buckets = (Node**)malloc(sizeof(Node*) * table->capacity);
+    memset(table->buckets, 0, sizeof(Node*) * table->capacity);
 }
 
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 {
-  DynObject *tableObject = o->Object;
+    DynObject* tableObject = o->Object;
 
-  if (tableObject->type != vtable)
-  {
-    printf("Runtime error: attempting to set value in table on object that isn't a table.\n");
-    return;
-  }
-
-  DynamicTable *table = tableObject->data.table;
-
-  if (table->size >= table->capacity)
-  {
-    table->capacity *= 2;
-    TableKeyValuePair *new_pairs = (TableKeyValuePair *)realloc(table->pairs, table->capacity * sizeof(TableKeyValuePair));
-    if (new_pairs == NULL)
+    if (tableObject->type != vtable)
     {
-      fprintf(stderr, "Memory reallocation failed\n");
-      return; // Return without modifying the table
+        printf("Runtime error: attempting to set value in table on object that isn't a table.\n");
+        return;
     }
-    table->pairs = new_pairs;
-  }
 
-  TableKeyValuePair *result = GetDynamicTablePairByIndex(table, index);
+    DynamicTable* table = tableObject->data.table;
 
-  if (result != NULL)
-  {
-    MemoryContext_Release(result->key);
-    MemoryContext_Release(result->value);
-
-    result->key = Clone(index);
-    result->value = Clone(value);
-  }
-  else
-  {
-    table->pairs[table->size].key = Clone(index);
-    if (table->pairs[table->size].key != NULL)
-    {
-      table->pairs[table->size].value = Clone(value);
-      table->size++;
-    }
-    else
-    {
-      printf("Table key is null\n");
-    }
-  }
+    HashMapInsert(table, Clone(index), Clone(value));
 }
 
 ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
 {
-  DynObject *tableObject = o->Object;
+    DynObject* tableObject = o->Object;
 
-  if (tableObject->type != vtable)
-  {
-    //printf("Runtime error: attempting to index value in table on object that isn't a table.\n");
-    return DynNil();
-  }
+    if (tableObject->type != vtable)
+    {
+        printf("Runtime error: attempting to index value in table on object that isn't a table.\n");
+        return DynNil();
+    }
 
-  DynamicTable *table = tableObject->data.table;
-  TableKeyValuePair *result = GetDynamicTablePairByIndex(table, index);
+    DynamicTable* table = tableObject->data.table;
 
-  if (result != NULL)
-  {
-    return result->value;
-  }
-
-  return DynNil();
+    return HashMapGet(table, index);
 }
 
-void dealloc_string(void *o)
+void dealloc_string(void* o)
 {
-  DynObject *obj = o;
-  free(obj->data.str);
+    DynObject* obj = o;
+    free(obj->data.str);
 }
 
-ChronObject DynString(const char *str)
+ChronObject DynString(const char* str)
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->data.str = strdup(str);
-  _VO_obj->type = vstring;
+    _VO_obj->data.str = strdup(str);
+    _VO_obj->type = vstring;
 
-  GC_obj->deallocate = dealloc_string;
+    GC_obj->deallocate = dealloc_string;
 
-  return GC_obj;
+    return GC_obj;
 }
 
 ChronObject DynChar(char c)
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->data.str = malloc(2 * sizeof(char));
-  _VO_obj->type = vstring;
+    _VO_obj->data.str = malloc(2 * sizeof(char));
+    _VO_obj->type = vstring;
 
-  _VO_obj->data.str[0] = c;
-  _VO_obj->data.str[1] = '\0';
+    _VO_obj->data.str[0] = c;
+    _VO_obj->data.str[1] = '\0';
 
-  GC_obj->deallocate = dealloc_string;
+    GC_obj->deallocate = dealloc_string;
 
-  return GC_obj;
+    return GC_obj;
 }
 
 ChronObject DynInteger(int i)
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->data.integer = i;
-  _VO_obj->type = vinteger;
+    _VO_obj->data.integer = i;
+    _VO_obj->type = vinteger;
 
-  return GC_obj;
+    return GC_obj;
 }
 
 ChronObject DynBoolean(bool boolean)
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->data.boolean = boolean;
-  _VO_obj->type = vboolean;
-  return GC_obj;
+    _VO_obj->data.boolean = boolean;
+    _VO_obj->type = vboolean;
+    return GC_obj;
 }
 
-void dealloc_table(void *o)
+void dealloc_table(void* o)
 {
-  DynObject *obj = o;
-  DynamicTable *table = obj->data.table;
-  for (size_t i = 0; i < table->size; i++)
-  {
-    MemoryContext_Release(table->pairs[i].key);
-    MemoryContext_Release(table->pairs[i].value);
-  }
-  free(table->pairs);
-  table->pairs = NULL;
-  table->size = 0;
-  table->capacity = 0;
-  free(table);
+    DynObject* obj = o;
+    DynamicTable* table = obj->data.table;
+    for (int i = 0; i < table->capacity; i++)
+    {
+        Node* current = table->buckets[i];
+        while (current != NULL)
+        {
+            MemoryContext_Release(current->pair.key);
+            MemoryContext_Release(current->pair.value);
+            current = current->next;
+        }
+    }
+    free(table->buckets);
+    table->buckets = NULL;
+    table->size = 0;
+    table->capacity = 0;
+    free(table);
 }
 
 ChronObject DynTable()
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->type = vtable;
-  _VO_obj->data.table = (DynamicTable *)malloc(sizeof(DynamicTable));
+    _VO_obj->type = vtable;
+    _VO_obj->data.table = (DynamicTable*)malloc(sizeof(DynamicTable));
 
-  InitializeDynamicTable(_VO_obj->data.table);
+    InitializeDynamicTable(_VO_obj->data.table);
 
-  GC_obj->deallocate = dealloc_table;
+    GC_obj->deallocate = dealloc_table;
 
-  return GC_obj;
+    return GC_obj;
 }
 
 ChronObject DynNil()
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->type = vnull;
+    _VO_obj->type = vnull;
 
-  return GC_obj;
+    return GC_obj;
 }
 
-ChronObject DynPointer(void *ptr)
+ChronObject DynPointer(void* ptr)
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->type = vptr;
-  _VO_obj->data.ptr = ptr;
+    _VO_obj->type = vptr;
+    _VO_obj->data.ptr = ptr;
 
-  return GC_obj;
+    return GC_obj;
 }
 
-ChronObject DynFunction(void *ptr)
+ChronObject DynFunction(void* ptr)
 {
-  newObject(obj, DynObject);
+    newObject(obj, DynObject);
 
-  _VO_obj->type = vfunction;
-  _VO_obj->data.ptr = ptr;
+    _VO_obj->type = vfunction;
+    _VO_obj->data.ptr = ptr;
 
-  return GC_obj;
+    return GC_obj;
 }
 
 // DynObject Expect(DynObject input, DynObject errorMessage) {
@@ -220,60 +270,65 @@ ChronObject DynFunction(void *ptr)
 
 ChronObject Clone(ChronObject input)
 {
-  if (input == NULL)
-  {
-    return DynNil();
-  }
-
-  DynObject *target = input->Object;
-
-  ChronObject cloneObject = DynNil();
-  DynObject *clone = cloneObject->Object;
-  clone->type = target->type;
-
-  switch (clone->type)
-  {
-  case vstring:
-    clone->data.str = strdup(target->data.str);
-    cloneObject->deallocate = dealloc_string;
-    break;
-  case vboolean:
-    clone->data.boolean = target->data.boolean;
-    break;
-
-  case vnumber:
-    clone->data.number = target->data.number;
-    break;
-
-  case vinteger:
-    clone->data.integer = target->data.integer;
-    break;
-  case vtable:
-    clone->data.table = (DynamicTable *)malloc(sizeof(DynamicTable));
-    InitializeDynamicTable(clone->data.table);
-    cloneObject->deallocate = dealloc_table;
-
-    for (size_t i = 0; i < target->data.table->size; i++)
+    if (input == NULL)
     {
-      SetDynamicTable(cloneObject, Clone(target->data.table->pairs[i].key), Clone(target->data.table->pairs[i].value));
+        return DynNil();
     }
 
-    break;
-  case vfunction:
-  case vptr:
-    clone->data.ptr = target->data.ptr;
-    break;
-  case vnull:
-    break;
-  case vdeallocated:
-    clone->type = vdeallocated;
-    break;
-  }
+    DynObject* target = input->Object;
 
-  return cloneObject;
+    ChronObject cloneObject = DynNil();
+    DynObject* clone = cloneObject->Object;
+    clone->type = target->type;
+
+    switch (clone->type)
+    {
+    case vstring:
+        clone->data.str = strdup(target->data.str);
+        cloneObject->deallocate = dealloc_string;
+        break;
+    case vboolean:
+        clone->data.boolean = target->data.boolean;
+        break;
+
+    case vnumber:
+        clone->data.number = target->data.number;
+        break;
+
+    case vinteger:
+        clone->data.integer = target->data.integer;
+        break;
+    case vtable:
+        clone->data.table = (DynamicTable*)malloc(sizeof(DynamicTable));
+        InitializeDynamicTable(clone->data.table);
+        cloneObject->deallocate = dealloc_table;
+
+        for (int i = 0; i < target->data.table->capacity; i++)
+        {
+            Node* current = target->data.table->buckets[i];
+            while (current != NULL)
+            {
+                SetDynamicTable(cloneObject, Clone(current->pair.key), Clone(current->pair.value));
+                current = current->next;
+            }
+        }
+
+        break;
+    case vfunction:
+    case vptr:
+        clone->data.ptr = target->data.ptr;
+        break;
+    case vnull:
+        break;
+    case vdeallocated:
+        clone->type = vdeallocated;
+        break;
+    }
+
+    return cloneObject;
 }
 
-DynObject *GetRef(ChronObject GC)
+DynObject* GetRef(ChronObject GC)
 {
-  return (DynObject *)GC->Object;
+    return (DynObject*)GC->Object;
 }

@@ -6,8 +6,8 @@
 
 ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -17,7 +17,7 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 	if (left->type == vstring)
 	{
 		int len = strlen(left->data.str) + strlen(right->data.str) + 1;
-		char *result = (char *)malloc(len * sizeof(char));
+		char* result = (char*)malloc(len * sizeof(char));
 
 		if (result == NULL)
 		{
@@ -40,8 +40,8 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectSub(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -57,8 +57,8 @@ ChronObject DynObjectSub(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectDiv(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -74,8 +74,8 @@ ChronObject DynObjectDiv(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectMul(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -91,8 +91,8 @@ ChronObject DynObjectMul(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectMod(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -108,8 +108,8 @@ ChronObject DynObjectMod(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectCompareGrt(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -125,8 +125,8 @@ ChronObject DynObjectCompareGrt(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectCompareGrtEq(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -142,8 +142,8 @@ ChronObject DynObjectCompareGrtEq(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectCompareLesstEq(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -159,8 +159,8 @@ ChronObject DynObjectCompareLesstEq(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectCompareLesst(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -176,8 +176,8 @@ ChronObject DynObjectCompareLesst(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -208,8 +208,8 @@ ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 
 ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != right->type)
 	{
@@ -240,8 +240,8 @@ ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 
 ChronObject DynObjectCompareOr(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != vboolean && left->type != right->type)
 	{
@@ -252,8 +252,8 @@ ChronObject DynObjectCompareOr(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectCompareAnd(ChronObject o1, ChronObject o2)
 {
-	DynObject *left = o1->Object;
-	DynObject *right = o2->Object;
+	DynObject* left = o1->Object;
+	DynObject* right = o2->Object;
 
 	if (left->type != vboolean && left->type != right->type)
 	{
@@ -264,7 +264,7 @@ ChronObject DynObjectCompareAnd(ChronObject o1, ChronObject o2)
 }
 ChronObject DynObjectNot(ChronObject o)
 {
-	DynObject *left = o->Object;
+	DynObject* left = o->Object;
 
 	if (left->type != vboolean)
 	{
@@ -276,8 +276,8 @@ ChronObject DynObjectNot(ChronObject o)
 
 ChronObject TypeOf(ChronObject left)
 {
-	const char *typeStr;
-	DynObject *obj = left->Object;
+	const char* typeStr;
+	DynObject* obj = left->Object;
 	switch (obj->type)
 	{
 	case vdeallocated:
@@ -317,7 +317,7 @@ ChronObject TypeOf(ChronObject left)
 
 ChronObject ToString(ChronObject item)
 {
-	DynObject *obj = GetRef(item);
+	DynObject* obj = GetRef(item);
 	switch (obj->type)
 	{
 	case vdeallocated:
@@ -329,20 +329,20 @@ ChronObject ToString(ChronObject item)
 	case vnumber:
 	{
 		int size = snprintf(NULL, 0, "%f", obj->data.number) + 1; // Determine the required size
-		char *str = (char *)malloc(size * sizeof(char));		  // Dynamically allocate memory
+		char* str = (char*)malloc(size * sizeof(char));		  // Dynamically allocate memory
 		snprintf(str, size, "%f", obj->data.number);			  // Convert number to string
 		return DynString(str);
 	}
 	case vinteger:
 	{
 		int size = snprintf(NULL, 0, "%d", obj->data.integer) + 1; // Determine the required size
-		char *str = (char *)malloc(size * sizeof(char));		   // Dynamically allocate memory
+		char* str = (char*)malloc(size * sizeof(char));		   // Dynamically allocate memory
 		snprintf(str, size, "%d", obj->data.integer);			   // Convert integer to string
 		return DynString(str);
 	}
 	case vtable:
 	{
-		DynamicTable *table = obj->data.table;
+		DynamicTable* table = obj->data.table;
 
 		/*
 			The following was written and compiled by ChronLang (besides the loop, no way to iter tables without an index as of now)
@@ -350,34 +350,40 @@ ChronObject ToString(ChronObject item)
 
 		ChronObject _V_str = DynString("<\n");
 
-		for (int i = 0; i < table->size; i++)
+		for (int i = 0; i < table->capacity; i++)
 		{
-			ChronObject _TEMP_V0 = _V_str;
-			ChronObject _TEMP_V8 = DynString("\t[");
-			_V_str = DynObjectAdd(_TEMP_V0, _TEMP_V8);
-			ChronObject _TEMP_V1 = _V_str;
-			ChronObject _TEMP_V9 = ToString(table->pairs[i].key);
-			_V_str = DynObjectAdd(_TEMP_V1, _TEMP_V9);
-			ChronObject _TEMP_V2 = _V_str;
-			ChronObject _TEMP_V10 = DynString("] = ");
-			_V_str = DynObjectAdd(_TEMP_V2, _TEMP_V10);
-			ChronObject _TEMP_V3 = _V_str;
-			ChronObject _TEMP_V11 = ToString(table->pairs[i].value);
-			_V_str = DynObjectAdd(_TEMP_V3, _TEMP_V11);
-			ChronObject _TEMP_V4 = _V_str;
-			ChronObject _TEMP_V12 = DynString(",\n");
-			_V_str = DynObjectAdd(_TEMP_V4, _TEMP_V12);
-			MemoryContext_Release(_TEMP_V0);
-			MemoryContext_Release(_TEMP_V8);
-			MemoryContext_Release(_TEMP_V1);
-			MemoryContext_Release(_TEMP_V9);
-			MemoryContext_Release(_TEMP_V2);
-			MemoryContext_Release(_TEMP_V10);
-			MemoryContext_Release(_TEMP_V3);
-			MemoryContext_Release(_TEMP_V11);
-			MemoryContext_Release(_TEMP_V4);
-			MemoryContext_Release(_TEMP_V12);
+			Node* current = table->buckets[i];
+			while (current != NULL)
+			{
+				ChronObject _TEMP_V0 = _V_str;
+				ChronObject _TEMP_V8 = DynString("\t[");
+				_V_str = DynObjectAdd(_TEMP_V0, _TEMP_V8);
+				ChronObject _TEMP_V1 = _V_str;
+				ChronObject _TEMP_V9 = ToString(current->pair.key);
+				_V_str = DynObjectAdd(_TEMP_V1, _TEMP_V9);
+				ChronObject _TEMP_V2 = _V_str;
+				ChronObject _TEMP_V10 = DynString("] = ");
+				_V_str = DynObjectAdd(_TEMP_V2, _TEMP_V10);
+				ChronObject _TEMP_V3 = _V_str;
+				ChronObject _TEMP_V11 = ToString(current->pair.value);
+				_V_str = DynObjectAdd(_TEMP_V3, _TEMP_V11);
+				ChronObject _TEMP_V4 = _V_str;
+				ChronObject _TEMP_V12 = DynString(",\n");
+				_V_str = DynObjectAdd(_TEMP_V4, _TEMP_V12);
+				MemoryContext_Release(_TEMP_V0);
+				MemoryContext_Release(_TEMP_V8);
+				MemoryContext_Release(_TEMP_V1);
+				MemoryContext_Release(_TEMP_V9);
+				MemoryContext_Release(_TEMP_V2);
+				MemoryContext_Release(_TEMP_V10);
+				MemoryContext_Release(_TEMP_V3);
+				MemoryContext_Release(_TEMP_V11);
+				MemoryContext_Release(_TEMP_V4);
+				MemoryContext_Release(_TEMP_V12);
+				current = current->next;
+			}
 		}
+
 		ChronObject _TEMP_V5 = _V_str;
 		ChronObject _TEMP_V13 = DynString(">");
 		_V_str = DynObjectAdd(_TEMP_V5, _TEMP_V13);
@@ -400,14 +406,14 @@ ChronObject ToString(ChronObject item)
 void Throw(ChronObject errorMessage)
 {
 	// Placeholder for text formatting in red
-	fprintf(stderr, "[Runtime Error Thrown] %s\n", ((DynObject *)errorMessage->Object)->data.str);
+	fprintf(stderr, "[Runtime Error Thrown] %s\n", ((DynObject*)errorMessage->Object)->data.str);
 	exit(EXIT_FAILURE);
 }
 
 ChronObject ReadLine()
 {
 	const size_t buffer_size = 1024;
-	char *buffer = malloc(buffer_size * sizeof(char));
+	char* buffer = malloc(buffer_size * sizeof(char));
 
 	if (buffer == NULL)
 	{
@@ -426,7 +432,7 @@ ChronObject ReadLine()
 
 bool GetBoolean(ChronObject o)
 {
-	bool result = ((DynObject *)o->Object)->data.boolean;
+	bool result = ((DynObject*)o->Object)->data.boolean;
 	MemoryContext_Release(o);
 	return result;
 }
@@ -442,72 +448,76 @@ ChronObject GetMemoryContext()
 }
 void SetMemoryContext(ChronObject o)
 {
-	DynObject *obj = o->Object;
-	Context = (MemoryContext *)obj->data.ptr;
+	DynObject* obj = o->Object;
+	Context = (MemoryContext*)obj->data.ptr;
 }
 
 void ReleaseMemoryContext(ChronObject o)
 {
-	DynObject *obj = o->Object;
-	MemoryContext *ctx = obj->data.ptr;
+	DynObject* obj = o->Object;
+	MemoryContext* ctx = obj->data.ptr;
 	MemoryContext_ReleaseContext(ctx);
 }
 
 int c_int(ChronObject o)
 {
-	DynObject *obj = o->Object;
+	DynObject* obj = o->Object;
 	return obj->data.integer;
 }
-const char *c_string(ChronObject o)
+const char* c_string(ChronObject o)
 {
-	DynObject *obj = o->Object;
+	DynObject* obj = o->Object;
 	return obj->data.str;
 }
 bool c_bool(ChronObject o)
 {
-	DynObject *obj = o->Object;
+	DynObject* obj = o->Object;
 	return obj->data.boolean;
 }
 
-void *c_pointer(ChronObject o)
+void* c_pointer(ChronObject o)
 {
-	DynObject *obj = o->Object;
+	DynObject* obj = o->Object;
 	return obj->data.ptr;
 }
 
 ChronObject TableSizeOf(ChronObject o)
 {
-	DynObject *obj = o->Object;
-	DynamicTable *table = obj->data.table;
+	DynObject* obj = o->Object;
+	DynamicTable* table = obj->data.table;
 
 	return DynInteger(table->size);
 }
 
-void dealloc_iter(void *o)
+void dealloc_iter(void* o)
 {
-	DynObject *obj = o;
-	Iterator *iter = obj->data.ptr;
+	DynObject* obj = o;
+	Iterator* iter = obj->data.ptr;
 	free(iter);
 }
 
-ChronObject TableIterIndex(void *self, int index)
+ChronObject TableIterIndex(void* self, int index)
 {
-	DynamicTable *table = self;
-	return Clone(table->pairs[index].key);
+	DynamicTable* table = self;
+	Node* current = table->buckets[index];
+
+	return Clone(current->pair.key);
 }
 
-ChronObject TableIterValue(void *self, int index)
+ChronObject TableIterValue(void* self, int index)
 {
-	DynamicTable *table = self;
-	return Clone(table->pairs[index].value);
+	DynamicTable* table = self;
+	Node* current = table->buckets[index];
+
+	return Clone(current->pair.value);
 }
 
 ChronObject TableIter(ChronObject o)
 {
-	DynObject *object = o->Object;
-	DynamicTable *table = object->data.table;
+	DynObject* object = o->Object;
+	DynamicTable* table = object->data.table;
 
-	Iterator *iter = malloc(sizeof(Iterator));
+	Iterator* iter = malloc(sizeof(Iterator));
 	iter->self = table;
 	iter->size = table->size;
 	iter->index = TableIterIndex;
@@ -519,23 +529,23 @@ ChronObject TableIter(ChronObject o)
 	return iterPointer;
 }
 
-ChronObject StringIterIndex(void *self, int index)
+ChronObject StringIterIndex(void* self, int index)
 {
 	return DynInteger(index);
 }
 
-ChronObject StringIterValue(void *self, int index)
+ChronObject StringIterValue(void* self, int index)
 {
-	const char *str = self;
+	const char* str = self;
 	return DynChar(str[index]);
 }
 
 ChronObject StringIter(ChronObject o)
 {
-	DynObject *object = o->Object;
-	const char *str = object->data.str;
+	DynObject* object = o->Object;
+	const char* str = object->data.str;
 
-	Iterator *iter = malloc(sizeof(Iterator));
+	Iterator* iter = malloc(sizeof(Iterator));
 	iter->self = str;
 	iter->size = (int)strlen(str);
 	iter->index = StringIterIndex;
@@ -549,7 +559,7 @@ ChronObject StringIter(ChronObject o)
 
 ChronObject StringContains(ChronObject source, ChronObject target)
 {
-	char *found = strstr(c_string(source), c_string(target));
+	char* found = strstr(c_string(source), c_string(target));
 	if (found != NULL)
 		return DynBoolean(true);
 
@@ -558,7 +568,7 @@ ChronObject StringContains(ChronObject source, ChronObject target)
 
 ChronObject StringIsAlpha(ChronObject source)
 {
-	const char *str = c_string(source);
+	const char* str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
@@ -571,7 +581,7 @@ ChronObject StringIsAlpha(ChronObject source)
 
 ChronObject StringIsAlphaNumeric(ChronObject source)
 {
-	const char *str = c_string(source);
+	const char* str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
@@ -584,7 +594,7 @@ ChronObject StringIsAlphaNumeric(ChronObject source)
 
 ChronObject StringIsNumeric(ChronObject source)
 {
-	const char *str = c_string(source);
+	const char* str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
@@ -597,7 +607,7 @@ ChronObject StringIsNumeric(ChronObject source)
 
 ChronObject StringIsWhitespace(ChronObject source)
 {
-	const char *str = c_string(source);
+	const char* str = c_string(source);
 	for (size_t i = 0; i < strlen(str); i++)
 	{
 		char check = str[i];
@@ -615,14 +625,14 @@ ChronObject StringLength(ChronObject source)
 
 ChronObject StringIndex(ChronObject source, ChronObject index)
 {
-	char *str = c_string(source);
+	char* str = c_string(source);
 	int idx = c_int(index);
 	size_t str_length = strlen(str);
 
 	if (idx < 0 || idx >= str_length)
 		return DynNil();
 
-	char *extracted_char = malloc(2);
+	char* extracted_char = malloc(2);
 	if (extracted_char == NULL)
 		return DynNil();
 
@@ -635,40 +645,47 @@ ChronObject StringIndex(ChronObject source, ChronObject index)
 	return result;
 }
 
-ChronObject StringReplace(ChronObject input, ChronObject sub, ChronObject replace) {
+ChronObject StringReplace(ChronObject input, ChronObject sub, ChronObject replace)
+{
 	const char* string = c_string(input);
 	const char* substring = c_string(sub);
 	const char* replacement = c_string(replace);
 
-	 char *result;
-    int i, count = 0;
-    int substringLen = strlen(substring);
-    int replacementLen = strlen(replacement);
+	char* result;
+	int i, count = 0;
+	int substringLen = strlen(substring);
+	int replacementLen = strlen(replacement);
 
-    // Count the number of occurrences of substring in string
-    for (i = 0; string[i] != '\0'; ++i) {
-        if (strstr(&string[i], substring) == &string[i]) {
-            ++count;
-            // Jump ahead by the length of the substring
-            i += substringLen - 1;
-        }
-    }
+	// Count the number of occurrences of substring in string
+	for (i = 0; string[i] != '\0'; ++i)
+	{
+		if (strstr(&string[i], substring) == &string[i])
+		{
+			++count;
+			// Jump ahead by the length of the substring
+			i += substringLen - 1;
+		}
+	}
 
-    // Allocate memory for the new string
-    result = (char *)malloc(i + count * (replacementLen - substringLen) + 1);
+	// Allocate memory for the new string
+	result = (char*)malloc(i + count * (replacementLen - substringLen) + 1);
 
-    i = 0;
-    while (*string) {
-        // Check if the substring is present at the current position
-        if (strstr(string, substring) == string) {
-            strcpy(&result[i], replacement);
-            i += replacementLen;
-            string += substringLen;
-        } else {
-            result[i++] = *string++;
-        }
-    }
-    result[i] = '\0';
+	i = 0;
+	while (*string)
+	{
+		// Check if the substring is present at the current position
+		if (strstr(string, substring) == string)
+		{
+			strcpy(&result[i], replacement);
+			i += replacementLen;
+			string += substringLen;
+		}
+		else
+		{
+			result[i++] = *string++;
+		}
+	}
+	result[i] = '\0';
 
 	ChronObject chronObjectResult = DynString(result);
 	free(result);
@@ -677,29 +694,29 @@ ChronObject StringReplace(ChronObject input, ChronObject sub, ChronObject replac
 
 int c_object_type(ChronObject o)
 {
-	DynObject *object = o->Object;
+	DynObject* object = o->Object;
 	return object->type;
 }
 
 int c_table_size(ChronObject o)
 {
-	DynObject *object = o->Object;
-	DynamicTable *table = object->data.table;
+	DynObject* object = o->Object;
+	DynamicTable* table = object->data.table;
 	return table->size;
 }
 
 ChronObject c_table_key(int index, ChronObject o)
 {
-	DynObject *object = o->Object;
-	DynamicTable *table = object->data.table;
-	ChronObject key = table->pairs[index].key;
+	DynObject* object = o->Object;
+	DynamicTable* table = object->data.table;
+	ChronObject key = table->buckets[index]->pair.key;
 	return key;
 }
 
 ChronObject c_table_value(int index, ChronObject o)
 {
-	DynObject *object = o->Object;
-	DynamicTable *table = object->data.table;
-	ChronObject value = table->pairs[index].value;
+	DynObject* object = o->Object;
+	DynamicTable* table = object->data.table;
+	ChronObject value = table->buckets[index]->pair.value;
 	return value;
 }
