@@ -42,7 +42,7 @@ IR.Env.Scope.Get :: (name) {
             }
         }
     }
-    return Clone(result)
+    return result
 }
 
 IR.Env.Scope.GetFirst :: (name) {

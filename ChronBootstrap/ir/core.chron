@@ -10,7 +10,8 @@ WriteMap = <
     "ScopedBlock"=IR.Write.ScopedBlock,
     "Continue"=IR.Write.Continue,
     "Break"=IR.Write.Break,
-    "TempVariable"=IR.Write.TempVariable
+    "TempVariable"=IR.Write.TempVariable,
+    "Variable"=IR.Write.Variable
 >
 ReadMap = <
     "Literals.String"=IR.Read.Literals.String, 
@@ -36,7 +37,8 @@ ReadMap = <
     "Comparison.LessThanEq"=IR.Read.Comparison.LessThanEq,
     "Comparison.Or"=IR.Read.Comparison.Or,
     "Comparison.And"=IR.Read.Comparison.And,
-    "Comparison.Not"=IR.Read.Comparison.Not
+    "Comparison.Not"=IR.Read.Comparison.Not,
+    "Variable"=IR.Read.Variable
 >
 
 IR.Write :: (node) {

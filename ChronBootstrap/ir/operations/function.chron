@@ -107,7 +107,7 @@ IR.Function.GenerateFunctionHeader :: (context) {
 IR.Function.ForwardDeclare :: (context) {
     scopeName = Clone(context["scopeName"])
 
-    context["block"] = nil
+    // context["block"] = nil
 
     // if context["native"] != true {
         sig = IR.Function.GenerateFunctionSignature(Clone(context["name"]) + "Sig", context)
@@ -115,7 +115,7 @@ IR.Function.ForwardDeclare :: (context) {
         IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
     // }
 
-    IR.Env.Scope.Add(scopeName, Clone(context), true)
+    IR.Env.Scope.Add(scopeName, context, true)
 }
 
 IR.Read.Function :: (context) {

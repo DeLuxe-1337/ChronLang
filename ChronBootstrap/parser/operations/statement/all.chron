@@ -8,6 +8,7 @@ include parser.operations.statement.return
 include parser.operations.statement.if
 include parser.operations.statement.continue
 include parser.operations.statement.break
+include parser.operations.statement.variable
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -35,6 +36,9 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.If(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.Variable(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Expression(state)

@@ -1,0 +1,11 @@
+Parser.Statement.Variable :: (state) {
+    if (Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) and Parser.State.Match(Parser.State.Peek(state, 1), "EQUAL", nil)) {
+        name = Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected 'identifier'")["value"]
+        Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
+
+        value = Parser.Expression(state)
+
+        return IR.CreateVariable(name, value)
+    }
+    return nil
+}

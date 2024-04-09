@@ -1,0 +1,26 @@
+IR.Write.Variable :: (context) {
+    expression = Clone(IR.Read(Clone(context["child"])))
+    varName = Clone(context["name"])
+    accessorName = Clone(context["accessorName"])
+
+    if IR.Env.Scope.GetFirst(varName) == nil {
+        IR.Writer.WriteLine("void* " + accessorName + " = " + expression + ";")
+        IR.Env.Scope.Add(varName, Clone(context), true)
+        IR.Env.Defer.Push(
+            IR.CreateDefer(
+                IR.CreateRelease(context)
+            )
+        )
+    } else {
+        IR.Writer.WriteLine(accessorName + " = " + expression + ";")
+    }
+}
+
+IR.Read.Variable :: (context) {
+    return Clone(context["accessorName"])
+}
+
+IR.CreateVariable :: (name, expression) {
+    newName = "_V_" + name
+    return <"type"="Variable", "accessorName"=Clone(newName), "name"=Clone(name), "child"=Clone(expression)>
+}

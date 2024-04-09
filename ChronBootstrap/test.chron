@@ -30,6 +30,10 @@ Test :: {
 }
 
 Main :: {
+    x = "Hello, from x variable"
+
+    PrintLn(x)
+
     defer PrintLn("End of program")
 
     PrintLn(Test())

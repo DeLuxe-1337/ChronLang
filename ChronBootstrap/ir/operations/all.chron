@@ -15,6 +15,7 @@ include ir.operations.if
 include ir.operations.return
 include ir.operations.continue
 include ir.operations.break
+include ir.operations.variable
 include ir.operations.math.add
 include ir.operations.math.sub
 include ir.operations.math.div
