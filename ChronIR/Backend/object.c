@@ -16,6 +16,26 @@ unsigned long HashString(const char* str) {
     return hash;
 }
 
+int hash(ChronObject key, int capacity);
+
+int HashPair(Node* node, int capacity) {
+    return hash(node->pair.key, capacity) ^ hash(node->pair.value, capacity);
+}
+
+int HashTable(DynamicTable* table) {
+    Node* current = NULL;
+    int sum = 0;
+    for (int i = 0; i < table->capacity; i++) {
+        current = table->buckets[i];
+        while (current != NULL) {
+            sum += HashPair(current, table->capacity);
+            current = current->next;
+        }
+    }
+    printf("Table hash: %d\n", sum);
+    return sum;
+}
+
 int hash(ChronObject key, int capacity) {
     DynObject* obj = key->Object;
     switch (obj->type) {
@@ -25,6 +45,11 @@ int hash(ChronObject key, int capacity) {
         return obj->data.integer % capacity;
     case vboolean:
         return obj->data.boolean ? 1 : 2;
+    case vfunction:
+    case vptr:
+        return (int)obj->data.ptr;
+    case vtable:
+        return HashTable(obj->data.table);
     case vnull:
         return 0;
     }
@@ -32,6 +57,10 @@ int hash(ChronObject key, int capacity) {
 
 ChronObject HashMapGet(DynamicTable* map, ChronObject key) {
     int index = hash(key, map->capacity);
+    if (index < 0 || index >= map->capacity || map->buckets[index] == NULL) {
+        return DynNil(); // Index out of bounds or bucket is empty
+    }
+
     Node* current = map->buckets[index];
     while (current != NULL) {
         if (GetBoolean(DynObjectCompareEq(current->pair.key, key))) {
@@ -78,15 +107,28 @@ void HashMapInsert(DynamicTable* map, ChronObject key, ChronObject value) {
     node->pair = *pair;
     node->next = NULL;
 
-    if (map->buckets[index] == NULL) {
+    Node* current = map->buckets[index];
+    Node* prev = NULL;
+    while (current != NULL) {
+        if (GetBoolean(DynObjectCompareEq(current->pair.key, key))) {
+            MemoryContext_Release(current->pair.value);
+            current->pair.value = value;
+            free(pair);
+            free(node);
+            return; // Exit function as we've replaced the value
+        }
+        prev = current;
+        current = current->next;
+    }
+
+    // If key doesn't already exist, add it to the end of the linked list
+    if (prev == NULL) {
+        // No collision, first node at this index
         map->buckets[index] = node;
     }
     else {
-        Node* current = map->buckets[index];
-        while (current->next != NULL) {
-            current = current->next;
-        }
-        current->next = node;
+        // Collision, add node to the end of the linked list
+        prev->next = node;
     }
     map->size++;
 }

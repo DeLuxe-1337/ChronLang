@@ -123,5 +123,5 @@ Lexer.GetAllTokens :: (state) {
         }
     }
 
-    return Clone(tokens)
+    return tokens
 }
