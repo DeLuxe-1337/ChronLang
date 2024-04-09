@@ -5,28 +5,113 @@
 #include <stdlib.h>
 #include <string.h>
 
-void InitializeDynamicTable(DynamicTable *table)
+unsigned long HashString(const char *str)
 {
-  table->pairs = (TableKeyValuePair *)malloc(1 * sizeof(TableKeyValuePair));
-  if (table->pairs == NULL)
+  unsigned long hash = 5381;
+  int c;
+
+  while ((c = *str++))
   {
-    fprintf(stderr, "Memory allocation failed\n");
+    hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
   }
-  table->size = 0;
-  table->capacity = 1;
+
+  return hash;
 }
 
-TableKeyValuePair *GetDynamicTablePairByIndex(DynamicTable *table, ChronObject index)
+int hash(ChronObject key, int capacity)
 {
-  for (size_t i = 0; i < table->size; i++)
+  DynObject *obj = key->Object;
+  switch (obj->type)
   {
-    if (GetBoolean(DynObjectCompareEq(table->pairs[i].key, index)))
+  case vstring:
+    return HashString(obj->data.str) % capacity;
+  case vinteger:
+    return obj->data.integer % capacity;
+  case vboolean:
+    return obj->data.boolean ? -2 : -3;
+  case vnull:
+    return -4;
+  }
+}
+
+ChronObject HashMapGet(DynamicTable *map, ChronObject key)
+{
+  int index = hash(key, map->capacity);
+  Node *current = map->buckets[index];
+  while (current != NULL)
+  {
+    if (GetBoolean(DynObjectCompareEq(current->pair.key, key)))
     {
-      return &table->pairs[i];
+      return current->pair.value;
+    }
+    current = current->next;
+  }
+  return DynNil(); // Key not found
+}
+
+void HashMapResize(DynamicTable *map)
+{
+  int newCapacity = map->capacity * 2;
+  Node **newBuckets = (Node **)malloc(sizeof(Node *) * newCapacity);
+  memset(newBuckets, 0, sizeof(Node *) * newCapacity);
+
+  // Rehash all elements into the new array
+  for (int i = 0; i < map->capacity; i++)
+  {
+    Node *current = map->buckets[i];
+    while (current != NULL)
+    {
+      Node *next = current->next;
+      int index = hash(current->pair.key, newCapacity);
+      current->next = newBuckets[index];
+      newBuckets[index] = current;
+      current = next;
     }
   }
 
-  return NULL;
+  // Free the old array and update the map's fields
+  free(map->buckets);
+  map->buckets = newBuckets;
+  map->capacity = newCapacity;
+}
+
+void HashMapInsert(DynamicTable *map, ChronObject key, ChronObject value)
+{
+  if ((double)map->size / map->capacity >= LOAD_FACTOR_THRESHOLD)
+  {
+    HashMapResize(map);
+  }
+
+  int index = hash(key, map->capacity);
+  KeyValuePair *pair = (KeyValuePair *)malloc(sizeof(KeyValuePair));
+  pair->key = key;
+  pair->value = value;
+  Node *node = (Node *)malloc(sizeof(Node));
+  node->pair = *pair;
+  node->next = NULL;
+
+  if (map->buckets[index] == NULL)
+  {
+    map->buckets[index] = node;
+  }
+  else
+  {
+    Node *current = map->buckets[index];
+    while (current->next != NULL)
+    {
+      current = current->next;
+    }
+    current->next = node;
+  }
+  map->size++;
+}
+
+void InitializeDynamicTable(DynamicTable *table)
+{
+  table->capacity = INITIAL_CAPACITY;
+  table->size = 0;
+  table->buckets = (Node **)malloc(sizeof(Node *) * table->capacity);
+  memset(table->buckets, 0, sizeof(Node *) * table->capacity);
 }
 
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
@@ -41,41 +126,7 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 
   DynamicTable *table = tableObject->data.table;
 
-  if (table->size >= table->capacity)
-  {
-    table->capacity *= 2;
-    TableKeyValuePair *new_pairs = (TableKeyValuePair *)realloc(table->pairs, table->capacity * sizeof(TableKeyValuePair));
-    if (new_pairs == NULL)
-    {
-      fprintf(stderr, "Memory reallocation failed\n");
-      return; // Return without modifying the table
-    }
-    table->pairs = new_pairs;
-  }
-
-  TableKeyValuePair *result = GetDynamicTablePairByIndex(table, index);
-
-  if (result != NULL)
-  {
-    MemoryContext_Release(result->key);
-    MemoryContext_Release(result->value);
-
-    result->key = Clone(index);
-    result->value = Clone(value);
-  }
-  else
-  {
-    table->pairs[table->size].key = Clone(index);
-    if (table->pairs[table->size].key != NULL)
-    {
-      table->pairs[table->size].value = Clone(value);
-      table->size++;
-    }
-    else
-    {
-      printf("Table key is null\n");
-    }
-  }
+  HashMapInsert(table, Clone(index), Clone(value));
 }
 
 ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
@@ -89,14 +140,8 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
   }
 
   DynamicTable *table = tableObject->data.table;
-  TableKeyValuePair *result = GetDynamicTablePairByIndex(table, index);
 
-  if (result != NULL)
-  {
-    return result->value;
-  }
-
-  return DynNil();
+  return HashMapGet(table, index);
 }
 
 void dealloc_string(void *o)
@@ -155,13 +200,18 @@ void dealloc_table(void *o)
 {
   DynObject *obj = o;
   DynamicTable *table = obj->data.table;
-  for (size_t i = 0; i < table->size; i++)
+  for (int i = 0; i < table->capacity; i++)
   {
-    MemoryContext_Release(table->pairs[i].key);
-    MemoryContext_Release(table->pairs[i].value);
+    Node *current = table->buckets[i];
+    while (current != NULL)
+    {
+      MemoryContext_Release(current->pair.key);
+      MemoryContext_Release(current->pair.value);
+      current = current->next;
+    }
   }
-  free(table->pairs);
-  table->pairs = NULL;
+  free(table->buckets);
+  table->buckets = NULL;
   table->size = 0;
   table->capacity = 0;
   free(table);
@@ -253,9 +303,14 @@ ChronObject Clone(ChronObject input)
     InitializeDynamicTable(clone->data.table);
     cloneObject->deallocate = dealloc_table;
 
-    for (size_t i = 0; i < target->data.table->size; i++)
+    for (int i = 0; i < target->data.table->capacity; i++)
     {
-      SetDynamicTable(cloneObject, Clone(target->data.table->pairs[i].key), Clone(target->data.table->pairs[i].value));
+      Node *current = target->data.table->buckets[i];
+      while (current != NULL)
+      {
+        SetDynamicTable(cloneObject, Clone(current->pair.key), Clone(current->pair.value));
+        current = current->next;
+      }
     }
 
     break;

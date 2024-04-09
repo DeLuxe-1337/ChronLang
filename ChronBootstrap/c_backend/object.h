@@ -19,17 +19,23 @@ typedef enum
   vfunction,
 } DynObjectType;
 
-typedef struct
-{
-  ChronObject key;
-  ChronObject value; // error on this line
-} TableKeyValuePair;
+#define INITIAL_CAPACITY 100
+#define LOAD_FACTOR_THRESHOLD 0.75
 
-typedef struct
-{
-  TableKeyValuePair *pairs;
-  size_t size;
-  size_t capacity;
+typedef struct {
+  ChronObject key;
+  ChronObject value;
+} KeyValuePair;
+
+typedef struct {
+  KeyValuePair pair;
+  struct Node *next;
+} Node;
+
+typedef struct {
+  Node **buckets;
+  int capacity;
+  int size;
 } DynamicTable;
 
 typedef struct
