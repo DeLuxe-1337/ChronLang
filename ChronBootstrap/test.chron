@@ -1,47 +1,10 @@
 include core.all
 
-// ["return"]
-Test :: {
-    PrintLn("Hello, world")
-    PrintLn(true)
-    PrintLn(false)
-    PrintLn(nil)
-
-    PrintLn(2 + 3)
-    PrintLn(5 - 2)
-    PrintLn(2 * 4)
-    PrintLn(10 / 2)
-    PrintLn(3 + 4 * 2) 
-    PrintLn((3 + 4) * 2)
-    PrintLn(6 / (2 + 1))
-    PrintLn(500 * 2)
-    PrintLn(((3 + 4 - 1) * 5 + 6 * 7) / 2)
-    PrintLn((10 + 5) * (6 - 3) / 2 - 4)
-    PrintLn("Hello, " + "world")
-    PrintLn(-500)
-    PrintLn(5 % 2)
-    PrintLn(5 != 3)
-    PrintLn(5 < 5)
-    PrintLn(5 <= 5)
-    PrintLn(5 == 5)
-    PrintLn(5 == 5 or 3 == 3)
-
-    return nil
-}
-
 Main :: {
-    x = "Hello, from x variable"
+    x = 0
 
-    PrintLn(x)
-
-    defer PrintLn("End of program")
-
-    PrintLn(Test())
-
-    if 1 == 2 {
-        PrintLn("1 == 1 is true")
-    } else if 5 == 3 {
-        PrintLn("5 == 5 is true")
-    } else
-        PrintLn("False")
+    while x < 5 {
+        PrintLn(x)
+        x = x + 1
+    }
 }

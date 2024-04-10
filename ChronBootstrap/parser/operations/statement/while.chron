@@ -1,0 +1,11 @@
+Parser.Statement.While :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "WHILE", nil) {
+        Parser.State.Expect(state, "WHILE", nil, "Expected 'while'")
+        
+        exp = Parser.Expression(state)
+        statement = Parser.Statement(state)
+        
+        return IR.CreateWhile(exp, statement)
+    }
+    return nil
+}

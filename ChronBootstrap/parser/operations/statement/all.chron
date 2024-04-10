@@ -9,6 +9,7 @@ include parser.operations.statement.if
 include parser.operations.statement.continue
 include parser.operations.statement.break
 include parser.operations.statement.variable
+include parser.operations.statement.while
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -36,6 +37,9 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.If(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.While(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Variable(state)

@@ -1,0 +1,31 @@
+IR.Write.While :: (context) {
+    expression = context["expression"]
+
+    conditionStore = IR.CreateTempVariable("WHILE_TMP", expression)
+
+    IR.Writer.WriteLine("while(1)")
+    IR.Writer.WriteLine("{")
+    IR.Env.Scope.Create()
+    IR.Env.Defer.Create()
+
+    // Condition
+    IR.Write(conditionStore)
+
+    //Evaluate
+    IR.Writer.WriteLine("if(" + Types.GetBooleanFromObject + "(" + IR.Read(conditionStore) + ") == false) {")
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Writer.WriteLine("break;\n}")
+
+    // Write block
+    IR.Write(context["block"])
+
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Scope.Pop()
+    IR.Env.Defer.Pop()
+
+    IR.Writer.WriteLine("}")
+}
+
+IR.CreateWhile :: (expression, block) {
+    return <"type"="While", "expression"=Clone(expression), "block"=Clone(IR.CreateScopedBlock(block))>
+}

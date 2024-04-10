@@ -21,6 +21,7 @@ Lexer.SymbolMap = <
     "and"="A",
     "nil"="NIL",
     "if"="IF",
+    "while"="WHILE",
     "else"="ELSE",
     "break"="BREAK",
     "continue"="CONTINUE",
