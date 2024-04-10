@@ -3,7 +3,7 @@ using ChronIR.IR.Operation.Constants;
 
 namespace ChronIR.IR.Operation
 {
-    public class ChronTable : ChronExpression, ChronVariableRef
+    public class ChronTable : ChronExpression, ChronVariableRef, ChronAutoRelease
     {
         private ChronInvoke invoke;
         private static ChronFunction createTable = new(ChronTypes.CreateTable, true);
