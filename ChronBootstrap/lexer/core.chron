@@ -28,7 +28,8 @@ Lexer.SymbolMap = <
     "defer"="DEFER",
     "release"="RELEASE",
     "return"="RETURN",
-    "include"="INCLUDE"
+    "include"="INCLUDE",
+    "emit_c" = "EMIT.C"
 >
 
 Lexer.GetToken :: (state) {
@@ -46,6 +47,23 @@ Lexer.GetToken :: (state) {
 
         Lexer.State.IncreaseIndex(state)
         state["currentLine"] += 1
+    }
+
+    if (Lexer.State.Get(state) == "`") {
+        Lexer.State.IncreaseIndex(state)
+
+        rawText = ""
+        while ((Lexer.State.Get(state) != "`") and (Lexer.State.EOF(state) == false)) {
+            if Lexer.State.Get(state) == "\n" {
+                state["currentLine"] += 1
+            }
+            rawText += Lexer.State.Get(state)
+            Lexer.State.IncreaseIndex(state)
+        }
+        
+        Lexer.State.IncreaseIndex(state)
+
+        return Lexer.Token.Create(rawText, "RAWTEXT", state["currentLine"])
     }
 
     if String.IsAlpha(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {

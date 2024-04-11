@@ -12,7 +12,8 @@ WriteMap = <
     "Break"=IR.Write.Break,
     "TempVariable"=IR.Write.TempVariable,
     "While"=IR.Write.While,
-    "Variable"=IR.Write.Variable
+    "Variable"=IR.Write.Variable,
+    "Literals.RawText"=IR.Write.Literals.RawText
 >
 ReadMap = <
     "Literals.String"=IR.Read.Literals.String, 

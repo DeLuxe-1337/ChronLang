@@ -9,4 +9,6 @@ Main :: {
         PrintLn(x)
         x = x + 1
     }
+
+    emit_c `// Hello, world`
 }
