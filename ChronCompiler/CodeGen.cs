@@ -207,11 +207,14 @@ namespace ChronCompiler
         }
         public override object VisitReturn([NotNull] ChronParser.ReturnContext context)
         {
+            if(context.expression() != null)
             BlockStack.Peek().AddStatement(
                 new ChronReturn(
                     Visit(context.expression()) as ChronExpression
                     )
                 );
+            else
+                BlockStack.Peek().AddStatement(new ChronReturn(null));
 
             return null;
         }
