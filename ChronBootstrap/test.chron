@@ -1,7 +1,9 @@
 include core.all
 
+x = 0
+y = "Hello, world"
 Main :: {
-    x = 0
+    defer PrintLn(y)
 
     while x < 5 {
         PrintLn(x)

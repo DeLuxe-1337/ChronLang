@@ -6,6 +6,10 @@ IR.Write.Function :: (context) {
 
     context["block"] = nil
 
+    if accessorName == "main" {
+        context["globalFunction"] = IR.Variable.WriteGlobals()
+    }
+
     IR.Env.Scope.Create()
     IR.Env.Defer.Create()
 
@@ -17,6 +21,10 @@ IR.Write.Function :: (context) {
 
     if block != nil {
         IR.Writer.WriteLine("{")
+
+        if context["globalFunction"] != nil {
+            IR.Writer.WriteLine(context["globalFunction"])
+        }
 
         IR.Write(block)
 
