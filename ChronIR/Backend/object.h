@@ -62,6 +62,7 @@ typedef struct
 
 void InitializeDynamicTable(DynamicTable* table);
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value);
+void TableInsert(ChronObject o, ChronObject value);
 ChronObject IndexDynamicTable(ChronObject o, ChronObject index);
 ChronObject DynString(const char* str);
 ChronObject DynChar(char c);

@@ -3,3 +3,6 @@
 
 ["return", "name"="Table.Iter"]
 !TableIter :: (table) ?
+
+["name"="Table.Insert"]
+!TableInsert :: (table, value) ?

@@ -140,6 +140,19 @@ void InitializeDynamicTable(DynamicTable* table) {
     memset(table->buckets, 0, sizeof(Node*) * table->capacity);
 }
 
+void TableInsert(ChronObject o, ChronObject value) {
+    DynObject* tableObject = o->Object;
+
+    if (tableObject->type != vtable) {
+        printf("Runtime error: attempting to set value in table on object that "
+            "isn't a table.\n");
+        return;
+    }
+
+    DynamicTable* table = tableObject->data.table;
+    HashMapInsert(table, DynInteger(table->size), value);
+}
+
 void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value) {
     DynObject* tableObject = o->Object;
 
