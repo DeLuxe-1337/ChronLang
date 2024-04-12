@@ -31,15 +31,15 @@ IR.Read.Invoke :: (context) {
             if value["autoRelease"] == true {
                 if value["conditionalAutoRelease"] != nil {
                     if invoke IR.Invoke.ConditionalAutoRelease value["conditionalAutoRelease"](value) {
-                        build += IR.Read(IR.CreateRelease(value))
+                        build += ToString(IR.Read(IR.CreateRelease(value)))
                     } else {
-                        build += IR.Read(value)
+                        build += ToString(IR.Read(value))
                     }
                 } else {
-                    build += IR.Read(IR.CreateRelease(value))
+                    build += ToString(IR.Read(IR.CreateRelease(value)))
                 }
             } else {
-                build += IR.Read(value)
+                build += ToString(IR.Read(value))
             }
             if index != (Table.SizeOf(parameters) - 1) {
                 build += ","

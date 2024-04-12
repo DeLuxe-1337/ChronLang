@@ -16,6 +16,10 @@ IR.Write.While :: (context) {
     IR.Env.Defer.VisitCurrentScope()
     IR.Writer.WriteLine("break;\n}")
 
+    if context["increase"] != nil {
+        IR.Write(context["increase"])
+    }
+
     // Write block
     IR.Write(context["block"])
 

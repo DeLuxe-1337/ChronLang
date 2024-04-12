@@ -10,6 +10,7 @@ include parser.operations.statement.continue
 include parser.operations.statement.break
 include parser.operations.statement.variable
 include parser.operations.statement.while
+include parser.operations.statement.for
 include parser.operations.statement.emit_c
 
 Parser.Statement :: (state) {
@@ -41,6 +42,9 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.While(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.For(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Variable(state)

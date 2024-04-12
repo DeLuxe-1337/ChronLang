@@ -1,12 +1,12 @@
 include core.all
 
-x = 0
-y = "Hello, world"
 Main :: {
-    defer PrintLn(y)
+    defer PrintLn("End of program")
 
-    while x < 5 {
+    y = 0
+    y = y + 5
+
+    for x = 0, 50 {
         PrintLn(x)
-        x = x + 1
     }
 }

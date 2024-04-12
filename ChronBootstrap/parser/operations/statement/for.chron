@@ -1,0 +1,19 @@
+Parser.Statement.For :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "FOR", nil) {
+        Parser.State.Expect(state, "FOR", nil, "Expected 'for'")
+        
+        identifier = Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected 'identifier'")["value"]
+        Parser.State.Expect(state, "EQUAL", nil, "Expected '=' to specify start")
+
+        start = Parser.Expression(state)
+
+        Parser.State.Expect(state, "COMMA", nil, "Expected ',' to specify end")
+
+        end = Parser.Expression(state)
+
+        statement = Parser.Statement(state)
+        
+        return IR.CreateForTo(identifier, start, end, statement)
+    }
+    return nil
+}

@@ -1,9 +1,9 @@
 IR.Variable.Globals = <>
 
 IR.Write.Variable :: (context) {
-    expression = Clone(IR.Read(Clone(context["child"])))
-    varName = Clone(context["name"])
-    accessorName = Clone(context["accessorName"])
+    expression = IR.Read(context["expression"])
+    varName = context["name"]
+    accessorName = context["accessorName"]
 
     if IR.Env.Scope.CurrentIndex == 0 {
         Table.Insert(IR.Variable.Globals, context)
@@ -43,5 +43,5 @@ IR.Read.Variable :: (context) {
 
 IR.CreateVariable :: (name, expression) {
     newName = "_V_" + name
-    return <"type"="Variable", "accessorName"=Clone(newName), "name"=Clone(name), "child"=Clone(expression)>
+    return <"type"="Variable", "accessorName"=Clone(newName), "name"=Clone(name), "expression"=Clone(expression)>
 }

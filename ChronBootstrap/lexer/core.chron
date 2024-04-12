@@ -29,6 +29,7 @@ Lexer.SymbolMap = <
     "release"="RELEASE",
     "return"="RETURN",
     "include"="INCLUDE",
+    "for"="FOR",
     "emit_c" = "EMIT.C"
 >
 
