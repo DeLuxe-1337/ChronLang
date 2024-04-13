@@ -1,4 +1,4 @@
-# ChronLang - Legacy Stage
+# ChronLang
 
 > A fast, compiled, dynamically typed programming language.   
 
@@ -42,8 +42,8 @@
 
 ## FAQ
 
-#### What is the legacy compiler?
-The legacy compiler is the initial version of ChronLang. It will shed the "legacy" label once it is bootstrapped and reaches a stable state.
+#### What is the bootstrapped compiler?
+The bootstrapped compiler is the ChronLang compiler written in ChronLang
 
 #### How mature is this programming language?
 ChronLang is currently in its early stages of development and may not be suitable for production-level projects.
@@ -64,39 +64,7 @@ Generating C source code thus allows for easy cross-platform with compilers like
 There are many ways you can contribute! You can work on the C backend, and you can implement features. You can clean up the compiler source. You can extend functionality, you can fix issues, and the list goes on.
 
 #### How to compile?
-<details>
-    <summary>Windows</summary>
-    <br>
-    You need git, tcc, and dotnet  
-    
-```bat
-git clone https://github.com/DeLuxe-1337/ChronLang
-cd ChronLang
-dotnet build  
-
-```  
-
-You can also use [Dotnet Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot) if you wish.
-
-</details>
-
-
-<details>
-<summary>Linux (Tested on PopOS! (Ubuntu) specifically)</summary>
-<br>
-    You need git, tcc, and dotnet
-
-```sh
-git clone https://github.com/DeLuxe-1337/ChronLang
-cd ChronLang
-dotnet build -c Release /p:CompileTarget=Linux
-cd ChronCompiler/bin/Release/net8.0
-chmod +x Targets/tcc.sh
-
-```
-
-
-</details>
+Visit the legacy branch to get the legacy compiler to compile this version...
 
 #### Target Audience
 The target audience is anyone who enjoys dynamically typed, lightweight, minimalistic, fast, and compiled languages. 
@@ -277,16 +245,18 @@ Main :: {
 
 ## Tables
 
-Syntax: `<` `expression list` `>` //Subject to change;  
+Syntax: `{` `expression list` `}`;
+
+// The syntax in bootstrap for tables is different... legacy uses <> while bootstrapped uses {}
 
 You can also initialize a table with key, value pairs for example:  
-`T = <"foo" = 5, ...>`
+`T = {"foo" = 5, ...}`
 
 ```chron
 include core.all
 
 Main :: {
-    x = <"Hi", 1, false> // 0 = "Hi", 1 = 1, 2 = false
+    x = {"Hi", 1, false} // 0 = "Hi", 1 = 1, 2 = false
     x[false] = true
     x["wow!"] = 100
 
