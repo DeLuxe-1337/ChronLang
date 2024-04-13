@@ -8,3 +8,5 @@ tcc/
 test.c
 ChronCompiler/Properties/PublishProfiles/FolderProfile.pubxml.user
 ChronBootstrap/*.c
+test.chron.c
+main.chron.c
