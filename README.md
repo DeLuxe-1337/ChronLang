@@ -16,6 +16,5 @@
 - **Natively Compiled**
 
 To get started check out Legacy or Bootstrapped compiler versions!  
-(Legacy is recommended as of right now)  
-[Legacy](https://github.com/DeLuxe-1337/ChronLang/tree/legacy)  
+[Legacy - Recommended](https://github.com/DeLuxe-1337/ChronLang/tree/legacy)  
 [Bootstrap](https://github.com/DeLuxe-1337/ChronLang/tree/bootstrap)  
