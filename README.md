@@ -1,4 +1,4 @@
-# ChronLang - Legacy Stage
+# ChronLang
 
 > A fast, compiled, dynamically typed programming language.   
 
@@ -14,7 +14,6 @@
 
 - **Dynamically Typed**
 - **Natively Compiled**
-- **Manual Memory Management**
 
 To get started check out Legacy or Bootstrapped compiler versions!
 (Legacy is recommended as of right now)  
