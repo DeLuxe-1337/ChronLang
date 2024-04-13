@@ -1,8 +1,0 @@
-Parser.Statement.Break :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "BREAK", nil) {
-        Parser.State.Expect(state, "BREAK", nil, "BREAK 'break'")
-
-        return IR.CreateBreak()
-    }
-    return nil
-}

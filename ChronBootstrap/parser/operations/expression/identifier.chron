@@ -1,7 +1,0 @@
-Parser.Expression.Identifier :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "IDENTIFIER", nil) {
-        return IR.CreateEnvironmentAccessor(Parser.State.GetAndIncrease(state)["value"])
-    }
-
-    return nil
-}
