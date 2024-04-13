@@ -1,0 +1,18 @@
+IR.TableAccessor.VariableWrite :: (context, value) {
+    setTable = IR.CreateInvoke(Functions.SetDynamicTable, <context["table"], context["index"], value>)
+    IR.Write(setTable)
+}
+
+IR.TableAccessor.VariableRead :: (context) {
+    return IR.Read(context)
+}
+
+IR.Read.TableAccessor :: (context) {
+    invokeCreate = IR.CreateInvoke(Functions.IndexDynamicTable, <context["table"], context["index"]>)
+
+    return IR.Read(invokeCreate)
+}
+
+IR.CreateTableAccessor :: (table, index) {
+    return <"type"="TableAccessor", "table"=table, "index"=index, "VariableWrite" = IR.TableAccessor.VariableWrite, "VariableRead"=IR.TableAccessor.VariableRead>
+}

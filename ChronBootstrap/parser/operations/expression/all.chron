@@ -7,6 +7,7 @@ include parser.operations.expression.release
 include parser.operations.expression.math
 include parser.operations.expression.comparison
 include parser.operations.expression.unary
+include parser.operations.expression.table
 
 Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.String(state)
@@ -22,6 +23,9 @@ Parser.Expression.Primary :: (state) {
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Table(state)
     if expr != nil { return expr } 
 
     return nil

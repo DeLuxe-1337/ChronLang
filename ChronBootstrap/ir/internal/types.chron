@@ -28,6 +28,12 @@ Types.ObjectCompareNot = "DynObjectNot"
 Types.Void = "ChronVoid"
 Types.Object = "ChronObject"
 
+Types.SetDynamicTable = "SetDynamicTable"
+Types.IndexDynamicTable = "IndexDynamicTable"
+
+Functions.SetDynamicTable = IR.CreateFunctionRaw(Types.SetDynamicTable, true)
+Functions.IndexDynamicTable = IR.CreateFunctionRaw(Types.IndexDynamicTable, true)
+
 Functions.CreateString = IR.CreateFunctionRaw(Types.CreateString, true)
 Functions.CreateInt = IR.CreateFunctionRaw(Types.CreateInt, true)
 Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true)

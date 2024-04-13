@@ -1,7 +1,10 @@
 IR.Variable.Globals = <>
 
+IR.Variable.VariableRead :: (context) {return nil}
+IR.Variable.VariableCreatedRef :: (context, variable) ?
+
 IR.Write.Variable :: (context) {
-    expression = IR.Read(context["expression"])
+    expression = context["expression"]
     varName = context["name"]
     accessorName = context["accessorName"]
 
@@ -12,8 +15,12 @@ IR.Write.Variable :: (context) {
         return
     }
 
+    // if context["VariableWrite"] != nil {
+    //     invoke IR.Variable.VariableCreatedRef context["VariableWrite"](expression, context)
+    // }
+
     if IR.Env.Scope.GetFirst(varName) == nil {
-        IR.Writer.WriteLine("void* " + accessorName + " = " + expression + ";")
+        IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
         IR.Env.Scope.Add(varName, Clone(context), true)
         IR.Env.Defer.Push(
             IR.CreateDefer(
@@ -21,7 +28,11 @@ IR.Write.Variable :: (context) {
             )
         )
     } else {
-        IR.Writer.WriteLine(accessorName + " = " + expression + ";")
+        IR.Writer.WriteLine(accessorName + " = " + IR.Read(expression) + ";")
+    }
+
+    if expression["VariableCreatedRef"] != nil {
+        invoke IR.Variable.VariableCreatedRef expression["VariableCreatedRef"](expression, context)
     }
 }
 
@@ -38,6 +49,10 @@ IR.Variable.WriteGlobals :: {
 }
 
 IR.Read.Variable :: (context) {
+    // if context["VariableRead"] != nil {
+    //     return invoke IR.Variable.VariableRead context["VariableRead"](context["expression"])
+    // }
+
     return Clone(context["accessorName"])
 }
 

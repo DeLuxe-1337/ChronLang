@@ -3,10 +3,6 @@ include core.all
 Main :: {
     defer PrintLn("End of program")
 
-    y = 0
-    y = y + 5
-
-    for x = 0, 50 {
-        PrintLn(x)
-    }
+    x = {"Hello", "World", false=true}
+    PrintLn(x)
 }
