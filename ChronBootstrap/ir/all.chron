@@ -1,6 +1,0 @@
-include ir.environment.scope
-include ir.environment.defer
-include ir.writer
-include ir.core
-include ir.internal.types
-include ir.operations.all

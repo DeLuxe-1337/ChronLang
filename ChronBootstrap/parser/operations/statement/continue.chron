@@ -1,8 +1,0 @@
-Parser.Statement.Continue :: (state) {
-    if Parser.State.Match(Parser.State.Get(state), "CONTINUE", nil) {
-        Parser.State.Expect(state, "CONTINUE", nil, "Expected 'continue'")
-
-        return IR.CreateContinue()
-    }
-    return nil
-}

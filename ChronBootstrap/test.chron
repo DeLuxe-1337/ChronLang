@@ -1,8 +1,0 @@
-include core.all
-
-Main :: {
-    defer PrintLn("End of program")
-
-    x = {"Hello", "World", false=true}
-    PrintLn(x)
-}
