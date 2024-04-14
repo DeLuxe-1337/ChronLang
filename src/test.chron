@@ -1,14 +1,27 @@
 include core.all
-include core.file.all
-include compiler.module
 
 Main :: {
-    module = Compiler.Module.Create("test")
+    defer PrintLn("End of program")
 
-    Compiler.Module.CompileFromFile("test.chron")
-    Compiler.Module.WriteStatementsToFile(module)
+    x = {"Hello", "World", false=true, "Sub"={10=4}}
+    // PrintLn(x)
 
-    PrintLn("End of program")
+    // PrintLn(x[0])
+    // PrintLn(x[false])
 
-    Memory.ReleaseAll()
+    // PrintLn(x["Sub"][10])
+
+    // y = "Test"
+    // PrintLn(y)
+
+    // z = 100 + 20
+    // PrintLn(z * 2)
+
+    // w = false
+    // PrintLn(release w)
+
+    foreach index, value in Table.Iter(x) {
+        PrintLn(index)
+        PrintLn(value)
+    }
 }
