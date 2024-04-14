@@ -1,0 +1,20 @@
+Parser.Statement.ForEach :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "FOREACH", nil) {
+        Parser.State.Expect(state, "FOREACH", nil, "Expected 'for'")
+        
+        index = Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected 'identifier' for index")["value"]
+
+        Parser.State.Expect(state, "COMMA", nil, "Expected ',' to separate index and value (index, value) in foreach")
+
+        value = Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected 'identifier' for value")["value"]
+
+        Parser.State.Expect(state, "IN", nil, "Expected 'in' to specify what to iterate")
+
+        iterator = Parser.Expression(state)
+
+        statement = Parser.Statement(state)
+        
+        return IR.CreateForEach(index, value, statement, iterator)
+    }
+    return nil
+}

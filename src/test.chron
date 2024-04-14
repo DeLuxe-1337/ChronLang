@@ -4,19 +4,24 @@ Main :: {
     defer PrintLn("End of program")
 
     x = {"Hello", "World", false=true, "Sub"={10=4}}
-    PrintLn(x)
+    // PrintLn(x)
 
-    PrintLn(x[0])
-    PrintLn(x[false])
+    // PrintLn(x[0])
+    // PrintLn(x[false])
 
-    PrintLn(x["Sub"][10])
+    // PrintLn(x["Sub"][10])
 
-    y = "Test"
-    PrintLn(y)
+    // y = "Test"
+    // PrintLn(y)
 
-    z = 100 + 20
-    PrintLn(z * 2)
+    // z = 100 + 20
+    // PrintLn(z * 2)
 
-    w = false
-    PrintLn(w)
+    // w = false
+    // PrintLn(release w)
+
+    foreach index, value in Table.Iter(x) {
+        PrintLn(index)
+        PrintLn(value)
+    }
 }

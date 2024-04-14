@@ -10,6 +10,8 @@ Types.ObjectDiv = "DynObjectDiv"
 Types.ObjectMul = "DynObjectMul"
 Types.ObjectModulus = "DynObjectMod"
 Types.MemoryRelease = "MemoryContext_Release"
+Types.Iterator = "Iterator*"
+Types.GetRef = "GetRef"
 
 Types.ObjectCompareEq = "DynObjectCompareEq"
 Types.ObjectCompareNEq = "DynObjectCompareNEq"

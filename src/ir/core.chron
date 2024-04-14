@@ -14,6 +14,7 @@ WriteMap = <
     "While"=IR.Write.While,
     "For"=IR.Write.For,
     "ForTo"=IR.Write.ForTo,
+    "ForEach"=IR.Write.ForEach,
     "Variable"=IR.Write.Variable,
     "Literals.RawText"=IR.Write.Literals.RawText
 >

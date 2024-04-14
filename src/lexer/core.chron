@@ -30,6 +30,8 @@ Lexer.SymbolMap = <
     "return"="RETURN",
     "include"="INCLUDE",
     "for"="FOR",
+    "in"="IN",
+    "foreach"="FOREACH",
     "emit_c" = "EMIT.C"
 >
 

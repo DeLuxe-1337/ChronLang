@@ -5,7 +5,7 @@ IR.Write.TempVariable :: (context) {
     varName = Clone(context["name"])
 
     if context["written"] != true {
-        IR.Writer.WriteLine("void* " + varName + " = " + IR.Read(expression) + ";")
+        IR.Writer.WriteLine(context["dataType"] + " " + varName + " = " + IR.Read(expression) + ";")
         context["written"] = true
     } else {
         IR.Writer.WriteLine(varName + " = " + IR.Read(expression) + ";")
@@ -23,5 +23,5 @@ IR.Read.TempVariable :: (context) {
 IR.CreateTempVariable :: (name, expression) {
     IR.Temp.Count += 1
     newName = "_TEMP_" + Clone(name) + "_" + ToString(IR.Temp.Count)
-    return <"type"="TempVariable", "name"=Clone(newName), "child"=Clone(expression)>
+    return <"type"="TempVariable", "name"=Clone(newName), "child"=Clone(expression), "dataType"="void*">
 }
