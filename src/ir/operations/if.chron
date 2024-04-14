@@ -1,0 +1,19 @@
+IR.Write.If :: (context) {
+    trueBlock = Clone(context["trueBlock"])
+    elseStatement = Clone(context["elseStatement"])
+    expression = Clone(context["expression"])
+
+    IR.Writer.WriteLine("if(" + Types.GetBooleanFromObject + "(" + IR.Read(expression) + "))")
+
+    IR.Write(trueBlock)
+
+    if elseStatement != nil {
+        IR.Writer.WriteLine("else")
+
+        IR.Write(elseStatement)
+    }
+}
+
+IR.CreateIf :: (expression, trueBlock, elseStatement) {
+    return {"type"="If", "expression"=Clone(expression), "trueBlock"=Clone(IR.CreateScopedBlock(trueBlock)), "elseStatement"=Clone(elseStatement)}
+}

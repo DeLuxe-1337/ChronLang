@@ -1,0 +1,62 @@
+include lexer.core
+include parser.core
+include ir.all
+
+Compiler.Module.Statements = {}
+Compiler.Module.StatementCount = 0
+Compiler.Module.Compiled = {}
+
+Compiler.Module.Create :: (name) {
+    return <"name"=name>
+}
+
+Compiler.Module.CompileFromFile :: (file) {
+    if Compiler.Module.Compiled[file] != nil {
+        PrintLn(file + " is already included")
+        return false
+    }
+
+    PrintLn("->Lexer:")
+
+    lexerState = Lexer.State.Create(File.Read(file))
+
+    tokens = Lexer.GetAllTokens(lexerState)
+    // PrintLn(tokens)
+
+    PrintLn("->Parser:")
+
+    parserState = Parser.State.Create(tokens)
+
+    Compiler.Module.Statements[Compiler.Module.StatementCount] = Parser.ParseAllStatements(parserState)
+    Compiler.Module.StatementCount += 1
+
+    Compiler.Module.Compiled[file] = true
+
+    return true
+}
+
+Compiler.Module.WriteStatementsToFile :: (module) {
+    PrintLn("->IR:")
+    IR.WriteModule()
+
+    IR.Env.Scope.Create()
+
+    foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
+        foreach index, statement in Table.Iter(statementTable) {
+            if statement["type"] == "Function" {
+                IR.Function.ForwardDeclare(statement)
+            }
+        }
+    }
+
+    foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
+        foreach index, statement in Table.Iter(statementTable) {
+            // PrintLn(index)
+            IR.Write(statement)
+        }
+    }
+
+    PrintLn("Writing to file")
+
+    IR.Writer.WriteToFile(module["name"] + ".chron.c")
+}

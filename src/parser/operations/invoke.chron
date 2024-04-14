@@ -1,0 +1,33 @@
+Parser.FinishInvoke :: (state, callee) {
+    parameters = {}
+    parameter_index = 0
+    while Parser.State.Get(state)["type"] != "RPAREN" {
+        if parameter_index > 0 {
+            Parser.State.Expect(state, "COMMA", nil, "Expected ','")
+        }
+
+        expr = Parser.Expression(state)
+
+        if expr != nil {
+            parameters[parameter_index] = expr
+            parameter_index += 1
+        } else {
+            PrintLn("Couldn't parse expression...")
+            Parser.State.IncreaseIndex(state)
+        }
+    }
+        
+    Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
+
+    return IR.CreateInvoke(callee, parameters)
+}
+
+Parser.Invoke :: (state) {
+    expr = Parser.Expression.Primary(state)
+
+    while Parser.State.MatchAny(state, {"LPAREN"}) {
+        expr = Parser.FinishInvoke(state, expr)
+    }
+    
+    return Clone(expr)
+}

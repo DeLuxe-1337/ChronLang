@@ -1,0 +1,24 @@
+IR.Write.ForTo :: (context) {
+    index = context["index"]
+
+    variable = IR.CreateVariable(index, IR.CreateSub(context["start"], IR.CreateNumber(1)))
+    whileLoop = IR.CreateWhile(IR.CreateCompareLess(variable, context["end"]), context["block"])
+
+    IR.Writer.WriteLine("{")
+    IR.Env.Defer.Create()
+
+    IR.Write(variable)
+
+    variable["expression"] = IR.CreateAdd(variable, IR.CreateNumber(1))
+    whileLoop["increase"] = variable
+
+    IR.Write(whileLoop)
+
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.Pop()
+    IR.Writer.WriteLine("}")
+}
+
+IR.CreateForTo :: (index, start, end, block) {
+    return {"type"="ForTo", "index"=index, "start"=Clone(start), "end"=Clone(end), "block"=Clone(block)}
+}

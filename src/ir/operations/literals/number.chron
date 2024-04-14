@@ -1,0 +1,12 @@
+IR.Read.Literals.Number :: (context) {
+    value = context["value"]
+
+    invokeParameters = {IR.CreateRawText(value)}
+    invokeCreateInt = IR.CreateInvoke(Functions.CreateInt, invokeParameters)
+
+    return IR.Read(invokeCreateInt)
+}
+
+IR.CreateNumber :: (value) {
+    return {"value"=Clone(value), "autoRelease"=true, "literal"=true, "type"="Literals.Number"}
+}

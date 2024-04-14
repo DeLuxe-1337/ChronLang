@@ -1,0 +1,31 @@
+Parser.Statement.Modifier :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "LBRACE", nil) {
+        Parser.State.IncreaseIndex(state)
+
+        modifier_index = 0
+        modifiers = {}
+
+        while !Parser.State.Match(Parser.State.Get(state), "RBRACE", nil) {
+            if modifier_index > 0 {
+                Parser.State.Expect(state, "COMMA", nil, "Expected ',' to separate modifiers")
+            }
+
+            name = Parser.State.ExpectRet(state, "STRING", nil, "Expected STRING in modifier name")["value"]
+            value = true
+
+            if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
+                Parser.State.IncreaseIndex(state)
+                value = Clone(Parser.State.ExpectRet(state, "STRING", nil, "Expected STRING in modifier value")["value"])
+            }
+
+            modifiers[name] = value
+            modifier_index += 1
+        }
+
+        Parser.State.Expect(state, "RBRACE", nil, "Expected ']' to close modifier")
+
+        return Clone(modifiers)
+    }
+
+    return {}
+}

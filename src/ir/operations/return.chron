@@ -1,0 +1,18 @@
+IR.Write.Return :: (context) {
+    if context["expression"] != nil {
+        tmpReturn = IR.CreateTempVariable("RETURN_TEMP", context["expression"])
+        IR.Write(tmpReturn)
+
+        IR.Env.Defer.VisitCurrentScope()
+
+        IR.Writer.WriteLine("return " + IR.Read(tmpReturn) + ";")
+    } else {
+        IR.Env.Defer.VisitCurrentScope()
+
+        IR.Writer.WriteLine("return;")
+    }
+}
+
+IR.CreateReturn :: (child) {
+    return {"type"="Return", "expression"=Clone(child)}
+}

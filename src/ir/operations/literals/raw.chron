@@ -1,0 +1,11 @@
+IR.Read.Literals.RawText :: (context) {
+    return Clone(context["value"])
+}
+
+IR.Write.Literals.RawText :: (context) {
+    IR.Writer.WriteLine(context["value"])
+}
+
+IR.CreateRawText :: (value) {
+    return {"value"=Clone(value), "type"="Literals.RawText"}
+}

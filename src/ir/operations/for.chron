@@ -1,0 +1,29 @@
+IR.Write.For :: (context) {
+    index = context["index"]
+    start = context["start"]
+    end = context["end"]
+    block = context["block"]
+
+    IR.Writer.WriteLine(
+        "for(" + 
+        ToString(index["dataType"]) + " " + IR.Read(index) + " = " + IR.Read(start) + ";" + 
+        IR.Read(index) + " < " + IR.Read(end) + ";" + 
+        IR.Read(index) + "++)"
+    )
+
+    IR.Writer.WriteLine("{")
+    IR.Env.Scope.Create()
+    IR.Env.Defer.Create()
+
+    // Write block
+    IR.Write(context["block"])
+
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Scope.Pop()
+    IR.Env.Defer.Pop()
+    IR.Writer.WriteLine("}")
+}
+
+IR.CreateFor :: (index, start, end, block) {
+    return {"type"="For", "index"=index, "start"=Clone(start), "end"=Clone(end), "block"=Clone(block)}
+}

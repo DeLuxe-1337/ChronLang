@@ -1,0 +1,76 @@
+IR.Env.Scope.List = {}
+IR.Env.Scope.Current = nil
+IR.Env.Scope.CurrentIndex = -1
+
+IR.Env.Scope.Create :: () {
+    IR.Env.Scope.CurrentIndex += 1
+    IR.Env.Scope.List[IR.Env.Scope.CurrentIndex] = {}
+    IR.Env.Scope.SetCurrent()
+}
+
+IR.Env.Scope.Pop :: () {
+    IR.Env.Scope.List[IR.Env.Scope.CurrentIndex] = nil
+    IR.Env.Scope.CurrentIndex -= 1
+    IR.Env.Scope.SetCurrent()
+}
+
+IR.Env.Scope.SetCurrent :: () {
+    IR.Env.Scope.Current = IR.Env.Scope.List[IR.Env.Scope.CurrentIndex]
+}
+
+IR.Env.Scope.Push :: (scopeItem) {
+    index = Table.SizeOf(IR.Env.Scope.Current)
+    IR.Env.Scope.Current[index] = scopeItem
+} 
+
+IR.Env.Scope.CreateItem :: (name, data) {
+    return {"name"=Clone(name), "value"=Clone(data), "type"="Scope"}
+}
+
+IR.Env.Scope.Get :: (name) {
+    result = {}
+    i = 0
+    foreach scopeIndex, scope in Table.Iter(IR.Env.Scope.List) {
+        if TypeOf(scope) == "table" {
+            foreach index, value in Table.Iter(scope) {
+                if (TypeOf(value) == "table") {
+                    if (value != nil) and (value["name"] == name) {
+                        result[i] = value["value"]
+                        i += 1
+                    }
+                }
+            }
+        }
+    }
+    return result
+}
+
+IR.Env.Scope.GetFirst :: (name) {
+    result = IR.Env.Scope.Get(name)
+
+    if result[0] != nil {
+        return result[0]
+    }
+
+    return nil
+}
+
+IR.Env.Scope.Add :: (name, operation, removeExisting) {
+    if removeExisting == true {
+        IR.Env.Scope.RemoveAllWithName(name)
+    }
+
+    IR.Env.Scope.Push(IR.Env.Scope.CreateItem(name, operation))
+}
+
+IR.Env.Scope.RemoveAllWithName :: (name) {
+    foreach scopeIndex, scope in Table.Iter(IR.Env.Scope.List) {
+        if TypeOf(scope) == "table" {
+            foreach index, value in Table.Iter(scope) {
+                if (value != nil) and (value["name"] == name) {
+                    IR.Env.Scope.List[scopeIndex][index] = nil
+                }
+            }
+        }
+    }
+}

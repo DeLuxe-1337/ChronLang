@@ -1,0 +1,143 @@
+IR.Write.Function :: (context) {
+    name = Clone(context["name"])
+    block = Clone(context["block"])
+    accessorName = Clone(context["accessorName"])
+    parameters = Clone(context["parameters"])
+
+    context["block"] = nil
+
+    if accessorName == "main" {
+        context["globalFunction"] = IR.Variable.WriteGlobals()
+    }
+
+    IR.Env.Scope.Create()
+    IR.Env.Defer.Create()
+
+    foreach index, param in Table.Iter(parameters) {
+        IR.Env.Scope.Add(param, IR.CreateRawText(param), true)
+    }
+    
+    IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context))
+
+    if block != nil {
+        IR.Writer.WriteLine("{")
+
+        if context["globalFunction"] != nil {
+            IR.Writer.WriteLine(context["globalFunction"])
+        }
+
+        IR.Write(block)
+
+        IR.Env.Defer.VisitCurrentScope()
+        IR.Writer.WriteLine("}")
+    } else {
+        IR.Writer.WriteLine(";")
+    }
+
+    IR.Env.Scope.Pop()
+    IR.Env.Defer.Pop()
+}
+
+IR.Function.GenerateParameters :: (context) {
+    if context["native"] == true {
+        return Clone(context["nativeParameters"])
+    }
+
+    parameters = Clone(context["parameters"])
+
+    if parameters != nil {
+        build = ""
+        foreach index, value in Table.Iter(parameters) {
+            build += Types.Object + " " + value
+            if index != (Table.SizeOf(parameters) - 1) {
+                build += ","
+            }
+        }
+        return Clone(build)
+    }
+
+    return nil
+}
+
+IR.Function.GenerateReturn :: (context) {
+    if context["native"] == true {
+        return Clone(context["nativeReturn"])
+    }
+
+    if context["return"] == false {
+        return Clone(Types.Void)
+    } 
+
+    return Clone(Types.Object)
+}
+
+IR.Function.GenerateFunctionSignature :: (name, context) {
+    return "typedef " + IR.Function.GenerateReturn(context) + " (*" + name + ")(" + IR.Function.GenerateParameters(context) + ");"
+}
+
+IR.Function.GenerateFunctionHeader :: (context) {
+    name = Clone(context["name"])
+    accessorName = name
+
+    if ((context["overrideName"] == false) and (context["native"] != true)) {
+        accessorName = "_F_" + name
+    }
+
+    if name == "Main" {
+        accessorName = "main"
+    }
+
+    context["accessorName"] = accessorName
+
+    build = ""
+
+    if context["extern"] == true {
+        build += "extern "
+    }
+
+    if context["inline"] == true {
+        build += "inline "
+    }
+
+    build += IR.Function.GenerateReturn(context)
+
+    build += " " + accessorName + "("
+
+    parameters = IR.Function.GenerateParameters(context)
+    if parameters != nil {
+        build += parameters
+    }
+
+    build += ")"
+    return Clone(build)
+}
+
+IR.Function.ForwardDeclare :: (context) {
+    scopeName = Clone(context["scopeName"])
+
+    // context["block"] = nil
+
+    // if context["native"] != true {
+        sig = IR.Function.GenerateFunctionSignature(Clone(context["name"]) + "Sig", context)
+        IR.Writer.WriteLine(sig)
+        IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
+    // }
+
+    IR.Env.Scope.Add(scopeName, context, true)
+}
+
+IR.Read.Function :: (context) {
+    return Clone(context["accessorName"])
+}
+
+IR.CreateFunction :: (name, block, parameters) {
+    doesReturn = false
+    if block["containsReturnStatement"] == true {
+        doesReturn = true
+    }
+    return {"name"=Clone(name), "scopeName"=Clone(name), "parameters"=Clone(parameters), "block"=Clone(block), "return"=Clone(doesReturn), "overrideName"=false, "type"="Function"}
+}
+
+IR.CreateFunctionRaw :: (name, returnValue) {
+    return {"name"=Clone(name), "accessorName"=Clone(name), "scopeName"=Clone(name), "parameters"=nil, "block"=nil, "return"=Clone(returnValue), "overrideName"=true, "type"="Function"}
+}

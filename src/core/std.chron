@@ -1,0 +1,10 @@
+["return"]
+!ToString :: (obj) ?
+
+["return"]
+!TypeOf :: (obj) ?
+
+!Throw :: (message) ?
+
+["return"]
+!Clone :: (object) ?

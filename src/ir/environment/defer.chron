@@ -1,0 +1,46 @@
+IR.Env.Defer.List = {}
+IR.Env.Defer.Current = nil
+IR.Env.Defer.CurrentIndex = -1
+
+IR.Env.Defer.Create :: () {
+    IR.Env.Defer.CurrentIndex += 1
+    IR.Env.Defer.List[IR.Env.Defer.CurrentIndex] = {}
+    IR.Env.Defer.SetCurrent()
+}
+
+IR.Env.Defer.Pop :: () {
+    IR.Env.Defer.List[IR.Env.Defer.CurrentIndex] = nil
+    IR.Env.Defer.CurrentIndex -= 1
+    IR.Env.Defer.SetCurrent()
+}
+
+IR.Env.Defer.SetCurrent :: () {
+    IR.Env.Defer.Current = IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]
+}
+
+IR.Env.Defer.Push :: (item) {
+    if item["defer"] != nil {
+        index = Table.SizeOf(IR.Env.Defer.Current)
+        IR.Env.Defer.Current[index] = item
+    }
+} 
+
+IR.Env.Defer.Visit :: (context) {
+    invoke IR.Env.Defer.Visit context["defer"](context)
+}
+
+IR.Env.Defer.VisitCurrentScope :: (pop) {
+    foreach index, value in Table.Iter(IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]) {
+        IR.Env.Defer.Visit(value)
+    }
+
+    if pop == true {
+        // Clear defer scope
+        IR.Env.Defer.Pop()
+        IR.Env.Defer.Create()
+    }
+}
+
+IR.Env.Defer.VisitCurrentScope :: () {
+    IR.Env.Defer.VisitCurrentScope(true)
+}

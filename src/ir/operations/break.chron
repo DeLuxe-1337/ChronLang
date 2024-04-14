@@ -1,0 +1,9 @@
+IR.Write.Break :: (context) {
+    IR.Env.Defer.VisitCurrentScope()
+
+    IR.Writer.WriteLine("break;")
+}
+
+IR.CreateBreak :: () {
+    return {"type"="Break"}
+}

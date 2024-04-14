@@ -1,0 +1,50 @@
+Parser.Expression.Table :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "LBRACKET", nil) {
+        Parser.State.IncreaseIndex(state)
+
+        index = 0
+        parameter_index = 0
+        parameters = {}
+        while Parser.State.Get(state)["type"] != "RBRACKET" {
+            if index > 0 {
+                Parser.State.Expect(state, "COMMA", nil, "Expected ','")
+            }
+
+            expression = Parser.Expression(state)
+
+            if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
+                Parser.State.IncreaseIndex(state)
+                value = Parser.Expression(state)
+
+                parameters[index] = {"index"=expression, "value"=value}
+                index += 1
+            } else {
+                parameters[index] = {"index"=IR.CreateNumber(parameter_index), "value"=expression}
+                parameter_index += 1
+                index += 1
+            }
+        }
+
+        Parser.State.Expect(state, "RBRACKET", nil, "Expected '>' to end table")
+
+        return IR.CreateTable(parameters)
+    }
+
+    return nil
+}
+
+Parser.Expression.TableIndex :: (state) {
+    left = Parser.Expression.ComparsionEquality(state)
+
+    while Parser.State.Match(Parser.State.Get(state), "LBRACE", nil) {
+        Parser.State.IncreaseIndex(state)
+
+        right = Parser.Expression(state)
+
+        Parser.State.Expect(state, "RBRACE", nil, "Expected ']' to end index")
+
+        left = IR.CreateTableAccessor(left, right)
+    }
+
+    return left
+}

@@ -1,0 +1,8 @@
+Parser.Statement.Emit_C :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "EMIT.C", nil) {
+        Parser.State.Expect(state, "EMIT.C", nil, "Expected 'emit_c'")
+        text = Parser.State.ExpectRet(state, "RAWTEXT", nil, "Expected 'raw text' after emit c")["value"]
+        return IR.CreateRawText(text)
+    }
+    return nil
+}

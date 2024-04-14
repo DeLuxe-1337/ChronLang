@@ -1,0 +1,16 @@
+IR.Table.VariableCreatedRef :: (context, variable) {
+    foreach index, pair in Table.Iter(context["table"]) {
+        tableAccessor = IR.CreateTableAccessor(variable, pair["index"])
+        IR.TableAccessor.VariableWrite(tableAccessor, pair["value"])
+    }
+}
+
+IR.Read.Table :: (context) {
+    invokeCreate = IR.CreateInvoke(Functions.CreateTable, nil)
+
+    return IR.Read(invokeCreate)
+}
+
+IR.CreateTable :: (table) {
+    return {"type"="Table", "table"=table, "VariableCreatedRef"=IR.Table.VariableCreatedRef}
+}

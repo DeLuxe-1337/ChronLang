@@ -1,0 +1,30 @@
+IR.Write.Block :: (context) {
+    foreach index, value in Table.Iter(context) {
+        if TypeOf(index) == "number" {
+            IR.Write(value)
+        }
+    }
+}
+
+IR.CreateBlock :: () {
+    return {"type"="Block"}
+}
+
+IR.CreateBlockWithStatement :: (statement) {
+    return {"type"="Block", 0=Clone(statement)}
+}
+
+IR.Block.Append :: (block, statement) {
+    index = Table.SizeOf(block) - 1
+    block[index] = statement
+
+    if statement["type"] == "Return" {
+        block["containsReturnStatement"] = true
+    }
+
+    if statement["type"] == "Block" { // If there's a return statement in an if, for, while, etc statement
+        if statement["containsReturnStatement"] == true {
+            block["containsReturnStatement"] = true
+        }
+    }
+}

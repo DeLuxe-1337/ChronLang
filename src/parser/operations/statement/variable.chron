@@ -1,0 +1,11 @@
+Parser.Statement.Variable :: (state) {
+    if (Parser.State.Match(Parser.State.Peek(state, 1), "EQUAL", nil)) {
+        target = Parser.Expression(state)
+        Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
+
+        value = Parser.Expression(state)
+
+        return IR.CreateVariable(target, value)
+    }
+    return nil
+}

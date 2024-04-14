@@ -1,0 +1,17 @@
+IR.Write.ScopedBlock :: (context) {
+    IR.Writer.WriteLine("{")
+    IR.Env.Scope.Create()
+    IR.Env.Defer.Create()
+
+    IR.Write(context["block"])
+
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Scope.Pop()
+    IR.Env.Defer.Pop()
+
+    IR.Writer.WriteLine("}")
+}
+
+IR.CreateScopedBlock :: (block) {
+    return {"type"="ScopedBlock", "block"=Clone(block)}
+}

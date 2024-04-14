@@ -1,0 +1,37 @@
+IR.Write.ForEach :: (context) {
+    index = context["index"]
+    value = context["value"]
+    iterator = context["iterator"]
+    block = context["block"]
+
+    IR.Writer.WriteLine("{")
+    IR.Env.Defer.Create()
+
+    iter = IR.CreateTempVariable("ITER_OBJECT", iterator)
+    __iter__ = IR.CreateTempVariable("ITER", IR.CreateRawText(Types.GetRef + "(" + IR.Read(iter) + ")->data.ptr"))
+    __iter__["dataType"] = Types.Iterator
+
+    IR.Write(iter)
+    IR.Write(__iter__)
+
+    __i = IR.CreateTempVariable("i", IR.CreateRawText("0"))
+    __i["dataType"] = "int"
+
+    foreachIndex = IR.CreateVariable(IR.CreateEnvironmentAccessor(index), IR.CreateRawText(IR.Read(__iter__) + "->index(" + IR.Read(__iter__) + "->self, " + IR.Read(__i) + ")"))
+    foreachValue = IR.CreateVariable(IR.CreateEnvironmentAccessor(value), IR.CreateRawText(IR.Read(__iter__) + "->value(" + IR.Read(__iter__) + "->self, " + IR.Read(__i) + ")"))
+
+    newBlock = IR.CreateBlock()
+    IR.Block.Append(newBlock, foreachIndex)
+    IR.Block.Append(newBlock, foreachValue)
+    IR.Block.Append(newBlock, block)
+
+    IR.Write(IR.CreateFor(__i, IR.CreateRawText("0"), IR.CreateRawText(IR.Read(__iter__) + "->size"), newBlock))
+
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.Pop()
+    IR.Writer.WriteLine("}")
+}
+
+IR.CreateForEach :: (index, value, block, iterator) {
+    return {"type"="ForEach", "index"=index, "value"=value, "block"=block, "iterator"=iterator}
+}

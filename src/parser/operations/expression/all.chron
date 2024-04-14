@@ -1,0 +1,42 @@
+include parser.operations.expression.identifier
+include parser.operations.expression.string
+include parser.operations.expression.number
+include parser.operations.expression.boolean
+include parser.operations.expression.nil
+include parser.operations.expression.release
+include parser.operations.expression.math
+include parser.operations.expression.comparison
+include parser.operations.expression.unary
+include parser.operations.expression.table
+
+Parser.Expression.Primary :: (state) {
+    expr = Parser.Expression.String(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Number(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Boolean(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Nil(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Table(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Release(state)
+    if expr != nil { return expr } 
+
+    return nil
+}
+
+Parser.Expression :: (state) {
+    expr = Parser.Expression.TableIndex(state)
+    if expr != nil { return expr } 
+
+    return nil
+}

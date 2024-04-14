@@ -1,0 +1,14 @@
+include core.all
+include core.file.all
+include compiler.module
+
+Main :: {
+    module = Compiler.Module.Create("test")
+
+    Compiler.Module.CompileFromFile("test.chron")
+    Compiler.Module.WriteStatementsToFile(module)
+
+    PrintLn("End of program")
+
+    Memory.ReleaseAll()
+}

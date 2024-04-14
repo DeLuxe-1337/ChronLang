@@ -1,0 +1,12 @@
+IR.Read.Literals.Boolean :: (context) {
+    value = context["value"]
+
+    invokeParameters = {IR.CreateRawText(value)}
+    invokeCreateBoolean = IR.CreateInvoke(Functions.CreateBoolean, invokeParameters)
+
+    return IR.Read(invokeCreateBoolean)
+}
+
+IR.CreateBoolean :: (value) {
+    return {"value"=Clone(value), "literal"=true, "autoRelease"=true, "type"="Literals.Boolean"}
+}

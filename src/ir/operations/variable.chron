@@ -1,0 +1,71 @@
+IR.Variable.Globals = {}
+
+IR.Variable.VariableRead :: (context) {return nil}
+IR.Variable.VariableCreatedRef :: (context, variable) ?
+
+IR.Write.Variable :: (context) {
+    expression = context["expression"]
+    target = context["target"]
+    varName = context["name"]
+    accessorName = context["accessorName"]
+
+    if IR.Env.Scope.CurrentIndex == 0 {
+        Table.Insert(IR.Variable.Globals, context)
+        IR.Writer.WriteLine("void* " + accessorName + ";")
+        IR.Env.Scope.Add(varName, context, true)
+        return
+    }
+
+    if target["VariableWrite"] != nil {
+        invoke IR.Variable.VariableCreatedRef target["VariableWrite"](expression, context)
+    }
+
+    if IR.Env.Scope.GetFirst(varName) == nil {
+        IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
+        IR.Env.Scope.Add(varName, Clone(context), true)
+        IR.Env.Defer.Push(
+            IR.CreateDefer(
+                IR.CreateRelease(context)
+            )
+        )
+    } else {
+        IR.Writer.WriteLine(accessorName + " = " + IR.Read(expression) + ";")
+    }
+
+    if expression["VariableCreatedRef"] != nil {
+        invoke IR.Variable.VariableCreatedRef expression["VariableCreatedRef"](expression, context)
+    }
+}
+
+IR.Variable.WriteGlobals :: {
+    IR.Writer.WriteLine("void __InitializeGlobals() {")
+    IR.Env.Scope.Create()
+    foreach index, value in Table.Iter(IR.Variable.Globals) {
+        IR.Write(value)
+    }
+    IR.Env.Scope.Pop()
+    IR.Writer.WriteLine("}")
+
+    return "__InitializeGlobals();"
+}
+
+IR.Read.Variable :: (context) {
+    target = context["target"]
+
+    if target["VariableRead"] != nil {
+        return invoke IR.Variable.VariableRead target["VariableRead"](context["expression"])
+    }
+
+    return Clone(context["accessorName"])
+}
+
+IR.CreateVariable :: (target, expression) {
+    name = "ERROR_NAME_NOT_VALID"
+
+    if target["type"] == "EnvironmentAccessor" {
+        name = target["value"]
+    }
+
+    newName = "_V_" + name
+    return {"type"="Variable", "accessorName"=Clone(newName), "name"=name, "target"=Clone(target), "expression"=Clone(expression)}
+}

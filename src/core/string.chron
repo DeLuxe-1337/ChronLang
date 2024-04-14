@@ -1,0 +1,26 @@
+["return", "name"="String.Iter"]
+!StringIter :: (str) ?
+
+["return", "name"="String.Contains"]
+!StringContains :: (source, target) ?
+
+["return", "name"="String.Index"]
+!StringIndex :: (source, index) ?
+
+["return", "name"="String.IsAlpha"]
+!StringIsAlpha :: (source) ?
+
+["return", "name"="String.IsAlphaNumeric"]
+!StringIsAlphaNumeric :: (source) ?
+
+["return", "name"="String.IsNumeric"]
+!StringIsNumeric :: (source) ?
+
+["return", "name"="String.IsWhitespace"]
+!StringIsWhitespace :: (source) ?
+
+["return", "name"="String.SizeOf"]
+!StringLength :: (source) ?
+
+["return", "name"="String.Replace"]
+!StringReplace :: (source, sub, replace) ?

@@ -1,0 +1,102 @@
+Parser.State.Create :: (tokens) {
+    return {"tokens"=tokens, "size"=Table.SizeOf(tokens), "index"=0, "EOT"=false}
+}
+
+Parser.State.Error :: (state, errorMessage) {
+    state["EOT"] = true
+
+    Throw(errorMessage)
+}
+
+Parser.State.Get :: (state) {
+    if state["EOT"] == true {
+        return nil
+    }
+
+    if (state["size"]) <= (state["index"]) {
+        state["EOT"] = true
+        return nil
+    }
+
+    return Clone(state["tokens"][state["index"]])
+}
+
+Parser.State.EOT :: (state) {
+    return Clone(state["EOT"])
+}
+
+Parser.State.IncreaseIndex :: (state) {
+    state["index"] += 1
+}
+
+Parser.State.Next :: (state) {
+    Parser.State.IncreaseIndex(state)
+    return Parser.State.Get(state)
+}
+
+Parser.State.GetAndIncrease :: (state) {
+    ret = Parser.State.Get(state)
+    Parser.State.IncreaseIndex(state)
+    return Clone(ret)
+}
+
+Parser.State.Peek :: (state, amount) {
+    return Clone(state["tokens"][(state["index"] + amount)])
+}
+
+Parser.State.Expect :: (state, type, value, errorMessage) {
+    if Parser.State.ExpectRet(state, type, value, errorMessage) != nil {
+        return true
+    }
+
+    return false
+}
+
+Parser.State.ExpectRet :: (state, type, value, errorMessage) {
+    token = Parser.State.GetAndIncrease(state)
+
+    if Parser.State.Match(token, type, value) == false {
+        Parser.State.Error(state, ("[Parse Error] " + errorMessage + "; (got " + ToString(token["type"]) + " at line " + ToString(token["line"]) + ")"))
+        return nil
+    }
+
+    return Clone(token)
+}
+
+Parser.State.Previous :: (state) {
+    return Clone(state["tokens"][(state["index"] - 1)])
+}
+
+Parser.State.MatchAny :: (state, tokens) {
+    foreach index, value in Table.Iter(tokens) {
+        if Parser.State.Match(Parser.State.Get(state), value, nil) {
+            Parser.State.IncreaseIndex(state)
+            return true
+        }
+    }
+
+    return false
+}
+
+Parser.State.Match :: (token, type, value) {
+    if token == nil {
+        return false
+    }
+
+    isTypeMatched = false
+    isValueMatched = false
+
+    if (type != nil) and (token["type"] == type) {
+        isTypeMatched = true
+    }
+
+    if (value != nil) and (token["value"] == value) {
+        isValueMatched = true
+    }
+
+    if (type != nil) and (value != nil) {
+        return isTypeMatched and isValueMatched
+    }
+
+    return isTypeMatched or isValueMatched
+}
