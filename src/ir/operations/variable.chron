@@ -5,6 +5,7 @@ IR.Variable.VariableCreatedRef :: (context, variable) ?
 
 IR.Write.Variable :: (context) {
     expression = context["expression"]
+    target = context["target"]
     varName = context["name"]
     accessorName = context["accessorName"]
 
@@ -15,9 +16,9 @@ IR.Write.Variable :: (context) {
         return
     }
 
-    // if context["VariableWrite"] != nil {
-    //     invoke IR.Variable.VariableCreatedRef context["VariableWrite"](expression, context)
-    // }
+    if target["VariableWrite"] != nil {
+        invoke IR.Variable.VariableCreatedRef target["VariableWrite"](expression, context)
+    }
 
     if IR.Env.Scope.GetFirst(varName) == nil {
         IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
@@ -49,14 +50,22 @@ IR.Variable.WriteGlobals :: {
 }
 
 IR.Read.Variable :: (context) {
-    // if context["VariableRead"] != nil {
-    //     return invoke IR.Variable.VariableRead context["VariableRead"](context["expression"])
-    // }
+    target = context["target"]
+
+    if target["VariableRead"] != nil {
+        return invoke IR.Variable.VariableRead target["VariableRead"](context["expression"])
+    }
 
     return Clone(context["accessorName"])
 }
 
-IR.CreateVariable :: (name, expression) {
+IR.CreateVariable :: (target, expression) {
+    name = "ERROR_NAME_NOT_VALID"
+
+    if target["type"] == "EnvironmentAccessor" {
+        name = target["value"]
+    }
+
     newName = "_V_" + name
-    return <"type"="Variable", "accessorName"=Clone(newName), "name"=Clone(name), "expression"=Clone(expression)>
+    return <"type"="Variable", "accessorName"=Clone(newName), "name"=name, "target"=Clone(target), "expression"=Clone(expression)>
 }

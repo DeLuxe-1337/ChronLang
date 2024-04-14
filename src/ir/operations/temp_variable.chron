@@ -1,14 +1,18 @@
 IR.Temp.Count = -1
 
 IR.Write.TempVariable :: (context) {
-    expression = Clone(IR.Read(Clone(context["child"])))
+    expression = context["child"]
     varName = Clone(context["name"])
 
     if context["written"] != true {
-        IR.Writer.WriteLine("void* " + varName + " = " + expression + ";")
+        IR.Writer.WriteLine("void* " + varName + " = " + IR.Read(expression) + ";")
         context["written"] = true
     } else {
-        IR.Writer.WriteLine(varName + " = " + expression + ";")
+        IR.Writer.WriteLine(varName + " = " + IR.Read(expression) + ";")
+    }
+
+    if expression["VariableCreatedRef"] != nil {
+        invoke IR.Variable.VariableCreatedRef expression["VariableCreatedRef"](expression, context)
     }
 }
 
