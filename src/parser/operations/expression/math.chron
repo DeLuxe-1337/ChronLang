@@ -1,5 +1,5 @@
 Parser.Expression.Factor :: (state) {
-    if Parser.State.MatchAny(state, <"LPAREN">) {
+    if Parser.State.MatchAny(state, {"LPAREN"}) {
         result = Parser.Expression(state)
 
         Parser.State.Expect(state, "RPAREN", nil, "Expected ')' after '('")
@@ -13,7 +13,7 @@ Parser.Expression.Factor :: (state) {
 Parser.Expression.Term :: (state) {
     left = Parser.Expression.Factor(state)
 
-    while Parser.State.MatchAny(state, <"STAR", "FSLASH", "PERCENT">) {
+    while Parser.State.MatchAny(state, {"STAR", "FSLASH", "PERCENT"}) {
         operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.Factor(state)
 
@@ -34,7 +34,7 @@ Parser.Expression.Term :: (state) {
 Parser.Expression.Summand :: (state) {
     left = Parser.Expression.Term(state)
 
-    while Parser.State.MatchAny(state, <"PLUS", "MINUS">) {
+    while Parser.State.MatchAny(state, {"PLUS", "MINUS"}) {
         operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.Term(state)
 

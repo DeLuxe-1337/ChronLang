@@ -15,5 +15,5 @@ IR.Write.If :: (context) {
 }
 
 IR.CreateIf :: (expression, trueBlock, elseStatement) {
-    return <"type"="If", "expression"=Clone(expression), "trueBlock"=Clone(IR.CreateScopedBlock(trueBlock)), "elseStatement"=Clone(elseStatement)>
+    return {"type"="If", "expression"=Clone(expression), "trueBlock"=Clone(IR.CreateScopedBlock(trueBlock)), "elseStatement"=Clone(elseStatement)}
 }

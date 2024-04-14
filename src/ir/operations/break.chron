@@ -5,5 +5,5 @@ IR.Write.Break :: (context) {
 }
 
 IR.CreateBreak :: () {
-    return <"type"="Break">
+    return {"type"="Break"}
 }

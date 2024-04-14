@@ -1,10 +1,10 @@
 IR.Read.Math.Mod :: (context) {
-    invokeParameters = <context["left"], context["right"]>
+    invokeParameters = {context["left"], context["right"]}
     invokeCreateAdd = IR.CreateInvoke(Functions.ObjectModulus, invokeParameters)
 
     return IR.Read(invokeCreateAdd)
 }
 
 IR.CreateMod :: (left, right) {
-    return <"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Mod">
+    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Mod"}
 }

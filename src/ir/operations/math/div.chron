@@ -1,10 +1,10 @@
 IR.Read.Math.Div :: (context) {
-    invokeParameters = <context["left"], context["right"]>
+    invokeParameters = {context["left"], context["right"]}
     invokeCreate = IR.CreateInvoke(Functions.ObjectDiv, invokeParameters)
 
     return IR.Read(invokeCreate)
 }
 
 IR.CreateDiv :: (left, right) {
-    return <"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Div">
+    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Div"}
 }

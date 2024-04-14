@@ -135,9 +135,9 @@ IR.CreateFunction :: (name, block, parameters) {
     if block["containsReturnStatement"] == true {
         doesReturn = true
     }
-    return <"name"=Clone(name), "scopeName"=Clone(name), "parameters"=Clone(parameters), "block"=Clone(block), "return"=Clone(doesReturn), "overrideName"=false, "type"="Function">
+    return {"name"=Clone(name), "scopeName"=Clone(name), "parameters"=Clone(parameters), "block"=Clone(block), "return"=Clone(doesReturn), "overrideName"=false, "type"="Function"}
 }
 
 IR.CreateFunctionRaw :: (name, returnValue) {
-    return <"name"=Clone(name), "accessorName"=Clone(name), "scopeName"=Clone(name), "parameters"=nil, "block"=nil, "return"=Clone(returnValue), "overrideName"=true, "type"="Function">
+    return {"name"=Clone(name), "accessorName"=Clone(name), "scopeName"=Clone(name), "parameters"=nil, "block"=nil, "return"=Clone(returnValue), "overrideName"=true, "type"="Function"}
 }

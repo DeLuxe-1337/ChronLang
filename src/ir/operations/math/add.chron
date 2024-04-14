@@ -1,10 +1,10 @@
 IR.Read.Math.Add :: (context) {
-    invokeParameters = <context["left"], context["right"]>
+    invokeParameters = {context["left"], context["right"]}
     invokeCreateAdd = IR.CreateInvoke(Functions.ObjectAdd, invokeParameters)
 
     return IR.Read(invokeCreateAdd)
 }
 
 IR.CreateAdd :: (left, right) {
-    return <"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Add">
+    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Add"}
 }

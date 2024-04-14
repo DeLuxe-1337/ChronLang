@@ -1,5 +1,5 @@
 IR.Write.Release :: (context) {
-    invokeParameters = <context["child"]>
+    invokeParameters = {context["child"]}
     invokeRelease = IR.CreateInvoke(Functions.MemoryRelease, invokeParameters)
     IR.Write(invokeRelease)
 }
@@ -14,11 +14,11 @@ IR.Read.Release :: (context) {
 }
 
 IR.Defer.Release :: (context) {
-    invokeParameters = <context["temp"]>
+    invokeParameters = {context["temp"]}
     invokeRelease = IR.CreateInvoke(Functions.MemoryRelease, invokeParameters)
     IR.Write(invokeRelease)
 }
 
 IR.CreateRelease :: (child) {
-    return <"type"="Release", "child"=Clone(child), "defer"=IR.Defer.Release>
+    return {"type"="Release", "child"=Clone(child), "defer"=IR.Defer.Release}
 }

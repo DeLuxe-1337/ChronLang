@@ -1,4 +1,4 @@
-IR.Variable.Globals = <>
+IR.Variable.Globals = {}
 
 IR.Variable.VariableRead :: (context) {return nil}
 IR.Variable.VariableCreatedRef :: (context, variable) ?
@@ -67,5 +67,5 @@ IR.CreateVariable :: (target, expression) {
     }
 
     newName = "_V_" + name
-    return <"type"="Variable", "accessorName"=Clone(newName), "name"=name, "target"=Clone(target), "expression"=Clone(expression)>
+    return {"type"="Variable", "accessorName"=Clone(newName), "name"=name, "target"=Clone(target), "expression"=Clone(expression)}
 }

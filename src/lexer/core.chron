@@ -1,7 +1,7 @@
 include lexer.token
 include lexer.state
 
-Lexer.SymbolMap = <
+Lexer.SymbolMap = {
     "("="LPAREN", ")"="RPAREN", 
     "{"="LBRACKET", "}"="RBRACKET", 
     "["="LBRACE", "]"="RBRACE", 
@@ -33,7 +33,7 @@ Lexer.SymbolMap = <
     "in"="IN",
     "foreach"="FOREACH",
     "emit_c" = "EMIT.C"
->
+}
 
 Lexer.GetToken :: (state) {
     while ((String.IsWhitespace(Lexer.State.Get(state))) or (Lexer.State.Get(state) == "\n")) and (Lexer.State.EOF(state) == false) {
@@ -136,7 +136,7 @@ Lexer.GetToken :: (state) {
 }
 
 Lexer.GetAllTokens :: (state) {
-    tokens = <>
+    tokens = {}
 
     while Lexer.State.EOF(state) == false {
         result = Lexer.GetToken(state)

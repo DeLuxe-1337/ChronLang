@@ -1,10 +1,10 @@
-IR.Env.Defer.List = <>
+IR.Env.Defer.List = {}
 IR.Env.Defer.Current = nil
 IR.Env.Defer.CurrentIndex = -1
 
 IR.Env.Defer.Create :: () {
     IR.Env.Defer.CurrentIndex += 1
-    IR.Env.Defer.List[IR.Env.Defer.CurrentIndex] = <>
+    IR.Env.Defer.List[IR.Env.Defer.CurrentIndex] = {}
     IR.Env.Defer.SetCurrent()
 }
 

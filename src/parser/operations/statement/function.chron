@@ -13,7 +13,7 @@ Parser.Statement.Function :: (state) {
 
         Parser.State.Expect(state, "CONSTANT", nil, "Expected '::'")
 
-        parameters = <>
+        parameters = {}
         parameter_index = 0
         if Parser.State.Match(Parser.State.Get(state), "LPAREN", nil) {
             Parser.State.Expect(state, "LPAREN", nil, "Expected '('")

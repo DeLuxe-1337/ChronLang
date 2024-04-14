@@ -7,11 +7,11 @@ IR.Write.Block :: (context) {
 }
 
 IR.CreateBlock :: () {
-    return <"type"="Block">
+    return {"type"="Block"}
 }
 
 IR.CreateBlockWithStatement :: (statement) {
-    return <"type"="Block", 0=Clone(statement)>
+    return {"type"="Block", 0=Clone(statement)}
 }
 
 IR.Block.Append :: (block, statement) {

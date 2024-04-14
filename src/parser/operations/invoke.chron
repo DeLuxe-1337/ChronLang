@@ -1,5 +1,5 @@
 Parser.FinishInvoke :: (state, callee) {
-    parameters = <>
+    parameters = {}
     parameter_index = 0
     while Parser.State.Get(state)["type"] != "RPAREN" {
         if parameter_index > 0 {
@@ -25,7 +25,7 @@ Parser.FinishInvoke :: (state, callee) {
 Parser.Invoke :: (state) {
     expr = Parser.Expression.Primary(state)
 
-    while Parser.State.MatchAny(state, <"LPAREN">) {
+    while Parser.State.MatchAny(state, {"LPAREN"}) {
         expr = Parser.FinishInvoke(state, expr)
     }
     

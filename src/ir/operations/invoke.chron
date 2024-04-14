@@ -47,7 +47,7 @@ IR.Read.Invoke :: (context) {
                     build += ToString(IR.Read(value))
                 }
             }
-            
+
             if index != (Table.SizeOf(parameters) - 1) {
                 build += ","
             }
@@ -60,5 +60,5 @@ IR.Read.Invoke :: (context) {
 }
 
 IR.CreateInvoke :: (callee, parameters) {
-    return <"target"=Clone(callee), "parameters"=Clone(parameters), "autoRelease"=true, "conditionalAutoRelease"=IR.Invoke.ConditionalAutoRelease, "type"="Invoke">
+    return {"target"=Clone(callee), "parameters"=Clone(parameters), "autoRelease"=true, "conditionalAutoRelease"=IR.Invoke.ConditionalAutoRelease, "type"="Invoke"}
 }

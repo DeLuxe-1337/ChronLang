@@ -14,5 +14,5 @@ IR.Write.Return :: (context) {
 }
 
 IR.CreateReturn :: (child) {
-    return <"type"="Return", "expression"=Clone(child)>
+    return {"type"="Return", "expression"=Clone(child)}
 }

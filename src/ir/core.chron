@@ -1,4 +1,4 @@
-WriteMap = <
+WriteMap = {
     "Function"=IR.Write.Function, 
     "Block"=IR.Write.Block, 
     "Invoke"=IR.Write.Invoke, 
@@ -17,8 +17,8 @@ WriteMap = <
     "ForEach"=IR.Write.ForEach,
     "Variable"=IR.Write.Variable,
     "Literals.RawText"=IR.Write.Literals.RawText
->
-ReadMap = <
+}
+ReadMap = {
     "Literals.String"=IR.Read.Literals.String, 
     "Literals.Number"=IR.Read.Literals.Number, 
     "Literals.Boolean"=IR.Read.Literals.Boolean,
@@ -46,7 +46,7 @@ ReadMap = <
     "Comparison.And"=IR.Read.Comparison.And,
     "Comparison.Not"=IR.Read.Comparison.Not,
     "Variable"=IR.Read.Variable
->
+}
 
 IR.Write :: (node) {
     type = node["type"]

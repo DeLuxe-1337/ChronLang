@@ -3,7 +3,7 @@ Parser.Statement.Modifier :: (state) {
         Parser.State.IncreaseIndex(state)
 
         modifier_index = 0
-        modifiers = <>
+        modifiers = {}
 
         while !Parser.State.Match(Parser.State.Get(state), "RBRACE", nil) {
             if modifier_index > 0 {
@@ -27,5 +27,5 @@ Parser.Statement.Modifier :: (state) {
         return Clone(modifiers)
     }
 
-    return <>
+    return {}
 }

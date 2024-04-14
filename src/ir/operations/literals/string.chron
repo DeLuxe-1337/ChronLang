@@ -1,12 +1,12 @@
 IR.Read.Literals.String :: (context) {
     value = context["value"]
 
-    invokeParameters = <IR.CreateRawText("\"" + value + "\"")>
+    invokeParameters = {IR.CreateRawText("\"" + value + "\"")}
     invokeCreateString = IR.CreateInvoke(Functions.CreateString, invokeParameters)
 
     return IR.Read(invokeCreateString)
 }
 
 IR.CreateString :: (value) {
-    return <"value"=Clone(value), "autoRelease"=true, "literal"=true, "type"="Literals.String">
+    return {"value"=Clone(value), "autoRelease"=true, "literal"=true, "type"="Literals.String"}
 }

@@ -33,5 +33,5 @@ IR.Write.ForEach :: (context) {
 }
 
 IR.CreateForEach :: (index, value, block, iterator) {
-    return <"type"="ForEach", "index"=index, "value"=value, "block"=block, "iterator"=iterator>
+    return {"type"="ForEach", "index"=index, "value"=value, "block"=block, "iterator"=iterator}
 }

@@ -1,10 +1,10 @@
 IR.Read.Comparison.And :: (context) {
-    invokeParameters = <context["left"], context["right"]>
+    invokeParameters = {context["left"], context["right"]}
     invokeCreate = IR.CreateInvoke(Functions.ObjectCompareAnd, invokeParameters)
 
     return IR.Read(invokeCreate)
 }
 
 IR.CreateCompareAnd :: (left, right) {
-    return <"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Comparison.And">
+    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Comparison.And"}
 }

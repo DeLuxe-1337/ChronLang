@@ -1,10 +1,10 @@
 IR.Read.Math.Sub :: (context) {
-    invokeParameters = <context["left"], context["right"]>
+    invokeParameters = {context["left"], context["right"]}
     invokeCreate = IR.CreateInvoke(Functions.ObjectSub, invokeParameters)
 
     return IR.Read(invokeCreate)
 }
 
 IR.CreateSub :: (left, right) {
-    return <"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Sub">
+    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Sub"}
 }

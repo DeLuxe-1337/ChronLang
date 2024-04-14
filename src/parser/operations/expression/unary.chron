@@ -1,5 +1,5 @@
 Parser.Expression.Unary :: (state) {
-    if (Parser.State.MatchAny(state, <"EXCLAMATION">)) {
+    if (Parser.State.MatchAny(state, {"EXCLAMATION"})) {
         operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.Unary(state)
         

@@ -1,5 +1,5 @@
 Parser.State.Create :: (tokens) {
-    return <"tokens"=tokens, "size"=Table.SizeOf(tokens), "index"=0, "EOT"=false>
+    return {"tokens"=tokens, "size"=Table.SizeOf(tokens), "index"=0, "EOT"=false}
 }
 
 Parser.State.Error :: (state, errorMessage) {

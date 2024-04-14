@@ -2,9 +2,9 @@ include lexer.core
 include parser.core
 include ir.all
 
-Compiler.Module.Statements = <>
+Compiler.Module.Statements = {}
 Compiler.Module.StatementCount = 0
-Compiler.Module.Compiled = <>
+Compiler.Module.Compiled = {}
 
 Compiler.Module.Create :: (name) {
     return <"name"=name>

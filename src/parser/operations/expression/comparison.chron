@@ -2,7 +2,7 @@ Parser.Expression.ComparsionEquality :: (state) {
     left = Parser.Expression.Summand(state)
     oldState = Clone(state["index"])
 
-    while (Parser.State.MatchAny(state, <"EQUAL", "EXCLAMATION", "GREATER", "LESS">)) {
+    while (Parser.State.MatchAny(state, {"EQUAL", "EXCLAMATION", "GREATER", "LESS"})) {
         operator = Parser.State.Previous(state)["type"]
 
         if Parser.State.Get(state)["type"] != "EQUAL" {
@@ -55,7 +55,7 @@ Parser.Expression.ComparsionEquality :: (state) {
 Parser.Expression.ComparisonLogical :: (state) {
     left = Parser.Expression.ComparsionEquality(state)
 
-    while (Parser.State.MatchAny(state, <"OR", "AND">)) {
+    while (Parser.State.MatchAny(state, {"OR", "AND"})) {
         operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.ComparsionEquality(state)
 

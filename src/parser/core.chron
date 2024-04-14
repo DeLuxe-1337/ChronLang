@@ -2,7 +2,7 @@ include parser.state
 include parser.operations.all
 
 Parser.ParseAllStatements :: (state) {
-    statements = <>
+    statements = {}
 
     while Parser.State.EOT(state) == false {
         result = Parser.Statement(state)

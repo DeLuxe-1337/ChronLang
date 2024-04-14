@@ -1,10 +1,10 @@
-IR.Env.Scope.List = <>
+IR.Env.Scope.List = {}
 IR.Env.Scope.Current = nil
 IR.Env.Scope.CurrentIndex = -1
 
 IR.Env.Scope.Create :: () {
     IR.Env.Scope.CurrentIndex += 1
-    IR.Env.Scope.List[IR.Env.Scope.CurrentIndex] = <>
+    IR.Env.Scope.List[IR.Env.Scope.CurrentIndex] = {}
     IR.Env.Scope.SetCurrent()
 }
 
@@ -24,11 +24,11 @@ IR.Env.Scope.Push :: (scopeItem) {
 } 
 
 IR.Env.Scope.CreateItem :: (name, data) {
-    return <"name"=Clone(name), "value"=Clone(data), "type"="Scope">
+    return {"name"=Clone(name), "value"=Clone(data), "type"="Scope"}
 }
 
 IR.Env.Scope.Get :: (name) {
-    result = <>
+    result = {}
     i = 0
     foreach scopeIndex, scope in Table.Iter(IR.Env.Scope.List) {
         if TypeOf(scope) == "table" {

@@ -12,5 +12,5 @@ IR.Read.Table :: (context) {
 }
 
 IR.CreateTable :: (table) {
-    return <"type"="Table", "table"=table, "VariableCreatedRef"=IR.Table.VariableCreatedRef>
+    return {"type"="Table", "table"=table, "VariableCreatedRef"=IR.Table.VariableCreatedRef}
 }

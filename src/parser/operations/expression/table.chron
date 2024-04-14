@@ -4,7 +4,7 @@ Parser.Expression.Table :: (state) {
 
         index = 0
         parameter_index = 0
-        parameters = <>
+        parameters = {}
         while Parser.State.Get(state)["type"] != "RBRACKET" {
             if index > 0 {
                 Parser.State.Expect(state, "COMMA", nil, "Expected ','")
@@ -16,10 +16,10 @@ Parser.Expression.Table :: (state) {
                 Parser.State.IncreaseIndex(state)
                 value = Parser.Expression(state)
 
-                parameters[index] = <"index"=expression, "value"=value>
+                parameters[index] = {"index"=expression, "value"=value}
                 index += 1
             } else {
-                parameters[index] = <"index"=IR.CreateNumber(parameter_index), "value"=expression>
+                parameters[index] = {"index"=IR.CreateNumber(parameter_index), "value"=expression}
                 parameter_index += 1
                 index += 1
             }
