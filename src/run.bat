@@ -1,2 +1,2 @@
-cls && chroncompiler
+cls && chron
 pause

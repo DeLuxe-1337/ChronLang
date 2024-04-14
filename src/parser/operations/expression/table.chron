@@ -32,3 +32,19 @@ Parser.Expression.Table :: (state) {
 
     return nil
 }
+
+Parser.Expression.TableIndex :: (state) {
+    left = Parser.Expression.ComparsionEquality(state)
+
+    while Parser.State.Match(Parser.State.Get(state), "LBRACE", nil) {
+        Parser.State.IncreaseIndex(state)
+
+        right = Parser.Expression(state)
+
+        Parser.State.Expect(state, "RBRACE", nil, "Expected ']' to end index")
+
+        left = IR.CreateTableAccessor(left, right)
+    }
+
+    return left
+}

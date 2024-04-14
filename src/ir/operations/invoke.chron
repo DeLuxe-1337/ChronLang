@@ -28,19 +28,26 @@ IR.Read.Invoke :: (context) {
 
     if parameters != nil {
         foreach index, value in Table.Iter(parameters) {
-            if value["autoRelease"] == true {
-                if value["conditionalAutoRelease"] != nil {
-                    if invoke IR.Invoke.ConditionalAutoRelease value["conditionalAutoRelease"](value) {
-                        build += ToString(IR.Read(IR.CreateRelease(value)))
+            if value["type"] == "Table" {
+                tableTemp = IR.CreateTempVariable("TABLE_CALL_T", value)
+                IR.Write(tableTemp)
+                build += IR.Read(tableTemp)
+            } else {
+                if value["autoRelease"] == true {
+                    if value["conditionalAutoRelease"] != nil {
+                        if invoke IR.Invoke.ConditionalAutoRelease value["conditionalAutoRelease"](value) {
+                            build += ToString(IR.Read(IR.CreateRelease(value)))
+                        } else {
+                            build += ToString(IR.Read(value))
+                        }
                     } else {
-                        build += ToString(IR.Read(value))
+                        build += ToString(IR.Read(IR.CreateRelease(value)))
                     }
                 } else {
-                    build += ToString(IR.Read(IR.CreateRelease(value)))
+                    build += ToString(IR.Read(value))
                 }
-            } else {
-                build += ToString(IR.Read(value))
             }
+            
             if index != (Table.SizeOf(parameters) - 1) {
                 build += ","
             }

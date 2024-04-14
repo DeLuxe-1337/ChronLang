@@ -28,14 +28,14 @@ Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.Table(state)
     if expr != nil { return expr } 
 
+    expr = Parser.Expression.Release(state)
+    if expr != nil { return expr } 
+
     return nil
 }
 
 Parser.Expression :: (state) {
-    expr = Parser.Expression.ComparisonLogical(state)
-    if expr != nil { return expr } 
-
-    expr = Parser.Expression.Release(state)
+    expr = Parser.Expression.TableIndex(state)
     if expr != nil { return expr } 
 
     return nil
