@@ -14,7 +14,8 @@
 
 - **Dynamically Typed**
 - **Natively Compiled**
-- **Manual Memory Management**
+
+[Legacy Branch](https://github.com/DeLuxe-1337/ChronLang/tree/legacy)  
 
 ## Documentation
 
