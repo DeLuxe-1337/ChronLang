@@ -99,7 +99,20 @@ Lexer.GetToken :: (state) {
 
         Lexer.State.IncreaseIndex(state)
 
-        while Lexer.State.Get(state) != "\"" and (Lexer.State.EOF(state) == false) {
+        while (Lexer.State.EOF(state) == false) {
+            if (Lexer.State.Get(state) == "\\") {
+                string += Lexer.State.Get(state)
+                Lexer.State.IncreaseIndex(state)
+
+                string += Lexer.State.Get(state)
+                Lexer.State.IncreaseIndex(state)
+
+                continue
+            }
+            if (Lexer.State.Get(state) == "\"") {
+                break
+            }
+
             string += Lexer.State.Get(state)
             Lexer.State.IncreaseIndex(state)
         }
