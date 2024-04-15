@@ -3,7 +3,12 @@ Parser.Statement.Block :: (state) {
         Parser.State.Expect(state, "LBRACKET", nil, "Expected '{'")
         block = IR.CreateBlock()
         while Parser.State.Get(state)["type"] != "RBRACKET" {
-            IR.Block.Append(block, Parser.Statement(state))
+            stmt = Parser.Statement(state)
+            if stmt == nil {
+                Parser.State.IncreaseIndex(state)
+                continue
+            }
+            IR.Block.Append(block, stmt)
         }
         Parser.State.Expect(state, "RBRACKET", nil, "Expected '}'")
         return Clone(block)
