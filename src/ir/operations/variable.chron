@@ -17,7 +17,13 @@ IR.Write.Variable :: (context) {
     }
 
     if target["VariableWrite"] != nil {
-        invoke IR.Variable.VariableCreatedRef target["VariableWrite"](expression, context)
+        invoke IR.Variable.VariableCreatedRef target["VariableWrite"](target, expression)
+
+        if expression["VariableCreatedRef"] != nil {
+            invoke IR.Variable.VariableCreatedRef expression["VariableCreatedRef"](expression, context)
+        }
+        
+        return
     }
 
     if IR.Env.Scope.GetFirst(varName) == nil {

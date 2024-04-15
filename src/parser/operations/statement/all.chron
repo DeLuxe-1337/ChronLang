@@ -51,14 +51,14 @@ Parser.Statement :: (state) {
     stmt = Parser.Statement.ForEach(state)
     if stmt != nil { return stmt }
 
-    stmt = Parser.Statement.Variable(state)
-    if stmt != nil { return stmt }
-
     stmt = Parser.Statement.Emit_C(state)
     if stmt != nil { return stmt }
 
-    stmt = Parser.Expression(state)
+    stmt = Parser.Statement.Variable(state)
     if stmt != nil { return stmt }
+
+    PrintLn("Statement nil")
+    PrintLn(Parser.State.Get(state))
 
     return nil
 }
