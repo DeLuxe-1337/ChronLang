@@ -1,21 +1,31 @@
-Parser.Expression.Factor :: (state) {
-    if Parser.State.MatchAny(state, {"LPAREN"}) {
-        result = Parser.Expression(state)
-
-        Parser.State.Expect(state, "RPAREN", nil, "Expected ')' after '('")
-        
-        return Clone(result)
-    }
-
-    return Parser.Expression.Unary(state)
-}
-
 Parser.Expression.Term :: (state) {
-    left = Parser.Expression.Factor(state)
+    left = Parser.Expression.Unary(state)
 
     while Parser.State.MatchAny(state, {"STAR", "FSLASH", "PERCENT"}) {
         operator = Parser.State.Previous(state)["type"]
-        right = Parser.Expression.Factor(state)
+        
+        if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
+            Parser.State.IncreaseIndex(state)
+            right = Parser.Expression.Term(state)
+
+            if operator == "PERCENT" {
+                right = IR.CreateMod(left, right)
+                left = IR.CreateVariable(left, right)
+                continue
+            }
+
+            if operator == "STAR" {
+                right = IR.CreateMult(left, right)
+                left = IR.CreateVariable(left, right)
+                continue
+            } else {
+                right = IR.CreateDiv(left, right)
+                left = IR.CreateVariable(left, right)
+                continue
+            }
+        }
+
+        right = Parser.Expression.Term(state)
 
         if operator == "PERCENT" {
             left = IR.CreateMod(left, right)
@@ -36,12 +46,32 @@ Parser.Expression.Summand :: (state) {
 
     while Parser.State.MatchAny(state, {"PLUS", "MINUS"}) {
         operator = Parser.State.Previous(state)["type"]
+
+        if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
+            Parser.State.IncreaseIndex(state)
+            right = Parser.Expression.Term(state)
+
+            if operator == "PLUS" {
+                right = IR.CreateAdd(left, right)
+                left = IR.CreateVariable(left, right)
+                continue
+            }
+
+            if operator == "MINUS" {
+                right = IR.CreateSub(left, right)
+                left = IR.CreateVariable(left, right)
+                continue
+            }
+        }
+
         right = Parser.Expression.Term(state)
 
         if operator == "PLUS" {
             left = IR.CreateAdd(left, right)
+            continue
         } else {
             left = IR.CreateSub(left, right)
+            continue
         }
     }
 

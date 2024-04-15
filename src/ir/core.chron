@@ -45,7 +45,8 @@ ReadMap = {
     "Comparison.Or"=IR.Read.Comparison.Or,
     "Comparison.And"=IR.Read.Comparison.And,
     "Comparison.Not"=IR.Read.Comparison.Not,
-    "Variable"=IR.Read.Variable
+    "Variable"=IR.Read.Variable,
+    "Grouping"=IR.Read.Grouping
 }
 
 IR.Write :: (node) {

@@ -1,0 +1,7 @@
+IR.Read.Grouping :: (context) {
+    return IR.Read(context["expression"])
+}
+
+IR.CreateGrouping :: (expr) {
+    return {"type"="Grouping", "expression"=expr}
+}

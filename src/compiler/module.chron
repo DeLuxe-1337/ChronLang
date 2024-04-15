@@ -7,7 +7,7 @@ Compiler.Module.StatementCount = 0
 Compiler.Module.Compiled = {}
 
 Compiler.Module.Create :: (name) {
-    return <"name"=name>
+    return {"name"=name}
 }
 
 Compiler.Module.CompileFromFile :: (file) {

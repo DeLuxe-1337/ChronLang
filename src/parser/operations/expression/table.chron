@@ -34,7 +34,7 @@ Parser.Expression.Table :: (state) {
 }
 
 Parser.Expression.TableIndex :: (state) {
-    left = Parser.Expression.ComparsionEquality(state)
+    left = Parser.Expression.Primary(state)
 
     while Parser.State.Match(Parser.State.Get(state), "LBRACE", nil) {
         Parser.State.IncreaseIndex(state)

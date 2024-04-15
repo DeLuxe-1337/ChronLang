@@ -16,7 +16,9 @@ IR.CreateBlockWithStatement :: (statement) {
 
 IR.Block.Append :: (block, statement) {
     index = Table.SizeOf(block) - 1
-    block[index] = statement
+    if (block != nil) and (statement != nil) {
+        block[index] = statement
+    }
 
     if statement["type"] == "Return" {
         block["containsReturnStatement"] = true

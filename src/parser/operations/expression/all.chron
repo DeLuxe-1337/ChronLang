@@ -31,11 +31,20 @@ Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.Release(state)
     if expr != nil { return expr } 
 
+    while Parser.State.MatchAny(state, {"LPAREN"}) {
+        expr = Parser.Expression(state)
+
+        Parser.State.Expect(state, "RPAREN", nil, "Expected ')' after '('")
+        
+        expr = IR.CreateGrouping(expr)
+    }
+    if expr != nil { return expr } 
+
     return nil
 }
 
 Parser.Expression :: (state) {
-    expr = Parser.Expression.TableIndex(state)
+    expr = Parser.Expression.ComparisonLogical(state)
     if expr != nil { return expr } 
 
     return nil
