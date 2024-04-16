@@ -106,7 +106,7 @@ include_module: 'include' IDENTIFIER;
 
 NIL: 'nil';
 NUMBER: '-'? [0-9][0-9]*;
-STRING: ('"' (ESC | ~'"')* '"');
+STRING: '"' (~["\\\r\n] | '\\' .)* '"';
 fragment ESC: '\\' .;
 BOOLEAN: 'false' | 'true';
 
