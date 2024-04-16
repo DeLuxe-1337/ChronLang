@@ -381,8 +381,7 @@ ChronObject Clone(ChronObject input)
             Node *current = target->data.table->buckets[i];
             while (current != NULL)
             {
-                SetDynamicTable(cloneObject, Clone(current->pair.key),
-                                Clone(current->pair.value));
+                SetDynamicTable(cloneObject, current->pair.key, current->pair.value);
                 current = current->next;
             }
         }
