@@ -8,5 +8,5 @@ Parser.Expression.Unary :: (state) {
         }
     }
 
-    return Parser.Invoke(state)
+    return Parser.Expression.TableIndex(state)
 }
