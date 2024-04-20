@@ -106,10 +106,10 @@ IR.Function.GenerateFunctionHeader :: (context) {
 
 IR.Function.ForwardDeclare :: (context) {
     scopeName = Clone(context["scopeName"])
-    signatureName = scopeName + "Sig"
     name = context["name"]
     accessorName = Clone(name)
 
+    // begin Format C name
     if ((context["overrideName"] == false) and (context["native"] != true)) {
         accessorName = "_F_" + String.Replace(name, ".", "_")
     }
@@ -119,16 +119,19 @@ IR.Function.ForwardDeclare :: (context) {
     }
 
     context["accessorName"] = accessorName
+    // end
 
-    // if context["native"] != true {
-        sig = IR.Function.GenerateFunctionSignature(accessorName + "Sig", context)
-        IR.Writer.WriteLine(sig)
-        IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
-    // }
+    signatureName = accessorName + "Sig"
 
+    // Forward declare the sig and function
+    sig = IR.Function.GenerateFunctionSignature(signatureName, context)
+    IR.Writer.WriteLine(sig)
+    IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
+
+    // Add the signature to a table
     IR.Env.Scope.Add(scopeName, context, true)
     IR.Function.Signatures[scopeName] = signatureName
-    PrintLn(IR.Function.Signatures[scopeName])
+    // PrintLn(IR.Function.Signatures[scopeName])
 }
 
 IR.Read.Function :: (context) {
