@@ -1,4 +1,4 @@
-Parser.Statement.Invoke :: (state) {
+Parser.Expression.Invoke :: (state) { // This will be used as a statement and expression...
     if Parser.State.Match(Parser.State.Get(state), "INVOKE", nil) {
         Parser.State.Expect(state, "INVOKE", nil, "Expected 'invoke'")
 
