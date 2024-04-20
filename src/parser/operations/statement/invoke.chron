@@ -1,0 +1,15 @@
+Parser.Statement.Invoke :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "INVOKE", nil) {
+        Parser.State.Expect(state, "INVOKE", nil, "Expected 'invoke'")
+
+        sig = Parser.Expression.Identifier(state)["value"]
+        expr = Parser.Expression(state)
+
+        while Parser.State.MatchAny(state, {"LPAREN"}) {
+            expr = Parser.FinishInvoke(state, expr)
+        }
+
+        return IR.CreateRuntimeInvoke(expr, sig)
+    }
+    return nil
+}

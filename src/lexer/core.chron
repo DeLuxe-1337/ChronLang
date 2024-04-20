@@ -31,6 +31,7 @@ Lexer.SymbolMap = {
     "include"="INCLUDE",
     "for"="FOR",
     "in"="IN",
+    "invoke"="INVOKE",
     "foreach"="FOREACH",
     "emit_c" = "EMIT.C"
 }

@@ -29,7 +29,7 @@ Parser.Expression.Primary :: (state) {
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Release(state)
-    if expr != nil { return expr } 
+    if expr != nil { return expr }
 
     while Parser.State.MatchAny(state, {"LPAREN"}) {
         expr = Parser.Expression(state)

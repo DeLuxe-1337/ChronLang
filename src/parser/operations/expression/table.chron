@@ -36,9 +36,7 @@ Parser.Expression.Table :: (state) {
 Parser.Expression.TableIndex :: (state) {
     left = Parser.Invoke(state)
 
-    while Parser.State.Match(Parser.State.Get(state), "LBRACE", nil) {
-        Parser.State.IncreaseIndex(state)
-
+    while Parser.State.MatchAny(state, {"LBRACE"}) {
         right = Parser.Expression(state)
 
         Parser.State.Expect(state, "RBRACE", nil, "Expected ']' to end index")

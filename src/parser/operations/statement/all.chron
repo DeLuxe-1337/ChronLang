@@ -13,6 +13,7 @@ include parser.operations.statement.while
 include parser.operations.statement.for
 include parser.operations.statement.foreach
 include parser.operations.statement.emit_c
+include parser.operations.statement.invoke
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -40,6 +41,9 @@ Parser.Statement :: (state) {
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.If(state)
+    if stmt != nil { return stmt }
+
+    stmt = Parser.Statement.Invoke(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.While(state)

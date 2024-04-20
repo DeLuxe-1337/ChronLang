@@ -16,15 +16,9 @@ IR.Invoke.ConditionalAutoRelease :: (context) {
     return true
 }
 
-IR.Read.Invoke :: (context) {
-    parameters = Clone(context["parameters"])
-    target = Clone(context["target"])
-
-    invokeBuild = ""
-
-    invokeBuild += IR.Invokable(target) + "("
-
+IR.Invoke.FormatParameters :: (context) {
     build = ""
+    parameters = Clone(context["parameters"])
 
     if parameters != nil {
         foreach index, value in Table.Iter(parameters) {
@@ -54,15 +48,27 @@ IR.Read.Invoke :: (context) {
         }
     }
 
-    invokeBuild += build + ")"
+    return build
+}
 
-    return Clone(invokeBuild)
+IR.Read.Invoke :: (context) {
+    target = Clone(context["target"])
+
+    invokeBuild = ""
+    parameters= IR.Invoke.FormatParameters(context)
+
+    if context["RuntimeInvoke"] != nil {
+        sig = IR.Function.Signatures[context["RuntimeInvoke"]]
+        return "((" + sig + ")c_pointer(" + ToString(IR.Read(target)) + "))(" + parameters + ")"
+    }
+
+    return (IR.Invokable(target) + "(" + parameters + ")")
 }
 
 IR.CreateRuntimeInvoke :: (invoker, signature) {
     invoker["RuntimeInvoke"] = signature
 
-    return invoker
+    return Clone(invoker)
 }
 
 IR.CreateInvoke :: (callee, parameters) {

@@ -3,11 +3,11 @@ include ir.operations.literals.number
 include ir.operations.literals.boolean
 include ir.operations.literals.nil
 include ir.operations.literals.raw
+include ir.operations.function
 include ir.operations.block
 include ir.operations.scoped_block
 include ir.operations.invoke
 include ir.operations.environment_accessor
-include ir.operations.function
 include ir.operations.defer
 include ir.operations.release
 include ir.operations.temp_variable
