@@ -1,3 +1,5 @@
+IR.Function.Signatures = {}
+
 IR.Write.Function :: (context) {
     name = Clone(context["name"])
     block = Clone(context["block"])
@@ -76,18 +78,8 @@ IR.Function.GenerateFunctionSignature :: (name, context) {
 }
 
 IR.Function.GenerateFunctionHeader :: (context) {
-    name = Clone(context["name"])
-    accessorName = name
-
-    if ((context["overrideName"] == false) and (context["native"] != true)) {
-        accessorName = "_F_" + name
-    }
-
-    if name == "Main" {
-        accessorName = "main"
-    }
-
-    context["accessorName"] = accessorName
+    name = context["name"]
+    accessorName = context["accessorName"]
 
     build = ""
 
@@ -114,16 +106,29 @@ IR.Function.GenerateFunctionHeader :: (context) {
 
 IR.Function.ForwardDeclare :: (context) {
     scopeName = Clone(context["scopeName"])
+    signatureName = scopeName + "Sig"
+    name = context["name"]
+    accessorName = Clone(name)
 
-    // context["block"] = nil
+    if ((context["overrideName"] == false) and (context["native"] != true)) {
+        accessorName = "_F_" + String.Replace(name, ".", "_")
+    }
+
+    if name == "Main" {
+        accessorName = "main"
+    }
+
+    context["accessorName"] = accessorName
 
     // if context["native"] != true {
-        sig = IR.Function.GenerateFunctionSignature(Clone(context["name"]) + "Sig", context)
+        sig = IR.Function.GenerateFunctionSignature(accessorName + "Sig", context)
         IR.Writer.WriteLine(sig)
         IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context) + ";")
     // }
 
     IR.Env.Scope.Add(scopeName, context, true)
+    IR.Function.Signatures[scopeName] = signatureName
+    PrintLn(IR.Function.Signatures[scopeName])
 }
 
 IR.Read.Function :: (context) {
