@@ -49,6 +49,11 @@ ReadMap = {
     "Grouping"=IR.Read.Grouping
 }
 
+InvokableMap = {
+    "EnvironmentAccessor"=IR.Invokable.EnvironmentAccessor,
+    "Function"=IR.Invokable.Function
+}
+
 IR.Write :: (node) {
     type = node["type"]
     visiter = WriteMap[type]
@@ -59,6 +64,13 @@ IR.Write :: (node) {
 IR.Read :: (node) {
     type = node["type"]
     visiter = ReadMap[type]
+    
+    return invoke IR.Read visiter(node)
+}
+
+IR.Invokable :: (node) {
+    type = node["type"]
+    visiter = InvokableMap[type]
     
     return invoke IR.Read visiter(node)
 }

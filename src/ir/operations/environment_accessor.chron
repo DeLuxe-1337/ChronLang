@@ -23,3 +23,7 @@ IR.EnvironmentAccessor.Find :: (value) {
 IR.CreateEnvironmentAccessor :: (name) {
     return {"value"=Clone(name), "type"="EnvironmentAccessor"}
 }
+
+IR.Invokable.EnvironmentAccessor :: (context) {
+    return IR.Invokable(IR.EnvironmentAccessor.Find(context["value"]))
+}

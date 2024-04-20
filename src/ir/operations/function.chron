@@ -135,6 +135,13 @@ IR.Function.ForwardDeclare :: (context) {
 }
 
 IR.Read.Function :: (context) {
+    invokeParameters = {IR.CreateRawText(context["accessorName"])}
+    invokeCreateFunction = IR.CreateInvoke(Functions.CreateFunction, invokeParameters)
+
+    return IR.Read(invokeCreateFunction)
+}
+
+IR.Invokable.Function :: (context) {
     return Clone(context["accessorName"])
 }
 

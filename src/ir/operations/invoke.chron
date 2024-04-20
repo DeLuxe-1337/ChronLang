@@ -22,7 +22,7 @@ IR.Read.Invoke :: (context) {
 
     invokeBuild = ""
 
-    invokeBuild += IR.Read(target) + "("
+    invokeBuild += IR.Invokable(target) + "("
 
     build = ""
 
@@ -57,6 +57,12 @@ IR.Read.Invoke :: (context) {
     invokeBuild += build + ")"
 
     return Clone(invokeBuild)
+}
+
+IR.CreateRuntimeInvoke :: (invoker, signature) {
+    invoker["RuntimeInvoke"] = signature
+
+    return invoker
 }
 
 IR.CreateInvoke :: (callee, parameters) {
