@@ -57,20 +57,30 @@ InvokableMap = {
 IR.Write :: (node) {
     type = node["type"]
     visiter = WriteMap[type]
-    
-    invoke IR.Write visiter(node)
+
+    if visiter != nil {
+        invoke IR.Write visiter(node)
+    }
 }
 
 IR.Read :: (node) {
     type = node["type"]
     visiter = ReadMap[type]
     
-    return invoke IR.Read visiter(node)
+    if visiter != nil {
+        return invoke IR.Read visiter(node)
+    }
+
+    return nil
 }
 
 IR.Invokable :: (node) {
     type = node["type"]
     visiter = InvokableMap[type]
-    
-    return invoke IR.Read visiter(node)
+
+    if visiter != nil {
+        return invoke IR.Read visiter(node)
+    }
+
+    return nil
 }

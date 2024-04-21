@@ -29,18 +29,14 @@ IR.Env.Defer.Visit :: (context) {
     invoke IR.Env.Defer.Visit context["defer"](context)
 }
 
-IR.Env.Defer.VisitCurrentScope :: (pop) {
+IR.Env.Defer.VisitCurrentScope :: () {
     foreach index, value in Table.Iter(IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]) {
         IR.Env.Defer.Visit(value)
     }
-
-    if pop == true {
-        // Clear defer scope
-        IR.Env.Defer.Pop()
-        IR.Env.Defer.Create()
-    }
 }
 
-IR.Env.Defer.VisitCurrentScope :: () {
-    IR.Env.Defer.VisitCurrentScope(true)
+IR.Env.Defer.VisitCurrentScopeWithPop :: () {
+    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.Pop()
+    IR.Env.Defer.Create()
 }

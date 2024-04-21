@@ -1,6 +1,4 @@
 IR.Read.Literals.Nil :: (context) {
-    value = context["value"]
-    
     invokeCreateNil = IR.CreateInvoke(Functions.CreateNil, nil)
 
     return IR.Read(invokeCreateNil)

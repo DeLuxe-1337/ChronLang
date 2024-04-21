@@ -13,7 +13,7 @@ IR.Write.While :: (context) {
 
     //Evaluate
     IR.Writer.WriteLine("if(" + Types.GetBooleanFromObject + "(" + IR.Read(conditionStore) + ") == false) {")
-    IR.Env.Defer.VisitCurrentScope(false)
+    IR.Env.Defer.VisitCurrentScope()
     IR.Writer.WriteLine("break;\n}")
 
     IR.Env.Defer.VisitCurrentScope()
