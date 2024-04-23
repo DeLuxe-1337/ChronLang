@@ -8,5 +8,5 @@ IR.Read.Literals.Boolean :: (context) {
 }
 
 IR.CreateBoolean :: (value) {
-    return {"value"=Clone(value), "literal"=true, "autoRelease"=true, "type"="Literals.Boolean"}
+    return {"value"=value, "literal"=true, "autoRelease"=true, "type"="Literals.Boolean"}
 }

@@ -6,5 +6,5 @@ IR.Read.Comparison.GreaterThanEq :: (context) {
 }
 
 IR.CreateCompareGreaterThanEqual :: (left, right) {
-    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Comparison.GreaterThanEq"}
+    return {"left"=left, "right"=right, "autoRelease"=true, "type"="Comparison.GreaterThanEq"}
 }

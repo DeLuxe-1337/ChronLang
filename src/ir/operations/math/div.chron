@@ -6,5 +6,5 @@ IR.Read.Math.Div :: (context) {
 }
 
 IR.CreateDiv :: (left, right) {
-    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Div"}
+    return {"left"=left, "right"=right, "autoRelease"=true, "type"="Math.Div"}
 }

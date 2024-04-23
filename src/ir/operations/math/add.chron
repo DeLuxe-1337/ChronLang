@@ -2,8 +2,6 @@ IR.Read.Math.Add :: (context) {
     invokeParameters = {context["left"], context["right"]}
     invokeCreateAdd = IR.CreateInvoke(Functions.ObjectAdd, invokeParameters)
 
-    PrintLn(context)
-
     return IR.Read(invokeCreateAdd)
 }
 

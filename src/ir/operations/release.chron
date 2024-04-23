@@ -20,5 +20,5 @@ IR.Defer.Release :: (context) {
 }
 
 IR.CreateRelease :: (child) {
-    return {"type"="Release", "child"=Clone(child), "defer"=IR.Defer.Release}
+    return {"type"="Release", "child"=child, "defer"=IR.Defer.Release}
 }

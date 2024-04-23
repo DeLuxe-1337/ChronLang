@@ -25,5 +25,5 @@ IR.Write.For :: (context) {
 }
 
 IR.CreateFor :: (index, start, end, block) {
-    return {"type"="For", "index"=index, "start"=Clone(start), "end"=Clone(end), "block"=Clone(block)}
+    return {"type"="For", "index"=index, "start"=start, "end"=end, "block"=block}
 }

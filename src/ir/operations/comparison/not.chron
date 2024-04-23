@@ -6,5 +6,5 @@ IR.Read.Comparison.Not :: (context) {
 }
 
 IR.CreateCompareNot :: (right) {
-    return {"right"=Clone(right), "autoRelease"=true, "type"="Comparison.Not"}
+    return {"right"=right, "autoRelease"=true, "type"="Comparison.Not"}
 }

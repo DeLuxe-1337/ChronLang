@@ -72,5 +72,5 @@ IR.CreateRuntimeInvoke :: (invoker, signature) {
 }
 
 IR.CreateInvoke :: (callee, parameters) {
-    return {"target"=Clone(callee), "parameters"=Clone(parameters), "autoRelease"=true, "conditionalAutoRelease"=IR.Invoke.ConditionalAutoRelease, "type"="Invoke"}
+    return {"target"=callee, "parameters"=parameters, "autoRelease"=true, "conditionalAutoRelease"=IR.Invoke.ConditionalAutoRelease, "type"="Invoke"}
 }

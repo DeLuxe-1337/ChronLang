@@ -13,5 +13,5 @@ IR.Write.ScopedBlock :: (context) {
 }
 
 IR.CreateScopedBlock :: (block) {
-    return {"type"="ScopedBlock", "block"=Clone(block)}
+    return {"type"="ScopedBlock", "block"=block}
 }

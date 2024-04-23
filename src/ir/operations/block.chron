@@ -11,7 +11,7 @@ IR.CreateBlock :: () {
 }
 
 IR.CreateBlockWithStatement :: (statement) {
-    return {"type"="Block", 0=Clone(statement)}
+    return {"type"="Block", 0=statement}
 }
 
 IR.Block.Append :: (block, statement) {

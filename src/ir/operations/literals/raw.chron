@@ -7,5 +7,5 @@ IR.Write.Literals.RawText :: (context) {
 }
 
 IR.CreateRawText :: (value) {
-    return {"value"=Clone(value), "type"="Literals.RawText"}
+    return {"value"=value, "type"="Literals.RawText"}
 }

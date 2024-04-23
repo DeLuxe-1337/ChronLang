@@ -7,5 +7,5 @@ IR.DeferStatement :: (context) {
 }
 
 IR.CreateDefer :: (child) {
-    return {"type"="Defer", "child"=Clone(child), "defer"=IR.DeferStatement}
+    return {"type"="Defer", "child"=child, "defer"=IR.DeferStatement}
 }

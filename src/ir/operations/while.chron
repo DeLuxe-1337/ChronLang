@@ -33,5 +33,5 @@ IR.Write.While :: (context) {
 }
 
 IR.CreateWhile :: (expression, block) {
-    return {"type"="While", "expression"=Clone(expression), "block"=Clone(IR.CreateScopedBlock(block))}
+    return {"type"="While", "expression"=expression, "block"=IR.CreateScopedBlock(block)}
 }

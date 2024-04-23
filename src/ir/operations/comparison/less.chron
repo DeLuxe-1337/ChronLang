@@ -6,5 +6,5 @@ IR.Read.Comparison.Less :: (context) {
 }
 
 IR.CreateCompareLess :: (left, right) {
-    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Comparison.Less"}
+    return {"left"=left, "right"=right, "autoRelease"=true, "type"="Comparison.Less"}
 }

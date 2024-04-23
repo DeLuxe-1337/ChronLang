@@ -6,5 +6,5 @@ IR.Read.Math.Mult :: (context) {
 }
 
 IR.CreateMult :: (left, right) {
-    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Math.Mult"}
+    return {"left"=left, "right"=right, "autoRelease"=true, "type"="Math.Mult"}
 }

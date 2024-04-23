@@ -6,5 +6,5 @@ IR.Read.Comparison.Equal :: (context) {
 }
 
 IR.CreateCompareEqual :: (left, right) {
-    return {"left"=Clone(left), "right"=Clone(right), "autoRelease"=true, "type"="Comparison.Equal"}
+    return {"left"=left, "right"=right, "autoRelease"=true, "type"="Comparison.Equal"}
 }

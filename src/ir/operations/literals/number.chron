@@ -8,5 +8,5 @@ IR.Read.Literals.Number :: (context) {
 }
 
 IR.CreateNumber :: (value) {
-    return {"value"=Clone(value), "autoRelease"=true, "literal"=true, "type"="Literals.Number"}
+    return {"value"=value, "autoRelease"=true, "literal"=true, "type"="Literals.Number"}
 }

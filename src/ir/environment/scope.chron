@@ -24,7 +24,7 @@ IR.Env.Scope.Push :: (scopeItem) {
 } 
 
 IR.Env.Scope.CreateItem :: (name, data) {
-    return {"name"=Clone(name), "value"=Clone(data), "type"="Scope"}
+    return {"name"=name, "value"=data, "type"="Scope"}
 }
 
 IR.Env.Scope.Get :: (name) {
