@@ -73,12 +73,12 @@ ForTest :: {
     Pass("For")
 }
 
-ForeachTest :: { // This test fails, something with the Iter index and value since hashmap impl.
+ForeachTest :: {
     foreach index, value in Table.Iter({"Hello, world"=true, nil=10, 10=50, false=true, "SubTable"={"My sub table"}}) {
-        PrintLn(index + ": " + value)
+        PrintLn(ToString(index) + ": " + ToString(value))
     }
 
-    Fail("Foreach")
+    Pass("Foreach")
 }
 
 TestFunction :: (influence) {
@@ -211,6 +211,6 @@ Main :: {
     FibonacciTest()
 }
 
-//Everything besides Foreach Test passed (with bootstrapped compiler)
+//Everything is now passing
 
-// In short, I have to add decimal numbers, unary negative and figure out the issue with hashmap implementation for `foreach`
+// In short, I have to add decimal numbers, unary negative.

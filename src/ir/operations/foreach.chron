@@ -19,6 +19,8 @@ IR.Write.ForEach :: (context) {
 
     foreachIndex = IR.CreateVariable(IR.CreateEnvironmentAccessor(index), IR.CreateRawText(IR.Read(__iter__) + "->index(" + IR.Read(__iter__) + "->self, " + IR.Read(__i) + ")"))
     foreachValue = IR.CreateVariable(IR.CreateEnvironmentAccessor(value), IR.CreateRawText(IR.Read(__iter__) + "->value(" + IR.Read(__iter__) + "->self, " + IR.Read(__i) + ")"))
+    foreachIndex["autoReleaseExpression"] = false
+    foreachValue["autoReleaseExpression"] = false
 
     newBlock = IR.CreateBlock()
     IR.Block.Append(newBlock, foreachIndex)

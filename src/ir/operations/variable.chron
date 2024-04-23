@@ -29,11 +29,13 @@ IR.Write.Variable :: (context) {
     if IR.Env.Scope.GetFirst(varName) == nil {
         IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
         IR.Env.Scope.Add(varName, Clone(context), true)
-        IR.Env.Defer.Push(
-            IR.CreateDefer(
-                IR.CreateRelease(context)
+        if context["autoReleaseExpression"] == true {
+            IR.Env.Defer.Push(
+                IR.CreateDefer(
+                    IR.CreateRelease(context)
+                )
             )
-        )
+        }
     } else {
         IR.Writer.WriteLine(accessorName + " = " + IR.Read(expression) + ";")
     }
@@ -77,5 +79,5 @@ IR.CreateVariable :: (target, expression) {
     }
 
     newName = "_V_" + String.Replace(name, ".", "_")
-    return {"type"="Variable", "accessorName"=Clone(newName), "name"=name, "target"=Clone(target), "expression"=Clone(expression)}
+    return {"type"="Variable", "accessorName"=newName, "name"=name, "target"=target, "expression"=expression, "autoReleaseExpression"=true}
 }
