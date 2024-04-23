@@ -72,6 +72,10 @@ IR.CreateVariable :: (target, expression) {
         name = target["value"]
     }
 
+    if TypeOf(target) == "string" {
+        name = target
+    }
+
     newName = "_V_" + String.Replace(name, ".", "_")
     return {"type"="Variable", "accessorName"=Clone(newName), "name"=name, "target"=Clone(target), "expression"=Clone(expression)}
 }
