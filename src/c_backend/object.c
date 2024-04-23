@@ -168,7 +168,7 @@ void TableInsert(ChronObject o, ChronObject value)
 
     if (tableObject->type != vtable)
     {
-        printf("Runtime error: attempting to set value in table on object that "
+        printf("Runtime warning: attempting to set value in table on object that "
                "isn't a table.\n");
         return;
     }
@@ -186,7 +186,7 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
         void* result = ToString(o);
         void* i = ToString(index);
         void* v = ToString(value);
-        printf("Runtime error: attempting to set value on Table=%s Index=%s Value=%s\n", c_string(result), c_string(i), c_string(v));
+        printf("Runtime warning: attempting to set value on Table=%s Index=%s Value=%s\n", c_string(result), c_string(i), c_string(v));
         MemoryContext_Release(result);
         MemoryContext_Release(i);
         MemoryContext_Release(v);
@@ -206,7 +206,7 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
     {
         void* result = ToString(o);
         void* i = ToString(index);
-        printf("Runtime error: attempting to index on Table=%s Index=%s \n", c_string(result), c_string(i));
+        printf("Runtime warning: attempting to index on Table=%s Index=%s \n", c_string(result), c_string(i));
         MemoryContext_Release(result);
         MemoryContext_Release(i);
         return DynNil();
