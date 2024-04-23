@@ -1,11 +1,216 @@
 include core.all
 
-Test :: {
-    return {"Hello"}
+Assert :: (input, value, message) {
+    if input != value {
+        PrintLn("Expected: " + ToString(value) + " Got: " + ToString(input))
+        Throw("Assert Failed: " + message)
+    }
+}
+
+Pass :: (message) {
+    PrintLn("Passed test: " + message)
+}
+
+Fail :: (message) {
+    PrintLn("Failed test: " + message)
+}
+
+ConditionsTest :: {
+    x = 100
+    y = 50
+    z = true
+
+    Assert(x > 50, true, "line 14")
+    Assert(x < 50, false, "line 15")
+    Assert(x == true, false, "line 16")
+    Assert(z == true, true, "line 17")
+    Assert(x > y, true, "line 18")
+
+    Pass("Conditions")
+}
+
+TableTest :: {
+    x = {true=false, nil=100, "World"="Hello"}
+
+    Assert(x[true], false, "line 30")
+    Assert(x[nil], 100, "line 31")
+    Assert(x["World"], "Hello", "line 32")
+
+    x[true] = "TRUE!"
+
+    Assert(x[true], "TRUE!", "line 36")
+
+    Pass("Tables")
+}
+
+WhileTest :: {
+    x = 0
+    while true {
+        if x == 5 {
+            PrintLn("While loop 5 continue")
+            x += 2
+            continue
+        }
+
+        if x >= 10 {
+            PrintLn("While loop 10 break")
+            break
+        }
+
+        x += 1
+    }
+
+    Pass("While loop")
+}
+
+ForTest :: {
+    x = 15
+    z = 5
+    for i = z, x {
+        PrintLn(i)
+    }
+
+    Pass("For")
+}
+
+ForeachTest :: { // This test fails, something with the Iter index and value since hashmap impl.
+    foreach index, value in Table.Iter({"Hello, world"=true, nil=10, 10=50, false=true, "SubTable"={"My sub table"}}) {
+        PrintLn(index + ": " + value)
+    }
+
+    Fail("Foreach")
+}
+
+TestFunction :: (influence) {
+    if influence > 5 {
+        return true
+    }
+
+    return false
+}
+
+FunctionReturnTest :: {
+    Assert(TestFunction(10), true, "line 92")
+    Assert(TestFunction(0), false, "line 92")
+
+    Pass("Function return")
+}
+
+UnaryTest :: { // Todo: Implement negative
+    Assert(!true, false, "line 99")
+
+    x = false
+    Assert(!x, true, "line 102")
+
+    Pass("Unary test")
+}
+
+IfStatementTest :: {
+    pass = false
+
+    if true == true {
+        pass = true
+    } else {
+        pass = false
+    }
+
+    if false != true {
+        pass = true
+    } else {
+        pass = false
+    }
+
+    if 5 > 5 {
+        pass = false
+    }
+
+    if (5 + 5) == 10 {
+        pass = true
+    } else {
+        pass = false
+    }
+
+    if pass == true {
+        Pass("If statement")
+    } else {
+        Fail("If statement")
+    }
+}
+
+Math :: {
+    Assert(10 + 10, 20, "line 140")
+    Assert(0 + 0, 0, "line 141")
+    Assert(10 - 5, 5, "line 142")
+    Assert(100 - 100, 0, "line 143")
+    Assert(5 * 5, 25, "line 144")
+    Assert(10 * 0, 0, "line 145")
+    Assert((-3) * 7, -21, "line 146")
+    Assert(10 / 2, 5, "line 147")
+    Assert(20 / 4, 5, "line 149")
+    Assert((10 * 2) + (50 - 2), 68, "line 150")
+
+    Pass("Basic Math")
+}
+
+TypesTest :: {
+    x = "Hello, world"
+    y = 100
+    z = false
+    w = nil
+    p = {"My table"}
+
+    Assert(TypeOf(x), "string", "line 163")
+    Assert(TypeOf(y), "number", "line 164")
+    Assert(TypeOf(z), "boolean", "line 165")
+    Assert(TypeOf(w), "nil", "line 166")
+    Assert(TypeOf(p), "table", "line 167")
+
+    Pass("Types")
+}
+
+RuntimeInvokeTest :: {
+    x = {"MyFunction"=TestFunction}
+
+    Assert(invoke TestFunction x["MyFunction"](0), false, "line 175")
+
+    Pass("Runtime invoke")
+}
+
+Fibonacci :: (n) {
+    if n <= 1 {
+        return n
+    }
+
+    return Fibonacci(n - 1) + Fibonacci(n - 2)
+}
+
+FibonacciTest :: {
+    Assert(Fibonacci(0), 0, "line 188")
+    Assert(Fibonacci(1), 1, "line 189")
+    Assert(Fibonacci(2), 1, "line 190")
+    Assert(Fibonacci(3), 2, "line 191")
+    Assert(Fibonacci(4), 3, "line 192")
+
+    Pass("Fibonacci")
 }
 
 Main :: {
-    defer PrintLn("End of program")
-    
-    PrintLn(Test()[0])
+    defer PrintLn("End of tests")
+
+    ConditionsTest()
+    TableTest()
+    WhileTest()
+    ForTest()
+    ForeachTest()
+    FunctionReturnTest()
+    UnaryTest()
+    IfStatementTest()
+    Math()
+    TypesTest()
+    RuntimeInvokeTest()
+    FibonacciTest()
 }
+
+//Everything besides Foreach Test passed (with bootstrapped compiler)
+
+// In short, I have to add decimal numbers, unary negative and figure out the issue with hashmap implementation for `foreach`
