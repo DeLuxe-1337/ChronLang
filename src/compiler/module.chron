@@ -37,10 +37,14 @@ Compiler.Module.CompileFromFile :: (file) {
 
 Compiler.Module.WriteStatementsToFile :: (module) {
     PrintLn("->IR:")
+    IR.Writer.Create(module["name"] + ".chron.c")
+    PrintLn("File created")
+
     IR.WriteModule()
 
     IR.Env.Scope.Create()
 
+    PrintLn("Forward declare")
     foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
         foreach index, statement in Table.Iter(statementTable) {
             if statement["type"] == "Function" {
@@ -49,14 +53,14 @@ Compiler.Module.WriteStatementsToFile :: (module) {
         }
     }
 
+    PrintLn("Writing all statements in root")
     foreach statementIndex, statementTable in Table.Iter(Compiler.Module.Statements)  {
         foreach index, statement in Table.Iter(statementTable) {
-            // PrintLn(index)
             IR.Write(statement)
         }
     }
 
-    PrintLn("Writing to file")
+    PrintLn("Closing file")
 
-    IR.Writer.WriteToFile(module["name"] + ".chron.c")
+    IR.Writer.Close()
 }
