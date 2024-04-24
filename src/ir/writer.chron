@@ -1,17 +1,21 @@
 include core.file.all
 
-GeneratedSource = ""
+File = nil
 
 IR.Writer.WriteLine :: (text) {
-    GeneratedSource += ToString(text) + "\n"
+    File.WriteStringToFile(File, (ToString(text) + "\n"))
 }
 
 IR.Writer.Write :: (text) {
-    GeneratedSource += ToString(text)
+    File.WriteStringToFile(File, ToString(text))
 }
 
-IR.Writer.WriteToFile :: (path) {
-    File.Write(path, GeneratedSource)
+IR.Writer.Create :: (path) {
+    File = File.Create(path, "a")
+}
+
+IR.Writer.Close :: () {
+    File.Close(File)
 }
 
 IR.WriteModule :: {
