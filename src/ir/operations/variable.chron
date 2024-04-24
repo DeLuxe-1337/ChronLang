@@ -28,7 +28,7 @@ IR.Write.Variable :: (context) {
 
     if IR.Env.Scope.GetFirst(varName) == nil {
         IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
-        if context["autoReleaseExpression"] == true {
+        if (context["autoReleaseExpression"] == true) and (expression["autoRelease"] == true) {
             context["deferIndex"] = IR.Env.Defer.Push(
                 context
             )
