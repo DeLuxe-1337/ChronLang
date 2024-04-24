@@ -3,6 +3,10 @@ IR.Write.If :: (context) {
     elseStatement = Clone(context["elseStatement"])
     expression = Clone(context["expression"])
 
+    if elseStatement == nil {
+        IR.Env.Defer.Create()
+    }
+
     IR.Writer.WriteLine("if(" + Types.GetBooleanFromObject + "(" + IR.Read(expression) + "))")
 
     IR.Write(trueBlock)
@@ -11,6 +15,9 @@ IR.Write.If :: (context) {
         IR.Writer.WriteLine("else")
 
         IR.Write(elseStatement)
+    } else {
+        IR.Env.Defer.VisitCurrentScope()
+        IR.Env.Defer.Pop()
     }
 }
 
