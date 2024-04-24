@@ -1,4 +1,4 @@
-C `
+emit_c `
 ChronVoid Chron_WriteFile(ChronObject o1, ChronObject o2) {
 	DynObject *path = o1->Object;
 	DynObject *content = o2->Object;
@@ -9,7 +9,7 @@ ChronVoid Chron_WriteFile(ChronObject o1, ChronObject o2) {
 }
 `
 
-C `
+emit_c `
 #define CHUNK_SIZE 1024
 ChronObject Chron_ReadFile(ChronObject o1) {
     DynObject *path = o1->Object;
@@ -50,6 +50,37 @@ ChronObject Chron_ReadFile(ChronObject o1) {
     return result;
 }
 `
+
+emit_c `
+    ChronObject Chron_CreateFile(ChronObject path, ChronObject mode) {
+        FILE *file = fopen(c_string(path), c_string(mode));
+        return DynPointer(file);
+    }
+`
+
+emit_c `
+    void Chron_WriteStringToFile(ChronObject fileObject, ChronObject text) {
+        FILE *file = (FILE*)c_pointer(fileObject);
+        fprintf(file, "%s", c_string(text));
+    }
+`
+
+emit_c `
+    void Chron_CloseFile(ChronObject fileObject) {
+        FILE *file = (FILE*)c_pointer(fileObject);
+        fclose(file);
+    }
+`
+
+["name"="File.WriteStringToFile"]
+!Chron_WriteStringToFile :: (file, content) ?
+
+["return", "name"="File.Create"]
+!Chron_CreateFile :: (path, mode) ?
+
+["name"="File.Close"]
+!Chron_CloseFile :: (file) ?
+
 ["name"="File.Write"]
 !Chron_WriteFile :: (path, content) ?
 
