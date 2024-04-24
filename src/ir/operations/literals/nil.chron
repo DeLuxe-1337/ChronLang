@@ -1,5 +1,5 @@
 IR.Read.Literals.Nil :: (context) {
-    invokeCreateNil = IR.CreateInvoke(Functions.CreateNil, nil)
+    invokeCreateNil = IR.CreateInvoke(Functions.CreateNil, {})
 
     return IR.Read(invokeCreateNil)
 }
