@@ -1,4 +1,5 @@
-# ChronLang - Bootstrapped version (#steps-to-self-compilation)
+# ChronLang - Bootstrapped version 
+[Steps to self compilation](#steps-to-self-compilation)
 
 > A fast, compiled, dynamically typed programming language.   
 
