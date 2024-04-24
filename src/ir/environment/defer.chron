@@ -14,6 +14,25 @@ IR.Env.Defer.Pop :: () {
     IR.Env.Defer.SetCurrent()
 }
 
+IR.Env.Defer.Remove :: (index) {
+    IR.Env.Defer.Current[index] = nil
+}
+
+IR.Env.Defer.RemoveIf :: (context) {
+    deferIndex = nil
+    if context["type"] == "EnvironmentAccessor" {
+        deferIndex = Clone(IR.EnvironmentAccessor.Find(context["value"])["deferIndex"])
+    }
+    
+    if context["deferIndex"] != nil {
+        deferIndex = context["deferIndex"]
+    }
+
+    if deferIndex != nil {
+        IR.Env.Defer.Remove(deferIndex)
+    }
+}
+
 IR.Env.Defer.SetCurrent :: () {
     IR.Env.Defer.Current = IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]
 }
@@ -22,7 +41,10 @@ IR.Env.Defer.Push :: (item) {
     if item["defer"] != nil {
         index = Table.SizeOf(IR.Env.Defer.Current)
         IR.Env.Defer.Current[index] = item
+        return index
     }
+
+    return nil
 } 
 
 IR.Env.Defer.Visit :: (context) {
@@ -31,7 +53,9 @@ IR.Env.Defer.Visit :: (context) {
 
 IR.Env.Defer.VisitCurrentScope :: () {
     foreach index, value in Table.Iter(IR.Env.Defer.List[IR.Env.Defer.CurrentIndex]) {
-        IR.Env.Defer.Visit(value)
+        if value != nil {
+            IR.Env.Defer.Visit(value)
+        }
     }
 }
 

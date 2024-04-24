@@ -5,7 +5,7 @@ IR.Write.ScopedBlock :: (context) {
 
     IR.Write(context["block"])
 
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
     IR.Env.Scope.Pop()
     IR.Env.Defer.Pop()
 

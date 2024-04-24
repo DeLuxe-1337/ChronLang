@@ -14,7 +14,7 @@ IR.Write.ForTo :: (context) {
 
     IR.Write(whileLoop)
 
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
     IR.Env.Defer.Pop()
     IR.Writer.WriteLine("}")
 }

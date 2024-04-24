@@ -9,7 +9,7 @@ IR.Write.Variable :: (context) {
     varName = context["name"]
     accessorName = context["accessorName"]
 
-    if IR.Env.Scope.CurrentIndex == 0 {
+    if IR.Env.Scope.CurrentIndex == 0 { // Global because it's not in any scopes
         Table.Insert(IR.Variable.Globals, context)
         IR.Writer.WriteLine("void* " + accessorName + ";")
         IR.Env.Scope.Add(varName, context, true)
@@ -28,14 +28,12 @@ IR.Write.Variable :: (context) {
 
     if IR.Env.Scope.GetFirst(varName) == nil {
         IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
-        IR.Env.Scope.Add(varName, Clone(context), true)
         if context["autoReleaseExpression"] == true {
-            IR.Env.Defer.Push(
-                IR.CreateDefer(
-                    IR.CreateRelease(context)
-                )
+            context["deferIndex"] = IR.Env.Defer.Push(
+                context
             )
         }
+        IR.Env.Scope.Add(varName, context, true)
     } else {
         IR.Writer.WriteLine(accessorName + " = " + IR.Read(expression) + ";")
     }
@@ -67,6 +65,10 @@ IR.Read.Variable :: (context) {
     return Clone(context["accessorName"])
 }
 
+IR.Variable.Defer :: (context) {
+    IR.Write(IR.CreateRelease(context))
+}
+
 IR.CreateVariable :: (target, expression) {
     name = "ERROR_NAME_NOT_VALID"
 
@@ -79,5 +81,5 @@ IR.CreateVariable :: (target, expression) {
     }
 
     newName = "_V_" + String.Replace(name, ".", "_")
-    return {"type"="Variable", "accessorName"=newName, "name"=name, "target"=target, "expression"=expression, "autoReleaseExpression"=true}
+    return {"type"="Variable", "accessorName"=newName, "name"=name, "target"=target, "expression"=expression, "autoReleaseExpression"=true, "defer"=IR.Variable.Defer}
 }

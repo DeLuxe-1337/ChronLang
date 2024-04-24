@@ -1,13 +1,16 @@
 IR.Write.Return :: (context) {
-    if context["expression"] != nil {
-        tmpReturn = IR.CreateTempVariable("RETURN_TEMP", context["expression"])
+    expression = context["expression"]
+    IR.Env.Defer.RemoveIf(Clone(expression))
+    
+    if expression != nil {
+        tmpReturn = IR.CreateTempVariable("RETURN_TEMP", expression)
         IR.Write(tmpReturn)
 
-        IR.Env.Defer.VisitCurrentScope()
+        IR.Env.Defer.VisitCurrentScopeWithPop()
 
         IR.Writer.WriteLine("return " + IR.Read(tmpReturn) + ";")
     } else {
-        IR.Env.Defer.VisitCurrentScope()
+        IR.Env.Defer.VisitCurrentScopeWithPop()
 
         IR.Writer.WriteLine("return;")
     }

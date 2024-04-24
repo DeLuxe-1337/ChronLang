@@ -30,7 +30,7 @@ IR.Write.Function :: (context) {
 
         IR.Write(block)
 
-        IR.Env.Defer.VisitCurrentScope()
+        IR.Env.Defer.VisitCurrentScopeWithPop()
         IR.Writer.WriteLine("}")
     } else {
         IR.Writer.WriteLine(";")

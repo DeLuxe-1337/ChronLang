@@ -29,7 +29,7 @@ IR.Write.ForEach :: (context) {
 
     IR.Write(IR.CreateFor(__i, IR.CreateRawText("0"), IR.CreateRawText(IR.Read(__iter__) + "->size"), newBlock))
 
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
     IR.Env.Defer.Pop()
     IR.Writer.WriteLine("}")
 }

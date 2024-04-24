@@ -13,10 +13,10 @@ IR.Write.While :: (context) {
 
     //Evaluate
     IR.Writer.WriteLine("if(" + Types.GetBooleanFromObject + "(" + IR.Read(conditionStore) + ") == false) {")
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
     IR.Writer.WriteLine("break;\n}")
 
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
 
     if context["increase"] != nil {
         IR.Write(context["increase"])
@@ -25,7 +25,7 @@ IR.Write.While :: (context) {
     // Write block
     IR.Write(context["block"])
 
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
     IR.Env.Scope.Pop()
     IR.Env.Defer.Pop()
 

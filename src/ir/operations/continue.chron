@@ -1,5 +1,5 @@
 IR.Write.Continue :: (context) {
-    IR.Env.Defer.VisitCurrentScope()
+    IR.Env.Defer.VisitCurrentScopeWithPop()
 
     IR.Writer.WriteLine("continue;")
 }
