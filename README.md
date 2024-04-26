@@ -1,5 +1,5 @@
 # ChronLang - Bootstrapped version 
-[Steps to self compilation](#steps-to-self-compilation)
+[Self compilation](#self-compilation)
 
 > A fast, compiled, dynamically typed programming language.   
 
@@ -417,7 +417,7 @@ Same as most languages (basic, no standard math library yet)
 ## Error handling
 Still trying to figure out a good design  
 
-## Steps To Self Compilation
-The bootstrapped compiler is not yet self-compilable.  
+## Self Compilation
+The bootstrapped compiler is self-compilable and passed all tests!
 
-The lexer, parser, ir compile fine. There is a minuscule issue with the IR to where it deforms (C) functions headers/signature.   
+I am very stoked to have been able to reach this milestone.
