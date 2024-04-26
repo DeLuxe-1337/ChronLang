@@ -6,6 +6,8 @@ Parser.Statement.Variable :: (state) {
 
         value = Parser.Expression(state)
 
+        Parser.State.MatchAny(state, {"SEMICOLON"})
+
         return IR.CreateVariable(target, value)
     }
     return target

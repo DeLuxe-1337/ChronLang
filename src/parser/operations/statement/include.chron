@@ -6,6 +6,8 @@ Parser.Statement.Include :: (state) {
 
         Parser.State.IncreaseIndex(state)
 
+        Parser.State.MatchAny(state, {"SEMICOLON"})
+
         Compiler.Module.CompileFromFile(path)
 
     }

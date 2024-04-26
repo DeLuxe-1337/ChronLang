@@ -4,6 +4,8 @@ Parser.Statement.Release :: (state) {
 
         exp = Parser.Expression(state)
 
+        Parser.State.MatchAny(state, {"SEMICOLON"})
+
         return IR.CreateRelease(exp)
     }
     return nil
