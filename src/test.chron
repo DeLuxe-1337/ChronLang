@@ -208,12 +208,17 @@ CompoundAssignment :: {
     Assert(x, 10, "line 208")
 
     x /= 2
-    Assert(x, 5, "line 21")
+    Assert(x, 5, "line 211")
 
     Pass("Compound Assignment")
 }
 
-Main :: {
+["native", "parameters"="int count, char* args[]"]
+Main :: (count, args) {
+    parameters = GetLaunchParameters()
+
+    PrintLn(parameters)
+    
     defer PrintLn("End of tests")
 
     ConditionsTest()
