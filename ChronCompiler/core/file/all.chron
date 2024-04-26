@@ -72,6 +72,28 @@ emit_c `
     }
 `
 
+emit_c `
+ChronObject Chron_FileExists(ChronObject path) {
+    FILE* file = fopen(c_string(path), "r");
+    if(file != NULL) {
+        fclose(file);
+        return DynBoolean(true);
+    }
+
+    return DynBoolean(false);
+}
+`
+
+emit_c `
+ChronObject Chron_FileRemove(ChronObject path) {
+    if(remove(c_string(path)) == 0) {
+        return DynBoolean(true);
+    }
+
+    return DynBoolean(false);
+}
+`
+
 ["name"="File.WriteStringToFile"]
 !Chron_WriteStringToFile :: (file, content) ?
 
@@ -86,3 +108,9 @@ emit_c `
 
 ["return", "name"="File.Read"]
 !Chron_ReadFile :: (path) ?
+
+["return", "name"="File.Exists"]
+!Chron_FileExists :: (path) ?
+
+["return", "name"="File.Remove"]
+!Chron_FileRemove :: (path) ?
