@@ -50,7 +50,7 @@ IR.Function.GenerateParameters :: (context) {
     if parameters != nil {
         build = ""
         foreach index, value in Table.Iter(parameters) {
-            build += Types.Object + " " + value
+            build += (Types.Object + " " + value)
             if index != (Table.SizeOf(parameters) - 1) {
                 build += ","
             }
@@ -93,7 +93,7 @@ IR.Function.GenerateFunctionHeader :: (context) {
 
     build += IR.Function.GenerateReturn(context)
 
-    build += " " + accessorName + "("
+    build += (" " + accessorName + "(")
 
     parameters = IR.Function.GenerateParameters(context)
     if parameters != nil {
@@ -101,7 +101,8 @@ IR.Function.GenerateFunctionHeader :: (context) {
     }
 
     build += ")"
-    return Clone(build)
+
+    return build
 }
 
 IR.Function.ForwardDeclare :: (context) {

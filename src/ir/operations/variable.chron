@@ -52,6 +52,8 @@ IR.Variable.WriteGlobals :: {
     IR.Env.Scope.Pop()
     IR.Writer.WriteLine("}")
 
+    release IR.Variable.Globals
+
     return "__InitializeGlobals();"
 }
 
