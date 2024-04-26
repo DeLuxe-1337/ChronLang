@@ -11,6 +11,10 @@ IR.Writer.Write :: (text) {
 }
 
 IR.Writer.Create :: (path) {
+    if(File.Exists(path)) {
+        File.Remove(path)
+    }
+    
     File = File.Create(path, "a")
 }
 
