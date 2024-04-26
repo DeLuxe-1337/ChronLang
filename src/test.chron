@@ -194,6 +194,25 @@ FibonacciTest :: {
     Pass("Fibonacci")
 }
 
+CompoundAssignment :: {
+    x = 1
+    Assert(x, 1, "line 199")
+
+    x += 4 + 1
+    Assert(x, 6, "line 202")
+
+    x -= 1
+    Assert(x, 5, "line 205")
+
+    x *= 2
+    Assert(x, 10, "line 208")
+
+    x /= 2
+    Assert(x, 5, "line 21")
+
+    Pass("Compound Assignment")
+}
+
 Main :: {
     defer PrintLn("End of tests")
 
@@ -209,6 +228,7 @@ Main :: {
     TypesTest()
     RuntimeInvokeTest()
     FibonacciTest()
+    CompoundAssignment()
 }
 
 //Everything is now passing

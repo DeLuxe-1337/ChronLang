@@ -6,7 +6,7 @@ Parser.Expression.Term :: (state) {
         
         if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
             Parser.State.IncreaseIndex(state)
-            right = Parser.Expression.Term(state)
+            right = Parser.Expression(state)
 
             if operator == "PERCENT" {
                 right = IR.CreateMod(left, right)
@@ -49,7 +49,7 @@ Parser.Expression.Summand :: (state) {
 
         if Parser.State.Match(Parser.State.Get(state), "EQUAL", nil) {
             Parser.State.IncreaseIndex(state)
-            right = Parser.Expression.Term(state)
+            right = Parser.Expression(state)
 
             if operator == "PLUS" {
                 right = IR.CreateAdd(left, right)
