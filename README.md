@@ -417,7 +417,7 @@ Same as most languages (basic, no standard math library yet)
 ## Error handling
 Still trying to figure out a good design  
 
-## Steps To Self Compilation
+## Self Compilation
 The bootstrapped compiler is self-compilable and passed all tests!
 
 I am very stoked to have been able to reach this milestone.
