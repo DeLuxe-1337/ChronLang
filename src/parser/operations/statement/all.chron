@@ -12,7 +12,7 @@ include parser.operations.statement.variable
 include parser.operations.statement.while
 include parser.operations.statement.for
 include parser.operations.statement.foreach
-include parser.operations.statement.emit_c
+include parser.operations.emit_c
 
 Parser.Statement :: (state) {
     stmt = Parser.Statement.Include(state)
@@ -51,14 +51,11 @@ Parser.Statement :: (state) {
     stmt = Parser.Statement.ForEach(state)
     if stmt != nil { return stmt }
 
-    stmt = Parser.Statement.Emit_C(state)
+    stmt = Parser.Emit_C(state)
     if stmt != nil { return stmt }
 
     stmt = Parser.Statement.Variable(state)
     if stmt != nil { return stmt }
-
-    PrintLn("Statement nil")
-    PrintLn(Parser.State.Get(state))
 
     return nil
 }

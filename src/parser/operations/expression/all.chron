@@ -9,6 +9,7 @@ include parser.operations.expression.comparison
 include parser.operations.expression.unary
 include parser.operations.expression.table
 include parser.operations.expression.invoke
+include parser.operations.emit_c
 
 Parser.Expression.Primary :: (state) {
     expr = Parser.Expression.String(state)
@@ -33,6 +34,9 @@ Parser.Expression.Primary :: (state) {
     if expr != nil { return expr }
 
     expr = Parser.Expression.Invoke(state)
+    if expr != nil { return expr }
+
+    expr = Parser.Emit_C(state)
     if expr != nil { return expr }
 
     while Parser.State.MatchAny(state, {"LPAREN"}) {
