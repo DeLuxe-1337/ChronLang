@@ -102,7 +102,7 @@ IR.Function.GenerateFunctionHeader :: (context) {
 
     build += ")"
 
-    return build
+    return Clone(build)
 }
 
 IR.Function.ForwardDeclare :: (context) {

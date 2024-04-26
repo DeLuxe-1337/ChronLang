@@ -3,9 +3,9 @@ include core.file.all
 include compiler.module
 
 Main :: {
-    module = Compiler.Module.Create("test")
+    module = Compiler.Module.Create("bootstrap")
 
-    Compiler.Module.CompileFromFile("test.chron")
+    Compiler.Module.CompileFromFile("main.chron")
     Compiler.Module.WriteStatementsToFile(module)
 
     PrintLn("End of program")
