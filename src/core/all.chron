@@ -3,15 +3,3 @@ include core.std
 include core.console
 include core.table
 include core.string
-
-["native", "return"="ChronObject", "parameters"="int count, char* args[]"]
-GetLaunchParameters :: (count, args) {
-    argc = c.fromInt(count) - 1
-    result = {}
-
-    for i = 0, argc {
-        Table.Insert(result, c.fromString(emit_c `args[c_int(_V_i)]`))
-    }
-
-    return result
-}

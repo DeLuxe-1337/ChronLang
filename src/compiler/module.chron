@@ -6,6 +6,10 @@ Compiler.Module.Statements = {}
 Compiler.Module.StatementCount = 0
 Compiler.Module.Compiled = {}
 
+Compiler.Module.IsCompiled :: (path) {
+    return Compiler.Module.Compiled[path] != nil
+}
+
 Compiler.Module.Create :: (name) {
     return {"name"=name}
 }

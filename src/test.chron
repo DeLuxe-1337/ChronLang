@@ -1,4 +1,5 @@
 include core.all
+include core.parameters
 
 Assert :: (input, value, message) {
     if input != value {
@@ -213,11 +214,8 @@ CompoundAssignment :: {
     Pass("Compound Assignment")
 }
 
-["native", "parameters"="int count, char* args[]"]
-Main :: (count, args) {
-    parameters = GetLaunchParameters()
-
-    PrintLn(parameters)
+Main :: {
+    PrintLn(LaunchParameters)
     
     defer PrintLn("End of tests")
 

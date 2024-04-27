@@ -1,0 +1,15 @@
+
+include core.c
+include core.table
+include core.std
+
+LaunchParameters = {};
+
+["native", "parameters"="int count, char* args[]"]
+SetLaunchParameters :: (count, args) {
+    argc = c.fromInt(count) - 1
+
+    for i = 0, argc {
+        Table.Insert(LaunchParameters, c.fromString(emit_c `args[c_int(_V_i)]`))
+    }
+}

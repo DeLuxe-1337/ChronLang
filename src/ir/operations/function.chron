@@ -8,7 +8,7 @@ IR.Write.Function :: (context) {
 
     context["block"] = nil
 
-    if accessorName == "main" {
+    if (context["entrypoint"] == true) and (context["native"] == true)  {
         context["globalFunction"] = IR.Variable.WriteGlobals()
     }
 
@@ -38,6 +38,20 @@ IR.Write.Function :: (context) {
 
     IR.Env.Scope.Pop()
     IR.Env.Defer.Pop()
+
+    if (context["entrypoint"] == true) and (context["native"] != true) {
+        globalInitializeFunction = IR.Variable.WriteGlobals()
+
+        IR.Writer.WriteLine("int main(int argc, char* argv[]) { ")
+        
+        IR.Writer.WriteLine(globalInitializeFunction)
+
+        if Compiler.Module.IsCompiled("core/parameters.chron") {
+            IR.Writer.WriteLine("SetLaunchParameters(argc, argv);")
+        }
+
+        IR.Writer.WriteLine("_main(); return 0; }")
+    }
 }
 
 IR.Function.GenerateParameters :: (context) {
@@ -115,8 +129,13 @@ IR.Function.ForwardDeclare :: (context) {
         accessorName = "_F_" + String.Replace(name, ".", "_")
     }
 
-    if name == "Main" {
+    if (name == "Main") or (name == "main") {
         accessorName = "main"
+        context["entrypoint"] = true
+    }
+
+    if (context["entrypoint"] == true) and (context["native"] != true) {
+        accessorName = "_main"
     }
 
     context["accessorName"] = accessorName

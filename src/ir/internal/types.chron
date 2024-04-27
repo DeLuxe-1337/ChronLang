@@ -61,3 +61,5 @@ Functions.ObjectCompareLesstEq = IR.CreateFunctionRaw(Types.ObjectCompareLesstEq
 Functions.ObjectCompareLesst = IR.CreateFunctionRaw(Types.ObjectCompareLesst, true)
 
 Functions.ObjectCompareNot = IR.CreateFunctionRaw(Types.ObjectCompareNot, true)
+
+Functions.XFunction = IR.CreateFunctionRaw("X signature", true)
