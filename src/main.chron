@@ -1,11 +1,20 @@
 include core.all
 include core.file.all
+include core.parameters
 include compiler.module
 
 Main :: {
-    module = Compiler.Module.Create("bootstrap")
+    PrintLn(LaunchParameters)
 
-    Compiler.Module.CompileFromFile("main.chron")
+    entryFile = "main"
+
+    if LaunchParameters[1] != nil {
+        entryFile = LaunchParameters[1]
+    }
+
+    module = Compiler.Module.Create(entryFile)
+
+    Compiler.Module.CompileFromFile(entryFile + ".chron")
     Compiler.Module.WriteStatementsToFile(module)
 
     PrintLn("End of program")

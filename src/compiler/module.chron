@@ -14,15 +14,33 @@ Compiler.Module.Create :: (name) {
     return {"name"=name}
 }
 
+Compiler.Module.FileFetch :: (file) {
+    if File.Exists(file) {
+        return file
+    }
+
+    RootPath = (LaunchParameters[0]) + "/../";
+    RootFile = RootPath + file
+    if File.Exists(RootFile) {
+        return RootFile
+    }
+
+    Throw(file + " could not find file to include")
+
+    return nil
+}
+
 Compiler.Module.CompileFromFile :: (file) {
-    if Compiler.Module.Compiled[file] != nil {
+    if Compiler.Module.IsCompiled(file) {
         PrintLn(file + " is already included")
         return false
     }
 
+    filePath = Compiler.Module.FileFetch(file)
+
     PrintLn("->Lexer:")
 
-    lexerState = Lexer.State.Create(File.Read(file))
+    lexerState = Lexer.State.Create(File.Read(filePath))
 
     tokens = Lexer.GetAllTokens(lexerState)
     // PrintLn(tokens)
