@@ -216,6 +216,10 @@ CompoundAssignment :: {
     Pass("Compound Assignment")
 }
 
+TypedFunction :: (integer: int) {
+    PrintLn(c.fromInt(integer))
+}
+
 Main :: {
     // PrintLn(LaunchParameters)
     

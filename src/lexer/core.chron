@@ -8,6 +8,7 @@ Lexer.SymbolMap = {
     "true"="TRUE", "false"="FALSE",
     ","="COMMA", 
     ";"="SEMICOLON", 
+    ":"="COLON", 
     "!"="EXCLAMATION", 
     "="="EQUAL", 
     ">"="GREATER", 

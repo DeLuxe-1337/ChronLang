@@ -17,7 +17,13 @@ IR.Write.Function :: (context) {
     IR.Env.Defer.Create()
 
     foreach index, param in Table.Iter(parameters) {
-        IR.Env.Scope.Add(param, IR.CreateRawText(param), true)
+        if TypeOf(param) == "table" {
+            IR.Env.Scope.Add(param["value"], IR.CreateRawText(param["value"]), true)
+            PrintLn(param)
+        }
+        else {
+            IR.Env.Scope.Add(param, IR.CreateRawText(param), true)
+        }
     }
     
     IR.Writer.WriteLine(IR.Function.GenerateFunctionHeader(context))
@@ -74,7 +80,11 @@ IR.Function.GenerateParameters :: (context) {
     if parameters != nil {
         build = ""
         foreach index, value in Table.Iter(parameters) {
-            build += (Types.Object + " " + value)
+            if TypeOf(value) == "table" {
+                build += (value["type"] + " " + value["value"])
+            } else {
+                build += (Types.Object + " " + value)
+            }
             if index != (Table.SizeOf(parameters) - 1) {
                 build += ","
             }
