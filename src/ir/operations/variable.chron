@@ -43,7 +43,7 @@ IR.Write.Variable :: (context) {
     }
 }
 
-IR.Variable.WriteGlobals :: {
+IR.Variable.WriteInitializeGlobals :: {
     IR.Writer.WriteLine("void __InitializeGlobals() {")
     IR.Env.Scope.Create()
     foreach index, value in Table.Iter(IR.Variable.Globals) {
@@ -53,6 +53,18 @@ IR.Variable.WriteGlobals :: {
     IR.Writer.WriteLine("}")
 
     return "__InitializeGlobals();"
+}
+
+IR.Variable.WriteReleaseGlobals :: {
+    IR.Writer.WriteLine("void __ReleaseGlobals() {")
+    IR.Env.Scope.Create()
+    foreach index, value in Table.Iter(IR.Variable.Globals) {
+        IR.Write(IR.CreateRelease(value))
+    }
+    IR.Env.Scope.Pop()
+    IR.Writer.WriteLine("}")
+
+    return "__ReleaseGlobals();"
 }
 
 IR.Read.Variable :: (context) {

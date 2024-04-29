@@ -9,7 +9,8 @@ IR.Write.Function :: (context) {
     context["block"] = nil
 
     if (context["entrypoint"] == true) and (context["native"] == true)  {
-        context["globalFunction"] = IR.Variable.WriteGlobals()
+        context["globalFunction"] = IR.Variable.WriteInitializeGlobals()
+        context["globalReleaseFunction"] = IR.Variable.WriteReleaseGlobals()
     }
 
     IR.Env.Scope.Create()
@@ -30,6 +31,10 @@ IR.Write.Function :: (context) {
 
         IR.Write(block)
 
+        if context["globalReleaseFunction"] != nil {
+            IR.Writer.WriteLine(context["globalReleaseFunction"])
+        }
+
         IR.Env.Defer.VisitCurrentScopeWithPop()
         IR.Writer.WriteLine("}")
     } else {
@@ -40,7 +45,8 @@ IR.Write.Function :: (context) {
     IR.Env.Defer.Pop()
 
     if (context["entrypoint"] == true) and (context["native"] != true) {
-        globalInitializeFunction = IR.Variable.WriteGlobals()
+        globalInitializeFunction = IR.Variable.WriteInitializeGlobals()
+        globalReleaseFunction = IR.Variable.WriteReleaseGlobals()
 
         IR.Writer.WriteLine("int main(int argc, char* argv[]) { ")
         
@@ -50,7 +56,11 @@ IR.Write.Function :: (context) {
             IR.Writer.WriteLine("SetLaunchParameters(argc, argv);")
         }
 
-        IR.Writer.WriteLine("_main(); return 0; }")
+        IR.Writer.WriteLine("_main();")
+        
+        IR.Writer.WriteLine(globalReleaseFunction)
+        
+        IR.Writer.WriteLine("return 0; }")
     }
 }
 
