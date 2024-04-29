@@ -20,7 +20,7 @@ Compiler.Module.FileFetch :: (file) {
     }
 
     RootPath = (LaunchParameters[0]) + "/../";
-    RootFile = RootPath + file
+    RootFile = RootPath + file;
     if File.Exists(RootFile) {
         return RootFile
     }
