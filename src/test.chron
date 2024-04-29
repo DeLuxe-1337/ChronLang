@@ -1,5 +1,7 @@
 include core.all
-include core.parameters
+// include core.parameters
+
+GlobalTest = "Hello, world"
 
 Assert :: (input, value, message) {
     if input != value {
@@ -215,9 +217,12 @@ CompoundAssignment :: {
 }
 
 Main :: {
-    PrintLn(LaunchParameters)
+    // PrintLn(LaunchParameters)
     
     defer PrintLn("End of tests")
+
+    PrintLn("Global: " + GlobalTest)
+    defer release GlobalTest
 
     ConditionsTest()
     TableTest()
