@@ -222,6 +222,8 @@ TypedFunction :: (integer: cint) {
 
 Main :: {
     // PrintLn(LaunchParameters)
+
+    typedVariable: object = "Hello, world"
     
     defer PrintLn("End of tests")
 

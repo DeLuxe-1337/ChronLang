@@ -9,6 +9,10 @@ IR.TypeMap = {
     "object"="ChronObject"
 }
 
+IR.Type.SetType(reference, value) {
+    IR.TypeMap[reference] = value
+}
+
 IR.Read.Type :: (context) {
     type = IR.TypeMap[context["name"]]
     if type != nil {

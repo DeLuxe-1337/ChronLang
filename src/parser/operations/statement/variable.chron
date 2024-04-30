@@ -1,5 +1,9 @@
 Parser.Statement.Variable :: (state) {
     target = Parser.Expression(state)
+    typeDef = nil
+    if Parser.State.Match(Parser.State.Peek(state, 2), "EQUAL", nil) {
+        typeDef = Parser.Expression.Type(state)
+    }
 
     if (Parser.State.Match(Parser.State.Get(state), "EQUAL", nil)) {
         Parser.State.Expect(state, "EQUAL", nil, "Expected '='")
@@ -8,7 +12,10 @@ Parser.Statement.Variable :: (state) {
 
         Parser.State.MatchAny(state, {"SEMICOLON"})
 
-        return IR.CreateVariable(target, value)
+        varResult = IR.CreateVariable(target, value)
+        varResult["typeDef"] = typeDef
+
+        return varResult
     }
     return target
 }
