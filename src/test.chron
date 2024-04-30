@@ -133,6 +133,19 @@ IfStatementTest :: {
         pass = false
     }
 
+    if true != true {
+        pass = false
+    } else if false == true {
+        pass = false
+    } else {
+        pass = true
+    }
+
+    if (5 - 4) == 1
+        pass = true
+    else
+        pass = false
+
     if pass == true {
         Pass("If statement")
     } else {
