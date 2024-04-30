@@ -1,9 +1,15 @@
 IR.TypeMap = {
     "cint"="int",
     "cdouble"="double",
+    "cfloat"="float",
     "cstring"="char*",
+    "cchar"="char",
     "cbool"="bool",
     "cnil"="null",
+    "cshort"="short",
+    "clong"="long",
+    "csigned"="signed",
+    "cunsigned"="unsigned",
     "cptr"="void*",
     "void"="ChronVoid",
     "object"="ChronObject"
