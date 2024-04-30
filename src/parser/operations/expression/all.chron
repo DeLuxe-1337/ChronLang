@@ -9,6 +9,7 @@ include parser.operations.expression.comparison
 include parser.operations.expression.unary
 include parser.operations.expression.table
 include parser.operations.expression.invoke
+include parser.operations.expression.type
 include parser.operations.emit_c
 
 Parser.Expression.Primary :: (state) {

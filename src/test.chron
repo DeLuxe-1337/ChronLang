@@ -216,7 +216,7 @@ CompoundAssignment :: {
     Pass("Compound Assignment")
 }
 
-TypedFunction :: (integer: int) {
+TypedFunction :: (integer: cint) {
     PrintLn(c.fromInt(integer))
 }
 

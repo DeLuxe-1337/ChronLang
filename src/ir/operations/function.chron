@@ -19,7 +19,6 @@ IR.Write.Function :: (context) {
     foreach index, param in Table.Iter(parameters) {
         if TypeOf(param) == "table" {
             IR.Env.Scope.Add(param["value"], IR.CreateRawText(param["value"]), true)
-            PrintLn(param)
         }
         else {
             IR.Env.Scope.Add(param, IR.CreateRawText(param), true)
@@ -81,7 +80,7 @@ IR.Function.GenerateParameters :: (context) {
         build = ""
         foreach index, value in Table.Iter(parameters) {
             if TypeOf(value) == "table" {
-                build += (value["type"] + " " + value["value"])
+                build += (IR.Read(value["type"]) + " " + value["value"])
             } else {
                 build += (Types.Object + " " + value)
             }

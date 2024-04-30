@@ -1,0 +1,25 @@
+IR.TypeMap = {
+    "cint"="int",
+    "cdouble"="double",
+    "cstring"="char*",
+    "cbool"="bool",
+    "cnil"="null",
+    "cptr"="void*",
+    "void"="ChronVoid",
+    "object"="ChronObject"
+}
+
+IR.Read.Type :: (context) {
+    type = IR.TypeMap[context["name"]]
+    if type != nil {
+        return Clone(type)
+    }
+
+    Throw(context["name"] + " is not a valid type...")
+
+    return nil
+}
+
+IR.CreateType :: (name) {
+    return {"type"="Type", "name"=name}
+}

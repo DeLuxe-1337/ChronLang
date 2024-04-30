@@ -46,6 +46,7 @@ ReadMap = {
     "Comparison.And"=IR.Read.Comparison.And,
     "Comparison.Not"=IR.Read.Comparison.Not,
     "Variable"=IR.Read.Variable,
+    "Type"=IR.Read.Type,
     "Grouping"=IR.Read.Grouping
 }
 
