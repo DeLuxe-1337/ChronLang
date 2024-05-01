@@ -39,9 +39,12 @@ Parser.Statement.Function :: (state) {
             Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
         }
 
+        returnTypeDef = Parser.Expression.Type(state)
+
         block = Parser.Statement.Block(state)
         function = IR.CreateFunction(name, block, parameters)
 
+        function["returnTypeDef"] = returnTypeDef
         function["overrideName"] = OverrideName
 
         if Modifiers["name"] != nil {

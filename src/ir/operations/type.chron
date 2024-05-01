@@ -15,7 +15,7 @@ IR.TypeMap = {
     "object"="ChronObject"
 }
 
-IR.Type.SetType(reference, value) {
+IR.Type.SetType :: (reference, value) {
     IR.TypeMap[reference] = value
 }
 

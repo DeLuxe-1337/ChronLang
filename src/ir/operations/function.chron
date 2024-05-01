@@ -95,6 +95,10 @@ IR.Function.GenerateParameters :: (context) {
 }
 
 IR.Function.GenerateReturn :: (context) {
+    if context["returnTypeDef"] != nil {
+        return IR.Read(context["returnTypeDef"])
+    }
+
     if context["native"] == true {
         return Clone(context["nativeReturn"])
     }
