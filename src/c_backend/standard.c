@@ -274,6 +274,18 @@ ChronObject DynObjectNot(ChronObject o)
     return DynBoolean(!left->data.boolean);
 }
 
+ChronObject DynObjectNegative(ChronObject o)
+{
+    DynObject *left = o->Object;
+
+    if (left->type != vinteger)
+    {
+        return DynNil();
+    }
+
+    return DynInteger(-left->data.integer);
+}
+
 ChronObject TypeOf(ChronObject left)
 {
     const char *typeStr;

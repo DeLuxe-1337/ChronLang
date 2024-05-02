@@ -1,10 +1,14 @@
 Parser.Expression.Unary :: (state) {
-    if (Parser.State.MatchAny(state, {"EXCLAMATION"})) {
+    if Parser.State.MatchAny(state, {"EXCLAMATION", "MINUS"}) {
         operator = Parser.State.Previous(state)["type"]
         right = Parser.Expression.Unary(state)
         
         if operator == "EXCLAMATION" {
             return IR.CreateCompareNot(right)
+        }
+
+        if operator == "MINUS" {
+            return IR.CreateNegate(right)
         }
     }
 

@@ -7,8 +7,7 @@
 typedef struct
 {
   void *Object;
-  // void *(*deallocate)(ChronObject);
-  void (*deallocate)(void*);
+  void (*deallocate)(void *);
 } AllocatedObject;
 
 typedef AllocatedObject *ChronObject;

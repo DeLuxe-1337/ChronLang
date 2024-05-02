@@ -47,7 +47,8 @@ ReadMap = {
     "Comparison.Not"=IR.Read.Comparison.Not,
     "Variable"=IR.Read.Variable,
     "Type"=IR.Read.Type,
-    "Grouping"=IR.Read.Grouping
+    "Grouping"=IR.Read.Grouping,
+    "Negative"=IR.Read.Negative
 }
 
 InvokableMap = {

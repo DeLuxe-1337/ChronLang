@@ -1,65 +1,68 @@
-Types.CreateString = "DynString"
-Types.CreateInt = "DynInteger"
-Types.CreateBoolean = "DynBoolean"
-Types.CreateTable = "DynTable"
-Types.CreateNil = "DynNil"
-Types.CreateFunction = "DynFunction"
-Types.ObjectAdd = "DynObjectAdd"
-Types.ObjectSub = "DynObjectSub"
-Types.ObjectDiv = "DynObjectDiv"
-Types.ObjectMul = "DynObjectMul"
-Types.ObjectModulus = "DynObjectMod"
-Types.MemoryRelease = "MemoryContext_Release"
-Types.Iterator = "Iterator*"
-Types.GetRef = "GetRef"
+Types.CreateString = "DynString";
+Types.CreateInt = "DynInteger";
+Types.CreateBoolean = "DynBoolean";
+Types.CreateTable = "DynTable";
+Types.CreateNil = "DynNil";
+Types.CreateFunction = "DynFunction";
+Types.ObjectAdd = "DynObjectAdd";
+Types.ObjectSub = "DynObjectSub";
+Types.ObjectDiv = "DynObjectDiv";
+Types.ObjectMul = "DynObjectMul";
+Types.ObjectModulus = "DynObjectMod";
+Types.MemoryRelease = "MemoryContext_Release";
+Types.Iterator = "Iterator*";
+Types.GetRef = "GetRef";
 
-Types.ObjectCompareEq = "DynObjectCompareEq"
+Types.ObjectCompareEq = "DynObjectCompareEq";
 Types.ObjectCompareNEq = "DynObjectCompareNEq"
-Types.ObjectCompareOr = "DynObjectCompareOr"
-Types.ObjectCompareAnd = "DynObjectCompareAnd"
+Types.ObjectCompareOr = "DynObjectCompareOr";
+Types.ObjectCompareAnd = "DynObjectCompareAnd";
 
-Types.ObjectCompareGrt = "DynObjectCompareGrt"
-Types.ObjectCompareGrtEq = "DynObjectCompareGrtEq"
-Types.ObjectCompareLesstEq = "DynObjectCompareLesstEq"
-Types.ObjectCompareLesst = "DynObjectCompareLesst"
+Types.ObjectCompareGrt = "DynObjectCompareGrt";
+Types.ObjectCompareGrtEq = "DynObjectCompareGrtEq";
+Types.ObjectCompareLesstEq = "DynObjectCompareLesstEq";
+Types.ObjectCompareLesst = "DynObjectCompareLesst";
 
-Types.GetBooleanFromObject = "GetBoolean"
+Types.GetBooleanFromObject = "GetBoolean";
 
-Types.ObjectCompareNot = "DynObjectNot"
+Types.ObjectNegative = "DynObjectNegative";
+Types.ObjectCompareNot = "DynObjectNot";
 
-Types.Void = "ChronVoid"
-Types.Object = "ChronObject"
+Types.Void = "ChronVoid";
+Types.Object = "ChronObject";
 
-Types.SetDynamicTable = "SetDynamicTable"
-Types.IndexDynamicTable = "IndexDynamicTable"
+Types.SetDynamicTable = "SetDynamicTable";
+Types.IndexDynamicTable = "IndexDynamicTable";
 
-Functions.SetDynamicTable = IR.CreateFunctionRaw(Types.SetDynamicTable, true)
-Functions.IndexDynamicTable = IR.CreateFunctionRaw(Types.IndexDynamicTable, true)
+Functions.SetDynamicTable = IR.CreateFunctionRaw(Types.SetDynamicTable, true);
+Functions.IndexDynamicTable = IR.CreateFunctionRaw(Types.IndexDynamicTable, true);
 
-Functions.CreateString = IR.CreateFunctionRaw(Types.CreateString, true)
-Functions.CreateInt = IR.CreateFunctionRaw(Types.CreateInt, true)
-Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true)
-Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true)
-Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true)
-Functions.CreateFunction = IR.CreateFunctionRaw(Types.CreateFunction, true)
-Functions.MemoryRelease = IR.CreateFunctionRaw(Types.MemoryRelease, true)
+Functions.ObjectNegative = IR.CreateFunctionRaw(Types.ObjectNegative, true);
 
-Functions.ObjectCompareEq = IR.CreateFunctionRaw(Types.ObjectCompareEq, true)
-Functions.ObjectCompareNEq = IR.CreateFunctionRaw(Types.ObjectCompareNEq, true)
-Functions.ObjectCompareOr = IR.CreateFunctionRaw(Types.ObjectCompareOr, true)
-Functions.ObjectCompareAnd = IR.CreateFunctionRaw(Types.ObjectCompareAnd, true)
+Functions.CreateString = IR.CreateFunctionRaw(Types.CreateString, true);
+Functions.CreateInt = IR.CreateFunctionRaw(Types.CreateInt, true);
+Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true);
+Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true);
+Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true);
+Functions.CreateFunction = IR.CreateFunctionRaw(Types.CreateFunction, true);
+Functions.MemoryRelease = IR.CreateFunctionRaw(Types.MemoryRelease, true);
 
-Functions.ObjectAdd = IR.CreateFunctionRaw(Types.ObjectAdd, true)
-Functions.ObjectSub = IR.CreateFunctionRaw(Types.ObjectSub, true)
-Functions.ObjectDiv = IR.CreateFunctionRaw(Types.ObjectDiv, true)
-Functions.ObjectMul = IR.CreateFunctionRaw(Types.ObjectMul, true)
-Functions.ObjectModulus = IR.CreateFunctionRaw(Types.ObjectModulus, true)
+Functions.ObjectCompareEq = IR.CreateFunctionRaw(Types.ObjectCompareEq, true);
+Functions.ObjectCompareNEq = IR.CreateFunctionRaw(Types.ObjectCompareNEq, true);
+Functions.ObjectCompareOr = IR.CreateFunctionRaw(Types.ObjectCompareOr, true);
+Functions.ObjectCompareAnd = IR.CreateFunctionRaw(Types.ObjectCompareAnd, true);
 
-Functions.ObjectCompareGrt = IR.CreateFunctionRaw(Types.ObjectCompareGrt, true)
-Functions.ObjectCompareGrtEq = IR.CreateFunctionRaw(Types.ObjectCompareGrtEq, true)
-Functions.ObjectCompareLesstEq = IR.CreateFunctionRaw(Types.ObjectCompareLesstEq, true)
-Functions.ObjectCompareLesst = IR.CreateFunctionRaw(Types.ObjectCompareLesst, true)
+Functions.ObjectAdd = IR.CreateFunctionRaw(Types.ObjectAdd, true);
+Functions.ObjectSub = IR.CreateFunctionRaw(Types.ObjectSub, true);
+Functions.ObjectDiv = IR.CreateFunctionRaw(Types.ObjectDiv, true);
+Functions.ObjectMul = IR.CreateFunctionRaw(Types.ObjectMul, true);
+Functions.ObjectModulus = IR.CreateFunctionRaw(Types.ObjectModulus, true);
 
-Functions.ObjectCompareNot = IR.CreateFunctionRaw(Types.ObjectCompareNot, true)
+Functions.ObjectCompareGrt = IR.CreateFunctionRaw(Types.ObjectCompareGrt, true);
+Functions.ObjectCompareGrtEq = IR.CreateFunctionRaw(Types.ObjectCompareGrtEq, true);
+Functions.ObjectCompareLesstEq = IR.CreateFunctionRaw(Types.ObjectCompareLesstEq, true);
+Functions.ObjectCompareLesst = IR.CreateFunctionRaw(Types.ObjectCompareLesst, true);
 
-Functions.XFunction = IR.CreateFunctionRaw("X signature", true)
+Functions.ObjectCompareNot = IR.CreateFunctionRaw(Types.ObjectCompareNot, true);
+
+Functions.XFunction = IR.CreateFunctionRaw("X signature", true);
