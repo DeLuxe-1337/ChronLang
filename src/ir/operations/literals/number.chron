@@ -4,6 +4,10 @@ IR.Read.Literals.Number :: (context) {
     invokeParameters = {IR.CreateRawText(value)}
     invokeCreateInt = IR.CreateInvoke(Functions.CreateInt, invokeParameters)
 
+    if String.Contains(ToString(value), ".") {
+        invokeCreateInt = IR.CreateInvoke(Functions.CreateNumber, invokeParameters)
+    }
+
     return IR.Read(invokeCreateInt)
 }
 

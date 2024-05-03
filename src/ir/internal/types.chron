@@ -1,5 +1,6 @@
 Types.CreateString = "DynString";
 Types.CreateInt = "DynInteger";
+Types.CreateNumber = "DynNumber";
 Types.CreateBoolean = "DynBoolean";
 Types.CreateTable = "DynTable";
 Types.CreateNil = "DynNil";
@@ -41,6 +42,7 @@ Functions.ObjectNegative = IR.CreateFunctionRaw(Types.ObjectNegative, true);
 
 Functions.CreateString = IR.CreateFunctionRaw(Types.CreateString, true);
 Functions.CreateInt = IR.CreateFunctionRaw(Types.CreateInt, true);
+Functions.CreateNumber = IR.CreateFunctionRaw(Types.CreateNumber, true);
 Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true);
 Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true);
 Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true);

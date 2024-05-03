@@ -260,6 +260,15 @@ ChronObject DynInteger(int i)
     return GC_obj;
 }
 
+ChronObject DynNumber(double i) {
+    newObject(obj, DynObject);
+
+    _VO_obj->data.number = i;
+    _VO_obj->type = vnumber;
+
+    return GC_obj;
+}
+
 ChronObject DynBoolean(bool boolean)
 {
     newObject(obj, DynObject);
