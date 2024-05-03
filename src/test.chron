@@ -105,6 +105,9 @@ UnaryTest :: { // Todo: Implement negative
     x = false
     Assert(!x, true, "line 102")
 
+    y = 10
+    Assert(ToString(-y), "-10", "line 108")
+
     Pass("Unary test")
 }
 
@@ -229,8 +232,18 @@ CompoundAssignment :: {
     Pass("Compound Assignment")
 }
 
-TypedFunction :: (integer: cint) {
-    PrintLn(c.fromInt(integer))
+TypedFunction :: (): cint {
+    return c.int(5 + 5)
+}
+
+DecimalTest :: {
+    Assert(ToString(5.2), "5.200000", "line 240")
+    Assert(1.5 + 1.5, 3, "line 241")
+    Assert(5 / 2, 2, "line 243")
+    Assert(5.2 == 5.2, true, "line 244")
+    Assert(5.2 == 5.1, false, "line 245")
+
+    Pass("Decimal numbers")
 }
 
 Main :: {
@@ -256,6 +269,7 @@ Main :: {
     RuntimeInvokeTest()
     FibonacciTest()
     CompoundAssignment()
+    DecimalTest()
 }
 
 //Everything is now passing
