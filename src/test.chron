@@ -255,6 +255,12 @@ VariableTest :: {
     Pass("Variable")
 }
 
+MyStruct :: struct(a, b: cint)
+
+StructTest :: (this: MyStruct) {
+    
+}
+
 Main :: {
     // PrintLn(LaunchParameters)
 

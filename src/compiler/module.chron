@@ -71,6 +71,8 @@ Compiler.Module.WriteStatementsToFile :: (module) {
         foreach index, statement in Table.Iter(statementTable) {
             if statement["type"] == "Function" {
                 IR.Function.ForwardDeclare(statement)
+            } else if statement["type"] == "Struct" {
+                IR.Struct.ForwardDeclare(statement)
             }
         }
     }

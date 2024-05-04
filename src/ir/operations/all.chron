@@ -4,6 +4,7 @@ include ir.operations.literals.boolean
 include ir.operations.literals.nil
 include ir.operations.literals.raw
 include ir.operations.function
+include ir.operations.struct
 include ir.operations.block
 include ir.operations.scoped_block
 include ir.operations.invoke

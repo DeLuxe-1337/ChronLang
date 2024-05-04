@@ -1,5 +1,6 @@
 WriteMap = {
     "Function"=IR.Write.Function, 
+    "Struct"=IR.Write.Struct, 
     "Block"=IR.Write.Block, 
     "Invoke"=IR.Write.Invoke, 
     "EnvironmentAccessor"=IR.Write.EnvironmentAccessor, 
