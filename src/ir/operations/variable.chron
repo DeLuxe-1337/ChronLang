@@ -42,7 +42,7 @@ IR.Write.Variable :: (context) {
         IR.Env.Scope.Add(varName, context, true)
     } else {
         variable = IR.Env.Scope.GetFirst(varName)
-        if (variable["expression"])["autoRelease"] == true {
+        if ((variable["expression"])["autoRelease"] == true) and (IR.Env.Scope.CurrentIndex != 0) {
             tmpVariable = IR.CreateTempVariable("VARIABLE_ASSIGN_TEMP", expression)
             IR.Write(tmpVariable)
             IR.Write(IR.CreateRelease(context))
