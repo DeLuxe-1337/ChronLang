@@ -32,7 +32,7 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
     if (left->type == vstring)
     {
         int len = strlen(left->data.str) + strlen(right->data.str) + 1;
-        char *result = (char *)malloc(len * sizeof(char));
+        char *result = (char *)malloc(len);
 
         if (result == NULL)
         {
@@ -495,21 +495,21 @@ ChronObject ToString(ChronObject item)
         return DynString(obj->data.boolean ? "true" : "false");
     case vnumber:
     {
-        int size = snprintf(NULL, 0, "%f", obj->data.number) +
-                   1; // Determine the required size
-        char *str =
-            (char *)malloc(size * sizeof(char));     // Dynamically allocate memory
-        snprintf(str, size, "%f", obj->data.number); // Convert number to string
-        return DynString(str);
+        int size = snprintf(NULL, 0, "%f", obj->data.number) + 1; // Determine the required size
+        char *str = (char *)malloc(size * sizeof(char));          // Dynamically allocate memory
+        snprintf(str, size, "%f", obj->data.number);              // Convert number to string
+        ChronObject result = DynString(str);
+        free(str); // Free allocated memory
+        return result;
     }
     case vinteger:
     {
-        int size = snprintf(NULL, 0, "%d", obj->data.integer) +
-                   1; // Determine the required size
-        char *str =
-            (char *)malloc(size * sizeof(char));      // Dynamically allocate memory
-        snprintf(str, size, "%d", obj->data.integer); // Convert integer to string
-        return DynString(str);
+        int size = snprintf(NULL, 0, "%d", obj->data.integer) + 1; // Determine the required size
+        char *str = (char *)malloc(size * sizeof(char));           // Dynamically allocate memory
+        snprintf(str, size, "%d", obj->data.integer);              // Convert integer to string
+        ChronObject result = DynString(str);
+        free(str); // Free allocated memory
+        return result;
     }
     case vtable:
     {

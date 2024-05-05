@@ -183,9 +183,9 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
 
     if (tableObject->type != vtable)
     {
-        void* result = ToString(o);
-        void* i = ToString(index);
-        void* v = ToString(value);
+        void *result = ToString(o);
+        void *i = ToString(index);
+        void *v = ToString(value);
         printf("Runtime warning: attempting to set value on Table=%s Index=%s Value=%s\n", c_string(result), c_string(i), c_string(v));
         MemoryContext_Release(result);
         MemoryContext_Release(i);
@@ -204,8 +204,8 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
 
     if (tableObject->type != vtable)
     {
-        void* result = ToString(o);
-        void* i = ToString(index);
+        void *result = ToString(o);
+        void *i = ToString(index);
         printf("Runtime warning: attempting to index on Table=%s Index=%s \n", c_string(result), c_string(i));
         MemoryContext_Release(result);
         MemoryContext_Release(i);
@@ -260,7 +260,8 @@ ChronObject DynInteger(int i)
     return GC_obj;
 }
 
-ChronObject DynNumber(double i) {
+ChronObject DynNumber(double i)
+{
     newObject(obj, DynObject);
 
     _VO_obj->data.number = i;

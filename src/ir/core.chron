@@ -87,3 +87,7 @@ IR.Invokable :: (node) {
 
     return nil
 }
+
+IR.Throw :: (message) {
+    Throw("IR Error: " + ToString(message))
+}
