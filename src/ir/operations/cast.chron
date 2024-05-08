@@ -1,0 +1,9 @@
+IR.Read.Cast :: (context) {
+    build = "(" + IR.Read(context["dataType"]) + ")" + IR.Read(context["expression"]);
+    
+    return build
+}
+
+IR.CreateCast :: (expression, type) {
+    return {"expression"=expression, "dataType"=type, "type"="Cast"}
+}

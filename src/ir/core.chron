@@ -49,6 +49,8 @@ ReadMap = {
     "Variable"=IR.Read.Variable,
     "Type"=IR.Read.Type,
     "Grouping"=IR.Read.Grouping,
+    "Cast"=IR.Read.Cast,
+    "CastPtr"=IR.Read.CastPtr,
     "Negative"=IR.Read.Negative
 }
 
@@ -61,6 +63,8 @@ IR.Write :: (node) {
     type = node["type"]
     visiter = WriteMap[type]
 
+    PrintLn("Write " + type)
+
     if visiter != nil {
         invoke IR.Write visiter(node)
     }
@@ -70,6 +74,7 @@ IR.Read :: (node) {
     type = node["type"]
     visiter = ReadMap[type]
     
+    PrintLn("Read " + type)
     if visiter != nil {
         return invoke IR.Read visiter(node)
     }

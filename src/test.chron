@@ -257,8 +257,9 @@ VariableTest :: {
 
 MyStruct :: struct(a, b: cint)
 
-StructTest :: (this: MyStruct) {
-    
+StructTest :: (this) {
+    notValidCast = cast<MyStruct>(this)
+    myStructValidCast = cast_ptr<MyStruct>(this)
 }
 
 Main :: {

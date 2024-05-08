@@ -10,6 +10,7 @@ include parser.operations.expression.unary
 include parser.operations.expression.table
 include parser.operations.expression.invoke
 include parser.operations.expression.type
+include parser.operations.expression.cast
 include parser.operations.emit_c
 
 Parser.Expression.Primary :: (state) {
@@ -26,6 +27,9 @@ Parser.Expression.Primary :: (state) {
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Identifier(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.Cast(state)
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Table(state)

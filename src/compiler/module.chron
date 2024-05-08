@@ -82,8 +82,6 @@ Compiler.Module.WriteStatementsToFile :: (module) {
         foreach index, statement in Table.Iter(statementTable) {
             IR.Write(statement)
         }
-
-        release statementTable
     }
 
     PrintLn("Closing file")

@@ -1,0 +1,9 @@
+IR.Read.CastPtr :: (context) {
+    build = "(" + IR.Read(context["dataType"]) + ")c_pointer(" + IR.Read(context["expression"]) + ")";
+    
+    return build
+}
+
+IR.CreateCastPtr :: (expression, type) {
+    return {"expression"=expression, "dataType"=type, "type"="CastPtr"}
+}
