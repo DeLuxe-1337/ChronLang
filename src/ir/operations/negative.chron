@@ -1,0 +1,10 @@
+IR.Read.Negative :: (context) {
+    invokeParameters = {context["right"]}
+    invokeCreate = IR.CreateInvoke(Functions.ObjectNegative, invokeParameters)
+
+    return IR.Read(invokeCreate)
+}
+
+IR.CreateNegate :: (right) {
+    return {"right"=right, "autoRelease"=true, "type"="Negative"}
+}

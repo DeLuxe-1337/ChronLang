@@ -4,6 +4,7 @@ include ir.operations.literals.boolean
 include ir.operations.literals.nil
 include ir.operations.literals.raw
 include ir.operations.function
+include ir.operations.struct
 include ir.operations.block
 include ir.operations.scoped_block
 include ir.operations.invoke
@@ -23,6 +24,10 @@ include ir.operations.for_to
 include ir.operations.grouping
 include ir.operations.table
 include ir.operations.table_accessor
+include ir.operations.type
+include ir.operations.negative
+include ir.operations.cast
+include ir.operations.cast_ptr
 include ir.operations.math.add
 include ir.operations.math.sub
 include ir.operations.math.div

@@ -1,0 +1,30 @@
+IR.Write.Struct :: (context) {
+    name = Clone(context["name"])
+    accessorName = Clone(context["accessorName"])
+    parameters = Clone(context["parameters"])
+
+    IR.Writer.WriteLine("struct " + accessorName + " {")
+
+    foreach index, param in Table.Iter(parameters) {
+        if TypeOf(param) == "table" {
+            IR.Writer.WriteLine(IR.Read(param["type"]) + " " + param["value"] + ";")
+        } else {
+            IR.Writer.WriteLine(Types.Object + " " + param + ";")
+        }
+    }
+    
+    IR.Writer.WriteLine("};")
+}
+
+IR.Struct.ForwardDeclare :: (context) {
+    name = Clone(context["name"])
+    accessorName = Clone(context["accessorName"])
+    
+    IR.Writer.WriteLine("typedef struct " + accessorName + " " + accessorName + ";")
+    IR.Type.SetType(name, accessorName + "*")
+}
+
+IR.CreateStruct :: (name, parameters) {
+    accessorName = "_S_" + name
+    return {"name"=name, "accessorName"=accessorName, "parameters"=parameters, "type"="Struct"}
+}

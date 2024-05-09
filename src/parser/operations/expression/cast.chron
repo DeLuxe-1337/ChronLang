@@ -1,0 +1,21 @@
+Parser.Expression.Cast :: (state) {
+    if Parser.State.MatchAny(state, {"CAST", "CASTPTR"}) {
+        castType = Parser.State.Previous(state)
+
+        Parser.State.Expect(state, "LESS", nil, "Expected '<' type definition")
+        type = Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected IDENTIFIER for type definition")["value"]
+        Parser.State.Expect(state, "GREATER", nil, "Expected '>' to end type definition")
+
+        Parser.State.Expect(state, "LPAREN", nil, "Expected '(' to encase target")
+        expression = Parser.Expression(state)
+        Parser.State.Expect(state, "RPAREN", nil, "Expected ')' to encase target")
+
+        if Parser.State.Match(castType, "CASTPTR", nil) {
+            return IR.CreateCastPtr(expression, IR.CreateType(type))
+        }
+
+        return IR.CreateCast(expression, IR.CreateType(type))
+    }
+
+    return nil
+}

@@ -18,6 +18,7 @@ ChronObject DynObjectDiv(ChronObject left, ChronObject right);
 ChronObject DynObjectMul(ChronObject left, ChronObject right);
 ChronObject DynObjectMod(ChronObject left, ChronObject right);
 ChronObject DynObjectNot(ChronObject o);
+ChronObject DynObjectNegative(ChronObject o);
 ChronObject TypeOf(ChronObject obj);
 ChronObject Add(ChronObject left, ChronObject right);
 ChronObject ToString(ChronObject input);

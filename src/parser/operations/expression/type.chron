@@ -1,0 +1,9 @@
+Parser.Expression.Type :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "COLON", nil) {
+        Parser.State.Expect(state, "COLON", nil, "Expected ';'")
+
+        typeIdentifier = Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected IDENTIFIER for type definition")
+        return IR.CreateType(typeIdentifier["value"])
+    }
+    return nil
+}

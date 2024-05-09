@@ -66,6 +66,7 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index);
 ChronObject DynString(const char* str);
 ChronObject DynChar(char c);
 ChronObject DynInteger(int i);
+ChronObject DynNumber(double i);
 ChronObject DynBoolean(bool boolean);
 ChronObject DynNil();
 ChronObject DynTable();

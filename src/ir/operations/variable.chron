@@ -9,9 +9,15 @@ IR.Write.Variable :: (context) {
     varName = context["name"]
     accessorName = context["accessorName"]
 
+    type = "void*"
+
+    if context["typeDef"] != nil {
+        type = IR.Read(context["typeDef"])
+    }
+
     if IR.Env.Scope.CurrentIndex == 0 { // Global because it's not in any scopes
         Table.Insert(IR.Variable.Globals, context)
-        IR.Writer.WriteLine("void* " + accessorName + ";")
+        IR.Writer.WriteLine(type + " " + accessorName + ";")
         IR.Env.Scope.Add(varName, context, true)
         return
     }
@@ -27,7 +33,7 @@ IR.Write.Variable :: (context) {
     }
 
     if IR.Env.Scope.GetFirst(varName) == nil {
-        IR.Writer.WriteLine("void* " + accessorName + " = " + IR.Read(expression) + ";")
+        IR.Writer.WriteLine(type + " " + accessorName + " = " + IR.Read(expression) + ";")
         if (context["autoReleaseExpression"] == true) and (expression["autoRelease"] == true) {
             context["deferIndex"] = IR.Env.Defer.Push(
                 context

@@ -105,6 +105,9 @@ UnaryTest :: { // Todo: Implement negative
     x = false
     Assert(!x, true, "line 102")
 
+    y = 10
+    Assert(ToString(-y), "-10", "line 108")
+
     Pass("Unary test")
 }
 
@@ -132,6 +135,19 @@ IfStatementTest :: {
     } else {
         pass = false
     }
+
+    if true != true {
+        pass = false
+    } else if false == true {
+        pass = false
+    } else {
+        pass = true
+    }
+
+    if (5 - 4) == 1
+        pass = true
+    else
+        pass = false
 
     if pass == true {
         Pass("If statement")
@@ -216,8 +232,40 @@ CompoundAssignment :: {
     Pass("Compound Assignment")
 }
 
+TypedFunction :: (): cint {
+    return c.int(5 + 5)
+}
+
+DecimalTest :: {
+    Assert(ToString(5.2), "5.200000", "line 240")
+    Assert(1.5 + 1.5, 3, "line 241")
+    Assert(5 / 2, 2, "line 243")
+    Assert(5.2 == 5.2, true, "line 244")
+    Assert(5.2 == 5.1, false, "line 245")
+
+    Pass("Decimal numbers")
+}
+
+VariableTest :: {
+    x = 100
+    y = x
+
+    Assert(x, y, "line 253")
+
+    Pass("Variable")
+}
+
+MyStruct :: struct(a, b: cint)
+
+StructTest :: (this) {
+    notValidCast = cast<MyStruct>(this) //This won't be valid in the current usage because `this` is an object, so a direct cast of object to such isn't valid...
+    myStructValidCast = cast_ptr<MyStruct>(this) // This is valid because it casts the pointer that the object is holding...
+}
+
 Main :: {
     // PrintLn(LaunchParameters)
+
+    typedVariable: object = "Hello, world"
     
     defer PrintLn("End of tests")
 
@@ -237,8 +285,8 @@ Main :: {
     RuntimeInvokeTest()
     FibonacciTest()
     CompoundAssignment()
+    DecimalTest()
+    VariableTest()
 }
 
 //Everything is now passing
-
-// In short, I have to add decimal numbers, unary negative.

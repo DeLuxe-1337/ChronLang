@@ -22,6 +22,9 @@ IR.Invoke.FormatParameters :: (context) {
 
     if parameters != nil {
         foreach index, value in Table.Iter(parameters) {
+            if value == nil {
+                IR.Throw("Inovke parameter generation error.\n" + ToString(context))
+            }
             if value["type"] == "Table" {
                 tableTemp = IR.CreateTempVariable("TABLE_CALL_T", value)
                 IR.Write(tableTemp)

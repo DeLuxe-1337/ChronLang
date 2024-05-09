@@ -9,6 +9,21 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
 
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynNumber(left->data.number + right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynNumber(left->data.number + right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynNumber(right->data.number + left->data.integer);
+    }
+
     if (left->type != right->type)
     {
         return DynInteger(0);
@@ -17,7 +32,7 @@ ChronObject DynObjectAdd(ChronObject o1, ChronObject o2)
     if (left->type == vstring)
     {
         int len = strlen(left->data.str) + strlen(right->data.str) + 1;
-        char *result = (char *)malloc(len * sizeof(char));
+        char *result = (char *)malloc(len);
 
         if (result == NULL)
         {
@@ -43,6 +58,21 @@ ChronObject DynObjectSub(ChronObject o1, ChronObject o2)
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
 
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynNumber(left->data.number - right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynNumber(left->data.number - right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynNumber(right->data.number - left->data.integer);
+    }
+
     if (left->type != right->type)
     {
         return DynInteger(0);
@@ -60,6 +90,21 @@ ChronObject DynObjectDiv(ChronObject o1, ChronObject o2)
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
 
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynNumber(left->data.number / right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynNumber(left->data.number / right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynNumber(right->data.number / left->data.integer);
+    }
+
     if (left->type != right->type)
     {
         return DynInteger(0);
@@ -76,6 +121,21 @@ ChronObject DynObjectMul(ChronObject o1, ChronObject o2)
 {
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
+
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynNumber(left->data.number * right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynNumber(left->data.number * right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynNumber(right->data.number * left->data.integer);
+    }
 
     if (left->type != right->type)
     {
@@ -111,6 +171,21 @@ ChronObject DynObjectCompareGrt(ChronObject o1, ChronObject o2)
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
 
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynBoolean(left->data.number > right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynBoolean(left->data.number > right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynBoolean(right->data.number > left->data.integer);
+    }
+
     if (left->type != right->type)
     {
         return DynBoolean(false);
@@ -127,6 +202,21 @@ ChronObject DynObjectCompareGrtEq(ChronObject o1, ChronObject o2)
 {
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
+
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynBoolean(left->data.number >= right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynBoolean(left->data.number >= right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynBoolean(right->data.number >= left->data.integer);
+    }
 
     if (left->type != right->type)
     {
@@ -145,6 +235,21 @@ ChronObject DynObjectCompareLesstEq(ChronObject o1, ChronObject o2)
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
 
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynBoolean(left->data.number <= right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynBoolean(left->data.number <= right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynBoolean(right->data.number <= left->data.integer);
+    }
+
     if (left->type != right->type)
     {
         return DynBoolean(false);
@@ -162,6 +267,21 @@ ChronObject DynObjectCompareLesst(ChronObject o1, ChronObject o2)
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
 
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynBoolean(left->data.number < right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynBoolean(left->data.number < right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynBoolean(right->data.number < left->data.integer);
+    }
+
     if (left->type != right->type)
     {
         return DynBoolean(false);
@@ -178,6 +298,21 @@ ChronObject DynObjectCompareEq(ChronObject o1, ChronObject o2)
 {
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
+
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynBoolean(left->data.number == right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynBoolean(left->data.number == right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynBoolean(right->data.number == left->data.integer);
+    }
 
     if (left->type != right->type)
     {
@@ -210,6 +345,21 @@ ChronObject DynObjectCompareNEq(ChronObject o1, ChronObject o2)
 {
     DynObject *left = o1->Object;
     DynObject *right = o2->Object;
+
+    if (left->type == vnumber && right->type == vnumber)
+    {
+        return DynBoolean(left->data.number != right->data.number);
+    }
+
+    if (left->type == vnumber && right->type == vinteger)
+    {
+        return DynBoolean(left->data.number != right->data.integer);
+    }
+
+    if (right->type == vnumber && left->type == vinteger)
+    {
+        return DynBoolean(right->data.number != left->data.integer);
+    }
 
     if (left->type != right->type)
     {
@@ -274,6 +424,23 @@ ChronObject DynObjectNot(ChronObject o)
     return DynBoolean(!left->data.boolean);
 }
 
+ChronObject DynObjectNegative(ChronObject o)
+{
+    DynObject *left = o->Object;
+
+    if (left->type == vnumber)
+    {
+        return DynInteger(-left->data.number);
+    }
+
+    if (left->type == vinteger)
+    {
+        return DynInteger(-left->data.integer);
+    }
+
+    return DynNil();
+}
+
 ChronObject TypeOf(ChronObject left)
 {
     const char *typeStr;
@@ -328,21 +495,21 @@ ChronObject ToString(ChronObject item)
         return DynString(obj->data.boolean ? "true" : "false");
     case vnumber:
     {
-        int size = snprintf(NULL, 0, "%f", obj->data.number) +
-                   1; // Determine the required size
-        char *str =
-            (char *)malloc(size * sizeof(char));     // Dynamically allocate memory
-        snprintf(str, size, "%f", obj->data.number); // Convert number to string
-        return DynString(str);
+        int size = snprintf(NULL, 0, "%f", obj->data.number) + 1; // Determine the required size
+        char *str = (char *)malloc(size * sizeof(char));          // Dynamically allocate memory
+        snprintf(str, size, "%f", obj->data.number);              // Convert number to string
+        ChronObject result = DynString(str);
+        free(str); // Free allocated memory
+        return result;
     }
     case vinteger:
     {
-        int size = snprintf(NULL, 0, "%d", obj->data.integer) +
-                   1; // Determine the required size
-        char *str =
-            (char *)malloc(size * sizeof(char));      // Dynamically allocate memory
-        snprintf(str, size, "%d", obj->data.integer); // Convert integer to string
-        return DynString(str);
+        int size = snprintf(NULL, 0, "%d", obj->data.integer) + 1; // Determine the required size
+        char *str = (char *)malloc(size * sizeof(char));           // Dynamically allocate memory
+        snprintf(str, size, "%d", obj->data.integer);              // Convert integer to string
+        ChronObject result = DynString(str);
+        free(str); // Free allocated memory
+        return result;
     }
     case vtable:
     {

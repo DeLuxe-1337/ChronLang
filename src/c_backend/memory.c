@@ -76,7 +76,7 @@ void MemoryContext_ReleaseContext(MemoryContext *ctx)
 	{
 		if (ctx->memory[i] != NULL)
 		{
-			MemoryContext_Release((ChronObject)Context->memory[i]);
+			MemoryContext_Release((ChronObject)ctx->memory[i]);
 			ctx->memory[i] = NULL; // Set the pointer to NULL after releasing
 		}
 	}

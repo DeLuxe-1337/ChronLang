@@ -8,6 +8,7 @@ Lexer.SymbolMap = {
     "true"="TRUE", "false"="FALSE",
     ","="COMMA", 
     ";"="SEMICOLON", 
+    ":"="COLON", 
     "!"="EXCLAMATION", 
     "="="EQUAL", 
     ">"="GREATER", 
@@ -34,6 +35,9 @@ Lexer.SymbolMap = {
     "in"="IN",
     "invoke"="INVOKE",
     "foreach"="FOREACH",
+    "struct"="STRUCT",
+    "cast"="CAST",
+    "cast_ptr"="CASTPTR",
     "emit_c" = "EMIT.C"
 }
 
@@ -89,8 +93,14 @@ Lexer.GetToken :: (state) {
 
     if String.IsNumeric(Lexer.State.Get(state)) and (Lexer.State.EOF(state) == false) {
         number = ""
-        while (String.IsNumeric(Lexer.State.Get(state))) and (Lexer.State.EOF(state) == false) {
+        decimal = false
+        while ((String.IsNumeric(Lexer.State.Get(state))) or ((decimal == false) and (Lexer.State.Get(state) == "."))) and (Lexer.State.EOF(state) == false) {
             number += Lexer.State.Get(state)
+
+            if Lexer.State.Get(state) == "." {
+                decimal = true
+            }
+
             Lexer.State.IncreaseIndex(state)
         }
         return Lexer.Token.Create(number, "NUMBER", state["currentLine"])

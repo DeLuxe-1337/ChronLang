@@ -26,7 +26,12 @@ Parser.Statement.Function :: (state) {
                 ident = Parser.State.Get(state)
 
                 if Parser.State.Expect(state, "IDENTIFIER", nil, "Expected IDENTIFIER in function parameters") {
-                    parameters[parameter_index] = ident["value"]
+                    typeDef = Parser.Expression.Type(state)
+                    if typeDef != nil {
+                        parameters[parameter_index] = {"value"=ident["value"], "type"=typeDef}
+                    } else {
+                        parameters[parameter_index] = ident["value"]
+                    }
                     parameter_index += 1
                 }
             }
@@ -34,9 +39,12 @@ Parser.Statement.Function :: (state) {
             Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
         }
 
+        returnTypeDef = Parser.Expression.Type(state)
+
         block = Parser.Statement.Block(state)
         function = IR.CreateFunction(name, block, parameters)
 
+        function["returnTypeDef"] = returnTypeDef
         function["overrideName"] = OverrideName
 
         if Modifiers["name"] != nil {
