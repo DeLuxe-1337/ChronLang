@@ -11,6 +11,7 @@ Types.ObjectDiv = "DynObjectDiv";
 Types.ObjectMul = "DynObjectMul";
 Types.ObjectModulus = "DynObjectMod";
 Types.MemoryRelease = "MemoryContext_Release";
+Types.MemoryMalloc = "MemoryContext_Malloc";
 Types.Iterator = "Iterator*";
 Types.GetRef = "GetRef";
 

@@ -14,6 +14,63 @@ IR.Write.Struct :: (context) {
     }
     
     IR.Writer.WriteLine("};")
+
+    IR.Struct.GenerateConstructor(context)
+}
+
+IR.Struct.GenerateConstructor :: (context) {
+    parameters = Clone(context["parameters"])
+    deallocator = IR.Struct.GenerateDeallocator(context)
+    functionName = "_SF_New_" + context["name"];
+    structType = IR.CreateType(context["name"])
+
+    IR.Writer.Write(Types.Object + " " + functionName + "(")
+    foreach index, param in Table.Iter(parameters) {
+        if TypeOf(param) == "table" {
+            IR.Writer.Write(IR.Read(param["type"]) + " " + param["value"])
+        } else {
+            IR.Writer.Write(Types.Object + " " + param)
+        }
+        if index != (Table.SizeOf(parameters) - 1) {
+            IR.Writer.Write(",")
+        }
+    }
+    IR.Writer.WriteLine(") {")
+
+    IR.Writer.WriteLine(Types.Object + " object = " + Types.MemoryMalloc + "(sizeof(" + context["accessorName"] + "));")
+    IR.Writer.WriteLine("object->deallocate = " + deallocator + ";")
+    IR.Writer.WriteLine(IR.Read(structType) + " structRef = object->Object;")
+
+    foreach index, param in Table.Iter(parameters) {
+        if TypeOf(param) == "table" {
+            IR.Writer.WriteLine("structRef->" + param["value"] + " = " + param["value"] + ";")
+        } else {
+            IR.Writer.WriteLine("structRef->" + param + " = " + param + ";")
+        }
+    }
+
+    IR.Writer.WriteLine("return object;\n}")
+}
+
+IR.Struct.GenerateDeallocator :: (context) {
+    parameters = Clone(context["parameters"])
+    functionName = "_SD_dealloc_" + context["name"];
+    IR.Writer.WriteLine("void " + functionName + "(void* o) {")
+
+    structType = IR.CreateType(context["name"])
+
+    IR.Writer.Write(IR.Read(structType))
+    IR.Writer.WriteLine(" structRef = o;")
+
+    foreach index, param in Table.Iter(parameters) {
+        if TypeOf(param) != "table" {
+            IR.Writer.WriteLine(Types.MemoryRelease + "(structRef->" + param + ");")
+        }
+    }
+
+    IR.Writer.WriteLine("}")
+
+    return functionName
 }
 
 IR.Struct.ForwardDeclare :: (context) {
