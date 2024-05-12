@@ -4,6 +4,7 @@ Types.CreateNumber = "DynNumber";
 Types.CreateBoolean = "DynBoolean";
 Types.CreateTable = "DynTable";
 Types.CreateNil = "DynNil";
+Types.CreatePointer = "DynPointer";
 Types.CreateFunction = "DynFunction";
 Types.ObjectAdd = "DynObjectAdd";
 Types.ObjectSub = "DynObjectSub";
@@ -14,6 +15,8 @@ Types.MemoryRelease = "MemoryContext_Release";
 Types.MemoryMalloc = "MemoryContext_Malloc";
 Types.Iterator = "Iterator*";
 Types.GetRef = "GetRef";
+
+Types.RealObject = "DynObject";
 
 Types.ObjectCompareEq = "DynObjectCompareEq";
 Types.ObjectCompareNEq = "DynObjectCompareNEq"
@@ -47,6 +50,7 @@ Functions.CreateNumber = IR.CreateFunctionRaw(Types.CreateNumber, true);
 Functions.CreateBoolean = IR.CreateFunctionRaw(Types.CreateBoolean, true);
 Functions.CreateTable = IR.CreateFunctionRaw(Types.CreateTable, true);
 Functions.CreateNil = IR.CreateFunctionRaw(Types.CreateNil, true);
+Functions.CreatePointer = IR.CreateFunctionRaw(Types.CreatePointer, true);
 Functions.CreateFunction = IR.CreateFunctionRaw(Types.CreateFunction, true);
 Functions.MemoryRelease = IR.CreateFunctionRaw(Types.MemoryRelease, true);
 

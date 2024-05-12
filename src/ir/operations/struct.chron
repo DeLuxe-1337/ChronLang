@@ -37,9 +37,9 @@ IR.Struct.GenerateConstructor :: (context) {
     }
     IR.Writer.WriteLine(") {")
 
-    IR.Writer.WriteLine(Types.Object + " object = " + Types.MemoryMalloc + "(sizeof(" + context["accessorName"] + "));")
+    IR.Writer.WriteLine(Types.Object + " object = " + Types.CreatePointer + "(malloc(sizeof(" + context["accessorName"] + ")));")
     IR.Writer.WriteLine("object->deallocate = " + deallocator + ";")
-    IR.Writer.WriteLine(IR.Read(structType) + " structRef = object->Object;")
+    IR.Writer.WriteLine(IR.Read(structType) + " structRef = ((" + Types.RealObject + "*)object->Object)->data.ptr;")
 
     foreach index, param in Table.Iter(parameters) {
         if TypeOf(param) == "table" {
@@ -61,14 +61,18 @@ IR.Struct.GenerateDeallocator :: (context) {
 
     structType = IR.CreateType(context["name"])
 
+    IR.Writer.WriteLine(Types.RealObject + "* obj = o;")
+
     IR.Writer.Write(IR.Read(structType))
-    IR.Writer.WriteLine(" structRef = o;")
+    IR.Writer.WriteLine(" structRef = obj->data.ptr;")
 
     foreach index, param in Table.Iter(parameters) {
         if TypeOf(param) != "table" {
             IR.Writer.WriteLine(Types.MemoryRelease + "(structRef->" + param + ");")
         }
     }
+
+    IR.Writer.WriteLine("free(structRef);")
 
     IR.Writer.WriteLine("}")
 

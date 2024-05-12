@@ -262,6 +262,9 @@ StructTest :: {
     // myStructValidCast = cast_ptr<MyStruct>(this) // This is valid because it casts the pointer that the object is holding...
     myStruct = new MyStruct("Hello, world", 5)
 
+    PrintLn(myStruct)
+    PrintLn(TypeOf(myStruct))
+
     Pass("Struct")
 }
 
