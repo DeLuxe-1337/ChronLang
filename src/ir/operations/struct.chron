@@ -15,7 +15,7 @@ IR.Write.Struct :: (context) {
     
     IR.Writer.WriteLine("};")
 
-    IR.Struct.GenerateConstructor(context)
+    IR.Instance.SetConstructorFunction(name, IR.Struct.GenerateConstructor(context))
 }
 
 IR.Struct.GenerateConstructor :: (context) {
@@ -50,6 +50,8 @@ IR.Struct.GenerateConstructor :: (context) {
     }
 
     IR.Writer.WriteLine("return object;\n}")
+
+    return functionName
 }
 
 IR.Struct.GenerateDeallocator :: (context) {

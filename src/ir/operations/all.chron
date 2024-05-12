@@ -28,6 +28,7 @@ include ir.operations.type
 include ir.operations.negative
 include ir.operations.cast
 include ir.operations.cast_ptr
+include ir.operations.new
 include ir.operations.math.add
 include ir.operations.math.sub
 include ir.operations.math.div

@@ -33,6 +33,7 @@ Lexer.SymbolMap = {
     "include"="INCLUDE",
     "for"="FOR",
     "in"="IN",
+    "new"="NEW",
     "invoke"="INVOKE",
     "foreach"="FOREACH",
     "struct"="STRUCT",

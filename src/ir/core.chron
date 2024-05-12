@@ -51,6 +51,7 @@ ReadMap = {
     "Grouping"=IR.Read.Grouping,
     "Cast"=IR.Read.Cast,
     "CastPtr"=IR.Read.CastPtr,
+    "New"=IR.Read.New,
     "Negative"=IR.Read.Negative
 }
 

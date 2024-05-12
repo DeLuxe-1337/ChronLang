@@ -1,0 +1,33 @@
+Parser.Expression.New :: (state) {
+    if Parser.State.Match(Parser.State.Get(state), "NEW", nil) {
+            Parser.State.IncreaseIndex(state)
+
+            type = IR.CreateType(Parser.State.ExpectRet(state, "IDENTIFIER", nil, "Expected type for instantiation")["value"])
+
+            Parser.State.Expect(state, "LPAREN", nil, "Expected '(' for parameters")
+
+            parameters = {}
+            parameter_index = 0
+            while Parser.State.Get(state)["type"] != "RPAREN" {
+                if parameter_index > 0 {
+                    Parser.State.Expect(state, "COMMA", nil, "Expected ','")
+                }
+
+                expr = Parser.Expression(state)
+
+                if expr != nil {
+                    parameters[parameter_index] = expr
+                    parameter_index += 1
+                } else {
+                    PrintLn("Couldn't parse expression...")
+                    Parser.State.IncreaseIndex(state)
+                }
+            }
+                
+            Parser.State.Expect(state, "RPAREN", nil, "Expected ')'")
+
+            return IR.CreateInstantiation(type, parameters)
+        }
+
+    return nil
+}

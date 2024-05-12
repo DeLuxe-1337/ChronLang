@@ -1,0 +1,24 @@
+IR.InstantiationMap = {}
+
+IR.Instance.SetConstructorFunction :: (reference, value) {
+    IR.InstantiationMap[reference] = value
+}
+
+IR.Read.New :: (context) {
+    functionName = IR.InstantiationMap[(context["dataType"])["name"]]
+
+    PrintLn(IR.InstantiationMap)
+
+    if functionName == nil {
+        IR.Throw("Could not find constructor for ...")
+    }
+
+    constructorSig = IR.CreateFunctionRaw(functionName, true)
+    constructorInvoke = IR.CreateInvoke(constructorSig, context["parameters"])
+
+    return IR.Read(constructorInvoke)
+}
+
+IR.CreateInstantiation :: (type, parameters) {
+    return {"dataType"=type, "parameters"=parameters, "autoRelease"=true, "literal"=true, "type"="New"}
+}

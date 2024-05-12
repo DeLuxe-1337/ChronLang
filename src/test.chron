@@ -257,10 +257,12 @@ VariableTest :: {
 
 MyStruct :: struct(a, b)
 
-StructTest :: (this) {
+StructTest :: {
     // notValidCast = cast<MyStruct>(this) //This won't be valid in the current usage because `this` is an object, so a direct cast of object to such isn't valid...
     // myStructValidCast = cast_ptr<MyStruct>(this) // This is valid because it casts the pointer that the object is holding...
-    // myStruct = new MyStruct("Hello, world", 5);
+    myStruct = new MyStruct("Hello, world", 5)
+
+    Pass("Struct")
 }
 
 Main :: {
@@ -288,6 +290,7 @@ Main :: {
     CompoundAssignment()
     DecimalTest()
     VariableTest()
+    StructTest()
 }
 
 //Everything is now passing

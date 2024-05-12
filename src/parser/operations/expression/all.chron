@@ -11,6 +11,7 @@ include parser.operations.expression.table
 include parser.operations.expression.invoke
 include parser.operations.expression.type
 include parser.operations.expression.cast
+include parser.operations.expression.new
 include parser.operations.emit_c
 
 Parser.Expression.Primary :: (state) {
@@ -30,6 +31,9 @@ Parser.Expression.Primary :: (state) {
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Cast(state)
+    if expr != nil { return expr } 
+
+    expr = Parser.Expression.New(state)
     if expr != nil { return expr } 
 
     expr = Parser.Expression.Table(state)
