@@ -18,4 +18,4 @@
 
 [Legacy Branch](https://github.com/DeLuxe-1337/ChronLang/tree/legacy)  
 
-#### Removed documentation because it is outdated, updating soon...
+[Documentation - WIP](https://chron-lang.gitbook.io/documentation)
