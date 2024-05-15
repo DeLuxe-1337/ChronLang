@@ -44,20 +44,19 @@ int HashTable(DynamicTable *table)
 
 int hash(ChronObject key, int capacity)
 {
-    DynObject *obj = key->Object;
-    switch (obj->type)
+    switch (key->type)
     {
     case vstring:
-        return HashString(obj->data.str) % capacity;
+        return HashString(key->data.str) % capacity;
     case vinteger:
-        return obj->data.integer % capacity;
+        return key->data.integer % capacity;
     case vboolean:
-        return obj->data.boolean ? 1 : 2;
+        return key->data.boolean ? 1 : 2;
     case vfunction:
     case vptr:
-        return (int)obj->data.ptr;
+        return (int)key->data.ptr;
     case vtable:
-        return HashTable(obj->data.table);
+        return HashTable(key->data.table);
     case vnull:
         return 0;
     }
@@ -118,8 +117,8 @@ void HashMapInsert(DynamicTable *map, ChronObject key, ChronObject value)
 
     int index = hash(key, map->capacity);
     KeyValuePair *pair = (KeyValuePair *)malloc(sizeof(KeyValuePair));
-    pair->key = key;
-    pair->value = value;
+    pair->key = &key;
+    pair->value = &value;
     Node *node = (Node *)malloc(sizeof(Node));
     node->pair = *pair;
     node->next = NULL;
@@ -131,7 +130,7 @@ void HashMapInsert(DynamicTable *map, ChronObject key, ChronObject value)
         if (GetBoolean(DynObjectCompareEq(current->pair.key, key)))
         {
             MemoryContext_Release(current->pair.value);
-            current->pair.value = value;
+            current->pair.value = &value;
             free(pair);
             free(node);
             return; // Exit function as we've replaced the value
@@ -162,10 +161,8 @@ void InitializeDynamicTable(DynamicTable *table)
     memset(table->buckets, 0, sizeof(Node *) * table->capacity);
 }
 
-void TableInsert(ChronObject o, ChronObject value)
+void TableInsert(ChronObject tableObject, ChronObject value)
 {
-    DynObject *tableObject = o->Object;
-
     if (tableObject->type != vtable)
     {
         printf("Runtime warning: attempting to set value in table on object that "
@@ -177,15 +174,13 @@ void TableInsert(ChronObject o, ChronObject value)
     HashMapInsert(table, DynInteger(table->size), value);
 }
 
-void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
+void SetDynamicTable(ChronObject tableObject, ChronObject index, ChronObject value)
 {
-    DynObject *tableObject = o->Object;
-
     if (tableObject->type != vtable)
     {
-        void *result = ToString(o);
-        void *i = ToString(index);
-        void *v = ToString(value);
+        ChronObject result = ToString(tableObject);
+        ChronObject i = ToString(index);
+        ChronObject v = ToString(value);
         printf("Runtime warning: attempting to set value on Table=%s Index=%s Value=%s\n", c_string(result), c_string(i), c_string(v));
         MemoryContext_Release(result);
         MemoryContext_Release(i);
@@ -198,14 +193,12 @@ void SetDynamicTable(ChronObject o, ChronObject index, ChronObject value)
     HashMapInsert(table, Clone(index), Clone(value));
 }
 
-ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
+ChronObject IndexDynamicTable(ChronObject tableObject, ChronObject index)
 {
-    DynObject *tableObject = o->Object;
-
     if (tableObject->type != vtable)
     {
-        void *result = ToString(o);
-        void *i = ToString(index);
+        ChronObject result = ToString(tableObject);
+        ChronObject i = ToString(index);
         printf("Runtime warning: attempting to index on Table=%s Index=%s \n", c_string(result), c_string(i));
         MemoryContext_Release(result);
         MemoryContext_Release(i);
@@ -217,19 +210,19 @@ ChronObject IndexDynamicTable(ChronObject o, ChronObject index)
     return HashMapGet(table, index);
 }
 
-void dealloc_string(void *o)
+void dealloc_string(ChronObject o)
 {
-    DynObject *obj = o;
-    free(obj->data.str);
+    free(o->data.str);
 }
 
 ChronObject DynString(const char *str)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->data.str = strdup(str);
-    _VO_obj->type = vstring;
+    GC_obj->data.str = strdup(str);
+    GC_obj->type = vstring;
 
+    GC_obj->heap = true;
     GC_obj->deallocate = dealloc_string;
 
     return GC_obj;
@@ -237,51 +230,51 @@ ChronObject DynString(const char *str)
 
 ChronObject DynChar(char c)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->data.str = malloc(2 * sizeof(char));
-    _VO_obj->type = vstring;
+    GC_obj->data.str = malloc(2 * sizeof(char));
+    GC_obj->type = vstring;
 
-    _VO_obj->data.str[0] = c;
-    _VO_obj->data.str[1] = '\0';
+    GC_obj->data.str[0] = c;
+    GC_obj->data.str[1] = '\0';
 
     GC_obj->deallocate = dealloc_string;
+    GC_obj->heap = true;
 
     return GC_obj;
 }
 
 ChronObject DynInteger(int i)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->data.integer = i;
-    _VO_obj->type = vinteger;
+    GC_obj->data.integer = i;
+    GC_obj->type = vinteger;
 
     return GC_obj;
 }
 
 ChronObject DynNumber(double i)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->data.number = i;
-    _VO_obj->type = vnumber;
+    GC_obj->data.number = i;
+    GC_obj->type = vnumber;
 
     return GC_obj;
 }
 
 ChronObject DynBoolean(bool boolean)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->data.boolean = boolean;
-    _VO_obj->type = vboolean;
+    GC_obj->data.boolean = boolean;
+    GC_obj->type = vboolean;
     return GC_obj;
 }
 
-void dealloc_table(void *o)
+void dealloc_table(ChronObject obj)
 {
-    DynObject *obj = o;
     DynamicTable *table = obj->data.table;
     for (int i = 0; i < table->capacity; i++)
     {
@@ -302,12 +295,14 @@ void dealloc_table(void *o)
 
 ChronObject DynTable()
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->type = vtable;
-    _VO_obj->data.table = (DynamicTable *)malloc(sizeof(DynamicTable));
+    GC_obj->type = vtable;
+    GC_obj->data.table = (DynamicTable *)malloc(sizeof(DynamicTable));
 
-    InitializeDynamicTable(_VO_obj->data.table);
+    InitializeDynamicTable(GC_obj->data.table);
+
+    GC_obj->heap = true;
 
     GC_obj->deallocate = dealloc_table;
 
@@ -316,29 +311,29 @@ ChronObject DynTable()
 
 ChronObject DynNil()
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->type = vnull;
+    GC_obj->type = vnull;
 
     return GC_obj;
 }
 
 ChronObject DynPointer(void *ptr)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->type = vptr;
-    _VO_obj->data.ptr = ptr;
+    GC_obj->type = vptr;
+    GC_obj->data.ptr = ptr;
 
     return GC_obj;
 }
 
 ChronObject DynFunction(void *ptr)
 {
-    newObject(obj, DynObject);
+    newObject(obj);
 
-    _VO_obj->type = vfunction;
-    _VO_obj->data.ptr = ptr;
+    GC_obj->type = vfunction;
+    GC_obj->data.ptr = ptr;
 
     return GC_obj;
 }
@@ -351,24 +346,16 @@ ChronObject DynFunction(void *ptr)
 // 		return input;
 // }
 
-ChronObject Clone(ChronObject input)
+ChronObject Clone(ChronObject target)
 {
-    if (input == NULL)
-    {
-        return DynNil();
-    }
-
-    DynObject *target = input->Object;
-
-    ChronObject cloneObject = DynNil();
-    DynObject *clone = cloneObject->Object;
+    ChronObject clone = DynNil();
     clone->type = target->type;
 
     switch (clone->type)
     {
     case vstring:
         clone->data.str = strdup(target->data.str);
-        cloneObject->deallocate = dealloc_string;
+        clone->deallocate = dealloc_string;
         break;
     case vboolean:
         clone->data.boolean = target->data.boolean;
@@ -384,14 +371,14 @@ ChronObject Clone(ChronObject input)
     case vtable:
         clone->data.table = (DynamicTable *)malloc(sizeof(DynamicTable));
         InitializeDynamicTable(clone->data.table);
-        cloneObject->deallocate = dealloc_table;
+        clone->deallocate = dealloc_table;
 
         for (int i = 0; i < target->data.table->capacity; i++)
         {
             Node *current = target->data.table->buckets[i];
             while (current != NULL)
             {
-                SetDynamicTable(cloneObject, current->pair.key, current->pair.value);
+                SetDynamicTable(clone, current->pair.key, current->pair.value);
                 current = current->next;
             }
         }
@@ -408,7 +395,5 @@ ChronObject Clone(ChronObject input)
         break;
     }
 
-    return cloneObject;
+    return clone;
 }
-
-DynObject *GetRef(ChronObject GC) { return (DynObject *)GC->Object; }
