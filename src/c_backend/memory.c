@@ -1,6 +1,9 @@
 #include "memory.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define MAX_ALLOCATIONS 1000
 
 MemoryContext *Context;
 
@@ -62,6 +65,11 @@ MemoryContext *Create_MemoryContext()
 		context->size = 0;
 		context->capacity = MAX_ALLOCATIONS;
 		context->memory = malloc(MAX_ALLOCATIONS * sizeof(ChronObject));
+		if (context->memory == NULL)
+		{
+			free(context);
+			return NULL;
+		}
 	}
 	return context;
 }
@@ -82,6 +90,8 @@ void MemoryContext_ReleaseAll()
 		DynObject object = Context->memory[i];
 		MemoryContext_Release(&object);
 	}
+	free(Context->memory); // Free the memory context's memory
+	free(Context);         // Free the memory context itself
 }
 
 ChronObject MemoryContext_Push(DynObject object)
@@ -105,14 +115,12 @@ ChronObject MemoryContext_Push(DynObject object)
 	{
 		printf("MemoryContext expansion required...\n");
 		size_t new_capacity = Context->capacity * 2;
-		ChronObject *new_memory = (ChronObject *)malloc(new_capacity * sizeof(ChronObject));
+		ChronObject *new_memory = (ChronObject *)realloc(Context->memory, new_capacity * sizeof(ChronObject));
 		if (new_memory == NULL)
 		{
 			// Handle allocation failure
 			return NULL;
 		}
-		memcpy(new_memory, Context->memory, Context->capacity * sizeof(ChronObject));
-		free(Context->memory);
 		Context->memory = new_memory;
 		Context->capacity = new_capacity;
 	}
@@ -150,10 +158,14 @@ void MemoryContext_ReleaseContext(MemoryContext *ctx)
 		MemoryContext_Release(&object);
 	}
 	free(ctx->memory);
+	free(ctx); // Free the memory context itself
 }
 
 void MemoryContext_Release(ChronObject garbage)
 {
+	if(garbage->type == vdeallocated)
+		return;
+
 	if (garbage->heap == true && garbage->deallocate != NULL)
 	{
 		// printf("Deallocate\n");

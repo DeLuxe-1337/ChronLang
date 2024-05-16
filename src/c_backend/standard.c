@@ -6,6 +6,9 @@
 
 ChronObject DynObjectAdd(ChronObject left, ChronObject right)
 {
+    // printf("ADD LEFT TYPE-> %d\n", left->type);
+    // printf("ADD RIGHT TYPE-> %d\n", right->type);
+
     if (left->type == vnumber && right->type == vnumber)
     {
         return DynNumber(left->data.number + right->data.number);
@@ -462,7 +465,7 @@ ChronObject ToString(ChronObject obj)
     switch (obj->type)
     {
     case vdeallocated:
-        return DynString("Object is deallocated");
+        return DynString("deallocated");
     case vstring:
         return DynString(obj->data.str);
     case vboolean:

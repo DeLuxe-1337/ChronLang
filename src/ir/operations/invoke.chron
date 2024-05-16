@@ -1,8 +1,5 @@
 IR.Write.Invoke :: (context) {
-    IR.Env.Defer.Create()
     IR.Writer.WriteLine(IR.Read.Invoke(context) + ";")
-    IR.Env.Defer.VisitCurrentScopeWithPop()
-    IR.Env.Defer.Pop()
 }
 
 IR.Invoke.ConditionalAutoRelease :: (context) {
