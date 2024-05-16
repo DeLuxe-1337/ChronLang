@@ -23,5 +23,5 @@ IR.Read.TempVariable :: (context) {
 IR.CreateTempVariable :: (name, expression) {
     IR.Temp.Count += 1
     newName = "_TEMP_" + name + "_" + ToString(IR.Temp.Count)
-    return {"type"="TempVariable", "name"=newName, "child"=expression, "dataType"="void*"}
+    return {"type"="TempVariable", "name"=newName, "child"=expression, "dataType"=Types.Object}
 }

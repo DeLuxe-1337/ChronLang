@@ -80,10 +80,7 @@ void MemoryContext_ReleaseAll()
 	for (size_t i = 0; i < Context->size; ++i)
 	{
 		DynObject object = Context->memory[i];
-		if (object.deallocate != NULL || object.type == vptr)
-		{
-			MemoryContext_Release(&object);
-		}
+		MemoryContext_Release(&object);
 	}
 }
 
@@ -94,9 +91,13 @@ ChronObject MemoryContext_Push(DynObject object)
 
 	if (index != -1)
 	{
-		object.index = index;
-		Context->memory[index] = object;
-		printf("Reusing index %d\n", index);
+		Context->memory[index].data = object.data;
+		Context->memory[index].deallocate = object.deallocate;
+		Context->memory[index].heap = object.heap;
+		Context->memory[index].index = index;
+		Context->memory[index].type = object.type;
+
+		// printf("Reusing index %d\n", index);
 		return &Context->memory[index];
 	}
 
@@ -146,10 +147,7 @@ void MemoryContext_ReleaseContext(MemoryContext *ctx)
 	for (size_t i = 0; i < ctx->size; i++)
 	{
 		DynObject object = ctx->memory[i];
-		if (object.deallocate != NULL || object.type == vptr)
-		{
-			MemoryContext_Release(&object);
-		}
+		MemoryContext_Release(&object);
 	}
 	free(ctx->memory);
 }
@@ -158,15 +156,18 @@ void MemoryContext_Release(ChronObject garbage)
 {
 	if (garbage->heap == true && garbage->deallocate != NULL)
 	{
-		printf("Deallocate\n");
+		// printf("Deallocate\n");
 		garbage->deallocate(garbage);
 	}
 
 	if (garbage->type == vptr)
 	{
-		printf("Free ptr\n");
+		// printf("Free ptr\n");
 		free(garbage->data.ptr);
 	}
+
+	garbage->type = vdeallocated;
+	garbage->heap = false;
 
 	PushIndex(released_indices, garbage->index);
 }

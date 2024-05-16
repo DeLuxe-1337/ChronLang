@@ -545,7 +545,7 @@ ChronObject ToString(ChronObject obj)
     case vnull:
         return DynString("nil");
     default:
-        return DynString("Invalid object type");
+        return DynString("[]");
     }
 }
 

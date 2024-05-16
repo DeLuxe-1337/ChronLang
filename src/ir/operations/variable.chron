@@ -9,7 +9,7 @@ IR.Write.Variable :: (context) {
     varName = context["name"]
     accessorName = context["accessorName"]
 
-    type = "void*"
+    type = Types.Object
 
     if context["typeDef"] != nil {
         type = IR.Read(context["typeDef"])

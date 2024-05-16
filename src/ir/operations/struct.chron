@@ -57,7 +57,7 @@ IR.Struct.GenerateConstructor :: (context) {
 IR.Struct.GenerateDeallocator :: (context) {
     parameters = Clone(context["parameters"])
     functionName = "_SD_dealloc_" + context["name"];
-    IR.Writer.WriteLine("void " + functionName + "(void* o) {")
+    IR.Writer.WriteLine("void " + functionName + "(" + Types.Object + " o) {")
 
     structType = IR.CreateType(context["name"])
 
