@@ -39,7 +39,7 @@ IR.Struct.GenerateConstructor :: (context) {
 
     IR.Writer.WriteLine(Types.Object + " object = " + Types.CreatePointer + "(malloc(sizeof(" + context["accessorName"] + ")));")
     IR.Writer.WriteLine("object->deallocate = " + deallocator + ";")
-    IR.Writer.WriteLine(IR.Read(structType) + " structRef = ((" + Types.RealObject + "*)object->Object)->data.ptr;")
+    IR.Writer.WriteLine(IR.Read(structType) + " structRef = ((" + Types.RealObject + "*)object)->data.ptr;")
 
     foreach index, param in Table.Iter(parameters) {
         if TypeOf(param) == "table" {
@@ -57,11 +57,9 @@ IR.Struct.GenerateConstructor :: (context) {
 IR.Struct.GenerateDeallocator :: (context) {
     parameters = Clone(context["parameters"])
     functionName = "_SD_dealloc_" + context["name"];
-    IR.Writer.WriteLine("void " + functionName + "(" + Types.Object + " o) {")
+    IR.Writer.WriteLine("void " + functionName + "(" + Types.Object + " obj) {")
 
     structType = IR.CreateType(context["name"])
-
-    IR.Writer.WriteLine(Types.RealObject + "* obj = o;")
 
     IR.Writer.Write(IR.Read(structType))
     IR.Writer.WriteLine(" structRef = obj->data.ptr;")

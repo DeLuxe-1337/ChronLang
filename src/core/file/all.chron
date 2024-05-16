@@ -1,10 +1,7 @@
 emit_c `
 ChronVoid Chron_WriteFile(ChronObject o1, ChronObject o2) {
-	DynObject *path = o1->Object;
-	DynObject *content = o2->Object;
-
-	FILE *file = fopen(path->data.str, "w");
-	fprintf(file, "%s", content->data.str);
+	FILE *file = fopen(c_string(o1), "w");
+	fprintf(file, "%s", c_string(o2));
 	fclose(file);
 }
 `
@@ -12,8 +9,7 @@ ChronVoid Chron_WriteFile(ChronObject o1, ChronObject o2) {
 emit_c `
 #define CHUNK_SIZE 1024
 ChronObject Chron_ReadFile(ChronObject o1) {
-    DynObject *path = o1->Object;
-    FILE *file = fopen(path->data.str, "r");
+    FILE *file = fopen(c_string(o1), "r");
     char *buffer;
     long file_size;
     size_t total_bytes_read = 0;

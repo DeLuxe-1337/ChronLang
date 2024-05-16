@@ -8,7 +8,7 @@ IR.Write.ForEach :: (context) {
     IR.Env.Defer.Create()
 
     iter = IR.CreateTempVariable("ITER_OBJECT", iterator)
-    __iter__ = IR.CreateTempVariable("ITER", IR.CreateRawText(Types.GetRef + "(" + IR.Read(iter) + ")->data.ptr"))
+    __iter__ = IR.CreateTempVariable("ITER", IR.CreateRawText(IR.Read(iter) + "->data.ptr"))
     __iter__["dataType"] = Types.Iterator
 
     IR.Write(iter)
