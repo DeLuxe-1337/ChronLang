@@ -19,12 +19,14 @@ class Object {
 protected:
     ObjectType type;
 public:
+    Object() : type(vnull) {}
 
     Object(ObjectType type) : type(type) {
 
     }
 
     ~Object() {
+        std::cout << "Deallocate\n";
     }
 
     virtual int getTypeRaw() const {

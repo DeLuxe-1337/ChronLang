@@ -4,16 +4,16 @@
 #include "Include.hpp"
 #include <iostream>
 
-void print(const Object& object) {
-    switch (object.getTypeRaw()) {
+void print(Object* object) {
+    switch (object->getTypeRaw()) {
     case vstring: {
-        const StringObject& String = static_cast<const StringObject&>(object);
-        std::cout << String.str;
+        StringObject* String = static_cast<StringObject*>(object);
+        std::cout << String->str;
         break;
     }
     case vinteger: {
-        const IntegerObject& Integer = static_cast<const IntegerObject&>(object);
-        std::cout << Integer.integer;
+        IntegerObject* Integer = static_cast<IntegerObject*>(object);
+        std::cout << Integer->integer;
         break;
     }
     default: {
@@ -24,7 +24,7 @@ void print(const Object& object) {
 }
 
 
-void print_line(const Object& object) {
+void print_line(Object* object) {
 	print(object);
 	std::cout << "\n";
 }
