@@ -1,14 +1,28 @@
 #ifndef INTEGER_HPP
 #define INTEGER_HPP
 
-#include "Object.hpp"
+#include "Include.hpp"
 
-class IntegerObject : public Object {
-public:
-    int integer;
+namespace Object {
+    class Integer : public Object {
+    public:
+        int integer;
 
-    IntegerObject(int i) : Object(vinteger), integer(i) {
-    }
-};
+        Integer(int i) : Object(vinteger), integer(i) {
+        }
+
+        bool isEqual(const Object& other) const override {
+            const Integer* derivedOther = dynamic_cast<const Integer*>(&other);
+            if (derivedOther) {
+                return this->integer == derivedOther->integer;
+            }
+            return false;
+        }
+
+        std::unique_ptr<Object> toString() const override {
+            return std::make_unique<String>(std::to_string(integer));
+        }
+    };
+}
 
 #endif

@@ -2,29 +2,20 @@
 #define STANDARD_HPP
 
 #include "Include.hpp"
-#include <iostream>
 
-void print(Object* object) {
-    switch (object->getTypeRaw()) {
-    case vstring: {
-        StringObject* String = static_cast<StringObject*>(object);
-        std::cout << String->str;
-        break;
-    }
-    case vinteger: {
-        IntegerObject* Integer = static_cast<IntegerObject*>(object);
-        std::cout << Integer->integer;
-        break;
-    }
-    default: {
-        std::cout << "Unknown type";
-        break;
-    }
-    }
+void print(Object::Object* object) {
+	auto stringObjectPointer = object->toString();
+	Object::String* stringObject = dynamic_cast<Object::String*>(stringObjectPointer.get());
+	if (stringObject) {
+		std::cout << stringObject->str;
+	}
+	else {
+		std::cout << "Failed to print\n";
+	}
 }
 
 
-void print_line(Object* object) {
+void print_line(Object::Object* object) {
 	print(object);
 	std::cout << "\n";
 }

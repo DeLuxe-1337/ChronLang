@@ -3,6 +3,7 @@
 
 enum ObjectType {
     vstring,
+    vchar,
     vboolean,
     vnumber,
     vinteger,
@@ -13,25 +14,34 @@ enum ObjectType {
     vfunction,
 };
 
-#define ConstObject const Object&
+namespace Object {
 
-class Object {
-protected:
-    ObjectType type;
-public:
-    Object() : type(vnull) {}
+    class Object {
+    protected:
+        ObjectType type;
+    public:
+        Object() : type(vnull) {}
 
-    Object(ObjectType type) : type(type) {
+        Object(ObjectType type) : type(type) {
 
-    }
+        }
 
-    ~Object() {
-        std::cout << "Deallocate\n";
-    }
+        ~Object() {
+        }
 
-    virtual int getTypeRaw() const {
-        return type;
-    }
-};
+        virtual int getTypeRaw() const {
+            return type;
+        }
+
+        virtual bool isEqual(const Object& other) const = 0;
+
+        virtual bool operator==(const Object& other) const {
+            return this->isEqual(other);
+        }
+
+        virtual std::unique_ptr<Object> toString() const = 0;
+    };
+
+}
 
 #endif
