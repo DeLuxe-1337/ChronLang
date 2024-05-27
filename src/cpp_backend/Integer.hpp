@@ -22,6 +22,10 @@ namespace Object {
         std::unique_ptr<Object> toString() const override {
             return std::make_unique<String>(std::to_string(integer));
         }
+
+        int to_int() const override {
+            return integer;
+        }
     };
 }
 

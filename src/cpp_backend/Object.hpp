@@ -26,7 +26,7 @@ namespace Object {
 
         }
 
-        ~Object() {
+        virtual ~Object() {
         }
 
         virtual int getTypeRaw() const {
@@ -40,6 +40,30 @@ namespace Object {
         }
 
         virtual std::unique_ptr<Object> toString() const = 0;
+
+        virtual int to_int() const {
+            return 0;
+        }
+
+        virtual double to_double() const {
+            return 0;
+        }
+
+        virtual std::string to_str() const {
+            return "null str";
+        }
+
+        virtual bool to_bool() const {
+            return false;
+        }
+
+        virtual char to_char() const {
+            return '.';
+        }
+
+        virtual void* to_pointer() const {
+            return nullptr;
+        }
     };
 
 }

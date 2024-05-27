@@ -22,6 +22,10 @@ namespace Object {
         std::unique_ptr<Object> toString() const override {
             return std::make_unique<String>(this->boolean == true ? "true" : "false");
         }
+
+        bool to_bool() const override {
+            return boolean;
+        }
     };
 }
 #endif
