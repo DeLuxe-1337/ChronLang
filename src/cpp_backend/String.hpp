@@ -28,4 +28,15 @@ namespace Object {
         }
     };
 }
+
+namespace std {
+    template<>
+    struct hash<Object::String> {
+        std::size_t operator()(const Object::String& str) const {
+            using std::hash;
+            return hash<std::string>()(str.str);
+        }
+    };
+}
+
 #endif

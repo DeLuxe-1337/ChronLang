@@ -28,4 +28,15 @@ namespace Object {
         }
     };
 }
+
+namespace std {
+    template<>
+    struct hash<Object::Boolean> {
+        std::size_t operator()(const Object::Boolean& b) const {
+            using std::hash;
+            return hash<bool>()(b.boolean);
+        }
+    };
+}
+
 #endif

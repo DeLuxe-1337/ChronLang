@@ -35,4 +35,14 @@ namespace Object {
     };
 }
 
+namespace std {
+    template<>
+    struct hash<Object::Double> {
+        std::size_t operator()(const Object::Double& d) const {
+            using std::hash;
+            return hash<double>()(d.number);
+        }
+    };
+}
+
 #endif

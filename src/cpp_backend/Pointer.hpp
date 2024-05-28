@@ -35,4 +35,15 @@ namespace Object {
         }
     };
 }
+
+namespace std {
+    template<>
+    struct hash<Object::Pointer> {
+        std::size_t operator()(const Object::Pointer& ptr) const {
+            using std::hash;
+            return hash<void*>()(ptr.pointer);
+        }
+    };
+}
+
 #endif

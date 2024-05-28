@@ -29,4 +29,14 @@ namespace Object {
     };
 }
 
+namespace std {
+    template<>
+    struct hash<Object::Char> {
+        std::size_t operator()(const Object::Char& c) const {
+            using std::hash;
+            return hash<char>()(c.character);
+        }
+    };
+}
+
 #endif
